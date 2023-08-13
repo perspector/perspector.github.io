@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Create Task - Unit Converter</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> AP Computer Science Principles Performance Task for CollegeBoard
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Programming</span> Process</h2>
+
+        <div class="design-process-container">
+            <span><h1>Project Objective</h1></span>
+            <div class="design-process-image-box">
+                <img src="create-task1.png" alt="">
+            </div>
+            <p>
+                This program was made using Python to help people convert units of distance and weight. 
+                <br><u>Overall Functionality</u>
+                <br>The user inputs the type of units, either "Distance" or "Weight". Then, the user selects the input unit, the value of the input unit, and the desired output unit. Lastly, the user clicks the "Convert" button and the value of the output from the conversion is displayed at the bottom. 
+            </p>
+
+            <span><h1>List</h1></span>
+            <p>
+                <pre><code>
+distanceUnits = [ 
+        'picometers', 
+        'nanometers', 
+        'millimeters', 
+        'centimeters', 
+        'decimeters', 
+        'meters', 
+        'decameters', 
+        'hectometers', 
+        'kilometers', 
+        'megameters', 
+        'gigameters', 
+        'terameters', 
+        'inches', 
+        'feet', 
+        'miles', 
+        'lightyears' 
+        ] 
+
+return distanceUnits 
+                </code></pre>
+                <br><u>Using the List</u>
+                <br><pre><code>
+if unitType == "Distance":
+    possibleUnits = getUnitNames("Distance")
+
+elif unitType == "Weight": 
+    possibleUnits = getUnitNames("Weight") 
+
+inDrop.options = (flet.dropdown.Option(i) for i in possibleUnits) 
+                </code></pre>
+                <p>
+                    <u>What is the Functionality of the List?</u>
+                    <br>The data contained in distanceUnits is used when displaying the options inside the dropdown menu for input units.
+                    <br><u>Importance of Using Lists</u>
+                    <br>Without using this list, each unit option would need to be added manually to the dropdown menu. Instead, a for loop is used to automatically add each value in the distanceUnits list to the dropdown menu. This saves an immense amount of time, and makes adding new units very easy, as new units can just be added at the end of the list in the function getUnitNames. 
+                </p>
+            </p>
+
+            <span><h1>Procedure</h1></span>
+            <p>
+                <pre><code>
+def getConversions(unitType): 
+    # if the parameter unitType was Distance 
+    if unitType == "Distance": 
+        distanceConversions = [ 
+            1000000000, 
+            1000000, 
+            1000, 
+            100, 
+            10, 
+            1, 
+            0.1, 
+            0.01, 
+            0.001, 
+            0.000001, 
+            0.000000001, 
+            0.000000000001, 
+            39.37008, 
+            3.28084, 
+            0.0006213712, 
+            0.0000000000000001057004 
+        ] 
+        return distanceConversions 
+
+    # if the parameter unitType was Weight 
+    elif unitType == "Weight": 
+        weightConversions = [ 
+            1000000000, 
+            1000000, 
+            1000, 
+            100, 
+            10, 
+            1, 
+            0.1, 
+            0.01, 
+            0.001, 
+            0.000001, 
+            0.000000001, 
+            0.000000000001, 
+            0.002204623, 
+            0.03527396, 
+            1.102311e-6 
+        ] 
+
+        return weightConversions 
+                    </code></pre>
+                    <u>Calling the Procedure</u>
+                    <pre><code>
+possibleConversions = getConversions("Distance")
+possibleConversions = getConversions("Weight")
+                </code></pre>
+
+                <p>
+                    <u>Description of the Functionality of the Procedure</u>
+                    <br>The procedure getConversions takes the argument unitType. unitType is the type of unit, either "Weight" or "Distance" that the user selects. Based on this argument, the procedure returns a list of conversions whose indexes correspond to unit names in another list. For example, the value 1 corresponds to "meters" while 100 corresponds corresponds to "centimeters" since there are 100 centimeters in a meter, and meters are the base unit. So the indexes of each item in the list list [100, 10, 1, 0.1, 0.01] would correspond with the indexes in the list ["centimeters", "decimeters", "meters", "decameters", "hectometers"]. This is used in the conversion formula later. 
+                    <br><u>How the Procedure Works</u>
+                    <br>First, the procedure is defined in def getConversions(unitType):
+                    <br><br>Then, the conditional statement checks if the type of unit (unitType) is "Distance". If it is, then the appropriate conversions for distance units are returned. For example, the list [10, 1, 0.1] would be returned. These values would be used later in the program to correspond with decimeters, meters (base unit), and decameters.
+                    <br><br>If the type of unit was not "Distance", another conditional statement checks if the type of unit was "Weight". If it is, return the conversions for weight based units. An example of the output would be the list [1, 0.1, 0.01, 0.001] which would later in the program correspond with grams (base unit), decagrams, hectograms, and kilograms. 
+                </p>
+
+            </p>
+
+            <span><h1>Video</h1></span>
+            <div class="design-process-image-box">
+                <video
+                    controls
+                    poster="create-task1.png"
+                    source src="create-task-video.mp4" type="video/webm">
+                </video>
+            </div>
+
+            <p>
+                <u>Video Explanation</u>
+                <br>First, the user selects type of unit from the first dropdown. This is either "Distance" or "Weight". After that, the user selects the input unit. Some input unit options for distance are meters, millimeters, and centimeters. Next, the value of the input unit is given by the user in the "Input Value" textbox. Then, the user selects the output unit using the "Output Unit" dropdown menu, which is the same options as in the input unit dropdown. All of the previously mentioned steps for using the unit converter are inputs to the program. Then, the user clicks the "Convert" button and the output of the unit conversion is displayed below the "Convert" button. This represents the output of the program. 
+            </p>
+
+            <span><h1>Final Code</h1></span>
+            <p>Click  <a href="unitConverterFINAL.py" download>here</a> to download the code. 
+                <pre><code># Flet is a Graphical User Interface design library that is licensed
+# under the Apache 2.0 license. More information can be found at 
+# https://flet.dev
+# FLET MUST BE INSTALLED FOR THE PROGRAM TO WORK.
+# Install Flet using:
+# pip install flet
+import flet
+# The decimal library had to be imported to provide accurate and
+# precise calculations.
+# Example:
+# Without using Decimal: 0.1 + 0.1 + 0.1 returns 0.30000000000000004
+# With using Decimal: Decimal("0.1") + Decimal("0.1") + Decimal("0.1") returns Decimal("0.3").
+# The values are stored as strings inside Decimal to preserve their precision.
+from decimal import Decimal, getcontext, ROUND_HALF_UP, ROUND_DOWN, localcontext
+# Similar to Decimal, fractions uses Decimal but returns a fractional
+# value.
+from fractions import Fraction
+
+
+# This represents the main procedure for the application that is run
+# when the application starts
+def main(page: flet.Page):
+    # Here are variables that configure the basic application (Title,
+    # light or dark mode, window height, window width, and padding)
+    page.title = "Unit Converter"
+    page.theme_mode = 'DARK' # 'DARK' or 'LIGHT'
+    page.window_height = 720
+    page.window_width = 640
+    page.padding = 50
+
+    # This list represents options for the user to choose between.
+    # The procedure getUnitNames takes one of these values as input,
+    # either Distance or Weight
+    inUnits = ["Distance", "Weight"]
+    
+    # Here other lists are defined for use in storing values of items
+    # in dropdown menus.
+    possibleUnits = []
+    possibleConversions = []
+
+    # This is the standard width of a dropdown menu component, which
+    # ensures all text is nicely readable.
+    standardWidth = 200
+
+    # This procedure takes the parameter unitType, which is either
+    # Distance or Weight, and returns either units for distance or
+    # units for weight based on the input parameter
+    def getUnitNames(unitType):
+        if unitType == "Distance":
+            distanceUnits = [
+                'picometers',
+                'nanometers',
+                'millimeters',
+                'centimeters',
+                'decimeters',
+                'meters',
+                'decameters',
+                'hectometers',
+                'kilometers',
+                'megameters',
+                'gigameters',
+                'terameters',
+                'inches',
+                'feet',
+                'miles',
+                'lightyears'
+            ]
+            return distanceUnits
+        
+        elif unitType == "Weight":
+            weightUnits = [
+                'picograms',
+                'nanograms',
+                'milligrams',
+                'centigrams',
+                'decigrams',
+                'grams',
+                'decagrams',
+                'hectograms',
+                'kilograms',
+                'tons (metric)',
+                'gigagrams',
+                'terragrams',
+                'pounds',
+                'ounces',
+                'tons (imperial)'
+            ]
+            return weightUnits
+    
+    # This procedure takes the parameter unitType, which is either
+    # Distance or Weight, and returns either conversions for distance
+    # or conversions for weight based on the input parameter
+    # The conversions are based on a base unit which is meters for
+    # distance or grams for weight.
+    # The conversions for distance represent "how many" of the input
+    # unit are in one meter, and the conversions for weight
+    # represents "how many" of the input unit are in one gram.
+    def getConversions(unitType):
+        # if the parameter unitType was Distance
+        if unitType == "Distance":
+            distanceConversions = [
+                1000000000,
+                1000000,
+                1000,
+                100,
+                10,
+                1,
+                0.1,
+                0.01,
+                0.001,
+                0.000001,
+                0.000000001,
+                0.000000000001,
+                39.37008,
+                3.28084,
+                0.0006213712,
+                0.0000000000000001057004
+            ]
+            return distanceConversions
+        
+        # if the parameter unitType was Weight
+        elif unitType == "Weight":
+            weightConversions = [
+                1000000000,
+                1000000,
+                1000,
+                100,
+                10,
+                1,
+                0.1,
+                0.01,
+                0.001,
+                0.000001,
+                0.000000001,
+                0.000000000001,
+                0.002204623,
+                0.03527396,
+                1.102311e-6
+            ]
+            return weightConversions
+
+    # This procedure is called when the unitTypeDrop dropdown is
+    # changed.
+    # The parameter e is not used but is required to be passed to a
+    # procedure by the Flet GUI library.
+    def unitTypeChanged(e):
+        # Global variables needed to be used as parameters cannot be
+        # passed in procedures that are called when data in a Flet
+        # component is changed.
+        # Otherwise, procedure parameters would be far better.
+        global possibleUnits
+        global possibleConversions
+
+        # Get the value of the unitTypeDrop dropdown menu (either
+        # Weight or Distance)
+        unitType = unitTypeDrop.value
+        # Create a possibleUnits list that contains the unit names in
+        # the selected unit category
+        if unitType == "Distance":
+            possibleUnits = getUnitNames("Distance")
+        elif unitType == "Weight":
+            possibleUnits = getUnitNames("Weight")
+        inDrop.options = (
+            flet.dropdown.Option(i) for i in possibleUnits
+        )
+        
+        # Create a possibleConversions list that contains the
+        # conversions that correspond to the units in possibleUnits
+        if unitType == "Distance":
+            possibleConversions = getConversions("Distance")
+        elif unitType == "Weight":
+            possibleConversions = getConversions("Weight")
+        outDrop.options = (
+            flet.dropdown.Option(i) for i in possibleUnits
+        )
+
+        # update the page
+        page.update()
+
+
+    # This procedure is used when converting input to output.
+    # The parameter e is not used but is required to be passed to a
+    # procedure by the Flet GUI library.
+    def convert(e):
+        # By default, the Decimal library will round a 5 at the end
+        # of a decimal down, which is incorrectly rounded.
+        # Thus, to recieve a correct answer, Decimal must round 5 up
+        # to 10 instead of to 0.
+        getcontext().rounding=ROUND_HALF_UP
+
+        # Global variables needed to be used as parameters cannot be
+        # passed in procedures that are called when data in a Flet
+        # component is changed.
+        # Otherwise, procedure parameters would be far better.
+        global possibleUnits
+        global possibleConversions
+        
+        # This part gets the values of all the user inputs. Firstly
+        # the input unit from inDrop, next the value of the input
+        # unit, and finally the output unit.
+        inUnit = inDrop.value
+        inputValue = inValue.value
+        outUnit = outDrop.value
+        
+        # Here the appropriate conversions are obtained from the
+        # possibleConversions list for both the input and output
+        # units.
+        # The conversions are selected using the corresponding index
+        # of the input and output units in the possibleUnits list.
+        # The index of the conversions in the possibleConversions
+        # list corresponds with the index of each unit in the
+        # possibleUnits list.
+        inUnitConversion = possibleConversions[
+            possibleUnits.index(inUnit)
+        ]
+        outUnitConversion = possibleConversions[
+            possibleUnits.index(outUnit)
+        ]
+        
+        decInVal = Decimal(str(inputValue))
+        decInUnitConv = Decimal(str(inUnitConversion))
+        decOutUnitConv = Decimal(str(outUnitConversion))
+        # Compute the output value by actually converting the unit.
+        outValue = decInVal * (Decimal("1") / decInUnitConv) * decOutUnitConv
+
+        # Find the ratio of the conversion
+        fracInVal = Fraction(str(inputValue))
+        fracInUnitConv = Fraction(str(inUnitConversion))
+        fracOutUnitConv = Fraction(str(outUnitConversion))
+        ratio = Fraction(str(fracInVal * 1 / fracInUnitConv * fracOutUnitConv))
+
+        conversionFactor = Fraction(str(Fraction(1) / fracInUnitConv * fracOutUnitConv))
+        conversionFactorRatio = Fraction(conversionFactor)
+        # Display the output and ratio to the user as a formatted
+        # string
+        resultLabel.value = f"""{str(inputValue)} {inUnit}
+= {str(outValue)} {outUnit}
+= {ratio.numerator} / {ratio.denominator} {outUnit} \n
+Conversion Factor:
+INPUT * (1 / {Decimal(str(inUnitConversion))}) * {Decimal(str(outUnitConversion))}
+= INPUT * {conversionFactorRatio.numerator} / {conversionFactorRatio.denominator}"""
+
+        # Update the Graphical User Interface with the new label
+        # value for resultLabel
+        page.update()
+
+    # This is the dropdown menu that lets the user select the unit
+    # type (either Distance or Weight)
+    unitTypeDrop = flet.Dropdown(
+        label="Unit Type",
+        on_change=unitTypeChanged,
+        width=standardWidth,
+        options=[
+            flet.dropdown.Option(i) for i in inUnits
+        ]
+    )
+    # This is the dropdown menu that lets the user select the input
+    # unit
+    inDrop = flet.Dropdown(
+        label="Input Unit",
+        #on_change=inChanged,
+        width=standardWidth
+    )
+    # Here the user gives the value of the input
+    inValue = flet.TextField(
+        label="Input Value",
+        width=standardWidth
+    )
+    # This is the dropdown menu that lets the user select the desired
+    # output unit
+    outDrop = flet.Dropdown(
+        label="Output Unit",
+        width=standardWidth
+    )
+    # This is the button that initiates the conversion
+    convertButton = flet.ElevatedButton(
+        text="Convert",
+        on_click=convert
+    )
+    # This label displays the conversion output
+    resultLabel = flet.Text(
+        value="Output will appear here."
+    )
+    # Here all the UI components are added to the page
+    page.add(
+        unitTypeDrop,
+        inDrop,
+        inValue,
+        outDrop,
+        convertButton,
+        resultLabel
+    )
+
+# Start the app
+flet.app(target=main)
+                </code></pre>
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+
+
+
+    <!-- nice code formatting by highlight.js -->
+    <link rel="stylesheet"
+        href="../../../highlight/styles/a11y-dark.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>

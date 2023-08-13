@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Charmed, I'm Sure</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 2nd Intro to Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="charmed1.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="charmed2.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="charmed3.webp" alt="">
+                <img src="charmed4.webp" alt="">
+                <img src="charmed5.webp" alt="">
+                <img src="charmed6.webp" alt="">
+                <img src="charmed7.webp" alt="">
+                <img src="charmed8.webp" alt="">
+            </div>
+            <p>
+                <strong><u>Justification for the selected design:</u></strong>
+                <br>A Nintendo (c) Switch will be the best design since it is easy to design and 3D print, and since it will be very visually appealing.
+                <br><br>Total volume of design: 0.672 in^3 = 1.70688 cm^3
+            </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="charmed9.webp" alt="">
+                <img src="charmed10.webp" alt="">
+            </div>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+            <div class="design-process-image-box">
+                <img src="charmed11.webp" alt="">
+            </div>
+            <p>
+                I made the hole very slightly too small. A bit of work with a Dremel Tool made the hole big enough for the chain to fit through.
+                I learned that a company making charms would need to test all the charms with chains too since design specifications are not completely exact.
+                When 3D printing, you have to account for the thickness of a layer and width of the lines of filament.
+                Also, the design can warp while 3D printing.
+                <br><br>The charm works great on a backpack. It is not clunky, and is very visually appealing.
+                From my experience with enlarging the hole using a paper clip and Dremel Tool, I discovered that PLA plastic is actually quite rigid
+                and is harder to dent than it seems. This means the charm will keep it's shape and will not break under normal circumstances
+                (such as a backpack hitting the ground and falling over, the force will not noticeably damage the charm).
+            </p>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="charmed12.webp" alt="">
+            </div>
+
+            <p>
+                <strong><u>Cost Calculations:</u></strong>
+                <br>x = design hours spent on project
+                <br>V = volume of final product (I am using the version with 20% infill since that is the settings I used on the 3D printer)
+                <br>t = time to print product
+                <br>d = density of material
+                <br>
+                <br>x = 2 hours
+                <br>V =1.70688 cm^3
+                <br>t = 1 hour
+                <br>d = 1.25 g/cm^3
+                <br>
+                <br>Cost of filament per gram:
+                <br>for PLA: ($30/0.5kg)(1kg/1000g) = $0.06 per gram for PLA
+                <br>Total Cost = ($30 per hour)x + ($0.06 per gram)(d)(V) + ($0.80)t
+                <br>
+                <br>Total Cost = ($30 per hour)(2 hours)+($0.06 per gram of PLA filament)(1.25g/cm^3)(1.70688 cm^3) + ($0.80)(1 hour to print) = $60.928016
+                <br>or about $60.93 per part
+            </p>
+
+            <span><h1>Present Solution</h1></span>
+            <p>
+                1. The final product aligns with the design statement. The charm also meets all its constraints,
+                even though I had to account for the 20% infill when calculating the volume to meet the 2in^3 constraint.
+                Other than that, I met all the constraints completely. My partner really liked my design and how I painted it.
+                I guess I could have used my time a bit more wisely in order to get the design made faster.
+                I made my design so it would not need any supports while 3D printing, so I used material well.
+                <br><br>2. First, I made concept sketches. These were very limited, had no dimensions, and were only to get my ideas on paper.
+                Next, I made an isometric sketch which showed some dimensions and was a lot neater than the origional sketches.
+                After that, I used Fusion 360 to model my design in a 3D CAD environment. Here, I could find design vulnerabilities while designing.
+                I could also make the dimensions exact. I could even export it as an STL file to 3D print! Next, I made an engineering drawing using Fusion 360.
+                This had very accurate dimensions, and showed what the model looked like from multiple sides.
+                This is useful if you need the dimensions of a design. Lastly, I 3D printed my model using a 3D printer.
+                Finally, it was reality! Now, you can actually hang it on a bookbag, whereas before you cannot hang a monitor with your design on it on a bookbag. There is one limitation though: it is hard to modify this final real design. It would be easiest to change the model and reprint.
+                <br><br>3. I learned that the costs add up pretty quickly, and $60+ is not very appealing for a simple luggage charm.
+                To really profit and get lots of clients, a company would have to mass produce popular charms.
+                Or, the company would have to let the clients design the charm themselves, maybe just in 2D.
+                On top of that, 3D printing can be expensive for a company
+                There are the costs of the 3D printers and the filament, plus all the personel operating the 3D printers.
+                A more realistic solution for a company would be injection moulding for mass producing backpack charms.
+                It also takes a lot of time to create the models.
+                <br><br>All in all, I think it would be hard for a company to profit from making backpack charms.
+                But maybe if people really want an overpriced custom luggage charm out of cheap PLA filament…
+            </p>
+            
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

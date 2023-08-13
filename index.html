@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- js for loading 3D STL models -->
+    <!-- <style type="text/css">
+        div.stlviewer { height: 500px; }
+    </style> -->
+    <script type=text/javascript> 
+    window.onload=function() {
+        STLViewerEnable("stlviewer");
+    } 
+    </script>
+    <script src="/three.js/build/three.js"></script>
+    <script src="/three.js/examples/js/WebGL.js"></script>
+    <script src="/three.js/examples/js/loaders/STLLoader.js"></script>
+    <script src="/three.js/examples/js/controls/OrbitControls.js"></script>
+    <script src="/js/stl.js"></script>
+
+    
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="index.html" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="computer-science/computer-science.html">Computer Science</a>
+            <a href="other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Hello, I'm</h3>
+            <h1><span>Benjamin Chase</span></h1>
+            <!-- Animated Typing -->
+            <h3>I study
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ['<i>Engineering</i>', '<i>Computer Science</i>'],
+                        typeSpeed: 100,
+                        backSpeed: 75,
+                        cursorChar: "<i>|<i>",
+                        loop: true,
+                    });
+                </script>
+            </h3>
+            <h2>-> Engineering and Computer Science student, enthusiast, and hobbyist</h2>
+            <div class="social-media">
+                <a href="https://github.com/perspector" target="_blank" rel="noopener"><i class='bx bxl-github'></i></a>
+                <a href="mailto:benjaminlchase@protonmail.com" target="_blank" rel="noopener"><i class='bx bxl-gmail'></i></a>
+            </div>
+            <a href="#" class="btn">Download CV</a>
+        </div>
+
+        <div class="home-img">
+            <div class=stlviewer data-src="/assets/stl/test.stl"></div>
+        </div>
+    </section>
+
+    <!-- about section design -->
+    <section class="about" id="about">
+        <!--<div class="about-img">
+            <img src="images/about.png" alt="">
+        </div>  -->
+
+        <div class="about-content">
+            <h2 class="heading"><span>About Me</span></h2>
+            <h3>Greetings!</h3>
+            <p>I am a student at Stephen Decatur High School 
+                and Worcester Technical High School in Berlin, MD 21811, USA.
+                I am fascinated by engineering and computer science alike,
+                and enjoy using engineering and computer science
+                for ethical purposes to help people.</p>
+            <!-- <a href="#" class="btn">Read More</a> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <!-- <section class="portfolio" id="portfolio">
+        <h2 class="heading">Latest <span>Projects</span></h2>
+
+        <div class="portfolio-container">
+            <div class="portfolio-box">
+                <img src="images/portfolio1.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h1>Web Design</h1>
+                    <a href="#"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="images/portfolio2.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h1>Web Design</h1>
+                    <a href="#"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="images/portfolio3.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h1>Web Design</h1>
+                    <a href="#"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector" target="_blank" rel="noopener"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com" target="_blank" rel="noopener"><i class='bx bxl-gmail'></i></a>
+        </div>
+        
+        
+    </footer>
+
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- typed js -->
+    <!--     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>-->
+    <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+    <!-- custom js -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

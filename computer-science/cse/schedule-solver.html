@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Schedule Solver</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> An application that helps to create valid high school class schedules.
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <div class="design-process-container">
+            <span><h1>User Story</h1></span>
+            <p>
+                Stephen Decatur High School and Worcester Technical
+                High School are looking for an easy way to do high
+                school course scheduling for students. They need an
+                application that students can use to find a possible
+                schedule for their classes. Students will input
+                classes they have previously taken along with the
+                classes they desire. Then, the app will show them
+                multiple possible schedules for their upcoming high
+                school years. The program will check that all
+                prerequisites and requirements are fulfilled using
+                a custom defined procedure and conditional logic.
+            </p>
+            <span><h1>Backlog Items</h1></span>
+            <p>
+                <u>List of iteration tasks:</u>
+    <br>1. Create design/layout using checkboxes, labels, dropdown menus, and buttons to provide an intuitive user interface.
+    <br>2. Organize the data of all of the courses offered into a master file that is converted into a database.
+    <br>3. Check if all requirements are met (4 english classes, 4 math classes, 3 social studies classes, 3 science classes, 1 fine arts class, 2 PE/Health classes, and 1 technology class)
+    <br>4. Add lists of prerequisites for each class in the master data file.
+    <br>5. Use a method that tries all possibilities for class schedules whether they work or do not work
+    <br>6. Check if each possibility is a solution (all requirements are met and all prerequisites are met at least one semester before the class that needs the prerequisite)
+    <br>7. Display the schedule solutions that work.
+            </p>
+            <span><h1>Demonstration of the App</h1></span>
+            <div class="design-process-image-box">
+                    <iframe
+                        width="789"
+                        height="444"
+                        src="https://www.youtube.com/embed/lBlTRdmwetw"
+                        title="Heli Ball Motion"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+            </div>
+            <span><h1>The Code</h1></span>
+            <p>
+                For this project, I used MIT App Inventor.
+            </p>
+            <div class="design-process-image-box">
+                <img src="schedule-solver1.png" alt="">
+                <img src="schedule-solver2.png" alt="">
+            </div>
+            <p>
+                To download the .aia app inventor file, click <a href="schedulesolver_1_1_6.aia" download>here</a> to download all of the code.
+                <br>Then import it into MIT App Inventor.
+            </p>
+            <span><h1>Reflection</h1></span>
+            <p>
+                * First, the user selects their next semester using the spinner/dropdown menu. This is handled in the "when Spinner1.AfterSelecting" event handler. Then, the selection is checked and the amount of classes left is assigned to a global variable "classesLeft"
+                <br><br>* Second, users select their previous classes and future classes. This selection is handled using an event handler "when any CheckBox.changed"
+                <br><br>* When the user presses the submit button, or "buttonSubmit", all the requirements for the classes are calculated and checked. Multiple local variables are initialized, such as "amountMath" for getting the amount of math classes that are in the schedule. If/Else conditinal statements use conditional logic to check if the schedule meets the requirements (such as having 4 Mathematics credits), and the procedure "call Notifier1.ShowMessageDialog" is used to display a dialog so the user knows what is wrong in the schedule if it does not meet the requirements (such as not having enough Fine Arts credits).
+                <br><br>* A while loop is used to generate a new random schedule possibility, and conditional statements are used to ensure it is unique from other possibilities that have been previously tried.
+                <br><br>* A LOT of conditional logic is used to check that all prerequisites are met in the possible solution. This includes:
+                <br><br>->     Checking that the prerequisites are actually in the schedule
+                <br><br>->     Ensuring that the prerequisites have already been taken OR that the prerequisites are taken at least 4 classes prior to when they are needed for another class. Making sure that the prerequisites are taken at least 4 classes prior to their need makes sure that they are not in the same semester as the next classes that need them.
+                <br><br>->     The prerequisites must be met in order (For example, English 9, English 10, American Literature, AP English Literature, and not another order.)
+                <br><br>* I also had to check that solutions were not rechecked if they were already checked. I made a list of tried solutions and used a conditional statement to see if the solution was in the list. If it was already in the list, I would generate a new random possibility, and repeat the conditional statement until a unique possibility was found.
+                <br><br>* I had to limit the amount of solutions the program would try. I used some basic math to figure this out, which is (the amount of classes left)!. The ! means factorial. So if your next semester is your 10th grade spring semester, you have 20 classes left to take, meaning there are 20! or 2.4329020082×10^18 possibilities left where classes are not repeated. That is a lot! That is 2,432,902,008,200,000,000 possibilities!
+            
+            <br><br><br><br>I enjoyed making a useful app that helps students make a plan for high school. It was a fun challenge and I learned a lot about data management. But I will not leave it at that! I will reprogram it in python or another programming language so it runs faster and I can add more functionality such as checking whether you are at Stephen Decatur High School or Worcester Technical High School half of the day, or all of the day. I will also add the functionality of checking if a course is taught in only the fall semester, spring semester, or if it is taught in both semesters.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+
+
+
+    <!-- nice code formatting by highlight.js -->
+    <link rel="stylesheet"
+        href="../../../highlight/styles/a11y-dark.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>

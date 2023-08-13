@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../index.html" class="active">Home</a>
+            <a href="../index.html#about">About</a>
+            <a href="pre-engineering.html">Pre-Engineering</a>
+            <a href="../computer-science/computer-science.html">Computer Science</a>
+            <a href="../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ['<i>Pre-Engineering</i>'],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> I use the engineering skills I learn in Pre-Engineering at 
+                Worcester Technical High School daily, whether it's designing
+                a custom monitor mount or figuring out how to actually make
+                a RC car fly, I am always learning new skills and having fun
+                creating new things.
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- services section design -->
+    <section class="services" id="services">
+        <h2 class="heading">My <span>Skills</span></h2>
+
+        <div class="services-container">
+            <div class="services-box">
+                <i class='bx bx-cube'></i>
+                <h3>CAD Modeling</h3>
+                <p>I have extensive experience using <span>Computer Aided Design</span> software such as <span>Fusion 360</span> to create complex designs.</p>
+                <!-- <a href="#" class="btn">Read More</a> -->
+            </div>
+
+            <div class="services-box">
+                <i class='bx bx-wrench'></i>
+                <h3>3D Printing</h3>
+                <p>3D printing has been one of my favorite hobbies <span>since I was 15 years old.</span> I have used a Creality Ender 3 V2 3D printer and a Flashforge Adventurer 3. </p>
+                <!-- <a href="#" class="btn">Read More</a> -->
+            </div>
+
+            <div class="services-box">
+                <i class='bx bx-bar-chart-alt'></i>
+                <h3>Ethics First</h3>
+                <p>I hold paramount that ethical thinking <em>must</em> be at the forefront of all engineering designs in order <span>to help humanity and the environment as a whole.</span></p>
+                <!-- <a href="#" class="btn">Read More</a> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="portfolio" id="portfolio">
+        <h2 class="heading"><span>Engineering</span> Classes at Worcester Technical High School</h2>
+
+        <div class="portfolio-container">
+            <div class="portfolio-box">
+                <img src="ied/case8.png" alt="">
+                <div class="portfolio-layer">
+                    <h4>Intro to Engineering</h4>
+                    <p>1st Engineering Class</p>
+                    <a href="ied/ied.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="poe/trusses11.webp" alt="">
+                <div class="portfolio-layer">
+                    <h4>Principles of Engineering</h4>
+                    <p>2nd Engineering Class</p>
+                    <a href="poe/poe.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+            <!--
+            <div class="portfolio-box">
+                <img src="../images/portfolio3.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Digital Electronics</h4>
+                    <p>3rd Engineering Class</p>
+                    <a href="de/de.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="../images/portfolio4.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Aerospace Engineering</h4>
+                    <p>4th Engineering Class</p>
+                    <a href="ae/ae.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="../images/portfolio5.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Engineering Design and Development</h4>
+                    <p>5th Engineering Class</p>
+                    <a href="edd/edd.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+        -->
+            
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

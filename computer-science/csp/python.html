@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Python Programming - Multiple Text-Based CLI Programs</i>"],
+                        typeSpeed: 75,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> Making Tic-Tac-Toe, creating art with <code>turtles</code>, and building a text-based Wordle clone.
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <div class="design-process-container">
+            <span><h1>Code</h1></span>
+            <h1>Click <a href="AP_CS_Prin.zip" download>here</a> to download all of the code.</h1>
+            <p><br><br><br><h2 class="heading">Making <span>Tic-Tac-Toe</span></h2>
+        </div>
+
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="tic-tac-toe1.png" alt="">
+                <img src="tic-tac-toe2.png" alt="">
+                <img src="tic-tac-toe3.png" alt="">
+            </div>
+
+            <h1>Overview</h1>
+            <p><br>This program displays a colorful tic-tac-toe game board in the command line, or alternatively opens a GUI application.
+            The application was made using tkinter and uses text to display the game board.
+            </p>
+        </div>
+    </section>
+    <section class="design-process" id="design-process">
+        <div class="design-process-container">
+            <h2 class="heading">Creating <span>Games</span> and <span>Art</span> with <span>Turtles</span></h2>
+        </div>
+        <div class="design-process-image-box">
+            <video
+                controls
+                source src="turtles.mp4" type="video/webm">
+            </video>
+        </div>
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="turtles1.png" alt="">
+            </div>
+
+            <h1>Overview</h1>
+            <p>Here I learned how to use the <code>turtle</code> module in Python to create geometric art (first image)
+                and traffic simulations (second image). In the traffic simulation, when the different shapes "turtles" collide,
+                they stop and become gray, which represents a car crash.
+            </p>
+        </div>
+    </section>
+    <section class="design-process" id="design-process">
+        <h2 class="heading">Making a <span>Wordle</span> Clone</h2>
+
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="wordle1.png" alt="">
+            </div>
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+
+
+
+    <!-- nice code formatting by highlight.js -->
+    <link rel="stylesheet"
+        href="../../../highlight/styles/a11y-dark.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>

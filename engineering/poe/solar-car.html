@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Solar Powered Car</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 2nd Principles of Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <br><br><br><br>
+        <div class="design-process-container">
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="solar-car1.webp" alt="">
+            </div>
+            <p>
+                <u>In this project, we made a car that would be:</u>
+                <br>* Solar powered
+                <br>* Lightweight, so it would not need much voltage or current to accelerate
+                <br>* And would function reliably
+            </p>
+
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="solar-car2.webp" alt="">
+                <img src="solar-car3.webp" alt="">
+            </div>
+            <p>
+                Before we could start building, we had to brainstorm ideas. We could have used the original design, but that would be to large (and boring!).
+                A sturdy design seemed better, but it would be far too heavy. This would make it inefficient and slow since solar power does not produce high
+                voltage or current. It would take a very long time for the car to even start moving. So we decided to make a small, lightweight design that
+                would be easy to move to maximize efficiency.
+                <br><br>We did not modify the circuit much, we just made the breadboard smaller since that would save space. The circuit we used was a series
+                circuit and very simple, as we just connected the solar panel and motor. In between, we had to reverse the polarity of the circuit because we
+                found out the car was more efficient moving backwards.
+                <br><br>We mounted the solar panel vertically due to size constraints. We could not mount it otherwise. Mounting it horizontally would be more
+                efficient though because the light is more direct.
+            </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="solar-car4.webp" alt="">
+                <img src="solar-car5.webp" alt="">
+            </div>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+            <p>
+            We used a solar panel and two AA batteries to provide power to our car.
+            In the beginning, we thought about using a hydrogen fuel cell, but it did not hold a charge for an adequate time frame and was too heavy
+            to be efficient. Hydrogen fuel cells have low energy density. Overall, our car could keep driving for over 2.6 meters in a pretty straight line.
+            </p>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="solar-car6.webp" alt="">
+            </div>
+
+            <p>
+                Through this project, I learned about the process by which solar panels use semiconductors to convert UV radiation into usable electricity.
+                Batteries generally have higher voltages and higher current than solar panels since they are designed to have high energy density.
+                To use a solar panel effectively, batteries or hydrogen fuel cells must be implemented to store electricity for times of deficit, such as at
+                night or on a cloudy day. Hydrogen fuel cells do not have a high energy density, meaning they drain very quickly.
+                This makes batteries the most efficient and effective option for power storage, yet they are not environmentally friendly.
+                <br><br>In our tests we measured voltage and current, and calculated input power, work, time to travel two meters, output power,
+                and finally efficiency. Surprisingly, the solar cell generated almost the same voltage as the battery. Yet it lacked a steady supply of current.
+                The solar panel fluctuates based on the intensity of the light. We had an extremely high efficiency, so our design is pretty efficient.
+                <br><br>To further improve our design, we added a quarter to counteract the tipping of the car towards the area without a wheel.
+                This acted as a counterweight and ensured our car would not veer off course or fall over.
+                <br><br>We probably should have incorporated a gear ratio with a low mechanical advantage to make the car faster, but we did not have enough time.
+                Our design was also too small for any other enhancements.
+                <br><br>We learned about renewable energy sources and how to best design a vehicle to efficiently use scarce power.                
+            </p>
+
+            <span><h1>Present Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="solar-car7.webp" alt="">
+                <img src="solar-car8.webp" alt="">
+                <img src="solar-car9.webp" alt="">
+            </div>
+            <p>
+                Overall, renewable energy is great since it is always available in abundance. Yet there are a few drawbacks.
+                Renewable energy sources such as solar panels or wind turbines do not generate enough power, at this time, to fully sustain the energy needs
+                of humans. We are still greatly dependent on nonrenewable energy sources for the vast majority of our power.
+                Solar panel fields and gigantic wind farms take up much more land space than their nonrenewable counterparts.
+                Fusion energy seems promising, but for the time being, we will have to make solar, wind, wave power,
+                and other renewable power sources more efficient.
+            </p>
+            
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

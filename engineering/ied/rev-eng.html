@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Reverse Engineering a Toy</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 4th Intro to Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+
+        <div class="design-process-container">
+
+            <h1>Intro: <span>Heli Ball</span></h1>
+            <div class="design-process-image-box">
+                <img src="rev-eng1.jpeg" alt="">
+            </div>
+
+            <p>
+                <u>Pros:</u>
+                <br>* Propellors are dull and will not cut you.
+                <br>* A weighted rod is on the top which will provide balance.
+                <br>* It has an on/off power button.
+                <br>* A distance sensor is used to make it not crash into the ground.
+                <br>* When you plug it in, a status LED shows whether it is charged or not charged through the shell. (red=charging)
+                <br><u>Cons:</u>
+                <br>* Does not look high quality
+                <br>* The power cable could easily be twisted and break.
+                <br>* The battery does not last long.
+                <br>* Distance sensor will make it hard to catch while flying.
+                <br>* Spherical design so it cannot stand up by itself.
+            </p>
+            <span><h1>Elements and Principles Matrix</h1></span>
+            <div class="design-process-image-box">
+                <img src="rev-eng2.jpeg" alt="">
+            </div>
+
+            <span><h1>Visual Analysis</h1></span>
+            <div class="design-process-image-box">
+                <img src="rev-eng3.jpeg" alt="">
+                <img src="rev-eng4.jpeg" alt="">
+                <img src="rev-eng5.jpeg" alt="">
+            </div>
+            <p>
+                <u>Front View</u>
+                <br>This view shows a point on the top of the axle over the propellor. The design on the front under the eyes is made up of lines.
+                The color scheme is made up of mostly white, black and gray. The blue part of the eyes is made up of different values to provide contrast.
+                The main body is made in a spherical form. The black area around the eyes creates positive space for the eyes. The entire texture is smooth.
+                This also represents economy since they only used one texture for the entire model. The design represents balance since it is symmetrical.
+                There is emphasis on the blue eyes since they stand out against the black.
+            </p>
+            <p>
+                <u>Right Side View</u>
+                <br>The design of the right side is in the shape of two cocentric circles. The propellors represent rhythm since their form is repeated.
+                The cocentric circles are also proportional since they are cocentric.
+                The moulding did not work perfectly though, the parts are not lined up correctly.
+                The design represents unity as it is mostly gray. 
+            </p>
+            <p>
+                <u>Bottom View</u>
+                <br>Writing "CHARGE" would have not fit, so the designers decided to just use "CHA". This represents economy.
+                The spherical form also represents economy since there are no complex ridges.
+                There are not feet or structures to stand it up on, you just hold it in your hand, which also represents economy.
+                If more material were used, it might not fly.
+            </p>
+
+            <span><h1>Product in Motion</h1></span>
+            <div class="design-process-image-box">
+                <iframe
+                    width="789"
+                    height="444"
+                    src="https://www.youtube.com/embed/ho38M5hMWDI"
+                    title="Heli Ball Motion"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <p>
+
+            </p>
+
+            <span><h1>Functional Analysis</h1></span>
+            <div class="design-process-image-box">
+                <img src="rev-eng6.jpeg" alt="">
+            </div>
+
+            <span><h1>Structural Analysis</h1></span>
+            <div class="design-process-image-box">
+                <img src="rev-eng7.jpeg" alt="">
+            </div>
+            <div class="design-process-image-box">
+                <img src="rev-eng8.jpeg" alt="">
+            </div>
+            
+            <span><h1>Product Improvement/Innovation</h1></span>
+            <div class="design-process-image-box">
+                <img src="rev-eng9.jpeg" alt="">
+            </div>
+
+            <span><h1>Innovation - Generate Concepts</h1></span>
+            <p>
+                <u>Improvements:</u>
+                <br>* Better battery (possibly different battery chemistry)
+                <br>* Balance charging for battery so it lasts longer
+                <br>* Power cut-off so battery lasts longer
+                <br>* Feet or rails on the bottom so it can stand up
+                <br>* randomness in the circuit making it more interesting
+                <br>* Remote control to actually control it more
+                <br>* more sensors so it can move sideways
+                <br>* Lights on the inside, fly at night (and cooler!)
+                <br>* Stronger plastic
+                <br>* Replacement propellers
+                <br>* Camera so you can see what it "sees"
+                <br>* Larger battery (everything scaled up) so it flies longer
+                <br>* better airfoil so it is more efficient
+            </p>
+            <div class="design-process-image-box">
+                <img src="rev-eng10.jpeg" alt="Rails">
+                <img src="rev-eng9.jpeg" alt="Joystick">
+                <img src="rev-eng9.jpeg" alt="Camera">
+            </div>
+            <p>
+                <u>Rails on the bottom so it can stand up</u>
+                <br>The rails will just be little cylinders on the bottom which make it so the heli ball can just stand up and takeoff by itself.
+                This will eliminate the need to hold it while takeoff. There will be less injuries.
+                <br><u>Joystick and receiver inside heli ball to control it</u>
+                <br>This would make the heli ball much more interesting! It would also be safer since people would have more control over it.
+                It might decrease the amount of crashes.
+                People could turn it around and prevent a crash before it crashes and possibly breaks or breaks something else.
+                <br><u>Camera and transmitter</u>
+                <br>This would be a lot more fun! It could also be safer since people could see something more easily. This could be used to prevent crashes.
+            </p>
+
+            <span><h1>Product Pitch (Present Solution)</h1></span>
+            <div class="design-process-image-box">
+                <img src="rev-eng13.jpeg" alt="">
+                <img src="rev-eng14.jpeg" alt="">
+                <img src="rev-eng15.jpeg" alt="">
+            </div>
+            <p>
+                <u>Advertisement: The Ultra Heli Ball</u>
+                <br><u>By Benjamin Chase</u>
+                <br>Have you ever had one of those floating heli balls? You put your hand under it, and it flies up. Take your hand away, and it drifts down.
+                Sounds fun, right? Not for long. It gets boring pretty soon. But with the Ultra Heli Ball, you will never run out of fun!
+                Our newest design features and innovative joystick which lets you control the Ultra Heli Ball with ease. No more watching it go up and down.
+                Now you can fly it around! You can even race friends!
+                And remember those times when you had to make it takeoff from your hand?
+                Our new design is safer than ever since it has innovative rails on the bottom, letting you takeoff from any flat surface. Ready for takeoff!
+                But what if the heli ball flies into the next room?
+                (insert scene with heli ball flying into another room, someone screams and paper flies out the door the heli ball came through)
+                No more calling for matay with the new Ultra Heli Ball!
+                The Ultra Heli Ball includes a powerful responsive camera letting you see your flight from bird's eye view.
+                You can also use it for racing around the house!
+                You will have endless fun with the new Ultra Heli Ball! Get yours today at (insert website here)!
+                <br><br>(Quick warning at the end: Be safe, observe FAA regulations and guidelines)
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

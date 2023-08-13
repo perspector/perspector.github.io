@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Final Project - Robotic Arm</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 4th Principles of Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="final-project1.jpeg" alt="">
+            </div>
+            <p>
+                <u>Goals</u>
+                <br>* Create a robotic arm that has 3 independent axis of rotation
+                <br>* Make the robotic arm as stable as possible
+                <br>* Program the robot so the motors move very slowly, guaraneeing it is precise and accurate, which is needed for a robotic arm.
+                <br>* Add a claw to the robot so it can pick up objects.
+
+                <br><br><u>Design Brief</u>
+                <br><br>Owner: B.L.F.L.
+                <br><br>Client/Company: John Doe Surgeries
+                <br><br>About client/company: This surgeon-based hospital handles most surgeries in the country. They need capable people to build a robotic arm that will act as a third arm for surgeions without attendants.
+                <br><br>Project goals: Create a claw that can pick up things to move objects out of the surgeon's path. It will have three degrees of freedom and can handle precise movements.
+                <br><br>Target Audience: Surgeons or people in the medical field who need an "extra hand".
+            </p>
+
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="final-project2.jpeg" alt="Sketch">
+                <img src="final-project3.jpeg" alt="Flowchart">
+                <img src="final-project4.jpeg" alt="Pseudocode">
+                <img src="final-project9.jpeg" alt="Code">
+            </div>
+            <p>
+                <u>Decision Matrix:</u>
+                <br>
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td>Idea</td>
+                        <td>Strength</td>
+                        <td>Stability</td>
+                        <td>Weight</td>
+                        <td>Freedom to rotate</td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td><u>Worm Gear Arm</u></td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>Only Geared Arm</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>All motors are at the bottom, motion is transferred</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>7</td>
+                    </tr>
+                </table>
+            </p>
+
+            <p>Key: Scored 1 to 3, 1 is best and 3 is worst</p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <p>
+                In the beginning of this project, we brainstormed different ideas. We decided that using a worm gear
+                for the vertically rotating arm would be best as it would have a high mechanical advantage.
+                We started with a large, stable base. To this base, we mounted the bottom motor using an L-channel.
+                After this, we mounted the uppoer portion onto the gear that was controlled by the bottom motor.
+                Next, we got stuck on the worm gear, which was quite hard to reinforce. The other gear kept slipping, but we finally figured it out.
+                We added the main arm with the claw, but it was hard to lift.
+                To mitigate this issue, we added a counterweight of 1 kilogram to reduce the strain on the motor.
+                We also added a few other supports to ensure that the entire structure was stable.
+                <br>
+                <br>
+                For the code, we started with basic motions.
+                After we got the main axis motions, we fine-tuned the values to suit our needs.
+                This allowed us to pick up a ping-pong ball.
+            </p>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+
+            <div class="design-process-image-box">
+                <img src="final-project5.jpeg" alt="">
+                <img src="final-project6.jpeg" alt="">
+                <img src="final-project7.jpeg" alt="">
+            </div>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <p>
+                We had to use a worm gear instead of a regular gear in order to provide more torque and a higher mechanical advantage to the arm.
+                Additionally, we used a counterweight of 1 kilogram to offset the weight of the robotic arm so the worm gear experienced less stress and strain.
+                The robot was originally unstable, so we added supports in the form of a metal strip in a triangle to provide additional support.
+                We also added a support gantry to the back of the robotic arm to support the arm from the top.
+                Since we used sprockets to drive the claw, we had to take links of the chain off in order to achieve the desired tension.
+            </p>
+            <div class="design-process-image-box">
+                <img src="final-project8.jpeg" alt="">
+            </div>
+            
+            <span><h1>Present Solution</h1></span>
+            <div class="design-process-image-box">
+                <video
+                    controls
+                    source src="final-project-video-1.webm" type="video/webm">
+                </video>
+                <video
+                    controls
+                    source src="final-project-video-2.webm" type="video/webm">
+                </video>
+            </div>
+
+            <span><h1>Conclusion</h1></span>
+            <p>
+                In this project, we learned how to program a VEX controller to precisely set the position of the motors.
+                We used <i>if</i> conditional statements to check if buttons on the controller were pressed or changed.
+                The entire program ran inside a <i>forever</i> or "while" loop to make it repeat and always
+                query the controller input to change the positions of the motors.
+                <br><br>I enjoyed the challenge that the hardware offered as it was hard to keep everything stable and working.
+                <br><br>The hardest part of this project was ensuring the main gear was aligned properly on top of the worm gear.
+                <br><br>In order to further improve the design, a tolerance for stability should be added to ensure it is adequate for surgery.
+                Also, the robotic arm should have a requirement for the grip strength/force of the claw, which would ensure it could lift objects reliably.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

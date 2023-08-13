@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Piano Player</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 1st Principles of Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+
+        <div class="design-process-container">
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="piano1" alt="">
+            </div>
+            <p>
+                This project aims to have a machine repeatedly play one note on a piano with minimal effort.
+                The mechanical advantage must be greater than one, so less effort than resistance must be used.
+                We had to use at least three simple machines in our design.
+                Here I explain our design process while creating this machine.
+            </p>
+
+            <span><h1>Generate Concepts</h1></span>
+            <p>
+                <u>Brianstorming List:</u>
+                <br>* Machine that plays a note on a piano
+                <br>* Machine that lifts a heavy book
+                <br>* Machine that shoots a ping pong ball
+
+                <u>Decision Matrix:</u>
+                <br>
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td>Machine</td>
+                        <td>Creativity</td>
+                        <td>Simplicity to add 3 simple machines</td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td>Playing Piano</td>
+                        <td>1</td>
+                        <td>2.5</td>
+                        <td>3.5</td>
+                    </tr>
+                    <tr>
+                        <td>Lifting a Book</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Shooting a Ping Pong Ball</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>6</td>
+                    </tr>
+                </table>
+            </p>
+
+            <p>Key: Scored 1 to 3, 1 is best and 3 is worst</p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="piano2.webp" alt="">
+                <img src="piano3.webp" alt="">
+            </div>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+            <p>
+                <u>Our machine meets multiple constraints:</u>
+                <br>* We only have a single human input.
+                <br>* We used 4 simple machines in our design. The hand crank represents a wheel and axle.
+                We use sprockets to transfer force. To gain a higher mechanical advantage, we used gears, and another wheel and axle is used to play
+                the piano and gain an even higher mechanical advantage.
+                <br>* Our overall ideal mechanical advantage is 1.546 , which is greater than 1.
+                Our actual mechanical advantage is 2.55 , which gives us an efficiency of 165%.
+                <br>* After fixing a few problems, our machine now works flawlessly and consistently.
+                <br>* We minimized friction, so very little efficiency is lost.
+
+            <div class="design-process-image-box">
+                <iframe
+                    width="789"
+                    height="444"
+                    src="https://www.youtube.com/embed/58CEmzanxx4"
+                    title="Automata Ailerons"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loop="true"
+                    autoplay="true"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <p>
+                We used VEX components to create our complex machines.
+                VEX components are not frictionless, and the axles are square, so a lot of friction can occur.
+                Bearings are not available, so we just had to leave everything a bit loose to avoid excess friction.
+                We used movable axles to minimize friction and adjusted the chain on the sprockets to work perfectly.
+                The chain could not have too many links, or it would slip, and it could not have to little links, or it would cause more friction.
+                <br>Our test data is below:
+            </p>
+            <div class="design-process-image-box">
+                <img src="piano4.webp" alt="">
+                <img src="piano5.webp" alt="">
+            </div>
+            
+            <p>
+                We made a few mistakes along the way such as making the hand crank too short, having too many links in the sprocket,
+                using axles that were too short, and having the machine be too low. To solve these problems, we extended the hand crank,
+                took links out of the sprocket chain, started using longer axles, and mounted the machine higher up so it struck the keys correctly.
+                <br>Throughout the design process, we learned how to use time efficiently, how to divide tasks among our team, how to minimize friction.
+                Oh, and of course how to make a simple piano playing machine!
+                <br>We had to modify the design multiple times. In our original sketch we thought of using pulleys,
+                but decided to use a sprocket and gears to prevent slipping. Our sprocket had too many chain links, so we took a few out.
+                We also had to use longer axles to accommodate unforeseen modifications.
+                <br>Our Ideal Mechanical Advantage (IMA) used measurements from the diameters of the gears, wheels and axles, and sprockets.
+                Our IMA was 1.546 while our AMA was 2.55 , meaning our efficiency was 165%. This was surprising, as we expected an efficiency less than 100,
+                but we could have measured the AMA incorrectly with the force sensor. Another possibility for this efficiency is that we rounded our
+                diameter measurements to the nearest half centimeter, so our calculations could be inaccurate. When we tested the AMA with the force sensor,
+                we could have pressed the piano key too hard, which would give us inaccurate measurements.
+            </p>
+            <span><h1>Present Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="piano6.webp" alt="Base of the machine">
+                <img src="piano7.webp" alt="Extending the hand crank">
+                <img src="piano8.webp" alt="Testing">
+            </div>
+
+            <span><h1>Conclusion</h1></span>
+            <p>
+                It was easiest to determine the gear ratio of the sprocket, since it was easy to access and take measurements.
+                In contrast, it was difficult to measure the mechanical advantage of the gears since they cause a lot of friction and were hard to access.
+                We had reinforced their connection from both sides so they meshed properly, but that also meant that we could not find the diameter or
+                radius easily.
+                <br><br>To further improve the efficiency of the compound machine, we could lubricate the axles, increase the radius of the hand crank,
+                or use gear ratios with a higher mechanical advantage.
+                <br><br>It would also be fun to add more wheels and axles on the end of the design with a shared axle to play different notes on the piano.
+                Due to time constraints, we were only able to add one wheel to play a single note. To add more wheels, a longer axle would be required.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

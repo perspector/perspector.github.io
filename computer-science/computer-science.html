@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- fontawesome icons -->
+    <script src="https://kit.fontawesome.com/badacc2ce0.js" crossorigin="anonymous"></script>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../index.html" class="active">Home</a>
+            <a href="../index.html#about">About</a>
+            <a href="../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="computer-science.html">Computer Science</a>
+            <a href="../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ['<i>Computer Science</i>'],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> I use my programming skills in Python, Bash, and Raspberry Pi to make many useful programs that help people.
+                From a helpful 404 page to an open source personal assistant, my programs are ethical by design and strive to make people's lives better.
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- services section design -->
+    <section class="services" id="services">
+        <h2 class="heading">My <span>Skills</span></h2>
+
+        <div class="services-container">
+            <div class="services-box">
+                <i class='bx bxl-python'></i>
+                <h3>Python</h3>
+                <p>
+                    <span>Python</span> is my go-to programming language for software projects. With the power of Python,
+                    I can create a variety of complex programs, ranging from <span>virtual MIDI synthesizer</span> programs to a <span>unit converter application.</span></p>
+                <!-- <a href="#" class="btn">Read More</a> -->
+            </div>
+
+            <div class="services-box">
+                <br><br><br>
+                <i class="fa-brands fa-raspberry-pi fa-xs"></i>
+                <h3>Raspberry Pi</h3>
+                <p>
+                    Together with Python, <span>Raspberry Pi</span> allows me to interact with the world in amazing ways.
+                    From RC cars to MIDI instrument control to a portable First Person Video (FPV) station,
+                    Raspberry Pi enables many DIY projects to become reality.
+                </p>
+                <!-- <a href="#" class="btn">Read More</a> -->
+            </div>
+
+            <!-- <div class="services-box">
+                <i class='bx bx-bar-chart-alt'></i>
+                <h3>SOMETHING HERE</h3>
+                <p><span>SOMETHING HERE</span> SOMETHING HERE</p>
+                <a href="#" class="btn">Read More</a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="portfolio" id="portfolio">
+        <h2 class="heading"><span>Computer Science</span> Classes at Worcester Technical High School</h2>
+
+        <div class="portfolio-container">
+            <div class="portfolio-box">
+                <img src="cse/emergency-attendance7.png" alt="">
+                <div class="portfolio-layer">
+                    <h4>Computer Science Essentials</h4>
+                    <p>1st CS Class</p>
+                    <a href="cse/cse.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="csp/create-task1.png" alt="">
+                <div class="portfolio-layer">
+                    <h4>AP Computer Science Principles</h4>
+                    <p>2nd CS Class</p>
+                    <a href="csp/csp.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+            <!--
+            <div class="portfolio-box">
+                <img src="../images/portfolio3.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Digital Electronics</h4>
+                    <p>3rd CS Class</p>
+                    <a href="de/de.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="../images/portfolio4.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Aerospace Engineering</h4>
+                    <p>4th CS Class</p>
+                    <a href="ae/ae.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="../images/portfolio5.jpg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Engineering Design and Development</h4>
+                    <p>5th CS Class</p>
+                    <a href="edd/edd.html"><i class='bx bx-link-external'></i></a>
+                </div>
+            </div>
+        -->
+            
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

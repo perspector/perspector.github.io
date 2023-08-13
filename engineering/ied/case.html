@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ['<i>Design a Protective Case</i>'],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 3rd Intro to Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="case1.jpeg" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="case2.jpeg" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="case3.jpeg" alt="">
+                <img src="case4.jpeg" alt="">
+                <img src="case5.jpeg" alt="">
+                <img src="case6.jpeg" alt="">
+            </div>
+            <p>
+                Making a case machine is the best choice since it is small,
+                easy to reset and setup, profitable, and very fun to play.
+                This can be seen in the decision matrix
+            </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="case7.png" alt="">
+                <img src="case8.png" alt="">
+                <img src="case9.jpeg" alt="">
+                <img src="case10.gif" alt="">
+            </div>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+            <p>
+                It took 2 hours to print the lid.
+                It takes less than 7 seconds to put the earbuds into the case since you just wind it around the center column.
+                The hinge did not fit together perfectly, I needed to cut it apart and super glue it back together afterwords.
+                This could be easily fixed by using a smaller hinge or using a design where the parts revolve around a pin that is slotted into the design.
+            </p>
+            <div class="design-process-image-box">
+                <img src="case11.jpeg" alt="">
+            </div>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <p>
+                <u>Why does your preliminary design merit further development? That is, why is this solution worth pursuing?</u>
+                <br>This solution is worthwhile since it can add a stylish addition to the earbuds without a change in the design of the earbuds.
+                It accomplishes the task of protecting the earbuds, and is easy to produce.
+                It is an effective solution to making sure the wires do not detach from the earbuds.
+                <br><br><u>What are your suggested next steps for design iteration that would improve the design?</u>
+                <br>Using a different hinge design would make the construction much easier and more durable.
+                Having a hole and pin system where both the top and bottom have a thru hole and a pin that slides through the top and bottom
+                would effectively achieve this task.
+                <br><br><u>Could you add criteria or constraints to the design brief that would improve your ability to more
+                    effectively compare potential solutions?</u>
+                <br>It would be important to add maximum dimensions such as height to ensure that the case fits comfortably in the user's pocket.
+                Along with this, the magnet hole diameter would need to be accurately specified in order to ensure that the magnet fits well.
+                The cost would need to be calculated in order to profit. And a more stylish design would draw a greater amount of customers to buy the case.
+            </p>
+
+            <span><h1>Present Solution</h1></span>
+            <p>
+                <u>Different types of models used, along with their advantages, disadvantages, and their purpose for use.</u>
+                <br>First, I made a rough sketch. This served as just a quick way to get record some ideas.
+                The sketches were very limited since they were not dimensioned and could not be viewed from all sides.
+                It helped me brainstorm some ideas and made me think about features of the design.
+                <br><br>The second model that I created was a 3D CAD model, made using Autodesk Fusion 360.
+                This model was very precise and could be viewed in a 3D environment.
+                The dimensions were not easily visible unless you used the Measure tool or looked at the sketch in Fusion 360.
+                <br><br>After that, I created a drawing in Fusion 360. This model accomplished what the previous model had not.
+                It had easily readable extremely precise dimensions.
+                It could be modified by changing the previous 3D model which automatically altered the drawing.
+                But the model could not be viewed in 3D, and would be harder for people without an engineering background to understand than the 3D model.
+                It helped by adding precise dimensions to the design.
+                <br><br>The final model was a prototype model. It was 3D printed. This model had multiple advantages as well as disadvantages.
+                It was hard to make it work, the pieces did not fit well together due to the hinge.
+                But it demonstrated a real case and made it easy to spot changes which could be applied in the 3D model.
+                It was much harder to modify this model than any previous models.
+                <br><br><u>Review of goals:</u>
+                <br>The hinge:
+                The hinge did not work perfectly. It did not fit together, so I had to cut it apart and glue it back together.
+                This could be improved using a pin that would go through both the top and bottom parts.
+                <br><br>Easy and quick insertion:
+                <br>The earbuds could easily be wound around the center pillar in less than seven seconds, and the magnets made it easy to close the case.
+                <br><br>The case will protect the earbuds and will not break:
+                <br>The case would protect the earbuds, but the hinge was weak and could easily break.
+                Again, this could be easily fixed by adding a simple pin which would go through the entire hinge part instead of the half spheres.
+                <br><br>Allows for vent holes:
+                <br>The vent holes were perfect, and no parts of the earbuds could go through them. They integrated very well with the case.
+                There is one concern I have though: Occam's Law states that you should remove any unimportant features for simplicity since
+                it will remove possible issues. I see no need for vent holes, the earbuds would not overheat as they are not plugged in.
+                And for cleanliness, things from inside your pocket such as lint could potentially get inside the case making it dirtier.
+                My opinion is that the vent holes are not needed.
+                <br><br>How previous experiences and skills helped me with this project:
+                <br>It helped knowing how to use Fusion 360 from Intro to Engineering. Learning about dimensioning in Intro to Engineering was also important.
+                And the design process was very useful when creating this project and the design.
+                Teamwork was important, all the dimensions needed to work together.
+                And 3D printing skills are always useful in an engineering project to maximize the prototype print quality.
+            </p>
+            
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

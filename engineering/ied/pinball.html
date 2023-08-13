@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ['<i>Design a Game - Pinball</i>'],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 1st Intro to Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="pinball1.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="pinball2.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="pinball3.webp" alt="Brainstorming List">
+                <img src="pinball4.webp" alt="Decision Matrix">
+                <img src="pinball5.webp" alt="Sketch">
+            </div>
+            <p>
+                Making a pinball machine is the best choice since it is small,
+                easy to reset and setup, profitable, and very fun to play.
+                This can be seen in the decision matrix
+            </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="pinball5.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+            <p>
+                <strong><u>Game rules and instructions:</u></strong>
+                <br>* 4 tickets = 3 balls (1 round)
+                <br>* Every 5 points earned = 1 ticket
+                <br>* A lip-out (where the ball goes in a hole but bounces back out) = 0 points for that ball
+                <br>* Once the ball goes in a hole, it stays in the hole for the rest of the round
+                <br>* No cheating, and don't break the pinball game. Cheating or breaking the game will result in 0 points for the entire round.
+                <br>
+                <br><strong><u>Funfair booth setup documentation:</u></strong>
+                <br>Our game is very easy to setup. Just place the pinball game on a surface, and wait for the players to come. 3 balls costs 4 tickets.
+            </p>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+            <div class="design-process-image-box">
+                <img src="pinball6.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+
+                <img src="pinball7.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+                
+                <img src="pinball8.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+            <p>
+                Above: 3 pictures of the pinball machine in action and the mechanisms working.
+                These include the entire machine, the flipper, and the launcher mechanism.
+                <br>Test data and analysis (below)
+                <br>Mathematical model (using a spreadsheet) for required accuracy and precision to win a prize. (below)
+                <br>Our criteria required the game to have less than 25% of the games win. Our game wins 10% of the time.
+            </p>
+            <div class="design-process-image-box">
+                <img src="pinball9.webp" alt="">
+                <div class="design-process-image-layer">
+                </div>
+            </div>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <p>
+                When making the pinball game, we had to figure out how to mount the rubber bands for the launcher.
+                We figured out that tape was the best option since it was strong and since hot glue did not stick to the rubber bands.
+                We also realized that you could take the flipper part out, so we glued another little piece on so it cannot be removed.
+                Pinball machines are slanted so the ball comes back down, so we had to make it slanted.
+                Our first method was to hot glue a piece of cardboard on the bottom perpendicular to the bottom surface in the back.
+                This crumpled. We fixed this by gluing a box on the bottom in the back, and making sure the height stayed the same and it was strong for consistency.
+                If we had more time, maybe we could have added a second flipper and a ball collection system on the bottom for when the balls go in the holes.
+            </p>
+
+            <span><h1>Present Solution</h1></span>
+            <p>
+                <u>Proposal to “carnival committee”:</u>
+                <br>Pinball is a great choice as a carnival game. It is profitable 90% of the time, so players play more if they win and are not disappointed.
+                You will profit from the game. The game is small, portable, low maintenance, and easy to understand.
+                It is also made of recycled cardboard, so it is inexpensive and environmentally friendly.
+                The game is safe to use since the balls do not move at high velocity and are ping pong balls.
+                Players love pinball, and it will be a huge attraction to many customers.
+                <br><u>Ethical considerations of the game:</u>
+                <br>The game is not rigged. We have no influence on the game other than making it. We are not part of the game.
+                The game is not biased since there is a limit to how much skill you can have playing the game.
+                The game is fair because anyone can play the game, and it does not require much skill.
+                It is politically correct (PC) as there are no offensive references to others in the game.
+                <br><u>Reflection and Recommendations:</u>
+                <br>The game project worked very well. It was super fun! I learned how to use the design process to help with the making of pinball.
+                The decision matrix really helped us decide which game to use, it is much more useful than just pros and cons.
+                We worked great together as a team, and the building was quick. We used time very efficiently.
+                Next year, it would be good to provide maybe another day to add more features and modify the games to make them better.
+                Also, it would be cool if we could use Mrs. Gallo's laser cutter or 3D printers for some special parts.
+                And what would be really awesome? Having a fun fair where people get to play the games! (maybe after school)
+                Overall, it has been an awesome project, I learned so much and had lots of fun! Hands on is the way to go!
+            </p>
+            
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

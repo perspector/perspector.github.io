@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Emergency Attendance</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> This application helps teachers and students locate each other in an emergency.
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <div class="design-process-container">
+            <span><h1>User Story</h1></span>
+            <p>
+                In an emergency at school, such as a fire, there is no time to waste. The fire alarm startles everyone, students quickly exit the building, and teachers need to know where students are and if they are in danger. What if someone went to the bathroom before the fire alarm went off? The teacher has no idea where this person is, whether they got out of the building or are stuck inside. They could be on the outside but might have run, fallen, and gotten hurt. In that case, they would need immediate help. The Emergency Attendance app strives to solve all of these issues. With data such as location of each student and whether students need immediate help, teachers can quickly ensure that all students are safe and accounted for. Students have one app to report data about their situation, and teachers have a different app to check for students in their class.
+            </p>
+            <span><h1>Project Introduction</h1></span>
+            <p>
+                The Emergency Attendance apps aim to help teachers locate students in an emergency. There is location data gathered by the student application, along with the student's name and their current class. The data is sent to a web database that the teacher can access with the teacher app.
+                <p>
+                    <u>Features of the student application include:</u>
+                </p>
+                <ul>
+                    <li>
+                        The app has the ability to automatically acquire the current location of the student using a location sensor.
+                    </li>
+                    <li>
+                        The student can enter their name into the app so the teacher can understand the reported data better and can keep track of all students in their class.
+                    </li>
+                    <li>
+                        The application also has a list of classes for the student to choose from so the data is given to the teacher of the student's class. This allows the teacher to see the data of students only in their class, which simplifies attendance and responsiveness.
+                    </li>
+                    <li>
+                        All the gathered data is sent to a web database that can be accessed by the teacher.
+                    </li>
+                </ul>
+                <p>
+                    <u>The teacher application also has multiple advantages:</u>
+                </p>
+                <ul>
+                    <li>
+                        The teacher application can read the data from the web database with the simple press of a button.
+                    </li>
+                    <li>
+                        The teacher selects their current class. This returns the data collected for only the teacher's class, which makes it easier to keep track of everyone in their class.
+                    </li>
+                    <li>
+                        A map with the teacher's current location and reported student locations is shown so the teacher can locate students easily.
+                    </li>
+                    <li>
+                        Along with the map, there is also a list of students that reported that uses their names and shows whether they need immediate help. This feature helps teachers prioritize students who are in the most danger.
+                    </li>
+                    <p>
+                        Both applications are designed to be intuitive and easy to use in an emergency situation.
+                    </p>
+                </ul>
+            </p>
+            <span><h1>Backlog Items</h1></span>
+            <p>
+                <u>List of iteration tasks:</u>
+                <ol>
+                    <li>
+                        Create the front-end design and layout of each app, student and teacher version. Figure out the simplest, most intuitive user interface so it can be used quickly and effectively.
+                    </li>
+                    <li>
+                        Set up a Tiny Web Database (TinyWebDB) that is online and can be accessed easily to store data on the situations of students, with tags for each class so the student data is organized according to their current class.
+                    </li>
+                    <li>
+                        Handle textbox and button responses to record the student data.
+                    </li>
+                    <li>
+                        Send the data to the TinyWebDB so it can be accessed by the teacher.
+                    </li>
+                    <li>
+                        Add conditional logic (if statements) that check that all data has been entered. Figure out how to get the location of the student and also add that to the TinyWebDB.
+                    </li>
+                    <li>
+                        In the teacher app, add functionality to receive and parse/organize data from the TinyWebDB. Organize this data into a list and display it for the teacher to see. This can be used to check attendance and to see who has reported their position.
+                    </li>
+                    <li>
+                        Add a map to the user interface of the app. Center the map on the teacher's location. Add a marker on the map that shows where each student is. This can be used to see if students are inside the building, and where other students are.
+                    </li>
+                    <li>
+                        Add a login screen to the teacher app. This protects the data of the students. The login screen can be easily and quickly used.
+                    </li>
+                </ol>
+            </p>
+            <span><h1>Algorithms</h1></span>
+            <p>
+                The flowcharts can also be viewed by pressing "View on Draw.io"
+                <p><a href="https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&nav=1&title=emergencyAttendanceStudent(1).drawio#R%3Cmxfile%3E%3Cdiagram%20id%3D%22C5RBs43oDa-KdzZeNtuy%22%20name%3D%22Student%20Application%22%3E7V1Zc9u2Fv41mmkfrOGq5VG2ZMeN4zqRb1znpQOJkMSaIhgQtKT%2B%2BguAoLgAommtlJtMm4ogCIJn%2Fw4O0IZ5NV%2FeYBDMviAHeg1Dc5YNs98wDN0yjAb7R3NWcUvbsuKGKXYd0SltGLr%2FQtGoidbIdWCY60gQ8ogb5BvHyPfhmOTaAMZoke82QV7%2BrQGYQqlhOAae3PrkOmQWt3aMdtr%2BCbrTWfJmvdWN78xB0ll8STgDDlpkmsxBw7zCCJH413x5BT1GvIQuT7erJ%2B%2FupXXzx9fwJ%2Fjf5efH%2B%2B8X8WDX73lk%2FQkY%2BmTrob98v75%2FJM7PR5v0da9%2F2w6fjAvB3FfgRYJe4lvJKiEgdCg9xSXCZIamyAfeIG29xCjyHcheo9GrtM8dQgFt1GnjP5CQlRAOEBFEm2Zk7om7cOmSv9jjTVtcPWfu9JdiZH6xylw8QOzOIYFYtFWkk6BniCI8Fh%2B5mL%2F86M%2BeRrO7m6%2F9%2FpeXv%2FTv9oVlC3kFeApJCRXFgIxSGaETbLiBiM4Rr2gHDD1A3Ne8ZAIh4NN1v%2FWjD8ilH2JoiTLq7aaY0ipRMi0%2FSPxN4rlUGOiPzETSJi4i7xCXdi3EZXs2l3HvTS639s3lHHfeywpdYsWt7xIXeIxq9Gtm7G8PjelUkM%2FIAP0QYYldi5lL4DAAnEIL6gJ2IfUrxAQuS4kj7tqSJLeEJC9SI60nlneWMdAt7UAENSWCDuaQioQ%2FZvPuEQJ9B%2FhjRtYL%2Bu%2BQRA7k2tkLAs9N6FwgLyUHnfdlSDB6gVfIQ8xU%2BchnejBxPa%2FQlKH8BPlEaIBhJddiYHaf0Zq%2B1et57tSnbXPXcbh6AdEwprNjlnH%2FPMywyLYVLLIOxaKuxKJnGlqcvwVqVbRAnXpZINkE3aP%2FEDeSCLcm7GgpfHPLY9bHcV%2Fpzyn72UdMYYR3AEHANBfQmYme9MWZzornJbcSQDx3w5BdmNebhimIBJ6h%2BSii3395bO8jnI2hcDaGacuWrLMHS6YMLWXV%2BQCK05EVR%2Fnx9dKbjsSKnuOsdWTsgTCMdQalYZUbMsePJmmHZm0jK7NTMbKyD%2BW2dTm0OoW0U0LjVQZmssvnBE2yixRo8qss0pTR6RqQKtHpnjUrcTXHxyhqJGq2pPi9XZCeeKoSEu1hDFaZbgHrEJa8ySi%2BKQkvryuj5MIT9Ec8i71C44RFWTsSvqxNRhTSWJylr%2FAm%2F1kbC2K0u81uN0%2FB9hHRmdJnyJmHE4X%2B21qR7S1CmQ9909fq9qmcbdm03whSXaeoNwGGYfjOKJVe%2FYxYcvZyGI3mLkmv6c1RRMh2MWtGFlQKeiit1Jtdq5v9085pqKUMafWm1pWV9GBR7QfA58rvUiBCZb%2BT4XPlbJIo64zx%2BU7cSAhbE3bI%2BFxh5%2BKcHW902X99MIfcSNUGQqfmyNYyf4xOzhy1tRqYI0MOGj6EAlTF2cbJViwWn79Ooq%2FBvWE433%2F8uHC821aoyHmc1DsUqHJg%2FqgIoh2LGyWTLDdH4xlCIczYI57tOEeD1DFqYJBMqy4qUBMUo8prqCm3dxhTeYldyottyGxskUgopYkCI41wCejJZi152GBc5VIN7Ar4rE8IJpCsuMwBEhVymw4gYAS40jMZw%2BsbBEwbIueZtwbVAFS8BJqU4Oh5cQxnIGD95sspq0JqTjy0GM8AJs31dI6LtsyCEOiWIgHSOuqKQbVo3nd6rGiKXnHmuOM8ofOGI8lsJpU2z41slnPfmc2d1gIEXy60ZkfTTIkXqmXopG1Hk2AnCpkg7SKLN9TcqGxLfqDiOvmeUqZrGVwldChPmBb7W2Xp0vTpZDpoMgnhYSyhDJk%2BRj5BVxSWlWHGmiBYXY4ZPwSeqsyORIHrwg97Y6SQ8cS36YJ%2FZt3h%2Fs9H%2BvdvVNOvtN95cFAxtzqHwHf9qWLMigMkhWiayya2QPiFDXcGxQMZoJG3r4oF1qNDC717CkXcZmm0LtCjXVHpT1atUDrtHG4PAy%2BOEFj87gIPTXmUv%2BJ6yuL%2BdOnjmdIlbwm4GjpuCEYedJr094MH4%2FifRJh34LUObH0yXT8piNpJVyoL2tg99VKlYZ9SFd8Ty9dEFdf7Qs5LFQ05ofkuVVzrWZL0X8W6ycD7mShbWz%2B5sp3U752jslVdPtu7sm0FZi0jD047rXIwW%2BxvvVkt1Cnrv3OtUCkPdrYc6%2Fy8MB0iIadNMJqvI3QHo8BBC%2BbK59CPamlarGLFUcdUWBZTa2r6EY2Lde77ndS59KpJd6te6Ydk3hu1xgMjvnm1NPJlCWUmP4DpyQhCsTeKmYRMFpxAMJ5BzMLhb3AOXN4LTHbxy3IC%2FFDqZHWa7UL%2BWlkEbK7XOo6iTaacPvoI2lQ1eWTWK3lkysVaG5J5d1ytcjSU9pht3I2GYej%2By6ClYJjw93Rw%2B7Jh95X8KJeeohqst46LtzSyu7M3rCGYZksMt%2B3iwOGz35YhMehjZL%2Bra0y98J4pp1uzJRPCsYSi1pT%2BGI9hGE4iz1udQ8WE2bLyPkO9S%2BrIeU1Llwj3C9%2BVatfJ8prb4Tu7IHWm%2FgbAK6xWvv%2BBtzaQFCHkux%2BoJeY0KyeOCR0tu8IjasHSyHeAMdu03ktdb5JJDiO%2BE07LAFQwfknxqcvCBZ%2F5y%2FyTcV0KjRW48TwPhKorN8W0O82WbB4Ph1BlnzR87H17lOi2ZflNSM0I%2BfvYex3MVtPIAxjV6RAt46jwxZKTNoP7%2FkcjtG6pkOIBSa0qjJVN1TXwmD05QSSwk1ffT43xxtrhvJfvDX%2Fcfxp99nuvnzX9Av28uXx42LnGuHKZpHbAMkkVAWT4%2BoijE4tITkBSeam5iBymkla1XNQtwoQDy0il3YaZ%2Bphw4ZLxjM1vhCJSuaJlMYP0eZwOsz4ayIfQYcO78zmk8RWB3IJ67NgNnjWIU46x4Gq8KCY2dIeqhlEkT6qJW1UQWSy77yrqZg%2BKIZUbT%2Bpx2sY2p9zt0UZsdg9VKt%2BO5kd0vSAG%2BzvSTi0cZyMLW59fwa7URyUeTrCqlnQcSLBMU%2FY%2BulZRtN59RoVZSBgkJRBVEwDFB3bOAJTperk3HMZuKdlAz2%2B769JNMMm201msb70C7PIEfOzTKnrOFOhPXB9mYX%2B1PSUCTrHU65AgzI%2BCfcsTTtwlTM6pPaRnbLUL0mcrgFWyTXbfsKpMJ3cWAJn7fNScAGTSRfeDQX9YWSQ%2BDe4ePpYgKM5T6R5TFhxzBVE4%2Byd8Cv92r799uUWd5VvGIEPctYYin1yEnFws86d3gmVOg9ksxepf2ujBSe7cjTzb2ZBbvis%2F0ChpuP%2FzcRA%2Fc%2BtzL0KnxLa6XXGZ5qWuY%2BTw5Zr4JDwfkZywDu77TaX4jYrvpG3x%2FKXmTQJ%2BrkS9ZePhyOdIhsY91FZTxfKYiEc%2Bcb21vQgwmmLAKo84pUOCgoBGSb%2BISH%2F8Vtw4IeRQ0BW9cgDJE%2BG%2FyEVjakGPaVx7k5ez%2BODKWJs9FEKn%2BfseqFbwKeLoXkXVA6fFTjUPDBCEqeepejzwwTyU2bQLixu2IuNumQoPJR1BXsFF0cv02Pw4vE3%2F5wPm4P8%3D%3C%2Fdiagram%3E%3Cdiagram%20name%3D%22Teacher%20Application%22%20id%3D%22dZOdQwo-spF5rqQQU2Pz%22%3E7V3bdtq6Fv0axtn7IQzfuD0SQprs3TRpktM256VD2ALc2JZriwD9%2BiPJ8lXCEGIbSNvRtFiWhbwuU1NLS0pLH7mrDwHw5zfIgk5LU6xVS79oaZpqaFqL%2FlWsdVTSM4yoYBbYFq%2BUFjzYvyAvVHjpwrZgmKuIEXKw7ecLTeR50MS5MhAEaJmvNkVO%2Flt9MINCwYMJHLH0q23heVTa13pp%2BRW0Z%2FP4m9XuILrjgrgyf5NwDiy0zBTp45Y%2BChDC0Sd3NYIOFV4sl8mt%2BfTlYTm8DR4dZTUd4%2Buv386ixi5f80jyCgH0cLVNd6KmX4Cz4PJqaV2HfMm5Zb%2BQjzP6cezCYAY9c01qDjGGngU8E5KLM%2FLzCIE5hwG95fuObQJsIy9uhPQm0w4XI17HusFwRctDHKBnOEIOCki5hzxy%2B3xqO06haI5dh1yp9C7yMLc1zYivecP0%2FgsMMOmLM3TsmUfKXNuy6M1zwAtMIkrS67hTtD5cFSxmi7jVxAaI80DkQhxQCS1TK%2Bt0uOnMMxZm8DLADXuWPJoqj3zg%2BpPr8mHyX%2FfH4nrlTm5epmANDAt9PusLunwijleUObSIe%2FBLFOA5miEPOOO09Dwt%2FYiQzwX6A2K85hIHC4zy6gjQwrMg7ZySiJR%2B0R4CJZ1Fi8CEJfX4i2JArBKXCKQjV1AAHWKkL%2FnOVa4N1RDU8Qn9ztpQ9YbUUdbLcqD7Sr6WvMmcYhsp%2B7mg0H7%2BMCeoryl3IAyXKLDSG5tQTmh3ssCYgqJiEoB8ppq53BEhgzlyJwsijPPl3MbwwQdMF0syVud1XjmM8Va6HK346K%2FG1xmU0%2FR%2BeyDiXL8unNMkqnx%2FbmXEZCnjV5st%2B1BuFfcyo4yHx%2BH9o6CRaIyPGZialyxhVj6t565mlIS2pw5amnMQ4HZIXh9%2FVzfYf11GP%2Bi31UH2T84HJC6gdrV2R3SBbgUuIBe76APjTxcnL3QtjzW9QaOSlo9aDYELXNn4W%2BbzE4UZ8qbR1cWKow67WMcXHnnDb2lFevmUvZc%2Bxq7i52oDMqkElYZwjD06DAKwzlTwke3hMNPyHS3IDm%2F58U1XC5OoLfWN8uq69qbq6pb6ar%2B0PvkQySM1%2F0Sw%2B3uEIiJ%2BRJAi3oTXPjEt0obHjCjmTAUfOhCb0QeDttHJySzhKVmQ0STztvogRhXEUyvEpLCSgMWJQ4x%2BzBBjdH97yNAFyLiyLXiykCEjgI0ixkCQ58mHFjYHcHYILShyDTYU6BEHxNOPu71JHU0Feso6WR7ouQ63gc%2BOkR1zEVDhOvT9XuzQnlBNnkxwRzcKg8ERRHfUTrNs6P1NuNSjpkPCjKv7Z8aVusR9OJoOO1c3839WoPMzuJ3djx4kM64YYOiyV85X4tA0vXEWMtsfkgqq5q8iAEtD1wyTKG9IsCpqbQNYUXv9CCbQybuRsJ62ceUtgKQ%2FgAEkcwNuKKTxznmrc5Ff1FP7ZbDH14p5Y61khTbrQiXgshEPz5R2f6CrOQ3H4ebXeYVgOGeavNm4BTSdhsRZi%2BhZAflWe78LP5EBn7xi96CEUZwO7bwW9RHNKFFJ3Vh5P2tLCRYfcm1Jppt36CndHT0lev2DeUpX0MYHRLuNJK4RQJ%2FI%2FQJgkPOP0Awg9AQlHsjkVXXQNoyNS0uGcejQQmzv72xlqWQ5ryOTecOrTLoY0alK5MDzEGZJWd%2B1DF9z4JQ6iEMZ3R0KbZa1pV8E0ctG5AwG4xcYcTQ1rnsOzOcZA6tCclZ0l8ydYVDM5MrQOtoF0kPLJu0WqtWlfV06IcilaUkcrFObrg2RzvNRXXmQYxVPk6uJddOxKOTqae2ejFck6wG3MnJ9NlBaYkoeIe0Y2B7tbmaMq17fZ50CrVAk%2Fm1IVF5bYp4kSUIkFZ41pNmuVKkOCEPbbG1KeGTi3id8cQiOUZ4fKXM8XvbG%2BVa8kJugvF7QbtR%2F%2FlTZjL9XyP4ocs%2BIQwkNvTYuohfjHL0tkYtC%2Fe62yEXxPSqOXPi%2FfvS98f%2F8wbL%2F%2Bd9L1xqaXxJbaZxNi%2BDUpOXHGfJZdi0Vz0HXLQwxQfX9p27JFvvr43q3l9aVdXulww8jXR%2F%2FmOo3P6fSaN5JzzA3m3beBbznT2Bx3dGsjtbXur3B5bJ305gLlHUyo4prjzBhwq5%2BpavTDor3NCgh9ELCgV45lxT9py7j3zK77DWZ6nL3j%2BINle%2F33t3TyBnonQf3c28X2%2F8zzdlP94VpjgzpZHRLVauIpUmVLQ7%2B9yxEQ8qiKM2f%2BU4l851ePjtFTfScdfNBTROen9%2F9i%2B7VPx%2FWA%2BNft2ut75ZfFdnelz3GuPyAtceIV%2BEYJzVwTRzj5OJoKiGirJcZXQwtKxnd2GQTsqWGNKhqBci30JIOeS70FuQ%2F5FNbF1eNjmvoKziCIpv51zXeSbmeCIGnv%2FS2mcblXWGzMTbgCWWdzGjjAsF0lQ34PrUL8CLlfj4MXDsMGeJfCio8%2FFqa2h5kmV%2FPyPlCX0IHNF0y7amCDUiFL7rCMHxOBL0I2RbiKWXXcqm3X4s9tREtfdAuEOu%2BbKNKXUAjla4I8keVEboPfpRZ0b4qbAZnDrWGvG962j4bA6pRu2SPY5l51K52eejU0HrtPLVIdqZVHQTuF7%2BpvyU9Tu312rkZf6%2Fs8TdHeb%2FfTJTRzxsw1dejH5dfn1ytO5bY%2B%2BmznO793BjfmOc3l71vPXg1fflw%2FUuGUlKBNBXUKutkeXbRhZ1OAfjY65Opc0KGdkx%2FTjMt7knfbciok5CCwVOUTigxqZxMkaG9QTYltbB3uelgsy%2Ft4HODhnyurJM7bzrIMNxPt4%2Fk379ICyPlb%2FLPzr7nQuDZ3kzS5o4NxNFsxaYdW6LgmTZ3Ql6qtwfKxmC3Kk8nVNtKTfmEcj89HV7%2BJu%2FTjoyXSzvZ1M6SN9Lwo0jpKNNy1ho2U5C30vBX77Mtbs3YtrNEeCBeCtk1haL4QD3sWpzaX9ih70SyIT%2BWDRxEh4EQrNl4QL4mkxb7RJSaH3EY3Ft2SFdJrDb5fOdAELKg1yJgFeg7s4hLSuKOKfbSUZI%2F3YLK9QYDMVJtHe7Ur3exoW3XaddrYCe7uUfj54DVC0V6YTFW3boNrfhAtVCUPl7pdiPpYldVwYBjWv3bPOHYYfVPa4jySLcOVhQXfrMyiskRB1COVD4H5aNi0r8kLBNChx6LG431bLX2ONefyGQsv8NRlW1mqXMCJl97ryTd7pjAaDPI7ABGTUVJyjpZHiWJiyZBsWRrQOMDHdG490RfQmjsNCnCYMaMkdhiXBQ5Fzv%2FgSdC%2FId89IAL2ztGQfZMV7MABhNKupvNjlVVRciS6MiOs9H7oo%2F2avPRYxml6vbSXSmD2tSwJHdTUR2nT%2BF21UfJcZuH0odIEz6CEHOcavGTaxybFTG4o%2BVHzBLS2buiFbCo2zsCyqD9HpQhPnZwOxodlDTE3cwmDvk%2B9FKizN0AsCITBQEMfeRZ0dpICKYQr5nyAF4U8hyp03yxIT28kkXGotIJwhi5x5NvJBzSJEvj15V2p6ZdLHK1iOdsvc8xW3aoSC1B77epo6pDXk5SH%2FKKTR3yUtrNxtMwWFhPeaCbE0Jsm%2BH7ysQYFAL%2BiiTzsrZMDLmi%2B4fwsr3O8iUXdzCwyXsnm1L2XQCo3cslB9TUs7div7VGvbjVYMtubeHcuMIDb146LJVibRGXkQNB0CrGXKIs7mzQJROF4SdmtnjE5X3GWQTOpsq2osj2ZNVG2JKUjyPAKbUcp44Vk3YN37x1vrQfJCkFSNqWOdwpnJDx%2Bge6nVeCXuGBmkBPjJdEG97oAooLgmdGszLzPRf4rUJcOJMtYSIUkLkkwGynEDBNdjnLTySzkRi%2BhY4Dz%2FFMI3Utny6XTxRXpZvDDaPd05sEqS2seYeTTvvCSadKvHs4LWTbwoXDUF99qqr4XYURNTlm9fZxHD1z7TEkIF2iUYkRsxeWkGMidiK%2BFe1I8xDtQdry%2BNNFLh0nGTMnkjE7f47r1qH8VIV6TdsLFnRXKvE8C05tj3gWO4p74WHbSXzRDxDhBW6Lpz6FGPnszO8%2FQtTP%2FyqmEXM75HJFLwwtWWztj7gIBeLymAGG9Xk7izaQRt7soBBa7b8rkFph%2BNh8OAI%2F66L5oxHqGrJUmuy3OcFbtqfV0CWcOiHflafX6Ifk1E0k%2BtWYt7M5H%2BeIgq1lndw3IzdJt01Se9ZRjq5kanyU%2Bbd5NzRkx41UlHNLLtPfrx1NENLfUq6P%2Fw8%3D%3C%2Fdiagram%3E%3C%2Fmxfile%3E">View on Draw.io</a>
+                <p>A flowchart explaining the student application:
+            </p>
+            <div class="design-process-image-box">
+                <img src="emergency-attendance1.png" alt="">
+            </div>
+            <p>
+                A flowchart explaining the teacher application:
+            </p>
+            <div class="design-process-image-box">
+                <img src="emergency-attendance2.png" alt="">
+            </div>
+            <span><h1>Demonstration of the Apps</h1></span>
+            <div class="design-process-image-box">
+                <iframe
+                    width="789"
+                    height="444"
+                    src="https://www.youtube.com/embed/PZJ9woDpee0"
+                    title="Emergency Attendance - Student App"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+                <iframe
+                    width="789"
+                    height="444"
+                    src="https://www.youtube.com/embed/Pv-IIXxZ_3k"
+                    title="Emergency Attendance - Teacher App"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <span><h1>The Code</h1></span>
+            <p>
+                For this project, I used MIT App Inventor.
+            </p>
+            <div class="design-process-image-box">
+                <img src="emergency-attendance3.png" alt="">
+                <img src="emergency-attendance4.png" alt="">
+                <img src="emergency-attendance5.png" alt="">
+                <img src="emergency-attendance6.png" alt="">
+                <img src="emergency-attendance7.png" alt="">
+            </div>
+            <p>
+                To download the .aia app inventor file, click
+                <p><a href="emergency_attendance.zip" download>here</a>
+                <p>to download all of the code. Then import it into MIT App Inventor.
+            </p>
+            <span><h1>Reflection</h1></span>
+            <p>
+                Throughout this project, I have learned about how
+                computer science companies remain productive by using
+                concepts such as Agile Software Development and scrum.
+                In Agile software development, large projects are split
+                apart into smaller, more manageable parts where each
+                smaller team can work towards their own specific goals
+                and tasks, called a backlog item, rather than having to
+                focus on a large task all at once. Focusing on a large
+                task at once is complex and overall more unproductive.
+                In Agile development, teams use a scrum workflow to
+                iterate through the processes of planning, building,
+                testing, and deploying multiple times. Each of these
+                iterations, called sprints, are used to create a
+                small part of the final project.
+            </p>
+            <p>
+                I have also learned that using lists is
+                imperative for programming since it is a simple
+                way to organize data efficiently and effectively.
+                The data in the list can be quickly accessed using
+                an index, which is the place of the item in the
+                list. Databases can be even more powerful, while
+                they still often rely on lists, they let data easily
+                be shared and even more efficiently organized so
+                it can be accessed by more advanced methods, such
+                as finding the value of a tag. In both Emergency
+                Attendance apps, I used lists to easily organize
+                data collected from students, such as their names,
+                whether they need immediate help, and their latitude
+                and longitude. I also used a TinyWebDB as a database
+                to transfer the information from the student apps
+                to the teacher apps through an internet connection.
+                By using a database, I could organize all the student
+                reports by their current class, which simplifies
+                attendance for teachers and makes the data organized.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+
+
+
+    <!-- nice code formatting by highlight.js -->
+    <link rel="stylesheet"
+        href="../../../highlight/styles/a11y-dark.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>

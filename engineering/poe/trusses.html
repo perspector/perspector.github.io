@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Testing Trusses</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 3rd Principles of Engineering Project
+                <br><br>Trust the Trusses!
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="" alt="">
+            </div>
+
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="trusses1.webp" alt="">
+                <img src="trusses2.webp" alt="">
+            </div>
+            <p>
+                <u>Goals of the project:</u>
+                <br>* Create 2 trusses that support a heavy load.
+                <br>* Make the trusses support at least 10 Newtons of force (about 1.02kg)
+                <br>* Solve both trusses and calculate the individual beam forces.
+            </p>
+
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="trusses3.webp" alt="">
+                <img src="trusses4.webp" alt="">
+            </div>
+            <p>
+                <u>First Truss Expectations:</u>
+                <br>We expected the first truss to hold a maximum load of 25 Newtons since we used bass wood instead of balsa wood. This means it would hold much more than the average of 3N for balsa wood trusses in the same configuration. Bass wood is much stiffer and stronger than balsa wood, but it is a bit heavier. As a result of this, we expected our efficiency to be slightly greater than that of the other teams.
+                <u>Second Truss Expectations:</u>
+                <br>Since the second truss had more beams to distribute the weight, we expected it to hold 30 Newtons of force. On the other hand, the basic structure was somewhat similar, and more material and wood glue was used in the design, meaning efficiency would likely decrease.
+                <br><u>Static Determinacy:</u>
+                <br>* The first truss was statically determinate:
+                <br>2(Joints) = Members + Reactive forces
+                <br>6 = 3 + 3
+                <br>6 = 6
+                <br>True
+                <br><br>* The second truss was also statically determinate:
+                <br>2(Joints) = Members + Reactive forces
+                <br>2(5) = 7 + 3
+                <br>10 = 10
+                <br>True
+                <br><br>For estimating the maximum loads our trusses could hold, we thought about the stiffness of bass wood and decided that the first truss
+                could hold 25N while the robust second truss could hold 30N of force.
+            </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <p><u>First Truss:</u></p>
+            <div class="design-process-image-box">
+                <img src="trusses5.webp" alt="">
+                <img src="trusses6.webp" alt="">
+                <img src="trusses7.webp" alt="">
+                <img src="trusses8.webp" alt="">
+            </div>
+            <p><u>Second Truss:</u></p>
+            <div class="design-process-image-box">
+                <img src="trusses9.webp" alt="">
+                <img src="trusses10.webp" alt="">
+                <img src="trusses11.webp" alt="">
+                <img src="trusses12.webp" alt="">
+            </div>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+            <div class="design-process-image-box">
+                <img src="trusses13.webp" alt="">
+                <img src="trusses14.webp" alt="">
+            </div>
+
+            <p>
+                Desktop: Left: Truss 1, Right: Truss 2
+                <br><br>Mobile: Top: Truss 1, Bottom: Truss 2
+                <br><br>Truss 1 held 53.31N while Truss 2 held 68.7N
+            </p>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <p>
+                <u>Efficiency for Truss 1:</u>
+                <br>53.31N / 1.6g = 33.32 N/g
+                <br><u>Efficiency for Truss 2</u>
+                <br>68.727N / 2.3g = 29.88 N/g
+                <br><br>The first truss is superior to the second truss. This is because it has a much higher efficiency.
+                <br><br>33.32 - 29.88 = 3.44
+            </p>
+
+            <span><h1>Present Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="trusses15.webp" alt="">
+                <img src="trusses16.webp" alt="">
+                <img src="trusses17.webp" alt="">
+                <img src="trusses18.webp" alt="">
+            </div>
+            <div class="design-process-image-box">
+                <img src="trusses19.webp" alt="">
+                <img src="trusses20.webp" alt="">
+                <img src="trusses21.webp" alt="">
+                <img src="trusses22.webp" alt="">
+            </div>
+            
+            <span><h1>Conclusion</h1></span>
+            <div class="design-process-image-box">
+                <img src="trusses23.webp" alt="">
+                <img src="trusses24.webp" alt="">
+                <img src="trusses25.webp" alt="">
+            </div>
+            <p>
+                The break point for the first truss was slightly above the center on the right member.
+                This was due to the force of 37.4 N on that member (member BC), which was higher than the force of 26.25 N on member AC.
+                This makes sense since member BC experienced basically the highest amount of force which was only paralleled by member AB,
+                which had the same force applied.
+                <br><br>In contrast, the second truss had a quite different design.
+                The second truss failed at joint E, which is logical because 44.16 N in compression were applied at member CE, 57.49 N in
+                tension were applied at member DE, and at BE there were 36.8 N in compression.
+                This joint has forces of the greatest magnitude acting upon it, which means it would be the initial breaking point.  
+                <br><u>Improvements to the Designs:</u>
+                <br>* To improve efficiency, I would use paper gusset plates only on joints undergoing tension.
+                This would decrease the weight of the bridge while not affecting the load held. On joints undergoing compression,
+                the paper gussets crumple and do not contribute to the distribution of force across the truss.
+                Taking unnecessary gusset plates off would decrease the weight of the truss, and thus increase its efficiency.
+                <br><br>* In addition, I would experiment with different materials, such as balsa wood, different bass wood, oak,
+                or even metals and plastics to find the most efficient material that would best suit this application.
+                <br><br>* Wood glue is heavy, so it decreases efficiency.
+                I would like to test super glue and other joining methods to increase efficiency.
+                Even creating wood joints (lap joints, dovetail joints, etc.) could increase the surface area that the glue is applied to,
+                which would increase the strength of the joint, and thus increase efficiency.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase | All Rights Reserved.</p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
