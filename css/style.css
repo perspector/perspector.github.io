@@ -430,13 +430,14 @@ span {
 }
 
 .design-process-container h1 {
-    font-size: 5rem;
+    font-size: min(7vw, 5rem); /*5rem*/
+    text-align: center;
     font-weight: 700;
     line-height: 1.3;
 }
 
 .design-process-container p {
-    font-size: 2.5rem;
+    font-size: min(6vw, 2.5rem); /*2.5rem*/
     font-weight: 600;
     line-height: 1.5;
     text-indent: 50px;
@@ -646,17 +647,23 @@ ol ::-moz-list-number {
     align-items: center;
     flex-wrap: wrap;
     padding: 2rem 9%;
-    background: var(--second-bg-color);
+    background: var(--bg-color);
 }
 
 .footer-text p {
+    display: none;
+    text-align: center;
+}
+.footer-text::after {
     font-size: 1.6rem;
+    white-space: pre-wrap;
+    text-align: center;
+    content: "Copyright © 2023 by Benjamin Chase\A All code is licensed under the GNU GPLv3 license.\A Code: https://github.com/perspector/perspector.github.io";
 }
 
 .footer-icons a {
     display: inline-flex;
     justify-content: center;
-    align-items: center;
     width: 4rem;
     height: 4rem;
     background: transparent;
