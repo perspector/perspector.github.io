@@ -1,36 +1,37 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { CubeTextureLoader } from '../../../../src/loaders/CubeTextureLoader.js';
-
-import { Loader } from '../../../../src/loaders/Loader.js';
+import { CubeTextureLoader } from '../../../../src/loaders/CubeTextureLoader';
 
 export default QUnit.module( 'Loaders', () => {
 
 	QUnit.module( 'CubeTextureLoader', () => {
 
-		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
-
-			const object = new CubeTextureLoader();
-			assert.strictEqual(
-				object instanceof Loader, true,
-				'CubeTextureLoader extends from Loader'
-			);
-
-		} );
-
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new CubeTextureLoader();
-			assert.ok( object, 'Can instantiate a CubeTextureLoader.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.todo( 'load', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "load", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
+
+		} );
+
+		QUnit.todo( "setCrossOrigin", ( assert ) => {
+
+			assert.ok( false, "everything's gonna be alright" );
+
+		} );
+
+		QUnit.todo( "setPath", ( assert ) => {
+
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

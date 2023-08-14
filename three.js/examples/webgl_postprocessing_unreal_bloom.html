@@ -4,162 +4,164 @@
 		<title>three.js webgl - postprocessing - unreal bloom</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-		#info > * {
-			max-width: 650px;
-			margin-left: auto;
-			margin-right: auto;
-		}
+			body {
+				color: #fff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				background-color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				padding: 5px;
+			}
+			#info p {
+				max-width: 600px;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 0 2em;
+			}
+			a {
+				color: #2983ff;
+			}
 		</style>
 	</head>
+
 	<body>
 
 		<div id="container"></div>
 
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - Bloom pass by <a href="http://eduperiment.com" target="_blank" rel="noopener">Prashant Sharma</a> and <a href="https://clara.io" target="_blank" rel="noopener">Ben Houston</a>
-			<br/>
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - Bloom pass by <a href="http://eduperiment.com" target="_blank" rel="noopener">Prashant Sharma</a> and <a href="https://clara.io" target="_blank" rel="noopener">Ben Houston</a>
+			<p>
+				This Bloom Pass is inspired by the bloom pass of the Unreal Engine. It creates a mip map chain of bloom textures and blur them
+				with different radii. Because of the weigted combination of mips, and since larger blurs are done on higher mips, this bloom
+				is better in quality and performance.
+			</p>
 			Model: <a href="https://blog.sketchfab.com/art-spotlight-primary-ion-drive/" target="_blank" rel="noopener">Primary Ion Drive</a> by
 			<a href="http://mjmurdock.com/" target="_blank" rel="noopener">Mike Murdock</a>, CC Attribution.
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src="js/libs/dat.gui.min.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/loaders/GLTFLoader.js"></script>
 
-		<script type="module">
+		<script src="js/postprocessing/EffectComposer.js"></script>
+		<script src="js/postprocessing/RenderPass.js"></script>
+		<script src="js/postprocessing/ShaderPass.js"></script>
+		<script src="js/shaders/CopyShader.js"></script>
+		<script src="js/shaders/LuminosityHighPassShader.js"></script>
+		<script src="js/postprocessing/UnrealBloomPass.js"></script>
 
-			import * as THREE from 'three';
+		<script>
 
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+			var scene, camera, controls, pointLight, stats;
+			var composer, renderer, mixer;
 
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-			import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-			import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-			let camera, stats;
-			let composer, renderer, mixer, clock;
-
-			const params = {
-				threshold: 0,
-				strength: 1,
-				radius: 0,
-				exposure: 1
+			var params = {
+				exposure: 1,
+				bloomStrength: 1.5,
+				bloomThreshold: 0,
+				bloomRadius: 0
 			};
 
-			init();
+			var clock = new THREE.Clock();
+			var container = document.getElementById( 'container' );
 
-			function init() {
+			stats = new Stats();
+			container.appendChild( stats.dom );
 
-				const container = document.getElementById( 'container' );
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.toneMapping = THREE.ReinhardToneMapping;
+			container.appendChild( renderer.domElement );
 
-				stats = new Stats();
-				container.appendChild( stats.dom );
+			scene = new THREE.Scene();
 
-				clock = new THREE.Clock();
+			camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+			camera.position.set( - 5, 2.5, - 3.5 );
+			scene.add( camera );
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.toneMapping = THREE.ReinhardToneMapping;
-				container.appendChild( renderer.domElement );
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+			controls.maxPolarAngle = Math.PI * 0.5;
+			controls.minDistance = 1;
+			controls.maxDistance = 10;
 
-				const scene = new THREE.Scene();
+			scene.add( new THREE.AmbientLight( 0x404040 ) );
 
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
-				camera.position.set( - 5, 2.5, - 3.5 );
-				scene.add( camera );
+			pointLight = new THREE.PointLight( 0xffffff, 1 );
+			camera.add( pointLight );
 
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.maxPolarAngle = Math.PI * 0.5;
-				controls.minDistance = 3;
-				controls.maxDistance = 8;
+			var renderScene = new THREE.RenderPass( scene, camera );
 
-				scene.add( new THREE.AmbientLight( 0xcccccc ) );
+			var bloomPass = new THREE.UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+			bloomPass.threshold = params.bloomThreshold;
+			bloomPass.strength = params.bloomStrength;
+			bloomPass.radius = params.bloomRadius;
 
-				const pointLight = new THREE.PointLight( 0xffffff, 100 );
-				camera.add( pointLight );
+			composer = new THREE.EffectComposer( renderer );
+			composer.setSize( window.innerWidth, window.innerHeight );
+			composer.addPass( renderScene );
+			composer.addPass( bloomPass );
 
-				const renderScene = new RenderPass( scene, camera );
+			new THREE.GLTFLoader().load( 'models/gltf/PrimaryIonDrive.glb', function ( gltf ) {
 
-				const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-				bloomPass.threshold = params.threshold;
-				bloomPass.strength = params.strength;
-				bloomPass.radius = params.radius;
+				var model = gltf.scene;
 
-				const outputPass = new OutputPass();
+				scene.add( model );
 
-				composer = new EffectComposer( renderer );
-				composer.addPass( renderScene );
-				composer.addPass( bloomPass );
-				composer.addPass( outputPass );
+				// Mesh contains self-intersecting semi-transparent faces, which display
+				// z-fighting unless depthWrite is disabled.
+				var core = model.getObjectByName( 'geo1_HoloFillDark_0' );
+				core.material.depthWrite = false;
 
-				new GLTFLoader().load( 'models/gltf/PrimaryIonDrive.glb', function ( gltf ) {
+				mixer = new THREE.AnimationMixer( model );
+				var clip = gltf.animations[ 0 ];
+				mixer.clipAction( clip.optimize() ).play();
 
-					const model = gltf.scene;
+				animate();
 
-					scene.add( model );
+			} );
 
-					mixer = new THREE.AnimationMixer( model );
-					const clip = gltf.animations[ 0 ];
-					mixer.clipAction( clip.optimize() ).play();
+			var gui = new dat.GUI();
 
-					animate();
+			gui.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
 
-				} );
+				renderer.toneMappingExposure = Math.pow( value, 4.0 );
 
-				const gui = new GUI();
+			} );
 
-				const bloomFolder = gui.addFolder( 'bloom' );
+			gui.add( params, 'bloomThreshold', 0.0, 1.0 ).onChange( function ( value ) {
 
-				bloomFolder.add( params, 'threshold', 0.0, 1.0 ).onChange( function ( value ) {
+				bloomPass.threshold = Number( value );
 
-					bloomPass.threshold = Number( value );
+			} );
 
-				} );
+			gui.add( params, 'bloomStrength', 0.0, 3.0 ).onChange( function ( value ) {
 
-				bloomFolder.add( params, 'strength', 0.0, 3.0 ).onChange( function ( value ) {
+				bloomPass.strength = Number( value );
 
-					bloomPass.strength = Number( value );
+			} );
 
-				} );
+			gui.add( params, 'bloomRadius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
 
-				gui.add( params, 'radius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
+				bloomPass.radius = Number( value );
 
-					bloomPass.radius = Number( value );
+			} );
 
-				} );
+			window.onresize = function () {
 
-				const toneMappingFolder = gui.addFolder( 'tone mapping' );
-
-				toneMappingFolder.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
-
-					renderer.toneMappingExposure = Math.pow( value, 4.0 );
-
-				} );
-
-				window.addEventListener( 'resize', onWindowResize );
-
-			}
-
-			function onWindowResize() {
-
-				const width = window.innerWidth;
-				const height = window.innerHeight;
+				var width = window.innerWidth;
+				var height = window.innerHeight;
 
 				camera.aspect = width / height;
 				camera.updateProjectionMatrix();
@@ -167,7 +169,8 @@
 				renderer.setSize( width, height );
 				composer.setSize( width, height );
 
-			}
+			};
+
 
 			function animate() {
 

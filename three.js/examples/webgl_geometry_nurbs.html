@@ -4,57 +4,47 @@
 		<title>three.js webgl - geometry - NURBS</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			body {
+				font-family: Monospace;
 				background-color: #f0f0f0;
-				color: #444;
+				margin: 0px;
+				overflow: hidden;
 			}
-			a {
-				color: #08f;
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				padding: 5px;
+				text-align:center;
 			}
 		</style>
 	</head>
 	<body>
-		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - NURBS curve and surface example
-		</div>
+		<canvas id="debug" style="position:absolute; left:100px"></canvas>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - NURBS curve and surface example</div>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="../build/three.js"></script>
+		<script src="js/curves/NURBSCurve.js"></script>
+		<script src="js/curves/NURBSSurface.js"></script>
+		<script src="js/curves/NURBSUtils.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
-		<script type="module">
+		<script>
 
-			import * as THREE from 'three';
+			var container, stats;
 
-			import Stats from 'three/addons/libs/stats.module.js';
+			var camera, scene, renderer;
+			var group;
 
-			import { NURBSCurve } from 'three/addons/curves/NURBSCurve.js';
-			import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
-			import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
+			var targetRotation = 0;
+			var targetRotationOnMouseDown = 0;
 
-			let container, stats;
+			var mouseX = 0;
+			var mouseXOnMouseDown = 0;
 
-			let camera, scene, renderer;
-			let group;
-
-			let targetRotation = 0;
-			let targetRotationOnPointerDown = 0;
-
-			let pointerX = 0;
-			let pointerXOnPointerDown = 0;
-
-			let windowHalfX = window.innerWidth / 2;
+			var windowHalfX = window.innerWidth / 2;
 
 			init();
 			animate();
@@ -64,15 +54,23 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
+				var info = document.createElement( 'div' );
+				info.style.position = 'absolute';
+				info.style.top = '30px';
+				info.style.width = '100%';
+				info.style.textAlign = 'center';
+				info.innerHTML = 'Drag to spin';
+				container.appendChild( info );
+
 				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.set( 0, 150, 750 );
 
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xf0f0f0 );
 
-				scene.add( new THREE.AmbientLight( 0xffffff ) );
+				scene.add( new THREE.AmbientLight( 0x808080 ) );
 
-				const light = new THREE.DirectionalLight( 0xffffff, 3 );
+				var light = new THREE.DirectionalLight( 0xffffff, 1 );
 				light.position.set( 1, 1, 1 );
 				scene.add( light );
 
@@ -82,17 +80,17 @@
 
 				// NURBS curve
 
-				const nurbsControlPoints = [];
-				const nurbsKnots = [];
-				const nurbsDegree = 3;
+				var nurbsControlPoints = [];
+				var nurbsKnots = [];
+				var nurbsDegree = 3;
 
-				for ( let i = 0; i <= nurbsDegree; i ++ ) {
+				for ( var i = 0; i <= nurbsDegree; i ++ ) {
 
 					nurbsKnots.push( 0 );
 
 				}
 
-				for ( let i = 0, j = 20; i < j; i ++ ) {
+				for ( var i = 0, j = 20; i < j; i ++ ) {
 
 					nurbsControlPoints.push(
 						new THREE.Vector4(
@@ -103,34 +101,34 @@
 						)
 					);
 
-					const knot = ( i + 1 ) / ( j - nurbsDegree );
-					nurbsKnots.push( THREE.MathUtils.clamp( knot, 0, 1 ) );
+					var knot = ( i + 1 ) / ( j - nurbsDegree );
+					nurbsKnots.push( THREE.Math.clamp( knot, 0, 1 ) );
 
 				}
 
-				const nurbsCurve = new NURBSCurve( nurbsDegree, nurbsKnots, nurbsControlPoints );
+				var nurbsCurve = new THREE.NURBSCurve( nurbsDegree, nurbsKnots, nurbsControlPoints );
 
-				const nurbsGeometry = new THREE.BufferGeometry();
+				var nurbsGeometry = new THREE.BufferGeometry();
 				nurbsGeometry.setFromPoints( nurbsCurve.getPoints( 200 ) );
 
-				const nurbsMaterial = new THREE.LineBasicMaterial( { color: 0x333333 } );
+				var nurbsMaterial = new THREE.LineBasicMaterial( { color: 0x333333 } );
 
-				const nurbsLine = new THREE.Line( nurbsGeometry, nurbsMaterial );
+				var nurbsLine = new THREE.Line( nurbsGeometry, nurbsMaterial );
 				nurbsLine.position.set( 200, - 100, 0 );
 				group.add( nurbsLine );
 
-				const nurbsControlPointsGeometry = new THREE.BufferGeometry();
+				var nurbsControlPointsGeometry = new THREE.BufferGeometry();
 				nurbsControlPointsGeometry.setFromPoints( nurbsCurve.controlPoints );
 
-				const nurbsControlPointsMaterial = new THREE.LineBasicMaterial( { color: 0x333333, opacity: 0.25, transparent: true } );
+				var nurbsControlPointsMaterial = new THREE.LineBasicMaterial( { color: 0x333333, opacity: 0.25, transparent: true } );
 
-				const nurbsControlPointsLine = new THREE.Line( nurbsControlPointsGeometry, nurbsControlPointsMaterial );
+				var nurbsControlPointsLine = new THREE.Line( nurbsControlPointsGeometry, nurbsControlPointsMaterial );
 				nurbsControlPointsLine.position.copy( nurbsLine.position );
 				group.add( nurbsControlPointsLine );
 
 				// NURBS surface
 
-				const nsControlPoints = [
+				var nsControlPoints = [
 					[
 						new THREE.Vector4( - 200, - 200, 100, 1 ),
 						new THREE.Vector4( - 200, - 100, - 200, 1 ),
@@ -150,16 +148,15 @@
 						new THREE.Vector4( 200, 200, 100, 1 )
 					]
 				];
-				const degree1 = 2;
-				const degree2 = 3;
-				const knots1 = [ 0, 0, 0, 1, 1, 1 ];
-				const knots2 = [ 0, 0, 0, 0, 1, 1, 1, 1 ];
-				const nurbsSurface = new NURBSSurface( degree1, degree2, knots1, knots2, nsControlPoints );
+				var degree1 = 2;
+				var degree2 = 3;
+				var knots1 = [ 0, 0, 0, 1, 1, 1 ];
+				var knots2 = [ 0, 0, 0, 0, 1, 1, 1, 1 ];
+				var nurbsSurface = new THREE.NURBSSurface( degree1, degree2, knots1, knots2, nsControlPoints );
 
-				const map = new THREE.TextureLoader().load( 'textures/uv_grid_opengl.jpg' );
+				var map = new THREE.TextureLoader().load( 'textures/UV_Grid_Sm.jpg' );
 				map.wrapS = map.wrapT = THREE.RepeatWrapping;
 				map.anisotropy = 16;
-				map.colorSpace = THREE.SRGBColorSpace;
 
 				function getSurfacePoint( u, v, target ) {
 
@@ -167,9 +164,9 @@
 
 				}
 
-				const geometry = new ParametricGeometry( getSurfacePoint, 20, 20 );
-				const material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
-				const object = new THREE.Mesh( geometry, material );
+				var geometry = new THREE.ParametricBufferGeometry( getSurfacePoint, 20, 20 );
+				var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );
+				var object = new THREE.Mesh( geometry, material );
 				object.position.set( - 200, 100, 0 );
 				object.scale.multiplyScalar( 1 );
 				group.add( object );
@@ -184,12 +181,13 @@
 				stats = new Stats();
 				container.appendChild( stats.dom );
 
-				container.style.touchAction = 'none';
-				container.addEventListener( 'pointerdown', onPointerDown );
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -206,34 +204,66 @@
 
 			//
 
-			function onPointerDown( event ) {
+			function onDocumentMouseDown( event ) {
 
-				if ( event.isPrimary === false ) return;
+				event.preventDefault();
 
-				pointerXOnPointerDown = event.clientX - windowHalfX;
-				targetRotationOnPointerDown = targetRotation;
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.addEventListener( 'mouseout', onDocumentMouseOut, false );
 
-				document.addEventListener( 'pointermove', onPointerMove );
-				document.addEventListener( 'pointerup', onPointerUp );
-
-			}
-
-			function onPointerMove( event ) {
-
-				if ( event.isPrimary === false ) return;
-
-				pointerX = event.clientX - windowHalfX;
-
-				targetRotation = targetRotationOnPointerDown + ( pointerX - pointerXOnPointerDown ) * 0.02;
+				mouseXOnMouseDown = event.clientX - windowHalfX;
+				targetRotationOnMouseDown = targetRotation;
 
 			}
 
-			function onPointerUp() {
+			function onDocumentMouseMove( event ) {
 
-				if ( event.isPrimary === false ) return;
+				mouseX = event.clientX - windowHalfX;
 
-				document.removeEventListener( 'pointermove', onPointerMove );
-				document.removeEventListener( 'pointerup', onPointerUp );
+				targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
+
+			}
+
+			function onDocumentMouseUp() {
+
+				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+			}
+
+			function onDocumentMouseOut() {
+
+				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length == 1 ) {
+
+					event.preventDefault();
+
+					mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+					targetRotationOnMouseDown = targetRotation;
+
+				}
+
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length == 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.05;
+
+				}
 
 			}
 

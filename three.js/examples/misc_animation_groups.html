@@ -4,35 +4,50 @@
 		<title>three.js webgl - animation - groups</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #fff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+				color: #f00;
+			}
+
+		</style>
 	</head>
 	<body>
 
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - animation - groups
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - animation - groups
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			let stats, clock;
-			let scene, camera, renderer, mixer;
+			var stats, clock;
+			var scene, camera, renderer, mixer;
 
 			init();
 			animate();
@@ -49,20 +64,20 @@
 
 				// all objects of this animation group share a common animation state
 
-				const animationGroup = new THREE.AnimationObjectGroup();
+				var animationGroup = new THREE.AnimationObjectGroup();
 
 				//
 
-				const geometry = new THREE.BoxGeometry( 5, 5, 5 );
-				const material = new THREE.MeshBasicMaterial( { transparent: true } );
+				var geometry = new THREE.BoxBufferGeometry( 5, 5, 5 );
+				var material = new THREE.MeshBasicMaterial( { transparent: true } );
 
 				//
 
-				for ( let i = 0; i < 5; i ++ ) {
+				for ( var i = 0; i < 5; i ++ ) {
 
-					for ( let j = 0; j < 5; j ++ ) {
+					for ( var j = 0; j < 5; j ++ ) {
 
-						const mesh = new THREE.Mesh( geometry, material );
+						var mesh = new THREE.Mesh( geometry, material );
 
 						mesh.position.x = 32 - ( 16 * i );
 						mesh.position.y = 0;
@@ -77,23 +92,23 @@
 
 				// create some keyframe tracks
 
-				const xAxis = new THREE.Vector3( 1, 0, 0 );
-				const qInitial = new THREE.Quaternion().setFromAxisAngle( xAxis, 0 );
-				const qFinal = new THREE.Quaternion().setFromAxisAngle( xAxis, Math.PI );
-				const quaternionKF = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 1, 2 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
+				var xAxis = new THREE.Vector3( 1, 0, 0 );
+				var qInitial = new THREE.Quaternion().setFromAxisAngle( xAxis, 0 );
+				var qFinal = new THREE.Quaternion().setFromAxisAngle( xAxis, Math.PI );
+				var quaternionKF = new THREE.QuaternionKeyframeTrack( '.quaternion', [ 0, 1, 2 ], [ qInitial.x, qInitial.y, qInitial.z, qInitial.w, qFinal.x, qFinal.y, qFinal.z, qFinal.w, qInitial.x, qInitial.y, qInitial.z, qInitial.w ] );
 
-				const colorKF = new THREE.ColorKeyframeTrack( '.material.color', [ 0, 1, 2 ], [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ], THREE.InterpolateDiscrete );
-				const opacityKF = new THREE.NumberKeyframeTrack( '.material.opacity', [ 0, 1, 2 ], [ 1, 0, 1 ] );
+				var colorKF = new THREE.ColorKeyframeTrack( '.material.color', [ 0, 1, 2 ], [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ], THREE.InterpolateDiscrete );
+				var opacityKF = new THREE.NumberKeyframeTrack( '.material.opacity', [ 0, 1, 2 ], [ 1, 0, 1 ] );
 
 				// create clip
 
-				const clip = new THREE.AnimationClip( 'default', 3, [ quaternionKF, colorKF, opacityKF ] );
+				var clip = new THREE.AnimationClip( 'default', 3, [ quaternionKF, colorKF, opacityKF ] );
 
 				// apply the animation group to the mixer as the root object
 
 				mixer = new THREE.AnimationMixer( animationGroup );
 
-				const clipAction = mixer.clipAction( clip );
+				var clipAction = mixer.clipAction( clip );
 				clipAction.play();
 
 				//
@@ -114,7 +129,7 @@
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -137,7 +152,7 @@
 
 			function render() {
 
-				const delta = clock.getDelta();
+				var delta = clock.getDelta();
 
 				if ( mixer ) {
 

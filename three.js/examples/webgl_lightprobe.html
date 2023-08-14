@@ -1,50 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - light probe</title>
+		<title>three.js webgl - lights - light probe</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			a {
+				color: #ffa;
+				font-weight: bold;
+			}
+
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 0; /* to not conflict with dat.gui */
+				display:block;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - light probe
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl lights - light probe
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/controls/OrbitControls.js"></script>
+
+		<script src="js/libs/dat.gui.min.js"></script>
+
+		<script src="js/WebGL.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var mesh, renderer, scene, camera;
 
-			import * as THREE from 'three';
+			var gui;
 
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { LightProbeGenerator } from 'three/addons/lights/LightProbeGenerator.js';
-
-			let mesh, renderer, scene, camera;
-
-			let gui;
-
-			let lightProbe;
-			let directionalLight;
+			var lightProbe;
+			var directionalLight;
 
 			// linear color space
-			const API = {
+			var API = {
 				lightProbeIntensity: 1.0,
-				directionalLightIntensity: 0.6,
+				directionalLightIntensity: 0.2,
 				envMapIntensity: 1
 			};
 
@@ -59,8 +76,12 @@
 				document.body.appendChild( renderer.domElement );
 
 				// tone mapping
-				renderer.toneMapping = THREE.NoToneMapping;
+				//renderer.toneMapping = THREE.LinearToneMapping;
+			 	//renderer.toneMappingExposure = API.exposure;
 
+				// gamma
+				renderer.gammaOutput = true;
+				renderer.gammaFactor = 2.2; // approximate sRGB
 
 				// scene
 				scene = new THREE.Scene();
@@ -70,14 +91,14 @@
 				camera.position.set( 0, 0, 30 );
 
 				// controls
-				const controls = new OrbitControls( camera, renderer.domElement );
+				var controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.addEventListener( 'change', render );
 				controls.minDistance = 10;
 				controls.maxDistance = 50;
 				controls.enablePan = false;
 
 				// probe
-				lightProbe = new THREE.LightProbe();
+				lightProbe = new THREE.LightProbe( 0xffffff, API.lightProbeIntensity );
 				scene.add( lightProbe );
 
 				// light
@@ -86,7 +107,7 @@
 				scene.add( directionalLight );
 
 				// envmap
-				const genCubeUrls = function ( prefix, postfix ) {
+				var genCubeUrls = function ( prefix, postfix ) {
 
 					return [
 						prefix + 'px' + postfix, prefix + 'nx' + postfix,
@@ -96,18 +117,20 @@
 
 				};
 
-				const urls = genCubeUrls( 'textures/cube/pisa/', '.png' );
+				var urls = genCubeUrls( 'textures/cube/pisa/', '.png' );
 
 				new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
 
+					cubeTexture.encoding = THREE.sRGBEncoding;
+
 					scene.background = cubeTexture;
 
-					lightProbe.copy( LightProbeGenerator.fromCubeTexture( cubeTexture ) );
+					lightProbe.setFromCubeTexture( cubeTexture );
 
-					const geometry = new THREE.SphereGeometry( 5, 64, 32 );
-					//const geometry = new THREE.TorusKnotGeometry( 4, 1.5, 256, 32, 2, 3 );
+					var geometry = new THREE.SphereBufferGeometry( 5, 64, 32 );
+					//var geometry = new THREE.TorusKnotBufferGeometry( 4, 1.5, 256, 32, 2, 3 );
 
-					const material = new THREE.MeshStandardMaterial( {
+					var material = new THREE.MeshStandardMaterial( {
 						color: 0xffffff,
 						metalness: 0,
 						roughness: 0,
@@ -125,34 +148,30 @@
 
 
 				// gui
-				gui = new GUI( { title: 'Intensity' } );
+				gui = new dat.GUI();
 
-				gui.add( API, 'lightProbeIntensity', 0, 1, 0.02 )
-					.name( 'light probe' )
-					.onChange( function () {
+				gui.width = 300;
 
-						lightProbe.intensity = API.lightProbeIntensity; render();
+				gui.domElement.style.userSelect = 'none';
 
-					} );
+				var fl = gui.addFolder( 'Intensity' );
 
-				gui.add( API, 'directionalLightIntensity', 0, 1, 0.02 )
-					.name( 'directional light' )
-					.onChange( function () {
+				fl.add( API, 'lightProbeIntensity', 0, 1, 0.02 )
+					.name( 'light probe')
+					.onChange( function() { lightProbe.intensity = API.lightProbeIntensity; render(); } );
 
-						directionalLight.intensity = API.directionalLightIntensity; render();
+				fl.add( API, 'directionalLightIntensity', 0, 1, 0.02 )
+					.name( 'directional light')
+					.onChange( function() { directionalLight.intensity = API.directionalLightIntensity; render(); } );
 
-					} );
+				fl.add( API, 'envMapIntensity', 0, 1, 0.02 )
+					.name( 'envMap')
+					.onChange( function() { mesh.material.envMapIntensity = API.envMapIntensity; render(); } );
 
-				gui.add( API, 'envMapIntensity', 0, 1, 0.02 )
-					.name( 'envMap' )
-					.onChange( function () {
-
-						mesh.material.envMapIntensity = API.envMapIntensity; render();
-
-					} );
+				fl.open();
 
 				// listener
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 

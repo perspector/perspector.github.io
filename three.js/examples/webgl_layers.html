@@ -4,48 +4,41 @@
 		<title>three.js webgl - layers</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			body {
+				font-family: Monospace;
 				background-color: #f0f0f0;
-				color: #444;
+				margin: 0px;
+				overflow: hidden;
 			}
-			a {
-				color: #08f;
+
+			#info {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 0; /* to not conflict with dat.gui */
+				display:block;
 			}
 		</style>
 	</head>
 	<body>
 
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl layers
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl layers
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src='js/libs/dat.gui.min.js'></script>
 
-		<script type="module">
+		<script>
 
-			import * as THREE from 'three';
+			var container, stats;
+			var camera, scene, renderer;
 
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-			let container, stats;
-			let camera, scene, renderer;
-
-			let theta = 0;
-			const radius = 5;
+			var radius = 100, theta = 0;
 
 			init();
 			animate();
@@ -55,7 +48,7 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 100 );
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
 				camera.layers.enable( 0 ); // enabled by default
 				camera.layers.enable( 1 );
 				camera.layers.enable( 2 );
@@ -63,7 +56,7 @@
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xf0f0f0 );
 
-				const light = new THREE.PointLight( 0xffffff, 3, 0, 0 );
+				var light = new THREE.PointLight( 0xffffff, 1 );
 				light.layers.enable( 0 );
 				light.layers.enable( 1 );
 				light.layers.enable( 2 );
@@ -71,18 +64,19 @@
 				scene.add( camera );
 				camera.add( light );
 
-				const colors = [ 0xff0000, 0x00ff00, 0x0000ff ];
-				const geometry = new THREE.BoxGeometry();
+				var colors = [ 0xff0000, 0x00ff00, 0x0000ff ];
+				var geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+				var layer;
 
-				for ( let i = 0; i < 300; i ++ ) {
+				for ( var i = 0; i < 300; i ++ ) {
 
-					const layer = ( i % 3 );
+					layer = ( i % 3 );
 
-					const object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: colors[ layer ] } ) );
+					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: colors[ layer ] } ) );
 
-					object.position.x = Math.random() * 40 - 20;
-					object.position.y = Math.random() * 40 - 20;
-					object.position.z = Math.random() * 40 - 20;
+					object.position.x = Math.random() * 800 - 400;
+					object.position.y = Math.random() * 800 - 400;
+					object.position.z = Math.random() * 800 - 400;
 
 					object.rotation.x = Math.random() * 2 * Math.PI;
 					object.rotation.y = Math.random() * 2 * Math.PI;
@@ -98,7 +92,7 @@
 
 				}
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
@@ -106,50 +100,28 @@
 				stats = new Stats();
 				container.appendChild( stats.dom );
 
-				const layers = {
-
-					'toggle red': function () {
-
-						camera.layers.toggle( 0 );
-
-					},
-
-					'toggle green': function () {
-
-						camera.layers.toggle( 1 );
-
-					},
-
-					'toggle blue': function () {
-
-						camera.layers.toggle( 2 );
-
-					},
-
-					'enable all': function () {
-
-						camera.layers.enableAll();
-
-					},
-
-					'disable all': function () {
-
-						camera.layers.disableAll();
-
-					}
-
-				};
+				var layers = { red: true, green: true, blue: true };
 
 				//
 				// Init gui
-				const gui = new GUI();
-				gui.add( layers, 'toggle red' );
-				gui.add( layers, 'toggle green' );
-				gui.add( layers, 'toggle blue' );
-				gui.add( layers, 'enable all' );
-				gui.add( layers, 'disable all' );
+				var gui = new dat.GUI();
+				gui.add( layers, 'red' ).onChange( function () {
 
-				window.addEventListener( 'resize', onWindowResize );
+					camera.layers.toggle( 0 );
+
+				} );
+				gui.add( layers, 'green' ).onChange( function () {
+
+					camera.layers.toggle( 1 );
+
+				} );
+				gui.add( layers, 'blue' ).onChange( function () {
+
+					camera.layers.toggle( 2 );
+
+				} );
+
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -177,9 +149,9 @@
 
 				theta += 0.1;
 
-				camera.position.x = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
-				camera.position.y = radius * Math.sin( THREE.MathUtils.degToRad( theta ) );
-				camera.position.z = radius * Math.cos( THREE.MathUtils.degToRad( theta ) );
+				camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
+				camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
+				camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
 				camera.lookAt( scene.position );
 
 				renderer.render( scene, camera );

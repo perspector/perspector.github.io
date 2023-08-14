@@ -1,66 +1,24 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
 import { AudioContext } from '../../../../src/audio/AudioContext.js';
 
 export default QUnit.module( 'Audios', () => {
 
-	QUnit.module( 'AudioContext', ( hooks ) => {
+	QUnit.module( 'AudioContext', () => {
 
-		function mockWindowAudioContext() {
+		// PUBLIC STUFF
+		QUnit.todo( "getContext", ( assert ) => {
 
-			global.window = {
-				AudioContext: function () {
-
-					return {
-						createGain: () => {
-
-							return {
-								connect: () => {},
-							};
-
-						}
-					};
-
-				},
-			};
-
-		}
-
-		if ( typeof window === 'undefined' ) {
-
-			hooks.before( function () {
-
-				mockWindowAudioContext();
-
-			} );
-
-			hooks.after( function () {
-
-				global.window = undefined;
-
-			} );
-
-		}
-
-		// STATIC
-		QUnit.test( 'getContext', ( assert ) => {
-
-			const context = AudioContext.getContext();
-			assert.strictEqual(
-				context instanceof Object, true,
-				'AudioContext.getContext creates a context.'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.test( 'setContext', ( assert ) => {
+		QUnit.todo( "setContext", ( assert ) => {
 
-			AudioContext.setContext( new window.AudioContext() );
-			const context = AudioContext.getContext();
-			assert.strictEqual(
-				context instanceof Object, true,
-				'AudioContext.setContext updates the context.'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

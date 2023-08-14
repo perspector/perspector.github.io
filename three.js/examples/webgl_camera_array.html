@@ -4,48 +4,41 @@
 		<title>three.js webgl - arraycamera</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				margin: 0px;
+				background-color: #000000;
+				overflow: hidden;
+			}
+		</style>
 	</head>
 	<body>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			let camera, scene, renderer;
-			let mesh;
-			const AMOUNT = 6;
+			var camera, scene, renderer;
+			var mesh;
 
 			init();
 			animate();
 
 			function init() {
 
-				const ASPECT_RATIO = window.innerWidth / window.innerHeight;
+				var ASPECT_RATIO = window.innerWidth / window.innerHeight;
 
-				const WIDTH = ( window.innerWidth / AMOUNT ) * window.devicePixelRatio;
-				const HEIGHT = ( window.innerHeight / AMOUNT ) * window.devicePixelRatio;
+				var AMOUNT = 6;
+				var WIDTH = ( window.innerWidth / AMOUNT ) * window.devicePixelRatio;
+				var HEIGHT = ( window.innerHeight / AMOUNT ) * window.devicePixelRatio;
 
-				const cameras = [];
+				var cameras = [];
 
-				for ( let y = 0; y < AMOUNT; y ++ ) {
+				for ( var y = 0; y < AMOUNT; y ++ ) {
 
-					for ( let x = 0; x < AMOUNT; x ++ ) {
+					for ( var x = 0; x < AMOUNT; x ++ ) {
 
-						const subcamera = new THREE.PerspectiveCamera( 40, ASPECT_RATIO, 0.1, 10 );
+						var subcamera = new THREE.PerspectiveCamera( 40, ASPECT_RATIO, 0.1, 10 );
 						subcamera.viewport = new THREE.Vector4( Math.floor( x * WIDTH ), Math.floor( y * HEIGHT ), Math.ceil( WIDTH ), Math.ceil( HEIGHT ) );
 						subcamera.position.x = ( x / AMOUNT ) - 0.5;
 						subcamera.position.y = 0.5 - ( y / AMOUNT );
@@ -64,26 +57,26 @@
 
 				scene = new THREE.Scene();
 
-				scene.add( new THREE.AmbientLight( 0x999999 ) );
+				scene.add( new THREE.AmbientLight( 0x222244 ) );
 
-				const light = new THREE.DirectionalLight( 0xffffff, 3 );
+				var light = new THREE.DirectionalLight();
 				light.position.set( 0.5, 0.5, 1 );
 				light.castShadow = true;
 				light.shadow.camera.zoom = 4; // tighter shadow map
 				scene.add( light );
 
-				const geometryBackground = new THREE.PlaneGeometry( 100, 100 );
-				const materialBackground = new THREE.MeshPhongMaterial( { color: 0x000066 } );
+				var geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+				var material = new THREE.MeshPhongMaterial( { color: 0x000066 } );
 
-				const background = new THREE.Mesh( geometryBackground, materialBackground );
+				var background = new THREE.Mesh( geometry, material );
 				background.receiveShadow = true;
 				background.position.set( 0, 0, - 1 );
 				scene.add( background );
 
-				const geometryCylinder = new THREE.CylinderGeometry( 0.5, 0.5, 1, 32 );
-				const materialCylinder = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+				var geometry = new THREE.CylinderBufferGeometry( 0.5, 0.5, 1, 32 );
+				var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
 
-				mesh = new THREE.Mesh( geometryCylinder, materialCylinder );
+				mesh = new THREE.Mesh( geometry, material );
 				mesh.castShadow = true;
 				mesh.receiveShadow = true;
 				scene.add( mesh );
@@ -96,37 +89,14 @@
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
 			function onWindowResize() {
 
-				const ASPECT_RATIO = window.innerWidth / window.innerHeight;
-				const WIDTH = ( window.innerWidth / AMOUNT ) * window.devicePixelRatio;
-				const HEIGHT = ( window.innerHeight / AMOUNT ) * window.devicePixelRatio;
-
-				camera.aspect = ASPECT_RATIO;
+				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
-
-				for ( let y = 0; y < AMOUNT; y ++ ) {
-
-					for ( let x = 0; x < AMOUNT; x ++ ) {
-
-						const subcamera = camera.cameras[ AMOUNT * y + x ];
-
-						subcamera.viewport.set(
-							Math.floor( x * WIDTH ),
-							Math.floor( y * HEIGHT ),
-							Math.ceil( WIDTH ),
-							Math.ceil( HEIGHT ) );
-
-						subcamera.aspect = ASPECT_RATIO;
-						subcamera.updateProjectionMatrix();
-
-					}
-
-				}
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
 

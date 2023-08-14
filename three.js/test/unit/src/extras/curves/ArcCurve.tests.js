@@ -1,8 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { ArcCurve } from '../../../../../src/extras/curves/ArcCurve.js';
-
-import { EllipseCurve } from '../../../../../src/extras/curves/EllipseCurve.js';
+import { ArcCurve } from '../../../../../src/extras/curves/ArcCurve';
 
 export default QUnit.module( 'Extras', () => {
 
@@ -11,43 +12,23 @@ export default QUnit.module( 'Extras', () => {
 		QUnit.module( 'ArcCurve', () => {
 
 			// INHERITANCE
-			QUnit.test( 'Extending', ( assert ) => {
+			QUnit.todo( "Extending", ( assert ) => {
 
-				const object = new ArcCurve();
-				assert.strictEqual(
-					object instanceof EllipseCurve, true,
-					'ArcCurve extends from EllipseCurve'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
 			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			QUnit.todo( "Instancing", ( assert ) => {
 
-				const object = new ArcCurve();
-				assert.ok( object, 'Can instantiate an ArcCurve.' );
-
-			} );
-
-			// PROPERTIES
-			QUnit.test( 'type', ( assert ) => {
-
-				const object = new ArcCurve();
-				assert.ok(
-					object.type === 'ArcCurve',
-					'ArcCurve.type should be ArcCurve'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			// PUBLIC
-			QUnit.test( 'isArcCurve', ( assert ) => {
+			// PUBLIC STUFF
+			QUnit.todo( "isArcCurve", ( assert ) => {
 
-				const object = new ArcCurve();
-				assert.ok(
-					object.isArcCurve,
-					'ArcCurve.isArcCurve should be true'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

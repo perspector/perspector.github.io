@@ -4,71 +4,79 @@
 		<title>three.js webgl - mirror</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			body {
-				color: #444;
+				color: #888888;
+				font-family:Monospace;
+				font-size:13px;
+
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
 			}
+
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 200px;
+				left: calc(50% - 100px);
+				text-align: center;
+			}
+
 			a {
-				color: #08f;
+				color: #00f;
 			}
 		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - mirror
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - mirror
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/objects/Reflector.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
+			// scene size
+			var WIDTH = window.innerWidth;
+			var HEIGHT = window.innerHeight;
 
-			import * as THREE from 'three';
+			// camera
+			var VIEW_ANGLE = 45;
+			var ASPECT = WIDTH / HEIGHT;
+			var NEAR = 1;
+			var FAR = 500;
 
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { Reflector } from 'three/addons/objects/Reflector.js';
+			var camera, scene, renderer;
 
-			let camera, scene, renderer;
+			var cameraControls;
 
-			let cameraControls;
-
-			let sphereGroup, smallSphere;
-
-			let groundMirror, verticalMirror;
+			var sphereGroup, smallSphere;
 
 			init();
 			animate();
 
 			function init() {
 
-				const container = document.getElementById( 'container' );
+				var container = document.getElementById( 'container' );
 
 				// renderer
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( WIDTH, HEIGHT );
 				container.appendChild( renderer.domElement );
 
 				// scene
 				scene = new THREE.Scene();
 
 				// camera
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
+				camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR );
 				camera.position.set( 0, 75, 160 );
 
-				cameraControls = new OrbitControls( camera, renderer.domElement );
+				cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
 				cameraControls.target.set( 0, 40, 0 );
 				cameraControls.maxDistance = 400;
 				cameraControls.minDistance = 10;
@@ -76,29 +84,29 @@
 
 				//
 
-				const planeGeo = new THREE.PlaneGeometry( 100.1, 100.1 );
+				var planeGeo = new THREE.PlaneBufferGeometry( 100.1, 100.1 );
 
 				// reflectors/mirrors
 
-				let geometry, material;
-
-				geometry = new THREE.CircleGeometry( 40, 64 );
-				groundMirror = new Reflector( geometry, {
+				var geometry = new THREE.CircleBufferGeometry( 40, 64 );
+				var groundMirror = new THREE.Reflector( geometry, {
 					clipBias: 0.003,
-					textureWidth: window.innerWidth * window.devicePixelRatio,
-					textureHeight: window.innerHeight * window.devicePixelRatio,
-					color: 0xb5b5b5
+					textureWidth: WIDTH * window.devicePixelRatio,
+					textureHeight: HEIGHT * window.devicePixelRatio,
+					color: 0x777777,
+					recursion: 1
 				} );
 				groundMirror.position.y = 0.5;
 				groundMirror.rotateX( - Math.PI / 2 );
 				scene.add( groundMirror );
 
-				geometry = new THREE.PlaneGeometry( 100, 100 );
-				verticalMirror = new Reflector( geometry, {
+				var geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+				var verticalMirror = new THREE.Reflector( geometry, {
 					clipBias: 0.003,
-					textureWidth: window.innerWidth * window.devicePixelRatio,
-					textureHeight: window.innerHeight * window.devicePixelRatio,
-					color: 0xc1cbcb
+					textureWidth: WIDTH * window.devicePixelRatio,
+					textureHeight: HEIGHT * window.devicePixelRatio,
+					color: 0x889999,
+					recursion: 1
 				} );
 				verticalMirror.position.y = 50;
 				verticalMirror.position.z = - 50;
@@ -108,14 +116,14 @@
 				sphereGroup = new THREE.Object3D();
 				scene.add( sphereGroup );
 
-				geometry = new THREE.CylinderGeometry( 0.1, 15 * Math.cos( Math.PI / 180 * 30 ), 0.1, 24, 1 );
-				material = new THREE.MeshPhongMaterial( { color: 0xffffff, emissive: 0x8d8d8d } );
-				const sphereCap = new THREE.Mesh( geometry, material );
+				var geometry = new THREE.CylinderBufferGeometry( 0.1, 15 * Math.cos( Math.PI / 180 * 30 ), 0.1, 24, 1 );
+				var material = new THREE.MeshPhongMaterial( { color: 0xffffff, emissive: 0x444444 } );
+				var sphereCap = new THREE.Mesh( geometry, material );
 				sphereCap.position.y = - 15 * Math.sin( Math.PI / 180 * 30 ) - 0.05;
 				sphereCap.rotateX( - Math.PI );
 
-				geometry = new THREE.SphereGeometry( 15, 24, 24, Math.PI / 2, Math.PI * 2, 0, Math.PI / 180 * 120 );
-				const halfSphere = new THREE.Mesh( geometry, material );
+				var geometry = new THREE.SphereBufferGeometry( 15, 24, 24, Math.PI / 2, Math.PI * 2, 0, Math.PI / 180 * 120 );
+				var halfSphere = new THREE.Mesh( geometry, material );
 				halfSphere.add( sphereCap );
 				halfSphere.rotateX( - Math.PI / 180 * 135 );
 				halfSphere.rotateZ( - Math.PI / 180 * 20 );
@@ -123,75 +131,55 @@
 
 				sphereGroup.add( halfSphere );
 
-				geometry = new THREE.IcosahedronGeometry( 5, 0 );
-				material = new THREE.MeshPhongMaterial( { color: 0xffffff, emissive: 0x7b7b7b, flatShading: true } );
+				var geometry = new THREE.IcosahedronBufferGeometry( 5, 0 );
+				var material = new THREE.MeshPhongMaterial( { color: 0xffffff, emissive: 0x333333, flatShading: true } );
 				smallSphere = new THREE.Mesh( geometry, material );
 				scene.add( smallSphere );
 
 				// walls
-				const planeTop = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0xffffff } ) );
+				var planeTop = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0xffffff } ) );
 				planeTop.position.y = 100;
 				planeTop.rotateX( Math.PI / 2 );
 				scene.add( planeTop );
 
-				const planeBottom = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0xffffff } ) );
+				var planeBottom = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0xffffff } ) );
 				planeBottom.rotateX( - Math.PI / 2 );
 				scene.add( planeBottom );
 
-				const planeFront = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0x7f7fff } ) );
+				var planeFront = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0x7f7fff } ) );
 				planeFront.position.z = 50;
 				planeFront.position.y = 50;
 				planeFront.rotateY( Math.PI );
 				scene.add( planeFront );
 
-				const planeRight = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
+				var planeRight = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
 				planeRight.position.x = 50;
 				planeRight.position.y = 50;
 				planeRight.rotateY( - Math.PI / 2 );
 				scene.add( planeRight );
 
-				const planeLeft = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0xff0000 } ) );
+				var planeLeft = new THREE.Mesh( planeGeo, new THREE.MeshPhongMaterial( { color: 0xff0000 } ) );
 				planeLeft.position.x = - 50;
 				planeLeft.position.y = 50;
 				planeLeft.rotateY( Math.PI / 2 );
 				scene.add( planeLeft );
 
 				// lights
-				const mainLight = new THREE.PointLight( 0xe7e7e7, 2.5, 250, 0 );
+				var mainLight = new THREE.PointLight( 0xcccccc, 1.5, 250 );
 				mainLight.position.y = 60;
 				scene.add( mainLight );
 
-				const greenLight = new THREE.PointLight( 0x00ff00, 0.5, 1000, 0 );
+				var greenLight = new THREE.PointLight( 0x00ff00, 0.25, 1000 );
 				greenLight.position.set( 550, 50, 0 );
 				scene.add( greenLight );
 
-				const redLight = new THREE.PointLight( 0xff0000, 0.5, 1000, 0 );
+				var redLight = new THREE.PointLight( 0xff0000, 0.25, 1000 );
 				redLight.position.set( - 550, 50, 0 );
 				scene.add( redLight );
 
-				const blueLight = new THREE.PointLight( 0xbbbbfe, 0.5, 1000, 0 );
+				var blueLight = new THREE.PointLight( 0x7f7fff, 0.25, 1000 );
 				blueLight.position.set( 0, 50, 550 );
 				scene.add( blueLight );
-
-				window.addEventListener( 'resize', onWindowResize );
-
-			}
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-				groundMirror.getRenderTarget().setSize(
-					window.innerWidth * window.devicePixelRatio,
-					window.innerHeight * window.devicePixelRatio
-				);
-				verticalMirror.getRenderTarget().setSize(
-					window.innerWidth * window.devicePixelRatio,
-					window.innerHeight * window.devicePixelRatio
-				);
 
 			}
 
@@ -199,7 +187,7 @@
 
 				requestAnimationFrame( animate );
 
-				const timer = Date.now() * 0.01;
+				var timer = Date.now() * 0.01;
 
 				sphereGroup.rotation.y -= 0.002;
 

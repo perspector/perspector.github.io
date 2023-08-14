@@ -1,80 +1,41 @@
-import { UIPanel, UIRow } from './libs/ui.js';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-function MenubarView( editor ) {
+Menubar.View = function ( editor ) {
 
-	const strings = editor.strings;
-
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setClass( 'menu' );
 
-	const title = new UIPanel();
+	var title = new UI.Panel();
 	title.setClass( 'title' );
-	title.setTextContent( strings.getKey( 'menubar/view' ) );
+	title.setTextContent( 'View' );
 	container.add( title );
 
-	const options = new UIPanel();
+	var options = new UI.Panel();
 	options.setClass( 'options' );
 	container.add( options );
 
-	// Fullscreen
+	// VR mode
 
-	const option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/view/fullscreen' ) );
+	option.setTextContent( 'VR mode' );
 	option.onClick( function () {
 
-		if ( document.fullscreenElement === null ) {
+		if ( WEBVR.isAvailable() === true ) {
 
-			document.documentElement.requestFullscreen();
+			editor.signals.enterVR.dispatch();
 
-		} else if ( document.exitFullscreen ) {
+		} else {
 
-			document.exitFullscreen();
-
-		}
-
-		// Safari
-
-		if ( document.webkitFullscreenElement === null ) {
-
-			document.documentElement.webkitRequestFullscreen();
-
-		} else if ( document.webkitExitFullscreen ) {
-
-			document.webkitExitFullscreen();
+			alert( 'WebVR not available' );
 
 		}
 
 	} );
 	options.add( option );
 
-	// VR (Work in progress)
-
-	if ( 'xr' in navigator ) {
-
-		navigator.xr.isSessionSupported( 'immersive-vr' )
-			.then( function ( supported ) {
-
-				if ( supported ) {
-
-					const option = new UIRow();
-					option.setClass( 'option' );
-					option.setTextContent( 'VR' );
-					option.onClick( function () {
-
-						editor.signals.toggleVR.dispatch();
-
-					} );
-					options.add( option );
-
-				}
-
-			} );
-
-	}
-
 	return container;
 
-}
-
-export { MenubarView };
+};

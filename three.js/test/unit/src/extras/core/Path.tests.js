@@ -1,8 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Path } from '../../../../../src/extras/core/Path.js';
-
-import { CurvePath } from '../../../../../src/extras/core/CurvePath.js';
+import { Path } from '../../../../../src/extras/core/Path';
 
 export default QUnit.module( 'Extras', () => {
 
@@ -11,117 +12,77 @@ export default QUnit.module( 'Extras', () => {
 		QUnit.module( 'Path', () => {
 
 			// INHERITANCE
-			QUnit.test( 'Extending', ( assert ) => {
+			QUnit.todo( "Extending", ( assert ) => {
 
-				const object = new Path();
-				assert.strictEqual(
-					object instanceof CurvePath, true,
-					'Path extends from CurvePath'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
 			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			QUnit.todo( "Instancing", ( assert ) => {
 
-				const object = new Path();
-				assert.ok( object, 'Can instantiate a Path.' );
-
-			} );
-
-			// PROPERTIES
-			QUnit.test( 'type', ( assert ) => {
-
-				const object = new Path();
-				assert.ok(
-					object.type === 'Path',
-					'Path.type should be Path'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'currentPoint', ( assert ) => {
+			// PUBLIC STUFF
+			QUnit.todo( "fromPoints", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			// PUBLIC
-			QUnit.todo( 'setFromPoints', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'moveTo', ( assert ) => {
+			QUnit.todo( "moveTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'lineTo', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'quadraticCurveTo', ( assert ) => {
+			QUnit.todo( "lineTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'bezierCurveTo', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'splineThru', ( assert ) => {
+			QUnit.todo( "quadraticCurveTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'arc', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'absarc', ( assert ) => {
+			QUnit.todo( "bezierCurveTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'ellipse', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'absellipse', ( assert ) => {
+			QUnit.todo( "splineThru", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'copy', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'toJSON', ( assert ) => {
+			QUnit.todo( "arc", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'fromJSON', ( assert ) => {
+			QUnit.todo( "absarc", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
+
+			} );
+
+			QUnit.todo( "ellipse", ( assert ) => {
+
+				assert.ok( false, "everything's gonna be alright" );
+
+			} );
+
+			QUnit.todo( "absellipse", ( assert ) => {
+
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

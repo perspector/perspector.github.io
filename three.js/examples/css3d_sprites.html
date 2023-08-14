@@ -4,50 +4,53 @@
 		<title>three.js css3d - sprites</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-			body {
-				background-color: #fff;
-				color: #000;
+			html, body {
+				height: 100%;
 			}
+
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				font-family: Arial;
+				overflow: hidden;
+			}
+
 			a {
-				color: #48f;
+				color: #8888ff;
+			}
+
+			#info {
+				position: absolute;
+				width: 100%;
+				color: #000000;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				z-index: 1;
 			}
 		</style>
 	</head>
 	<body>
+		<script src="../build/three.js"></script>
+		<script src="js/libs/tween.min.js"></script>
+		<script src="js/controls/TrackballControls.js"></script>
+		<script src="js/renderers/CSS3DRenderer.js"></script>
 
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> css3d - sprites</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js css3d</a> - sprites.</div>
 		<div id="container"></div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+			var camera, scene, renderer;
+			var controls;
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import TWEEN from 'three/addons/libs/tween.module.js';
-			import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
-			import { CSS3DRenderer, CSS3DSprite } from 'three/addons/renderers/CSS3DRenderer.js';
-
-			let camera, scene, renderer;
-			let controls;
-
-			const particlesTotal = 512;
-			const positions = [];
-			const objects = [];
-			let current = 0;
+			var particlesTotal = 512;
+			var positions = [];
+			var objects = [];
+			var current = 0;
 
 			init();
 			animate();
@@ -60,12 +63,12 @@
 
 				scene = new THREE.Scene();
 
-				const image = document.createElement( 'img' );
+				var image = document.createElement( 'img' );
 				image.addEventListener( 'load', function () {
 
-					for ( let i = 0; i < particlesTotal; i ++ ) {
+					for ( var i = 0; i < particlesTotal; i ++ ) {
 
-						const object = new CSS3DSprite( image.cloneNode() );
+						var object = new THREE.CSS3DSprite( image.cloneNode() );
 						object.position.x = Math.random() * 4000 - 2000,
 						object.position.y = Math.random() * 4000 - 2000,
 						object.position.z = Math.random() * 4000 - 2000;
@@ -77,22 +80,22 @@
 
 					transition();
 
-				} );
+				}, false );
 				image.src = 'textures/sprite.png';
 
 				// Plane
 
-				const amountX = 16;
-				const amountZ = 32;
-				const separationPlane = 150;
-				const offsetX = ( ( amountX - 1 ) * separationPlane ) / 2;
-				const offsetZ = ( ( amountZ - 1 ) * separationPlane ) / 2;
+				var amountX = 16;
+				var amountZ = 32;
+				var separation = 150;
+				var offsetX = ( ( amountX - 1 ) * separation ) / 2;
+				var offsetZ = ( ( amountZ - 1 ) * separation ) / 2;
 
-				for ( let i = 0; i < particlesTotal; i ++ ) {
+				for ( var i = 0; i < particlesTotal; i ++ ) {
 
-					const x = ( i % amountX ) * separationPlane;
-					const z = Math.floor( i / amountX ) * separationPlane;
-					const y = ( Math.sin( x * 0.5 ) + Math.sin( z * 0.5 ) ) * 200;
+					var x = ( i % amountX ) * separation;
+					var z = Math.floor( i / amountX ) * separation;
+					var y = ( Math.sin( x * 0.5 ) + Math.sin( z * 0.5 ) ) * 200;
 
 					positions.push( x - offsetX, y, z - offsetZ );
 
@@ -100,15 +103,15 @@
 
 				// Cube
 
-				const amount = 8;
-				const separationCube = 150;
-				const offset = ( ( amount - 1 ) * separationCube ) / 2;
+				var amount = 8;
+				var separation = 150;
+				var offset = ( ( amount - 1 ) * separation ) / 2;
 
-				for ( let i = 0; i < particlesTotal; i ++ ) {
+				for ( var i = 0; i < particlesTotal; i ++ ) {
 
-					const x = ( i % amount ) * separationCube;
-					const y = Math.floor( ( i / amount ) % amount ) * separationCube;
-					const z = Math.floor( i / ( amount * amount ) ) * separationCube;
+					var x = ( i % amount ) * separation;
+					var y = Math.floor( ( i / amount ) % amount ) * separation;
+					var z = Math.floor( i / ( amount * amount ) ) * separation;
 
 					positions.push( x - offset, y - offset, z - offset );
 
@@ -116,7 +119,7 @@
 
 				// Random
 
-				for ( let i = 0; i < particlesTotal; i ++ ) {
+				for ( var i = 0; i < particlesTotal; i ++ ) {
 
 					positions.push(
 						Math.random() * 4000 - 2000,
@@ -128,12 +131,12 @@
 
 				// Sphere
 
-				const radius = 750;
+				var radius = 750;
 
-				for ( let i = 0; i < particlesTotal; i ++ ) {
+				for ( var i = 0; i < particlesTotal; i ++ ) {
 
-					const phi = Math.acos( - 1 + ( 2 * i ) / particlesTotal );
-					const theta = Math.sqrt( particlesTotal * Math.PI ) * phi;
+					var phi = Math.acos( - 1 + ( 2 * i ) / particlesTotal );
+					var theta = Math.sqrt( particlesTotal * Math.PI ) * phi;
 
 					positions.push(
 						radius * Math.cos( theta ) * Math.sin( phi ),
@@ -145,17 +148,18 @@
 
 				//
 
-				renderer = new CSS3DRenderer();
+				renderer = new THREE.CSS3DRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.getElementById( 'container' ).appendChild( renderer.domElement );
 
 				//
 
-				controls = new TrackballControls( camera, renderer.domElement );
+				controls = new THREE.TrackballControls( camera, renderer.domElement );
+				controls.rotateSpeed = 0.5;
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -170,12 +174,12 @@
 
 			function transition() {
 
-				const offset = current * particlesTotal * 3;
-				const duration = 2000;
+				var offset = current * particlesTotal * 3;
+				var duration = 2000;
 
-				for ( let i = 0, j = offset; i < particlesTotal; i ++, j += 3 ) {
+				for ( var i = 0, j = offset; i < particlesTotal; i ++, j += 3 ) {
 
-					const object = objects[ i ];
+					var object = objects[ i ];
 
 					new TWEEN.Tween( object.position )
 						.to( {
@@ -204,12 +208,12 @@
 				TWEEN.update();
 				controls.update();
 
-				const time = performance.now();
+				var time = performance.now();
 
-				for ( let i = 0, l = objects.length; i < l; i ++ ) {
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
 
-					const object = objects[ i ];
-					const scale = Math.sin( ( Math.floor( object.position.x ) + time ) * 0.002 ) * 0.3 + 1;
+					var object = objects[ i ];
+					var scale = Math.sin( ( Math.floor( object.position.x ) + time ) * 0.002 ) * 0.3 + 1;
 					object.scale.set( scale, scale, scale );
 
 				}

@@ -1,36 +1,25 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { AudioLoader } from '../../../../src/loaders/AudioLoader.js';
-
-import { Loader } from '../../../../src/loaders/Loader.js';
+import { AudioLoader } from '../../../../src/loaders/AudioLoader';
 
 export default QUnit.module( 'Loaders', () => {
 
 	QUnit.module( 'AudioLoader', () => {
 
-		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
-
-			const object = new AudioLoader();
-			assert.strictEqual(
-				object instanceof Loader, true,
-				'AudioLoader extends from Loader'
-			);
-
-		} );
-
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new AudioLoader();
-			assert.ok( object, 'Can instantiate an AudioLoader.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.todo( 'load', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "load", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

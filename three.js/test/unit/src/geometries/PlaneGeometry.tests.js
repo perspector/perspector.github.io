@@ -1,15 +1,19 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ * @author Anonymous
+ */
 /* global QUnit */
 
-import { PlaneGeometry } from '../../../../src/geometries/PlaneGeometry.js';
-
-import { BufferGeometry } from '../../../../src/core/BufferGeometry.js';
-import { runStdGeometryTests } from '../../utils/qunit-utils.js';
+import { runStdGeometryTests } from '../../qunit-utils';
+import {
+	PlaneBufferGeometry
+} from '../../../../src/geometries/PlaneGeometry';
 
 export default QUnit.module( 'Geometries', () => {
 
-	QUnit.module( 'PlaneGeometry', ( hooks ) => {
+	QUnit.module( 'PlaneBufferGeometry', ( hooks ) => {
 
-		let geometries = undefined;
+		var geometries = undefined;
 		hooks.beforeEach( function () {
 
 			const parameters = {
@@ -20,55 +24,26 @@ export default QUnit.module( 'Geometries', () => {
 			};
 
 			geometries = [
-				new PlaneGeometry(),
-				new PlaneGeometry( parameters.width ),
-				new PlaneGeometry( parameters.width, parameters.height ),
-				new PlaneGeometry( parameters.width, parameters.height, parameters.widthSegments ),
-				new PlaneGeometry( parameters.width, parameters.height, parameters.widthSegments, parameters.heightSegments ),
+				new PlaneBufferGeometry(),
+				new PlaneBufferGeometry( parameters.width ),
+				new PlaneBufferGeometry( parameters.width, parameters.height ),
+				new PlaneBufferGeometry( parameters.width, parameters.height, parameters.widthSegments ),
+				new PlaneBufferGeometry( parameters.width, parameters.height, parameters.widthSegments, parameters.heightSegments ),
 			];
 
 		} );
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new PlaneGeometry();
-			assert.strictEqual(
-				object instanceof BufferGeometry, true,
-				'PlaneGeometry extends from BufferGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new PlaneGeometry();
-			assert.ok( object, 'Can instantiate a PlaneGeometry.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new PlaneGeometry();
-			assert.ok(
-				object.type === 'PlaneGeometry',
-				'PlaneGeometry.type should be PlaneGeometry'
-			);
-
-		} );
-
-		QUnit.todo( 'parameters', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// STATIC
-		QUnit.todo( 'fromJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

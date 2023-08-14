@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<base href="../../../" />
+		<script src="list.js"></script>
 		<script src="page.js"></script>
 		<link type="text/css" rel="stylesheet" href="page.css" />
 	</head>
@@ -17,21 +18,28 @@
 			环境光不能用来投射阴影，因为它没有方向。
 		</p>
 
-		<h2>代码示例</h2>
 
-		<code>
-		const light = new THREE.AmbientLight( 0x404040 ); // 柔和的白光
-		scene.add( light );
-		</code>
+		<h2>示例</h2>
+		<p>
+			[example:canvas_camera_orthographic camera / orthographic ]<br />
+		  [example:canvas_interactive_voxelpainter interactive / voxelpainter ]<br />
+		  [example:canvas_materials materials ]<br />
+		  [example:canvas_sandbox sandbox ]<br />
+		  [example:webgl_animation_cloth animation / cloth ]<br />
+		  [example:webgl_animation_skinning_blending animation / skinning / blending ]
+		</p>
+
+<code>var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+scene.add( light );</code>
 
 		<h2>构造函数</h2>
 
-		<h3>[name]( [param:Color color], [param:Float intensity] )</h3>
+		<h3>[name]( [param:Integer color], [param:Float intensity] )</h3>
 		<p>
-			[page:Color color] -（可选）一个表示颜色的 Color 的实例、字符串或数字，默认为一个白色（0xffffff）的 [page:Color Color] 对象。<br />
-			[page:Float intensity] -（可选）光照的强度。默认值为 1。<br /><br />
+		[page:Integer color] - (参数可选）颜色的rgb数值。缺省值为 0xffffff。<br />
+		[page:Float intensity] - (参数可选)光照的强度。缺省值为 1。<br /><br />
 
-			创建一个环境光对象。
+		创建一个环境光对象。
 		</p>
 
 		<h2>属性</h2>
@@ -39,9 +47,17 @@
 			公共属性请查看基类 [page:Light Light]。
 		</p>
 
+		<h3>[property:Boolean castShadow]</h3>
+		<p>
+			这个参数在对象构造的时候就被设置成了 *undefined* 。因为环境光不能投射阴影。
+		</p>
+
+
 		<h3>[property:Boolean isAmbientLight]</h3>
 		<p>
-			只读，用于检查对象的类型是否为 [name]。
+			用来校验这个类或者派生类是不是环境光.默认是 *true*。<br /><br />
+
+			不应该去改变这个变量,因为内部使用这个变量做了些优化的工作。
 		</p>
 
 
@@ -52,8 +68,6 @@
 		</p>
 		<h2>源码</h2>
 
-		<p>
-			[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
-		</p>
+		[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
 	</body>
 </html>

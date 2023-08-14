@@ -1,108 +1,62 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Object3D } from '../../../../src/core/Object3D.js';
-import { Mesh } from '../../../../src/objects/Mesh.js';
-import { SkinnedMesh } from '../../../../src/objects/SkinnedMesh.js';
+import { SkinnedMesh } from '../../../../src/objects/SkinnedMesh';
 
 export default QUnit.module( 'Objects', () => {
 
 	QUnit.module( 'SkinnedMesh', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const skinnedMesh = new SkinnedMesh();
-
-			assert.strictEqual( skinnedMesh instanceof Object3D, true, 'SkinnedMesh extends from Object3D' );
-			assert.strictEqual( skinnedMesh instanceof Mesh, true, 'SkinnedMesh extends from Mesh' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new SkinnedMesh();
-			assert.ok( object, 'Can instantiate a SkinnedMesh.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new SkinnedMesh();
-			assert.ok(
-				object.type === 'SkinnedMesh',
-				'SkinnedMesh.type should be SkinnedMesh'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.test( 'bindMode', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isSkinnedMesh", ( assert ) => {
 
-			const object = new SkinnedMesh();
-			assert.ok(
-				object.bindMode === 'attached',
-				'SkinnedMesh.bindMode should be attached'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
+		QUnit.todo( "initBones", ( assert ) => {
 
-		QUnit.todo( 'bindMatrix', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'bindMatrixInverse', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
+		QUnit.todo( "bind", ( assert ) => {
 
-		// PUBLIC
-		QUnit.test( 'isSkinnedMesh', ( assert ) => {
-
-			const object = new SkinnedMesh();
-			assert.ok(
-				object.isSkinnedMesh,
-				'SkinnedMesh.isSkinnedMesh should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
+		QUnit.todo( "pose", ( assert ) => {
 
-		QUnit.todo( 'copy', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'bind', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
+		QUnit.todo( "normalizeSkinWeights", ( assert ) => {
 
-		QUnit.todo( 'pose', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'normalizeSkinWeights', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
+		QUnit.todo( "updateMatrixWorld", ( assert ) => {
 
-		QUnit.todo( 'updateMatrixWorld', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
+		QUnit.todo( "clone", ( assert ) => {
 
-		QUnit.todo( 'applyBoneTransform', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

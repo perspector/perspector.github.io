@@ -4,37 +4,52 @@
 		<title>three.js webgl - dashed lines</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				z-index:100;
+			}
+
+		</style>
 	</head>
 
 	<body>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - dashed lines example</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - dashed lines example</div>
+		<div id="container"></div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/geometries/hilbert3D.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var renderer, scene, camera, stats;
+			var objects = [];
 
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			import * as GeometryUtils from 'three/addons/utils/GeometryUtils.js';
-
-			let renderer, scene, camera, stats;
-			const objects = [];
-
-			const WIDTH = window.innerWidth, HEIGHT = window.innerHeight;
+			var WIDTH = window.innerWidth, HEIGHT = window.innerHeight;
 
 			init();
 			animate();
@@ -48,24 +63,24 @@
 				scene.background = new THREE.Color( 0x111111 );
 				scene.fog = new THREE.Fog( 0x111111, 150, 200 );
 
-				const subdivisions = 6;
-				const recursion = 1;
+				var subdivisions = 6;
+				var recursion = 1;
 
-				const points = GeometryUtils.hilbert3D( new THREE.Vector3( 0, 0, 0 ), 25.0, recursion, 0, 1, 2, 3, 4, 5, 6, 7 );
-				const spline = new THREE.CatmullRomCurve3( points );
+				var points = hilbert3D( new THREE.Vector3( 0, 0, 0 ), 25.0, recursion, 0, 1, 2, 3, 4, 5, 6, 7 );
+				var spline = new THREE.CatmullRomCurve3( points );
 
-				const samples = spline.getPoints( points.length * subdivisions );
-				const geometrySpline = new THREE.BufferGeometry().setFromPoints( samples );
+				var samples = spline.getPoints( points.length * subdivisions );
+				var geometrySpline = new THREE.BufferGeometry().setFromPoints( samples );
 
-				const line = new THREE.Line( geometrySpline, new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 1, gapSize: 0.5 } ) );
+				var line = new THREE.Line( geometrySpline, new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 1, gapSize: 0.5 } ) );
 				line.computeLineDistances();
 
 				objects.push( line );
 				scene.add( line );
 
-				const geometryBox = box( 50, 50, 50 );
+				var geometryCube = cube( 50 );
 
-				const lineSegments = new THREE.LineSegments( geometryBox, new THREE.LineDashedMaterial( { color: 0xffaa00, dashSize: 3, gapSize: 1 } ) );
+				var lineSegments = new THREE.LineSegments( geometryCube, new THREE.LineDashedMaterial( { color: 0xffaa00, dashSize: 3, gapSize: 1 } ) );
 				lineSegments.computeLineDistances();
 
 				objects.push( lineSegments );
@@ -74,65 +89,65 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( WIDTH, HEIGHT );
-				document.body.appendChild( renderer.domElement );
+
+				var container = document.getElementById( 'container' );
+				container.appendChild( renderer.domElement );
 
 				stats = new Stats();
-				document.body.appendChild( stats.dom );
+				container.appendChild( stats.dom );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
-			function box( width, height, depth ) {
+			function cube( size ) {
 
-				width = width * 0.5,
-				height = height * 0.5,
-				depth = depth * 0.5;
+				var h = size * 0.5;
 
-				const geometry = new THREE.BufferGeometry();
-				const position = [];
+				var geometry = new THREE.BufferGeometry();
+				var position = [];
 
 				position.push(
-					- width, - height, - depth,
-					- width, height, - depth,
+					- h, - h, - h,
+					- h, h, - h,
 
-					- width, height, - depth,
-					width, height, - depth,
+					- h, h, - h,
+					h, h, - h,
 
-					width, height, - depth,
-					width, - height, - depth,
+					h, h, - h,
+					h, - h, - h,
 
-					width, - height, - depth,
-					- width, - height, - depth,
+					h, - h, - h,
+					- h, - h, - h,
 
-					- width, - height, depth,
-					- width, height, depth,
+					- h, - h, h,
+					- h, h, h,
 
-					- width, height, depth,
-					width, height, depth,
+					- h, h, h,
+					h, h, h,
 
-					width, height, depth,
-					width, - height, depth,
+					h, h, h,
+					h, - h, h,
 
-					width, - height, depth,
-					- width, - height, depth,
+					h, - h, h,
+					- h, - h, h,
 
-					- width, - height, - depth,
-					- width, - height, depth,
+					- h, - h, - h,
+					- h, - h, h,
 
-					- width, height, - depth,
-					- width, height, depth,
+					- h, h, - h,
+					- h, h, h,
 
-					width, height, - depth,
-					width, height, depth,
+					h, h, - h,
+					h, h, h,
 
-					width, - height, - depth,
-					width, - height, depth
+					h, - h, - h,
+					h, - h, h
 				 );
 
-				geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( position, 3 ) );
+				geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( position, 3 ) );
 
 				return geometry;
 
@@ -158,7 +173,7 @@
 
 			function render() {
 
-				const time = Date.now() * 0.001;
+				var time = Date.now() * 0.001;
 
 				scene.traverse( function ( object ) {
 

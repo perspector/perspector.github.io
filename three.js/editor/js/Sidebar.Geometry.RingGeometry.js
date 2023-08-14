@@ -1,74 +1,74 @@
-import * as THREE from 'three';
+/**
+ * @author Temdog007 / http://github.com/Temdog007
+ */
 
-import { UIDiv, UIRow, UIText, UIInteger, UINumber } from './libs/ui.js';
+Sidebar.Geometry.RingGeometry = function ( editor, object ) {
 
-import { SetGeometryCommand } from './commands/SetGeometryCommand.js';
+	var strings = editor.strings;
 
-function GeometryParametersPanel( editor, object ) {
+	var signals = editor.signals;
 
-	const strings = editor.strings;
+	var container = new UI.Row();
 
-	const container = new UIDiv();
-
-	const geometry = object.geometry;
-	const parameters = geometry.parameters;
+	var geometry = object.geometry;
+	var parameters = geometry.parameters;
 
 	// innerRadius
 
-	const innerRadiusRow = new UIRow();
-	const innerRadius = new UINumber( parameters.innerRadius ).onChange( update );
+	var innerRadiusRow = new UI.Row();
+	var innerRadius = new UI.Number( parameters.innerRadius ).onChange( update );
 
-	innerRadiusRow.add( new UIText( strings.getKey( 'sidebar/geometry/ring_geometry/innerRadius' ) ).setWidth( '90px' ) );
+	innerRadiusRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/ring_geometry/innerRadius' ) ).setWidth( '90px' ) );
 	innerRadiusRow.add( innerRadius );
 
 	container.add( innerRadiusRow );
 
 	// outerRadius
 
-	const outerRadiusRow = new UIRow();
-	const outerRadius = new UINumber( parameters.outerRadius ).onChange( update );
+	var outerRadiusRow = new UI.Row();
+	var outerRadius = new UI.Number( parameters.outerRadius ).onChange( update );
 
-	outerRadiusRow.add( new UIText( strings.getKey( 'sidebar/geometry/ring_geometry/outerRadius' ) ).setWidth( '90px' ) );
+	outerRadiusRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/ring_geometry/outerRadius' ) ).setWidth( '90px' ) );
 	outerRadiusRow.add( outerRadius );
 
 	container.add( outerRadiusRow );
 
 	// thetaSegments
 
-	const thetaSegmentsRow = new UIRow();
-	const thetaSegments = new UIInteger( parameters.thetaSegments ).setRange( 3, Infinity ).onChange( update );
+	var thetaSegmentsRow = new UI.Row();
+	var thetaSegments = new UI.Integer( parameters.thetaSegments ).setRange( 3, Infinity ).onChange( update );
 
-	thetaSegmentsRow.add( new UIText( strings.getKey( 'sidebar/geometry/ring_geometry/thetaSegments' ) ).setWidth( '90px' ) );
+	thetaSegmentsRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/ring_geometry/thetaSegments' ) ).setWidth( '90px' ) );
 	thetaSegmentsRow.add( thetaSegments );
 
 	container.add( thetaSegmentsRow );
 
 	// phiSegments
 
-	const phiSegmentsRow = new UIRow();
-	const phiSegments = new UIInteger( parameters.phiSegments ).setRange( 3, Infinity ).onChange( update );
+	var phiSegmentsRow = new UI.Row();
+	var phiSegments = new UI.Integer( parameters.phiSegments ).setRange( 3, Infinity ).onChange( update );
 
-	phiSegmentsRow.add( new UIText( strings.getKey( 'sidebar/geometry/ring_geometry/phiSegments' ) ).setWidth( '90px' ) );
+	phiSegmentsRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/ring_geometry/phiSegments' ) ).setWidth( '90px' ) );
 	phiSegmentsRow.add( phiSegments );
 
 	container.add( phiSegmentsRow );
 
 	// thetaStart
 
-	const thetaStartRow = new UIRow();
-	const thetaStart = new UINumber( parameters.thetaStart * THREE.MathUtils.RAD2DEG ).setStep( 10 ).onChange( update );
+	var thetaStartRow = new UI.Row();
+	var thetaStart = new UI.Number( parameters.thetaStart * THREE.Math.RAD2DEG ).setStep( 10 ).onChange( update );
 
-	thetaStartRow.add( new UIText( strings.getKey( 'sidebar/geometry/ring_geometry/thetastart' ) ).setWidth( '90px' ) );
+	thetaStartRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/ring_geometry/thetastart' ) ).setWidth( '90px' ) );
 	thetaStartRow.add( thetaStart );
 
 	container.add( thetaStartRow );
 
 	// thetaLength
 
-	const thetaLengthRow = new UIRow();
-	const thetaLength = new UINumber( parameters.thetaLength * THREE.MathUtils.RAD2DEG ).setStep( 10 ).onChange( update );
+	var thetaLengthRow = new UI.Row();
+	var thetaLength = new UI.Number( parameters.thetaLength * THREE.Math.RAD2DEG ).setStep( 10 ).onChange( update );
 
-	thetaLengthRow.add( new UIText( strings.getKey( 'sidebar/geometry/ring_geometry/thetalength' ) ).setWidth( '90px' ) );
+	thetaLengthRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/ring_geometry/thetalength' ) ).setWidth( '90px' ) );
 	thetaLengthRow.add( thetaLength );
 
 	container.add( thetaLengthRow );
@@ -77,19 +77,19 @@ function GeometryParametersPanel( editor, object ) {
 
 	function update() {
 
-		editor.execute( new SetGeometryCommand( editor, object, new THREE.RingGeometry(
+		editor.execute( new SetGeometryCommand( object, new THREE[ geometry.type ](
 			innerRadius.getValue(),
 			outerRadius.getValue(),
 			thetaSegments.getValue(),
 			phiSegments.getValue(),
-			thetaStart.getValue() * THREE.MathUtils.DEG2RAD,
-			thetaLength.getValue() * THREE.MathUtils.DEG2RAD
+			thetaStart.getValue() * THREE.Math.DEG2RAD,
+			thetaLength.getValue() * THREE.Math.DEG2RAD
 		) ) );
 
 	}
 
 	return container;
 
-}
+};
 
-export { GeometryParametersPanel };
+Sidebar.Geometry.RingBufferGeometry = Sidebar.Geometry.RingGeometry;

@@ -4,23 +4,52 @@
 		<title>three.js webgl - lights - hemisphere light</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			body {
-				color: #444;
+				background-color: #fff;
+				color: #111;
+				margin: 0px;
+				overflow: hidden;
+				font-family: Monospace;
+				font-size: 13px;
 			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				text-align: center;
+			}
+
 			a {
-				color: #08f;
+				color: #0080ff;
+				text-decoration: none;
 			}
+
+			a:hover {
+				color: #f00;
+			}
+
+			#footer { width: 100%; margin: 2em auto; text-align: center; position: absolute; bottom: 0 }
+			strong { color: red }
 		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl hemisphere light example<br/>
-			flamingo by <a href="https://mirada.com/" target="_blank" rel="noopener">mirada</a> from <a href="http://www.ro.me" target="_blank" rel="noopener">ro.me</a>
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl hemisphere light example -
+			flamingo by <a href="http://mirada.com/">mirada</a> from <a href="http://ro.me">rome</a><br/>
 		</div>
+		<div id="footer">
+			press <strong>h</strong> to toggle hemisphere light, <strong>d</strong> to toggle directional light
+		</div>
+
+		<script src="../build/three.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src="js/loaders/GLTFLoader.js"></script>
 
 		<script type="x-shader/x-vertex" id="vertexShader">
 
@@ -55,40 +84,26 @@
 
 		</script>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var camera, scene, renderer, dirLight, dirLightHeper, hemiLight, hemiLightHelper;
+			var mixers = [];
+			var stats;
 
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-			let camera, scene, renderer;
-			const mixers = [];
-			let stats;
-
-			const clock = new THREE.Clock();
+			var clock = new THREE.Clock();
 
 			init();
 			animate();
 
 			function init() {
 
-				const container = document.getElementById( 'container' );
+				var container = document.getElementById( 'container' );
 
 				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 5000 );
 				camera.position.set( 0, 0, 250 );
@@ -99,18 +114,18 @@
 
 				// LIGHTS
 
-				const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+				hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 				hemiLight.color.setHSL( 0.6, 1, 0.6 );
 				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
 				hemiLight.position.set( 0, 50, 0 );
 				scene.add( hemiLight );
 
-				const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
+				hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
 				scene.add( hemiLightHelper );
 
 				//
 
-				const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
+				dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
 				dirLight.color.setHSL( 0.1, 1, 0.95 );
 				dirLight.position.set( - 1, 1.75, 1 );
 				dirLight.position.multiplyScalar( 30 );
@@ -121,7 +136,7 @@
 				dirLight.shadow.mapSize.width = 2048;
 				dirLight.shadow.mapSize.height = 2048;
 
-				const d = 50;
+				var d = 50;
 
 				dirLight.shadow.camera.left = - d;
 				dirLight.shadow.camera.right = d;
@@ -131,16 +146,16 @@
 				dirLight.shadow.camera.far = 3500;
 				dirLight.shadow.bias = - 0.0001;
 
-				const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 10 );
-				scene.add( dirLightHelper );
+				dirLightHeper = new THREE.DirectionalLightHelper( dirLight, 10 );
+				scene.add( dirLightHeper );
 
 				// GROUND
 
-				const groundGeo = new THREE.PlaneGeometry( 10000, 10000 );
-				const groundMat = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+				var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
+				var groundMat = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 				groundMat.color.setHSL( 0.095, 1, 0.75 );
 
-				const ground = new THREE.Mesh( groundGeo, groundMat );
+				var ground = new THREE.Mesh( groundGeo, groundMat );
 				ground.position.y = - 33;
 				ground.rotation.x = - Math.PI / 2;
 				ground.receiveShadow = true;
@@ -148,38 +163,38 @@
 
 				// SKYDOME
 
-				const vertexShader = document.getElementById( 'vertexShader' ).textContent;
-				const fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
-				const uniforms = {
-					'topColor': { value: new THREE.Color( 0x0077ff ) },
-					'bottomColor': { value: new THREE.Color( 0xffffff ) },
-					'offset': { value: 33 },
-					'exponent': { value: 0.6 }
+				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+				var uniforms = {
+					"topColor": { value: new THREE.Color( 0x0077ff ) },
+					"bottomColor": { value: new THREE.Color( 0xffffff ) },
+					"offset": { value: 33 },
+					"exponent": { value: 0.6 }
 				};
-				uniforms[ 'topColor' ].value.copy( hemiLight.color );
+				uniforms[ "topColor" ].value.copy( hemiLight.color );
 
-				scene.fog.color.copy( uniforms[ 'bottomColor' ].value );
+				scene.fog.color.copy( uniforms[ "bottomColor" ].value );
 
-				const skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
-				const skyMat = new THREE.ShaderMaterial( {
+				var skyGeo = new THREE.SphereBufferGeometry( 4000, 32, 15 );
+				var skyMat = new THREE.ShaderMaterial( {
 					uniforms: uniforms,
 					vertexShader: vertexShader,
 					fragmentShader: fragmentShader,
 					side: THREE.BackSide
 				} );
 
-				const sky = new THREE.Mesh( skyGeo, skyMat );
+				var sky = new THREE.Mesh( skyGeo, skyMat );
 				scene.add( sky );
 
 				// MODEL
 
-				const loader = new GLTFLoader();
+				var loader = new THREE.GLTFLoader();
 
 				loader.load( 'models/gltf/Flamingo.glb', function ( gltf ) {
 
-					const mesh = gltf.scene.children[ 0 ];
+					var mesh = gltf.scene.children[ 0 ];
 
-					const s = 0.35;
+					var s = 0.35;
 					mesh.scale.set( s, s, s );
 					mesh.position.y = 15;
 					mesh.rotation.y = - 1;
@@ -189,7 +204,7 @@
 
 					scene.add( mesh );
 
-					const mixer = new THREE.AnimationMixer( mesh );
+					var mixer = new THREE.AnimationMixer( mesh );
 					mixer.clipAction( gltf.animations[ 0 ] ).setDuration( 1 ).play();
 					mixers.push( mixer );
 
@@ -201,6 +216,10 @@
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
+
+				renderer.gammaInput = true;
+				renderer.gammaOutput = true;
+
 				renderer.shadowMap.enabled = true;
 
 				// STATS
@@ -210,30 +229,8 @@
 
 				//
 
-				const params = {
-					toggleHemisphereLight: function () {
-
-						hemiLight.visible = ! hemiLight.visible;
-						hemiLightHelper.visible = ! hemiLightHelper.visible;
-
-					},
-					toggleDirectionalLight: function () {
-
-						dirLight.visible = ! dirLight.visible;
-						dirLightHelper.visible = ! dirLightHelper.visible;
-
-					}
-				};
-
-				const gui = new GUI();
-
-				gui.add( params, 'toggleHemisphereLight' ).name( 'toggle hemisphere light' );
-				gui.add( params, 'toggleDirectionalLight' ).name( 'toggle directional light' );
-				gui.open();
-
-				//
-
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
+				document.addEventListener( 'keydown', onKeyDown, false );
 
 			}
 
@@ -243,6 +240,26 @@
 				camera.updateProjectionMatrix();
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onKeyDown( event ) {
+
+				switch ( event.keyCode ) {
+
+					case 72: // h
+
+						hemiLight.visible = ! hemiLight.visible;
+						hemiLightHelper.visible = ! hemiLightHelper.visible;
+						break;
+
+					case 68: // d
+
+						dirLight.visible = ! dirLight.visible;
+						dirLightHeper.visible = ! dirLightHeper.visible;
+						break;
+
+				}
 
 			}
 
@@ -259,9 +276,9 @@
 
 			function render() {
 
-				const delta = clock.getDelta();
+				var delta = clock.getDelta();
 
-				for ( let i = 0; i < mixers.length; i ++ ) {
+				for ( var i = 0; i < mixers.length; i ++ ) {
 
 					mixers[ i ].update( delta );
 

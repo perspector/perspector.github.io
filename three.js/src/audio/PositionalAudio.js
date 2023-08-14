@@ -1,103 +1,88 @@
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
+
 import { Vector3 } from '../math/Vector3.js';
 import { Quaternion } from '../math/Quaternion.js';
 import { Audio } from './Audio.js';
+import { Object3D } from '../core/Object3D.js';
 
-const _position = /*@__PURE__*/ new Vector3();
-const _quaternion = /*@__PURE__*/ new Quaternion();
-const _scale = /*@__PURE__*/ new Vector3();
-const _orientation = /*@__PURE__*/ new Vector3();
+function PositionalAudio( listener ) {
 
-class PositionalAudio extends Audio {
+	Audio.call( this, listener );
 
-	constructor( listener ) {
+	this.panner = this.context.createPanner();
+	this.panner.connect( this.gain );
 
-		super( listener );
+}
 
-		this.panner = this.context.createPanner();
-		this.panner.panningModel = 'HRTF';
-		this.panner.connect( this.gain );
+PositionalAudio.prototype = Object.assign( Object.create( Audio.prototype ), {
 
-	}
+	constructor: PositionalAudio,
 
-	connect() {
-
-		super.connect();
-
-		this.panner.connect( this.gain );
-
-	}
-
-	disconnect() {
-
-		super.disconnect();
-
-		this.panner.disconnect( this.gain );
-
-	}
-
-	getOutput() {
+	getOutput: function () {
 
 		return this.panner;
 
-	}
+	},
 
-	getRefDistance() {
+	getRefDistance: function () {
 
 		return this.panner.refDistance;
 
-	}
+	},
 
-	setRefDistance( value ) {
+	setRefDistance: function ( value ) {
 
 		this.panner.refDistance = value;
 
 		return this;
 
-	}
+	},
 
-	getRolloffFactor() {
+	getRolloffFactor: function () {
 
 		return this.panner.rolloffFactor;
 
-	}
+	},
 
-	setRolloffFactor( value ) {
+	setRolloffFactor: function ( value ) {
 
 		this.panner.rolloffFactor = value;
 
 		return this;
 
-	}
+	},
 
-	getDistanceModel() {
+	getDistanceModel: function () {
 
 		return this.panner.distanceModel;
 
-	}
+	},
 
-	setDistanceModel( value ) {
+	setDistanceModel: function ( value ) {
 
 		this.panner.distanceModel = value;
 
 		return this;
 
-	}
+	},
 
-	getMaxDistance() {
+	getMaxDistance: function () {
 
 		return this.panner.maxDistance;
 
-	}
+	},
 
-	setMaxDistance( value ) {
+	setMaxDistance: function ( value ) {
 
 		this.panner.maxDistance = value;
 
 		return this;
 
-	}
+	},
 
-	setDirectionalCone( coneInnerAngle, coneOuterAngle, coneOuterGain ) {
+	setDirectionalCone: function ( coneInnerAngle, coneOuterAngle, coneOuterGain ) {
 
 		this.panner.coneInnerAngle = coneInnerAngle;
 		this.panner.coneOuterAngle = coneOuterAngle;
@@ -105,42 +90,53 @@ class PositionalAudio extends Audio {
 
 		return this;
 
-	}
+	},
 
-	updateMatrixWorld( force ) {
+	updateMatrixWorld: ( function () {
 
-		super.updateMatrixWorld( force );
+		var position = new Vector3();
+		var quaternion = new Quaternion();
+		var scale = new Vector3();
 
-		if ( this.hasPlaybackControl === true && this.isPlaying === false ) return;
+		var orientation = new Vector3();
 
-		this.matrixWorld.decompose( _position, _quaternion, _scale );
+		return function updateMatrixWorld( force ) {
 
-		_orientation.set( 0, 0, 1 ).applyQuaternion( _quaternion );
+			Object3D.prototype.updateMatrixWorld.call( this, force );
 
-		const panner = this.panner;
+			if ( this.hasPlaybackControl === true && this.isPlaying === false ) return;
 
-		if ( panner.positionX ) {
+			this.matrixWorld.decompose( position, quaternion, scale );
 
-			// code path for Chrome and Firefox (see #14393)
+			orientation.set( 0, 0, 1 ).applyQuaternion( quaternion );
 
-			const endTime = this.context.currentTime + this.listener.timeDelta;
+			var panner = this.panner;
 
-			panner.positionX.linearRampToValueAtTime( _position.x, endTime );
-			panner.positionY.linearRampToValueAtTime( _position.y, endTime );
-			panner.positionZ.linearRampToValueAtTime( _position.z, endTime );
-			panner.orientationX.linearRampToValueAtTime( _orientation.x, endTime );
-			panner.orientationY.linearRampToValueAtTime( _orientation.y, endTime );
-			panner.orientationZ.linearRampToValueAtTime( _orientation.z, endTime );
+			if ( panner.positionX ) {
 
-		} else {
+				// code path for Chrome and Firefox (see #14393)
 
-			panner.setPosition( _position.x, _position.y, _position.z );
-			panner.setOrientation( _orientation.x, _orientation.y, _orientation.z );
+				var endTime = this.context.currentTime + this.listener.timeDelta;
 
-		}
+				panner.positionX.linearRampToValueAtTime( position.x, endTime );
+				panner.positionY.linearRampToValueAtTime( position.y, endTime );
+				panner.positionZ.linearRampToValueAtTime( position.z, endTime );
+				panner.orientationX.linearRampToValueAtTime( orientation.x, endTime );
+				panner.orientationY.linearRampToValueAtTime( orientation.y, endTime );
+				panner.orientationZ.linearRampToValueAtTime( orientation.z, endTime );
 
-	}
+			} else {
 
-}
+				panner.setPosition( position.x, position.y, position.z );
+				panner.setOrientation( orientation.x, orientation.y, orientation.z );
+
+			}
+
+		};
+
+	} )()
+
+
+} );
 
 export { PositionalAudio };

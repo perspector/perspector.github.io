@@ -1,70 +1,35 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { PlaneHelper } from '../../../../src/helpers/PlaneHelper.js';
-
-import { Line } from '../../../../src/objects/Line.js';
+import { PlaneHelper } from '../../../../src/helpers/PlaneHelper';
 
 export default QUnit.module( 'Helpers', () => {
 
 	QUnit.module( 'PlaneHelper', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new PlaneHelper();
-			assert.strictEqual(
-				object instanceof Line, true,
-				'PlaneHelper extends from Line'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new PlaneHelper();
-			assert.ok( object, 'Can instantiate a PlaneHelper.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new PlaneHelper();
-			assert.ok(
-				object.type === 'PlaneHelper',
-				'PlaneHelper.type should be PlaneHelper'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'plane', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "updateMatrixWorld", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'size', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.todo( 'updateMatrixWorld', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.test( 'dispose', ( assert ) => {
-
-			assert.expect( 0 );
-
-			const object = new PlaneHelper();
-			object.dispose();
-
-		} );
 
 	} );
 

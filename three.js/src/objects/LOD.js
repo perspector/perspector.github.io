@@ -1,62 +1,60 @@
 import { Vector3 } from '../math/Vector3.js';
 import { Object3D } from '../core/Object3D.js';
 
-const _v1 = /*@__PURE__*/ new Vector3();
-const _v2 = /*@__PURE__*/ new Vector3();
+/**
+ * @author mikael emtinger / http://gomo.se/
+ * @author alteredq / http://alteredqualia.com/
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-class LOD extends Object3D {
+function LOD() {
 
-	constructor() {
+	Object3D.call( this );
 
-		super();
+	this.type = 'LOD';
 
-		this._currentLevel = 0;
+	Object.defineProperties( this, {
+		levels: {
+			enumerable: true,
+			value: []
+		}
+	} );
 
-		this.type = 'LOD';
+}
 
-		Object.defineProperties( this, {
-			levels: {
-				enumerable: true,
-				value: []
-			},
-			isLOD: {
-				value: true,
-			}
-		} );
+LOD.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
-		this.autoUpdate = true;
+	constructor: LOD,
 
-	}
+	isLOD: true,
 
-	copy( source ) {
+	copy: function ( source ) {
 
-		super.copy( source, false );
+		Object3D.prototype.copy.call( this, source, false );
 
-		const levels = source.levels;
+		var levels = source.levels;
 
-		for ( let i = 0, l = levels.length; i < l; i ++ ) {
+		for ( var i = 0, l = levels.length; i < l; i ++ ) {
 
-			const level = levels[ i ];
+			var level = levels[ i ];
 
-			this.addLevel( level.object.clone(), level.distance, level.hysteresis );
+			this.addLevel( level.object.clone(), level.distance );
 
 		}
 
-		this.autoUpdate = source.autoUpdate;
-
 		return this;
 
-	}
+	},
 
-	addLevel( object, distance = 0, hysteresis = 0 ) {
+	addLevel: function ( object, distance ) {
+
+		if ( distance === undefined ) distance = 0;
 
 		distance = Math.abs( distance );
 
-		const levels = this.levels;
+		var levels = this.levels;
 
-		let l;
-
-		for ( l = 0; l < levels.length; l ++ ) {
+		for ( var l = 0; l < levels.length; l ++ ) {
 
 			if ( distance < levels[ l ].distance ) {
 
@@ -66,140 +64,108 @@ class LOD extends Object3D {
 
 		}
 
-		levels.splice( l, 0, { distance: distance, hysteresis: hysteresis, object: object } );
+		levels.splice( l, 0, { distance: distance, object: object } );
 
 		this.add( object );
 
 		return this;
 
-	}
+	},
 
-	getCurrentLevel() {
+	getObjectForDistance: function ( distance ) {
 
-		return this._currentLevel;
+		var levels = this.levels;
 
-	}
+		for ( var i = 1, l = levels.length; i < l; i ++ ) {
 
+			if ( distance < levels[ i ].distance ) {
 
-
-	getObjectForDistance( distance ) {
-
-		const levels = this.levels;
-
-		if ( levels.length > 0 ) {
-
-			let i, l;
-
-			for ( i = 1, l = levels.length; i < l; i ++ ) {
-
-				let levelDistance = levels[ i ].distance;
-
-				if ( levels[ i ].object.visible ) {
-
-					levelDistance -= levelDistance * levels[ i ].hysteresis;
-
-				}
-
-				if ( distance < levelDistance ) {
-
-					break;
-
-				}
+				break;
 
 			}
 
-			return levels[ i - 1 ].object;
-
 		}
 
-		return null;
+		return levels[ i - 1 ].object;
 
-	}
+	},
 
-	raycast( raycaster, intersects ) {
+	raycast: ( function () {
 
-		const levels = this.levels;
+		var matrixPosition = new Vector3();
 
-		if ( levels.length > 0 ) {
+		return function raycast( raycaster, intersects ) {
 
-			_v1.setFromMatrixPosition( this.matrixWorld );
+			matrixPosition.setFromMatrixPosition( this.matrixWorld );
 
-			const distance = raycaster.ray.origin.distanceTo( _v1 );
+			var distance = raycaster.ray.origin.distanceTo( matrixPosition );
 
 			this.getObjectForDistance( distance ).raycast( raycaster, intersects );
 
-		}
+		};
 
-	}
+	}() ),
 
-	update( camera ) {
+	update: function () {
 
-		const levels = this.levels;
+		var v1 = new Vector3();
+		var v2 = new Vector3();
 
-		if ( levels.length > 1 ) {
+		return function update( camera ) {
 
-			_v1.setFromMatrixPosition( camera.matrixWorld );
-			_v2.setFromMatrixPosition( this.matrixWorld );
+			var levels = this.levels;
 
-			const distance = _v1.distanceTo( _v2 ) / camera.zoom;
+			if ( levels.length > 1 ) {
 
-			levels[ 0 ].object.visible = true;
+				v1.setFromMatrixPosition( camera.matrixWorld );
+				v2.setFromMatrixPosition( this.matrixWorld );
 
-			let i, l;
+				var distance = v1.distanceTo( v2 );
 
-			for ( i = 1, l = levels.length; i < l; i ++ ) {
+				levels[ 0 ].object.visible = true;
 
-				let levelDistance = levels[ i ].distance;
+				for ( var i = 1, l = levels.length; i < l; i ++ ) {
 
-				if ( levels[ i ].object.visible ) {
+					if ( distance >= levels[ i ].distance ) {
 
-					levelDistance -= levelDistance * levels[ i ].hysteresis;
+						levels[ i - 1 ].object.visible = false;
+						levels[ i ].object.visible = true;
+
+					} else {
+
+						break;
+
+					}
 
 				}
 
-				if ( distance >= levelDistance ) {
+				for ( ; i < l; i ++ ) {
 
-					levels[ i - 1 ].object.visible = false;
-					levels[ i ].object.visible = true;
-
-				} else {
-
-					break;
+					levels[ i ].object.visible = false;
 
 				}
 
 			}
 
-			this._currentLevel = i - 1;
+		};
 
-			for ( ; i < l; i ++ ) {
+	}(),
 
-				levels[ i ].object.visible = false;
+	toJSON: function ( meta ) {
 
-			}
-
-		}
-
-	}
-
-	toJSON( meta ) {
-
-		const data = super.toJSON( meta );
-
-		if ( this.autoUpdate === false ) data.object.autoUpdate = false;
+		var data = Object3D.prototype.toJSON.call( this, meta );
 
 		data.object.levels = [];
 
-		const levels = this.levels;
+		var levels = this.levels;
 
-		for ( let i = 0, l = levels.length; i < l; i ++ ) {
+		for ( var i = 0, l = levels.length; i < l; i ++ ) {
 
-			const level = levels[ i ];
+			var level = levels[ i ];
 
 			data.object.levels.push( {
 				object: level.object.uuid,
-				distance: level.distance,
-				hysteresis: level.hysteresis
+				distance: level.distance
 			} );
 
 		}
@@ -208,7 +174,7 @@ class LOD extends Object3D {
 
 	}
 
-}
+} );
 
 
 export { LOD };

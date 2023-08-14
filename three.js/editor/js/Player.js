@@ -1,27 +1,22 @@
-import { UIPanel } from './libs/ui.js';
-import { APP } from './libs/app.js';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-function Player( editor ) {
+var Player = function ( editor ) {
 
-	const signals = editor.signals;
+	var signals = editor.signals;
 
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setId( 'player' );
 	container.setPosition( 'absolute' );
 	container.setDisplay( 'none' );
 
 	//
 
-	const player = new APP.Player();
+	var player = new APP.Player();
 	container.dom.appendChild( player.dom );
 
 	window.addEventListener( 'resize', function () {
-
-		player.setSize( container.dom.clientWidth, container.dom.clientHeight );
-
-	} );
-
-	signals.windowResize.add( function () {
 
 		player.setSize( container.dom.clientWidth, container.dom.clientHeight );
 
@@ -48,6 +43,4 @@ function Player( editor ) {
 
 	return container;
 
-}
-
-export { Player };
+};

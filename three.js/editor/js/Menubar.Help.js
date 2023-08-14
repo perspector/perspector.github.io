@@ -1,73 +1,47 @@
-import { UIPanel, UIRow } from './libs/ui.js';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-function MenubarHelp( editor ) {
+Menubar.Help = function ( editor ) {
 
-	const strings = editor.strings;
+	var strings = editor.strings;
 
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setClass( 'menu' );
 
-	const title = new UIPanel();
+	var title = new UI.Panel();
 	title.setClass( 'title' );
 	title.setTextContent( strings.getKey( 'menubar/help' ) );
 	container.add( title );
 
-	const options = new UIPanel();
+	var options = new UI.Panel();
 	options.setClass( 'options' );
 	container.add( options );
 
 	// Source code
 
-	let option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/help/source_code' ) );
 	option.onClick( function () {
 
-		window.open( 'https://github.com/mrdoob/three.js/tree/master/editor', '_blank' );
+		window.open( 'https://github.com/mrdoob/three.js/tree/master/editor', '_blank' )
 
 	} );
 	options.add( option );
-
-	/*
-	// Icon
-
-	let option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/help/icons' ) );
-	option.onClick( function () {
-
-		window.open( 'https://www.flaticon.com/packs/interface-44', '_blank' );
-
-	} );
-	options.add( option );
-	*/
 
 	// About
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/help/about' ) );
 	option.onClick( function () {
 
-		window.open( 'https://threejs.org', '_blank' );
-
-	} );
-	options.add( option );
-
-	// Manual
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/help/manual' ) );
-	option.onClick( function () {
-
-		window.open( 'https://github.com/mrdoob/three.js/wiki/Editor-Manual', '_blank' );
+		window.open( 'http://threejs.org', '_blank' );
 
 	} );
 	options.add( option );
 
 	return container;
 
-}
-
-export { MenubarHelp };
+};

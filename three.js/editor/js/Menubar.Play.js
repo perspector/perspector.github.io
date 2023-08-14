@@ -1,16 +1,18 @@
-import { UIPanel } from './libs/ui.js';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-function MenubarPlay( editor ) {
+Menubar.Play = function ( editor ) {
 
-	const signals = editor.signals;
-	const strings = editor.strings;
+	var signals = editor.signals;
+	var strings = editor.strings;
 
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setClass( 'menu' );
 
-	let isPlaying = false;
+	var isPlaying = false;
 
-	const title = new UIPanel();
+	var title = new UI.Panel();
 	title.setClass( 'title' );
 	title.setTextContent( strings.getKey( 'menubar/play' ) );
 	title.onClick( function () {
@@ -34,6 +36,4 @@ function MenubarPlay( editor ) {
 
 	return container;
 
-}
-
-export { MenubarPlay };
+};

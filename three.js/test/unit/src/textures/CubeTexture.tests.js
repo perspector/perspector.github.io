@@ -1,53 +1,39 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { CubeTexture } from '../../../../src/textures/CubeTexture.js';
-
-import { Texture } from '../../../../src/textures/Texture.js';
+import { CubeTexture } from '../../../../src/textures/CubeTexture';
 
 export default QUnit.module( 'Textures', () => {
 
 	QUnit.module( 'CubeTexture', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new CubeTexture();
-			assert.strictEqual(
-				object instanceof Texture, true,
-				'CubeTexture extends from Texture'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new CubeTexture();
-			assert.ok( object, 'Can instantiate a CubeTexture.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// PROPERTIES
-		QUnit.todo( 'images', ( assert ) => {
+		QUnit.todo( "images", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'flipY', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isCubeTexture', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isCubeTexture", ( assert ) => {
 
-			const object = new CubeTexture();
-			assert.ok(
-				object.isCubeTexture,
-				'CubeTexture.isCubeTexture should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

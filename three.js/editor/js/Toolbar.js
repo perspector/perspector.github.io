@@ -1,65 +1,61 @@
-import { UIPanel, UIButton, UICheckbox } from './libs/ui.js';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-function Toolbar( editor ) {
+var Toolbar = function ( editor ) {
 
-	const signals = editor.signals;
-	const strings = editor.strings;
+	var signals = editor.signals;
+	var strings = editor.strings;
 
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setId( 'toolbar' );
+	container.setDisplay( 'none' );
+
+	var buttons = new UI.Panel();
+	container.add( buttons );
 
 	// translate / rotate / scale
 
-	const translateIcon = document.createElement( 'img' );
-	translateIcon.title = strings.getKey( 'toolbar/translate' );
-	translateIcon.src = 'images/translate.svg';
-
-	const translate = new UIButton();
+	var translate = new UI.Button( strings.getKey( 'toolbar/translate' ) );
 	translate.dom.className = 'Button selected';
-	translate.dom.appendChild( translateIcon );
 	translate.onClick( function () {
 
 		signals.transformModeChanged.dispatch( 'translate' );
 
 	} );
-	container.add( translate );
+	buttons.add( translate );
 
-	const rotateIcon = document.createElement( 'img' );
-	rotateIcon.title = strings.getKey( 'toolbar/rotate' );
-	rotateIcon.src = 'images/rotate.svg';
-
-	const rotate = new UIButton();
-	rotate.dom.appendChild( rotateIcon );
+	var rotate = new UI.Button( strings.getKey( 'toolbar/rotate' ) );
 	rotate.onClick( function () {
 
 		signals.transformModeChanged.dispatch( 'rotate' );
 
 	} );
-	container.add( rotate );
+	buttons.add( rotate );
 
-	const scaleIcon = document.createElement( 'img' );
-	scaleIcon.title = strings.getKey( 'toolbar/scale' );
-	scaleIcon.src = 'images/scale.svg';
-
-	const scale = new UIButton();
-	scale.dom.appendChild( scaleIcon );
+	var scale = new UI.Button( strings.getKey( 'toolbar/scale' ) );
 	scale.onClick( function () {
 
 		signals.transformModeChanged.dispatch( 'scale' );
 
 	} );
-	container.add( scale );
+	buttons.add( scale );
 
-	const local = new UICheckbox( false );
-	local.dom.title = strings.getKey( 'toolbar/local' );
+	var local = new UI.THREE.Boolean( false, strings.getKey( 'toolbar/local' ) );
 	local.onChange( function () {
 
 		signals.spaceChanged.dispatch( this.getValue() === true ? 'local' : 'world' );
 
 	} );
-	container.add( local );
+	buttons.add( local );
 
 	//
+
+	signals.objectSelected.add( function ( object ) {
+
+		container.setDisplay( object === null ? 'none' : '' );
+
+	} );
 
 	signals.transformModeChanged.add( function ( mode ) {
 
@@ -79,6 +75,4 @@ function Toolbar( editor ) {
 
 	return container;
 
-}
-
-export { Toolbar };
+};

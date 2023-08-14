@@ -1,75 +1,44 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Fog } from '../../../../src/scenes/Fog.js';
+import { Fog } from '../../../../src/scenes/Fog';
 
-export default QUnit.module( 'Scenes', () => {
+export default QUnit.module( 'Fog', () => {
 
-	QUnit.module( 'Fog', () => {
+	QUnit.module( 'Scene', () => {
+
+		// INHERITANCE
+		QUnit.todo( "Extending", ( assert ) => {
+
+			assert.ok( false, "everything's gonna be alright" );
+
+		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			// Fog( color, near = 1, far = 1000 )
-
-			// no params
-			const object = new Fog();
-			assert.ok( object, 'Can instantiate a Fog.' );
-
-			// color
-			const object_color = new Fog( 0xffffff );
-			assert.ok( object_color, 'Can instantiate a Fog with color.' );
-
-			// color, near, far
-			const object_all = new Fog( 0xffffff, 0.015, 100 );
-			assert.ok( object_all, 'Can instantiate a Fog with color, near, far.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PROPERTIES
-		QUnit.todo( 'name', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isFog", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'color', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'near', ( assert ) => {
+		QUnit.todo( "clone", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'far', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isFog', ( assert ) => {
+		QUnit.todo( "toJSON", ( assert ) => {
 
-			const object = new Fog();
-			assert.ok(
-				object.isFog,
-				'Fog.isFog should be true'
-			);
-
-		} );
-
-		QUnit.todo( 'clone', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'toJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

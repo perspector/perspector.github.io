@@ -1,80 +1,44 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Object3D } from '../../../../src/core/Object3D.js';
-import { Sprite } from '../../../../src/objects/Sprite.js';
+import { Sprite } from '../../../../src/objects/Sprite';
 
 export default QUnit.module( 'Objects', () => {
 
 	QUnit.module( 'Sprite', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const sprite = new Sprite();
-			assert.strictEqual(
-				sprite instanceof Object3D, true,
-				'Sprite extends from Object3D'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new Sprite();
-			assert.ok( object, 'Can instantiate a Sprite.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new Sprite();
-			assert.ok(
-				object.type === 'Sprite',
-				'Sprite.type should be Sprite'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'geometry', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isSprite", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'material', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'center', ( assert ) => {
+		QUnit.todo( "raycast", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// PUBLIC
-		QUnit.test( 'isSprite', ( assert ) => {
-
-			const object = new Sprite();
-			assert.ok(
-				object.isSprite,
-				'Sprite.isSprite should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'raycast', ( assert ) => {
+		QUnit.todo( "clone", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'copy', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

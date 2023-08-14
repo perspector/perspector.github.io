@@ -1,66 +1,49 @@
 import { AudioContext } from '../audio/AudioContext.js';
 import { FileLoader } from './FileLoader.js';
-import { Loader } from './Loader.js';
+import { DefaultLoadingManager } from './LoadingManager.js';
 
-class AudioLoader extends Loader {
+/**
+ * @author Reece Aaron Lecrivain / http://reecenotes.com/
+ */
 
-	constructor( manager ) {
+function AudioLoader( manager ) {
 
-		super( manager );
+	this.manager = ( manager !== undefined ) ? manager : DefaultLoadingManager;
 
-	}
+}
 
-	load( url, onLoad, onProgress, onError ) {
+Object.assign( AudioLoader.prototype, {
 
-		const scope = this;
+	load: function ( url, onLoad, onProgress, onError ) {
 
-		const loader = new FileLoader( this.manager );
+		var loader = new FileLoader( this.manager );
 		loader.setResponseType( 'arraybuffer' );
 		loader.setPath( this.path );
-		loader.setRequestHeader( this.requestHeader );
-		loader.setWithCredentials( this.withCredentials );
 		loader.load( url, function ( buffer ) {
 
-			try {
+			// Create a copy of the buffer. The `decodeAudioData` method
+			// detaches the buffer when complete, preventing reuse.
+			var bufferCopy = buffer.slice( 0 );
 
-				// Create a copy of the buffer. The `decodeAudioData` method
-				// detaches the buffer when complete, preventing reuse.
-				const bufferCopy = buffer.slice( 0 );
+			var context = AudioContext.getContext();
+			context.decodeAudioData( bufferCopy, function ( audioBuffer ) {
 
-				const context = AudioContext.getContext();
-				context.decodeAudioData( bufferCopy, function ( audioBuffer ) {
+				onLoad( audioBuffer );
 
-					onLoad( audioBuffer );
-
-				}, handleError );
-
-			} catch ( e ) {
-
-				handleError( e );
-
-			}
+			} );
 
 		}, onProgress, onError );
 
-		function handleError( e ) {
+	},
 
-			if ( onError ) {
+	setPath: function ( value ) {
 
-				onError( e );
-
-			} else {
-
-				console.error( e );
-
-			}
-
-			scope.manager.itemError( url );
-
-		}
+		this.path = value;
+		return this;
 
 	}
 
-}
+} );
 
 
 export { AudioLoader };

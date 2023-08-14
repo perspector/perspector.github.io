@@ -4,42 +4,53 @@
 		<title>three.js webgl - shaders - ocean</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+
+			body {
+				color: #000;
+				font-family:Monospace;
+				font-size:13px;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				text-align:center;
+				padding: 5px;
+			}
+
+		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl ocean
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl ocean
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/objects/Water.js"></script>
+		<script src="js/objects/Sky.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src="js/libs/dat.gui.min.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { Water } from 'three/addons/objects/Water.js';
-			import { Sky } from 'three/addons/objects/Sky.js';
-
-			let container, stats;
-			let camera, scene, renderer;
-			let controls, water, sun, mesh;
+			var container, stats;
+			var camera, scene, renderer, light;
+			var controls, water, sphere;
 
 			init();
 			animate();
@@ -53,26 +64,27 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.toneMapping = THREE.ACESFilmicToneMapping;
-				renderer.toneMappingExposure = 0.5;
 				container.appendChild( renderer.domElement );
 
 				//
 
 				scene = new THREE.Scene();
 
+				//
+
 				camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 1, 20000 );
 				camera.position.set( 30, 30, 100 );
 
 				//
 
-				sun = new THREE.Vector3();
+				light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+				scene.add( light );
 
 				// Water
 
-				const waterGeometry = new THREE.PlaneGeometry( 10000, 10000 );
+				var waterGeometry = new THREE.PlaneBufferGeometry( 10000, 10000 );
 
-				water = new Water(
+				water = new THREE.Water(
 					waterGeometry,
 					{
 						textureWidth: 512,
@@ -82,7 +94,8 @@
 							texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
 						} ),
-						sunDirection: new THREE.Vector3(),
+						alpha: 1.0,
+						sunDirection: light.position.clone().normalize(),
 						sunColor: 0xffffff,
 						waterColor: 0x001e0f,
 						distortionScale: 3.7,
@@ -96,40 +109,41 @@
 
 				// Skybox
 
-				const sky = new Sky();
-				sky.scale.setScalar( 10000 );
-				scene.add( sky );
+				var sky = new THREE.Sky();
 
-				const skyUniforms = sky.material.uniforms;
+				var uniforms = sky.material.uniforms;
 
-				skyUniforms[ 'turbidity' ].value = 10;
-				skyUniforms[ 'rayleigh' ].value = 2;
-				skyUniforms[ 'mieCoefficient' ].value = 0.005;
-				skyUniforms[ 'mieDirectionalG' ].value = 0.8;
+				uniforms[ 'turbidity' ].value = 10;
+				uniforms[ 'rayleigh' ].value = 2;
+				uniforms[ 'luminance' ].value = 1;
+				uniforms[ 'mieCoefficient' ].value = 0.005;
+				uniforms[ 'mieDirectionalG' ].value = 0.8;
 
-				const parameters = {
-					elevation: 2,
-					azimuth: 180
+				var parameters = {
+					distance: 400,
+					inclination: 0.49,
+					azimuth: 0.205
 				};
 
-				const pmremGenerator = new THREE.PMREMGenerator( renderer );
-				let renderTarget;
+				var cubeCamera = new THREE.CubeCamera( 0.1, 1, 512 );
+				cubeCamera.renderTarget.texture.generateMipmaps = true;
+				cubeCamera.renderTarget.texture.minFilter = THREE.LinearMipMapLinearFilter;
+
+				scene.background = cubeCamera.renderTarget;
 
 				function updateSun() {
 
-					const phi = THREE.MathUtils.degToRad( 90 - parameters.elevation );
-					const theta = THREE.MathUtils.degToRad( parameters.azimuth );
+					var theta = Math.PI * ( parameters.inclination - 0.5 );
+					var phi = 2 * Math.PI * ( parameters.azimuth - 0.5 );
 
-					sun.setFromSphericalCoords( 1, phi, theta );
+					light.position.x = parameters.distance * Math.cos( phi );
+					light.position.y = parameters.distance * Math.sin( phi ) * Math.sin( theta );
+					light.position.z = parameters.distance * Math.sin( phi ) * Math.cos( theta );
 
-					sky.material.uniforms[ 'sunPosition' ].value.copy( sun );
-					water.material.uniforms[ 'sunDirection' ].value.copy( sun ).normalize();
+					sky.material.uniforms[ 'sunPosition' ].value = light.position.copy( light.position );
+					water.material.uniforms[ 'sunDirection' ].value.copy( light.position ).normalize();
 
-					if ( renderTarget !== undefined ) renderTarget.dispose();
-
-					renderTarget = pmremGenerator.fromScene( sky );
-
-					scene.environment = renderTarget.texture;
+					cubeCamera.update( renderer, sky );
 
 				}
 
@@ -137,15 +151,38 @@
 
 				//
 
-				const geometry = new THREE.BoxGeometry( 30, 30, 30 );
-				const material = new THREE.MeshStandardMaterial( { roughness: 0 } );
+				var geometry = new THREE.IcosahedronBufferGeometry( 20, 1 );
+				var count = geometry.attributes.position.count;
 
-				mesh = new THREE.Mesh( geometry, material );
-				scene.add( mesh );
+				var colors = [];
+				var color = new THREE.Color();
+
+				for ( var i = 0; i < count; i += 3 ) {
+
+					color.setHex( Math.random() * 0xffffff );
+
+					colors.push( color.r, color.g, color.b );
+					colors.push( color.r, color.g, color.b );
+					colors.push( color.r, color.g, color.b );
+
+				}
+
+				geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+
+				var material = new THREE.MeshStandardMaterial( {
+					vertexColors: THREE.VertexColors,
+					roughness: 0.0,
+					flatShading: true,
+					envMap: cubeCamera.renderTarget.texture,
+					side: THREE.DoubleSide
+				} );
+
+				sphere = new THREE.Mesh( geometry, material );
+				scene.add( sphere );
 
 				//
 
-				controls = new OrbitControls( camera, renderer.domElement );
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.maxPolarAngle = Math.PI * 0.495;
 				controls.target.set( 0, 10, 0 );
 				controls.minDistance = 40.0;
@@ -159,23 +196,24 @@
 
 				// GUI
 
-				const gui = new GUI();
+				var gui = new dat.GUI();
 
-				const folderSky = gui.addFolder( 'Sky' );
-				folderSky.add( parameters, 'elevation', 0, 90, 0.1 ).onChange( updateSun );
-				folderSky.add( parameters, 'azimuth', - 180, 180, 0.1 ).onChange( updateSun );
-				folderSky.open();
+				var folder = gui.addFolder( 'Sky' );
+				folder.add( parameters, 'inclination', 0, 0.5, 0.0001 ).onChange( updateSun );
+				folder.add( parameters, 'azimuth', 0, 1, 0.0001 ).onChange( updateSun );
+				folder.open();
 
-				const waterUniforms = water.material.uniforms;
+				var uniforms = water.material.uniforms;
 
-				const folderWater = gui.addFolder( 'Water' );
-				folderWater.add( waterUniforms.distortionScale, 'value', 0, 8, 0.1 ).name( 'distortionScale' );
-				folderWater.add( waterUniforms.size, 'value', 0.1, 10, 0.1 ).name( 'size' );
-				folderWater.open();
+				var folder = gui.addFolder( 'Water' );
+				folder.add( uniforms.distortionScale, 'value', 0, 8, 0.1 ).name( 'distortionScale' );
+				folder.add( uniforms.size, 'value', 0.1, 10, 0.1 ).name( 'size' );
+				folder.add( uniforms.alpha, 'value', 0.9, 1, .001 ).name( 'alpha' );
+				folder.open();
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -198,11 +236,11 @@
 
 			function render() {
 
-				const time = performance.now() * 0.001;
+				var time = performance.now() * 0.001;
 
-				mesh.position.y = Math.sin( time ) * 20 + 5;
-				mesh.rotation.x = time * 0.5;
-				mesh.rotation.z = time * 0.51;
+				sphere.position.y = Math.sin( time ) * 20 + 5;
+				sphere.rotation.x = time * 0.5;
+				sphere.rotation.z = time * 0.51;
 
 				water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
 

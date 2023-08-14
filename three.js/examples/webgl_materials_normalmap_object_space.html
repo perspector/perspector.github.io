@@ -4,48 +4,67 @@
 		<title>three.js webgl - materials - normal map [object space]</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			a {
+				color: #ffa;
+				font-weight: bold;
+			}
+
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl object-space normalmap demo<br />
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl object-space normalmap demo<br />
 			Nefertiti Bust by
 			<a href="http://www.cultlab3d.de/" target="_blank" rel="noopener">CultLab3D</a><br />
 
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/loaders/GLTFLoader.js"></script>
+
+		<script src="js/WebGL.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-			let renderer, scene, camera;
+			var renderer, scene, camera;
 
 			init();
 
 			function init() {
 
 				// renderer
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 
+				renderer.gammaOutput = true;
 
 				// scene
 				scene = new THREE.Scene();
@@ -56,21 +75,21 @@
 				scene.add( camera );
 
 				// controls
-				const controls = new OrbitControls( camera, renderer.domElement );
+				var controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.addEventListener( 'change', render );
 				controls.minDistance = 10;
 				controls.maxDistance = 50;
 				controls.enablePan = false;
 
 				// ambient
-				scene.add( new THREE.AmbientLight( 0xffffff, 0.6 ) );
+				scene.add( new THREE.AmbientLight( 0xffffff, .2 ) );
 
 				// light
-				const light = new THREE.PointLight( 0xffffff, 4.5, 0, 0 );
+				var light = new THREE.PointLight( 0xffffff, 1.5 );
 				camera.add( light );
 
 				// model
-				new GLTFLoader().load( 'models/gltf/Nefertiti/Nefertiti.glb', function ( gltf ) {
+				new THREE.GLTFLoader().load( 'models/gltf/Nefertiti/Nefertiti.glb', function ( gltf ) {
 
 					gltf.scene.traverse( function ( child ) {
 
@@ -83,7 +102,7 @@
 
 							// attribute normals are not required with an object-space normal map. remove them.
 
-							child.geometry.deleteAttribute( 'normal' );
+							child.geometry.removeAttribute( 'normal' );
 
 							//
 
@@ -106,7 +125,7 @@
 				} );
 
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 

@@ -4,7 +4,6 @@
 		<title>three.js webgl - multiple elements with text</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			* {
 				box-sizing: border-box;
@@ -12,20 +11,15 @@
 			}
 
 			body {
+				color: #000;
+				font-family: Monospace;
+				font-size: 13px;
+
 				background-color: #fff;
-				color: #444;
 				margin: auto;
 				padding: .5in;
 				max-width: 7in;
 				text-align: justify;
-			}
-
-			a {
-				color: #08f;
-			}
-
-			#info {
-				left: 0px;
 			}
 
 			.view {
@@ -43,75 +37,87 @@
 				z-index: -1;
 			}
 
-			.math {
+			#info {
+				position: absolute;
+				top: 0px; width: 6.5in;
+				padding: 0px;
 				text-align: center;
 			}
 
+			a { color: #0080ff; }
+
+			.math {
+
+				text-align: center;
+
+			}
+
 			.math-frac {
+
 				display: inline-block;
 				vertical-align: middle;
+
 			}
 
 			.math-num {
+
 				display: block;
+
 			}
 
 			.math-denom {
+
 				display: block;
 				border-top: 1px solid;
+
 			}
 
 			.math-sqrt {
+
 				display: inline-block;
 				transform: scale(1, 1.3);
+
 			}
 
 			.math-sqrt-stem {
+
 				display: inline-block;
 				border-top: 1px solid;
 				margin-top: 5px;
+
 			}
+
 		</style>
 	</head>
 	<body>
 
 		<canvas id="c"></canvas>
 
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - multiple elements with text - webgl</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - multiple elements with text - webgl</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/WebGL.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-			const scenes = [];
-
-			const clock = new THREE.Clock();
-
-			let views, t, canvas, renderer;
+			var scenes = [], views, t, canvas, renderer;
 
 			window.onload = init;
 
 			function init() {
 
-				const balls = 20;
-				const size = .25;
+				var balls = 20;
+				var size = .25;
 
-				const colors = [
+				var colors = [
 					'rgb(0,127,255)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(0,255,255)',
 					'rgb(255,0,255)', 'rgb(255,0,127)', 'rgb(255,255,0)', 'rgb(0,255,127)'
 				];
@@ -123,24 +129,24 @@
 
 				views = document.querySelectorAll( '.view' );
 
-				for ( let n = 0; n < views.length; n ++ ) {
+				for ( var n = 0; n < views.length; n ++ ) {
 
-					const scene = new THREE.Scene();
+					var scene = new THREE.Scene();
 					scene.background = new THREE.Color( 0xffffff );
 
-					const geometry0 = new THREE.BufferGeometry();
-					const geometry1 = new THREE.BufferGeometry();
+					var geometry0 = new THREE.BufferGeometry();
+					var geometry1 = new THREE.BufferGeometry();
 
-					const vertices = [];
+					var vertices = [];
 
 					if ( views[ n ].lattice ) {
 
-						const range = balls / 2;
-						for ( let i = - range; i <= range; i ++ ) {
+						var range = balls / 2;
+						for ( var i = - range; i <= range; i ++ ) {
 
-							for ( let j = - range; j <= range; j ++ ) {
+							for ( var j = - range; j <= range; j ++ ) {
 
-								for ( let k = - range; k <= range; k ++ ) {
+								for ( var k = - range; k <= range; k ++ ) {
 
 									vertices.push( i, j, k );
 
@@ -152,11 +158,11 @@
 
 					} else {
 
-						for ( let m = 0; m < Math.pow( balls, 3 ); m ++ ) {
+						for ( var m = 0; m < Math.pow( balls, 3 ); m ++ ) {
 
-							const i = balls * Math.random() - balls / 2;
-							const j = balls * Math.random() - balls / 2;
-							const k = balls * Math.random() - balls / 2;
+							var i = balls * Math.random() - balls / 2;
+							var j = balls * Math.random() - balls / 2;
+							var k = balls * Math.random() - balls / 2;
 
 							vertices.push( i, j, k );
 
@@ -164,33 +170,32 @@
 
 					}
 
-					geometry0.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-					geometry1.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices.slice(), 3 ) );
+					geometry0.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+					geometry1.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices.slice(), 3 ) );
 
-					const index = Math.floor( colors.length * Math.random() );
+					var index = Math.floor( colors.length * Math.random() );
 
-					const canvas2 = document.createElement( 'canvas' );
+					var canvas2 = document.createElement( 'canvas' );
 					canvas2.width = 128;
 					canvas2.height = 128;
-					const context = canvas2.getContext( '2d' );
+					var context = canvas2.getContext( '2d' );
 					context.arc( 64, 64, 64, 0, 2 * Math.PI );
 					context.fillStyle = colors[ index ];
 					context.fill();
-					const texture = new THREE.CanvasTexture( canvas2 );
-					texture.colorSpace = THREE.SRGBColorSpace;
+					var texture = new THREE.CanvasTexture( canvas2 );
 
-					const material = new THREE.PointsMaterial( { size: size, map: texture, transparent: true, alphaTest: 0.1 } );
+					var material = new THREE.PointsMaterial( { size: size, map: texture, transparent: true, alphaTest: 0.1 } );
 
 					scene.add( new THREE.Points( geometry0, material ) );
 
 					scene.userData.view = views[ n ];
 					scene.userData.geometry1 = geometry1;
 
-					const camera = new THREE.PerspectiveCamera( 75, 1, 0.1, 100 );
+					var camera = new THREE.PerspectiveCamera( 75, 1, 0.1, 100 );
 					camera.position.set( 0, 0, 1.2 * balls );
 					scene.userData.camera = camera;
 
-					const controls = new OrbitControls( camera, views[ n ] );
+					var controls = new THREE.OrbitControls( camera, views[ n ] );
 					scene.userData.controls = controls;
 
 					scenes.push( scene );
@@ -204,8 +209,8 @@
 
 			function updateSize() {
 
-				const width = canvas.clientWidth;
-				const height = canvas.clientHeight;
+				var width = canvas.clientWidth;
+				var height = canvas.clientHeight;
 
 				if ( canvas.width !== width || canvas.height != height ) {
 
@@ -235,36 +240,32 @@
 
 				scenes.forEach( function ( scene ) {
 
-					const rect = scene.userData.view.getBoundingClientRect();
-
+					var rect = scene.userData.view.getBoundingClientRect();
 					// check if it's offscreen. If so skip it
-
 					if ( rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
 						 rect.right < 0 || rect.left > renderer.domElement.clientWidth ) {
 
 						return; // it's off screen
 
 					}
-
 					// set the viewport
-
-					const width = rect.right - rect.left;
-					const height = rect.bottom - rect.top;
-					const left = rect.left;
-					const bottom = renderer.domElement.clientHeight - rect.bottom;
+					var width = rect.right - rect.left;
+					var height = rect.bottom - rect.top;
+					var left = rect.left;
+					var bottom = renderer.domElement.clientHeight - rect.bottom;
 
 					renderer.setViewport( left, bottom, width, height );
 					renderer.setScissor( left, bottom, width, height );
 
 					renderer.render( scene, scene.userData.camera );
 
-					const points = scene.children[ 0 ];
-					const position = points.geometry.attributes.position;
+					var points = scene.children[ 0 ];
+					var position = points.geometry.attributes.position;
 
-					const point = new THREE.Vector3();
-					const offset = new THREE.Vector3();
+					var point = new THREE.Vector3();
+					var offset = new THREE.Vector3();
 
-					for ( let i = 0; i < position.count; i ++ ) {
+					for ( var i = 0; i < position.count; i ++ ) {
 
 						point.fromBufferAttribute( scene.userData.geometry1.attributes.position, i );
 
@@ -278,7 +279,7 @@
 
 				} );
 
-				t += clock.getDelta() * 60;
+				t ++;
 
 			}
 
@@ -339,8 +340,7 @@
 
 		<script>
 
-			/* eslint-disable prefer-const*/
-			let parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
 			parent.displacement = function ( x, y, z, t, target ) {
 
@@ -360,7 +360,7 @@
 
 		<script>
 
-			parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
 			parent.displacement = function ( x, y, z, t, target ) {
 
@@ -454,7 +454,7 @@
 
 		<script>
 
-			parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
 			parent.displacement = function ( x, y, z, t, target ) {
 
@@ -464,8 +464,8 @@
 
 				} else {
 
-					const rho = Math.sqrt( x * x + y * y );
-					const phi = Math.atan2( y, x );
+					var rho = Math.sqrt( x * x + y * y );
+					var phi = Math.atan2( y, x );
 
 					return target.set( 1.5 * Math.cos( phi ) * Math.sin( rho - t ) / Math.sqrt( rho ), 1.5 * Math.sin( phi ) * Math.sin( rho - t ) / Math.sqrt( rho ), 0 );
 
@@ -485,7 +485,7 @@
 
 		<script>
 
-			parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
 			parent.displacement = function ( x, y, z, t, target ) {
 
@@ -495,8 +495,8 @@
 
 				} else {
 
-					const rho = Math.sqrt( x * x + y * y );
-					const phi = Math.atan2( y, x );
+					var rho = Math.sqrt( x * x + y * y );
+					var phi = Math.atan2( y, x );
 
 					return target.set( 1.5 * Math.cos( phi ) * Math.sin( rho - t ) / Math.sqrt( rho ), 1.5 * Math.sin( phi ) * Math.sin( rho - t ) / Math.sqrt( rho ), 0 );
 
@@ -590,7 +590,7 @@
 
 		<script>
 
-			parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
 			parent.displacement = function ( x, y, z, t, target ) {
 
@@ -600,9 +600,9 @@
 
 				} else {
 
-					const r = Math.sqrt( x * x + y * y + z * z );
-					const theta = Math.acos( z / r );
-					const phi = Math.atan2( y, x );
+					var r = Math.sqrt( x * x + y * y + z * z );
+					var theta = Math.acos( z / r );
+					var phi = Math.atan2( y, x );
 
 					return target.set( 3 * Math.cos( phi ) * Math.sin( theta ) * Math.sin( r - t ) / r, 3 * Math.sin( phi ) * Math.sin( theta ) * Math.sin( r - t ) / r, 3 * Math.cos( theta ) * Math.sin( r - t ) / r );
 
@@ -622,7 +622,7 @@
 
 		<script>
 
-			parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
 			parent.displacement = function ( x, y, z, t, target ) {
 
@@ -632,9 +632,9 @@
 
 				} else {
 
-					const r = Math.sqrt( x * x + y * y + z * z );
-					const theta = Math.acos( z / r );
-					const phi = Math.atan2( y, x );
+					var r = Math.sqrt( x * x + y * y + z * z );
+					var theta = Math.acos( z / r );
+					var phi = Math.atan2( y, x );
 
 					return target.set( 3 * Math.cos( phi ) * Math.sin( theta ) * Math.sin( r - t ) / r, 3 * Math.sin( phi ) * Math.sin( theta ) * Math.sin( r - t ) / r, 3 * Math.cos( theta ) * Math.sin( r - t ) / r );
 

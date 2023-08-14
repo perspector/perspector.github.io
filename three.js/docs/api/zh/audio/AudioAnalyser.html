@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<base href="../../../" />
+		<script src="list.js"></script>
 		<script src="page.js"></script>
 		<link type="text/css" rel="stylesheet" href="page.css" />
 	</head>
@@ -17,18 +18,24 @@
 
 		</p>
 
-		<h2>代码示例</h2>
+
+		<h2>示例</h2>
+
+		<p>
+			[example:webaudio_sandbox webaudio / sandbox ]<br />
+			[example:webaudio_visualizer webaudio / visualizer ]
+		</p>
 
 		<code>
 		// create an AudioListener and add it to the camera
-		const listener = new THREE.AudioListener();
+		var listener = new THREE.AudioListener();
 		camera.add( listener );
 
 		// create an Audio source
-		const sound = new THREE.Audio( listener );
+		var sound = new THREE.Audio( listener );
 
 		// load a sound and set it as the Audio object's buffer
-		const audioLoader = new THREE.AudioLoader();
+		var audioLoader = new THREE.AudioLoader();
 		audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
 			sound.setBuffer( buffer );
 			sound.setLoop(true);
@@ -37,18 +44,12 @@
 		});
 
 		// create an AudioAnalyser, passing in the sound and desired fftSize
-		const analyser = new THREE.AudioAnalyser( sound, 32 );
+		var analyser = new THREE.AudioAnalyser( sound, 32 );
 
 		// get the average frequency of the sound
-		const data = analyser.getAverageFrequency();
+		var data = analyser.getAverageFrequency();
 		</code>
 
-		<h2>例子</h2>
-
-		<p>
-			[example:webaudio_sandbox webaudio / sandbox ]<br />
-			[example:webaudio_visualizer webaudio / visualizer ]
-		</p>
 
 		<h2>构造函数</h2>
 
@@ -93,8 +94,6 @@
 
 		<h2>源码</h2>
 
-		<p>
-			[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
-		</p>
+		[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
 	</body>
 </html>

@@ -4,74 +4,116 @@
 		<title>three.js webgl - exporter - gltf</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #ccc;
+				text-align: center;
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - exporter - gltf
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - exporter - gltf<br/><br/>
+			<button id="export_scene">Export Scene1</button>
+			<button id="export_scenes">Export Scene1 and Scene 2</button>
+			<button id="export_object">Export Sphere</button>
+			<button id="export_obj">Export WaltHead</button>
+			<button id="export_objects">Export Sphere and Grid</button>
+			<button id="export_scene_object">Export Scene1 and Sphere</button>
+			<br/><br/>
+			<label><input id="option_trs" name="trs" type="checkbox"/>TRS</label>
+			<label><input id="option_visible" name="visible" type="checkbox" checked="checked"/>Only Visible</label>
+			<label><input id="option_drawrange" name="visible" type="checkbox" checked="checked"/>Truncate drawRange</label>
+			<label><input id="option_binary" name="visible" type="checkbox">Binary (<code>.glb</code>)</label>
+			<label><input id="option_forceindices" name="visible" type="checkbox">Force indices</label>
+			<label><input id="option_forcepot" name="visible" type="checkbox">Force POT textures</label>
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="js/WebGL.js"></script>
+		<script src="js/loaders/OBJLoader.js"></script>
+		<script src="js/exporters/GLTFExporter.js"></script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-			import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
-			import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		<script>
 
 			function exportGLTF( input ) {
 
-				const gltfExporter = new GLTFExporter();
+				var gltfExporter = new THREE.GLTFExporter();
 
-				const options = {
-					trs: params.trs,
-					onlyVisible: params.onlyVisible,
-					binary: params.binary,
-					maxTextureSize: params.maxTextureSize
+				var options = {
+					trs: document.getElementById( 'option_trs' ).checked,
+					onlyVisible: document.getElementById( 'option_visible' ).checked,
+					truncateDrawRange: document.getElementById( 'option_drawrange' ).checked,
+					binary: document.getElementById( 'option_binary' ).checked,
+					forceIndices: document.getElementById( 'option_forceindices' ).checked,
+					forcePowerOfTwoTextures: document.getElementById( 'option_forcepot' ).checked
 				};
-				gltfExporter.parse(
-					input,
-					function ( result ) {
+				gltfExporter.parse( input, function ( result ) {
 
-						if ( result instanceof ArrayBuffer ) {
+					if ( result instanceof ArrayBuffer ) {
 
-							saveArrayBuffer( result, 'scene.glb' );
+						saveArrayBuffer( result, 'scene.glb' );
 
-						} else {
+					} else {
 
-							const output = JSON.stringify( result, null, 2 );
-							console.log( output );
-							saveString( output, 'scene.gltf' );
+						var output = JSON.stringify( result, null, 2 );
+						console.log( output );
+						saveString( output, 'scene.gltf' );
 
-						}
+					}
 
-					},
-					function ( error ) {
-
-						console.log( 'An error happened during parsing', error );
-
-					},
-					options
-				);
+				}, options );
 
 			}
 
-			const link = document.createElement( 'a' );
+			document.getElementById( 'export_scene' ).addEventListener( 'click', function () {
+
+				exportGLTF( scene1 );
+
+			} );
+
+			document.getElementById( 'export_scenes' ).addEventListener( 'click', function () {
+
+				exportGLTF( [ scene1, scene2 ] );
+
+			} );
+
+			document.getElementById( 'export_object' ).addEventListener( 'click', function () {
+
+				exportGLTF( sphere );
+
+			} );
+
+			document.getElementById( 'export_obj' ).addEventListener( 'click', function () {
+
+				exportGLTF( waltHead );
+
+			} );
+
+			document.getElementById( 'export_objects' ).addEventListener( 'click', function () {
+
+				exportGLTF( [ sphere, gridHelper ] );
+
+			} );
+
+			document.getElementById( 'export_scene_object' ).addEventListener( 'click', function () {
+
+				exportGLTF( [ scene1, gridHelper ] );
+
+			} );
+
+
+			var link = document.createElement( 'a' );
 			link.style.display = 'none';
 			document.body.appendChild( link ); // Firefox workaround, see #6594
 
@@ -98,24 +140,16 @@
 
 			}
 
-			let container;
+			if ( WEBGL.isWebGLAvailable() === false ) {
 
-			let camera, object, object2, material, geometry, scene1, scene2, renderer;
-			let gridHelper, sphere, model, coffeemat;
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 
-			const params = {
-				trs: false,
-				onlyVisible: true,
-				binary: false,
-				maxTextureSize: 4096,
-				exportScene1: exportScene1,
-				exportScenes: exportScenes,
-				exportSphere: exportSphere,
-				exportModel: exportModel,
-				exportObjects: exportObjects,
-				exportSceneObject: exportSceneObject,
-				exportCompressedObject: exportCompressedObject,
-			};
+			}
+
+			var container;
+
+			var camera, object, scene1, scene2, renderer;
+			var gridHelper, sphere, waltHead;
 
 			init();
 			animate();
@@ -124,30 +158,6 @@
 
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
-
-				// Make linear gradient texture
-
-				const data = new Uint8ClampedArray( 100 * 100 * 4 );
-
-				for ( let y = 0; y < 100; y ++ ) {
-
-					for ( let x = 0; x < 100; x ++ ) {
-
-						const stride = 4 * ( 100 * y + x );
-
-						data[ stride ] = Math.round( 255 * y / 99 );
-						data[ stride + 1 ] = Math.round( 255 - 255 * y / 99 );
-						data[ stride + 2 ] = 0;
-						data[ stride + 3 ] = 255;
-
-					}
-
-				}
-
-				const gradientTexture = new THREE.DataTexture( data, 100, 100, THREE.RGBAFormat );
-				gradientTexture.minFilter = THREE.LinearFilter;
-				gradientTexture.magFilter = THREE.LinearFilter;
-				gradientTexture.needsUpdate = true;
 
 				scene1 = new THREE.Scene();
 				scene1.name = 'Scene1';
@@ -158,54 +168,53 @@
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.set( 600, 400, 0 );
 
-				camera.name = 'PerspectiveCamera';
+				camera.name = "PerspectiveCamera";
 				scene1.add( camera );
 
 				// ---------------------------------------------------------------------
 				// Ambient light
 				// ---------------------------------------------------------------------
-				const ambientLight = new THREE.AmbientLight( 0xcccccc );
-				ambientLight.name = 'AmbientLight';
-				scene1.add( ambientLight );
+				var light = new THREE.AmbientLight( 0xffffff, 0.2 );
+				light.name = 'AmbientLight';
+				scene1.add( light );
 
 				// ---------------------------------------------------------------------
 				// DirectLight
 				// ---------------------------------------------------------------------
-				const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
-				dirLight.target.position.set( 0, 0, - 1 );
-				dirLight.add( dirLight.target );
-				dirLight.lookAt( - 1, - 1, 0 );
-				dirLight.name = 'DirectionalLight';
-				scene1.add( dirLight );
+				light = new THREE.DirectionalLight( 0xffffff, 1 );
+				light.target.position.set( 0, 0, -1 );
+				light.add( light.target );
+				light.lookAt( -1, -1, 0 );
+				light.name = 'DirectionalLight';
+				scene1.add( light );
 
 				// ---------------------------------------------------------------------
 				// Grid
 				// ---------------------------------------------------------------------
-				gridHelper = new THREE.GridHelper( 2000, 20, 0xc1c1c1, 0x8d8d8d );
+				gridHelper = new THREE.GridHelper( 2000, 20 );
 				gridHelper.position.y = - 50;
-				gridHelper.name = 'Grid';
+				gridHelper.name = "Grid";
 				scene1.add( gridHelper );
 
 				// ---------------------------------------------------------------------
 				// Axes
 				// ---------------------------------------------------------------------
-				const axes = new THREE.AxesHelper( 500 );
-				axes.name = 'AxesHelper';
+				var axes = new THREE.AxesHelper( 500 );
+				axes.name = "AxesHelper";
 				scene1.add( axes );
 
 				// ---------------------------------------------------------------------
 				// Simple geometry with basic material
 				// ---------------------------------------------------------------------
 				// Icosahedron
-				const mapGrid = new THREE.TextureLoader().load( 'textures/uv_grid_opengl.jpg' );
+				var mapGrid = new THREE.TextureLoader().load( 'textures/UV_Grid_Sm.jpg' );
 				mapGrid.wrapS = mapGrid.wrapT = THREE.RepeatWrapping;
-				mapGrid.colorSpace = THREE.SRGBColorSpace;
-				material = new THREE.MeshBasicMaterial( {
+				var material = new THREE.MeshBasicMaterial( {
 					color: 0xffffff,
 					map: mapGrid
 				} );
 
-				object = new THREE.Mesh( new THREE.IcosahedronGeometry( 75, 0 ), material );
+				object = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 75, 0 ), material );
 				object.position.set( - 200, 0, 200 );
 				object.name = 'Icosahedron';
 				scene1.add( object );
@@ -215,7 +224,7 @@
 					color: 0x0000ff,
 					wireframe: true
 				} );
-				object = new THREE.Mesh( new THREE.OctahedronGeometry( 75, 1 ), material );
+				object = new THREE.Mesh( new THREE.OctahedronBufferGeometry( 75, 1 ), material );
 				object.position.set( 0, 0, 200 );
 				object.name = 'Octahedron';
 				scene1.add( object );
@@ -227,7 +236,7 @@
 					opacity: 0.5
 				} );
 
-				object = new THREE.Mesh( new THREE.TetrahedronGeometry( 75, 0 ), material );
+				object = new THREE.Mesh( new THREE.TetrahedronBufferGeometry( 75, 0 ), material );
 				object.position.set( 200, 0, 200 );
 				object.name = 'Tetrahedron';
 				scene1.add( object );
@@ -242,10 +251,9 @@
 					roughness: 1.0,
 					flatShading: true
 				} );
-				material.map = gradientTexture;
-				sphere = new THREE.Mesh( new THREE.SphereGeometry( 70, 10, 10 ), material );
+				sphere = new THREE.Mesh( new THREE.SphereBufferGeometry( 70, 10, 10 ), material );
 				sphere.position.set( 0, 0, 0 );
-				sphere.name = 'Sphere';
+				sphere.name = "Sphere";
 				scene1.add( sphere );
 
 				// Cylinder
@@ -253,9 +261,9 @@
 					color: 0xff00ff,
 					flatShading: true
 				} );
-				object = new THREE.Mesh( new THREE.CylinderGeometry( 10, 80, 100 ), material );
+				object = new THREE.Mesh( new THREE.CylinderBufferGeometry( 10, 80, 100 ), material );
 				object.position.set( 200, 0, 0 );
-				object.name = 'Cylinder';
+				object.name = "Cylinder";
 				scene1.add( object );
 
 				// TorusKnot
@@ -263,55 +271,88 @@
 					color: 0xff0000,
 					roughness: 1
 				} );
-				object = new THREE.Mesh( new THREE.TorusKnotGeometry( 50, 15, 40, 10 ), material );
+				object = new THREE.Mesh( new THREE.TorusKnotBufferGeometry( 50, 15, 40, 10 ), material );
 				object.position.set( - 200, 0, 0 );
-				object.name = 'Cylinder';
+				object.name = "Cylinder";
 				scene1.add( object );
 
 
 				// ---------------------------------------------------------------------
 				// Hierarchy
 				// ---------------------------------------------------------------------
-				const mapWood = new THREE.TextureLoader().load( 'textures/hardwood2_diffuse.jpg' );
+				var mapWood = new THREE.TextureLoader().load( 'textures/hardwood2_diffuse.jpg' );
 				material = new THREE.MeshStandardMaterial( { map: mapWood, side: THREE.DoubleSide } );
 
-				object = new THREE.Mesh( new THREE.BoxGeometry( 40, 100, 100 ), material );
+				object = new THREE.Mesh( new THREE.BoxBufferGeometry( 40, 100, 100 ), material );
 				object.position.set( - 200, 0, 400 );
-				object.name = 'Cube';
+				object.name = "Cube";
 				scene1.add( object );
 
-				object2 = new THREE.Mesh( new THREE.BoxGeometry( 40, 40, 40, 2, 2, 2 ), material );
+				var object2 = new THREE.Mesh( new THREE.BoxBufferGeometry( 40, 40, 40, 2, 2, 2 ), material );
 				object2.position.set( 0, 0, 50 );
 				object2.rotation.set( 0, 45, 0 );
-				object2.name = 'SubCube';
+				object2.name = "SubCube";
 				object.add( object2 );
 
 
 				// ---------------------------------------------------------------------
 				// Groups
 				// ---------------------------------------------------------------------
-				const group1 = new THREE.Group();
-				group1.name = 'Group';
+				var group1 = new THREE.Group();
+				group1.name = "Group";
 				scene1.add( group1 );
 
-				const group2 = new THREE.Group();
-				group2.name = 'subGroup';
+				var group2 = new THREE.Group();
+				group2.name = "subGroup";
 				group2.position.set( 0, 50, 0 );
 				group1.add( group2 );
 
-				object2 = new THREE.Mesh( new THREE.BoxGeometry( 30, 30, 30 ), material );
-				object2.name = 'Cube in group';
+				object2 = new THREE.Mesh( new THREE.BoxBufferGeometry( 30, 30, 30 ), material );
+				object2.name = "Cube in group";
 				object2.position.set( 0, 0, 400 );
 				group2.add( object2 );
 
 				// ---------------------------------------------------------------------
-				// THREE.Line Strip
+				// Triangle Strip
 				// ---------------------------------------------------------------------
-				geometry = new THREE.BufferGeometry();
-				let numPoints = 100;
-				let positions = new Float32Array( numPoints * 3 );
+				var geometry = new THREE.BufferGeometry();
+				var positions = new Float32Array( [
+					0, 0, 0,
+					0, 80, 0,
+					80, 0, 0,
+					80, 80, 0,
+					80, 0, 80,
+					80, 80, 80,
+				] );
 
-				for ( let i = 0; i < numPoints; i ++ ) {
+				var colors = new Float32Array( [
+					1, 0, 0,
+					1, 0, 0,
+					1, 1, 0,
+					1, 1, 0,
+					0, 0, 1,
+					0, 0, 1,
+				] );
+
+				geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+				object = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { side: THREE.DoubleSide, vertexColors: THREE.VertexColors } ) );
+				object.position.set( 140, - 40, - 250 );
+				object.setDrawMode( THREE.TriangleStripDrawMode );
+				object.name = 'Custom buffered';
+				object.userData = { data: 'customdata', list: [ 1, 2, 3, 4 ] };
+
+				scene1.add( object );
+
+
+				// ---------------------------------------------------------------------
+				// Line Strip
+				// ---------------------------------------------------------------------
+				var geometry = new THREE.BufferGeometry();
+				var numPoints = 100;
+				var positions = new Float32Array( numPoints * 3 );
+
+				for ( var i = 0; i < numPoints; i ++ ) {
 
 					positions[ i * 3 ] = i;
 					positions[ i * 3 + 1 ] = Math.sin( i / 2 ) * 20;
@@ -319,40 +360,79 @@
 
 				}
 
-				geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 				object = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xffff00 } ) );
 				object.position.set( - 50, 0, - 200 );
 				scene1.add( object );
 
-				// ---------------------------------------------------------------------
-				// THREE.Line Loop
-				// ---------------------------------------------------------------------
-				geometry = new THREE.BufferGeometry();
-				numPoints = 5;
-				const radius = 70;
-				positions = new Float32Array( numPoints * 3 );
 
-				for ( let i = 0; i < numPoints; i ++ ) {
+				// ---------------------------------------------------------------------
+				// Line Loop
+				// ---------------------------------------------------------------------
+				var geometry = new THREE.BufferGeometry();
+				var numPoints = 5;
+				var radius = 70;
+				var positions = new Float32Array( numPoints * 3 );
 
-					const s = i * Math.PI * 2 / numPoints;
+				for ( var i = 0; i < numPoints; i ++ ) {
+
+					var s = i * Math.PI * 2 / numPoints;
 					positions[ i * 3 ] = radius * Math.sin( s );
 					positions[ i * 3 + 1 ] = radius * Math.cos( s );
 					positions[ i * 3 + 2 ] = 0;
 
 				}
 
-				geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 				object = new THREE.LineLoop( geometry, new THREE.LineBasicMaterial( { color: 0xffff00 } ) );
 				object.position.set( 0, 0, - 200 );
 
 				scene1.add( object );
 
 				// ---------------------------------------------------------------------
-				// THREE.Points
+				// Buffer geometry truncated (DrawRange)
 				// ---------------------------------------------------------------------
-				numPoints = 100;
-				const pointsArray = new Float32Array( numPoints * 3 );
-				for ( let i = 0; i < numPoints; i ++ ) {
+				var geometry = new THREE.BufferGeometry();
+				var numElements = 6;
+				var outOfRange = 3;
+
+				var positions = new Float32Array( ( numElements + outOfRange ) * 3 );
+				var colors = new Float32Array( ( numElements + outOfRange ) * 3 );
+
+				positions.set( [
+					0, 0, 0,
+					0, 80, 0,
+					80, 0, 0,
+					80, 0, 0,
+					0, 80, 0,
+					80, 80, 0
+				] );
+
+				colors.set( [
+					1, 0, 0,
+					1, 0, 0,
+					1, 1, 0,
+					1, 1, 0,
+					0, 0, 1,
+					0, 0, 1,
+				] );
+
+				geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+				geometry.setDrawRange( 0, numElements );
+
+				object = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { side: THREE.DoubleSide, vertexColors: THREE.VertexColors } ) );
+				object.name = 'Custom buffered truncated';
+				object.position.set( 340, - 40, - 200 );
+
+				scene1.add( object );
+
+				// ---------------------------------------------------------------------
+				// Points
+				// ---------------------------------------------------------------------
+				var numPoints = 100;
+				var pointsArray = new Float32Array( numPoints * 3 );
+				for ( var i = 0; i < numPoints; i ++ ) {
 
 					pointsArray[ 3 * i ] = - 50 + Math.random() * 100;
 					pointsArray[ 3 * i + 1 ] = Math.random() * 100;
@@ -360,19 +440,19 @@
 
 				}
 
-				const pointsGeo = new THREE.BufferGeometry();
-				pointsGeo.setAttribute( 'position', new THREE.BufferAttribute( pointsArray, 3 ) );
+				var pointsGeo = new THREE.BufferGeometry();
+				pointsGeo.addAttribute( 'position', new THREE.BufferAttribute( pointsArray, 3 ) );
 
-				const pointsMaterial = new THREE.PointsMaterial( { color: 0xffff00, size: 5 } );
-				const pointCloud = new THREE.Points( pointsGeo, pointsMaterial );
-				pointCloud.name = 'Points';
-				pointCloud.position.set( - 200, 0, - 200 );
-				scene1.add( pointCloud );
+				var pointsMaterial = new THREE.PointsMaterial( { color: 0xffff00, size: 5 } );
+				var points = new THREE.Points( pointsGeo, pointsMaterial );
+				points.name = "Points";
+				points.position.set( - 200, 0, - 200 );
+				scene1.add( points );
 
 				// ---------------------------------------------------------------------
 				// Ortho camera
 				// ---------------------------------------------------------------------
-				const cameraOrtho = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 0.1, 10 );
+				var cameraOrtho = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 0.1, 10 );
 				scene1.add( cameraOrtho );
 				cameraOrtho.name = 'OrthographicCamera';
 
@@ -381,28 +461,28 @@
 					side: THREE.DoubleSide
 				} );
 
-				object = new THREE.Mesh( new THREE.CircleGeometry( 50, 20, 0, Math.PI * 2 ), material );
+				object = new THREE.Mesh( new THREE.CircleBufferGeometry( 50, 20, 0, Math.PI * 2 ), material );
 				object.position.set( 200, 0, - 400 );
 				scene1.add( object );
 
-				object = new THREE.Mesh( new THREE.RingGeometry( 10, 50, 20, 5, 0, Math.PI * 2 ), material );
+				object = new THREE.Mesh( new THREE.RingBufferGeometry( 10, 50, 20, 5, 0, Math.PI * 2 ), material );
 				object.position.set( 0, 0, - 400 );
 				scene1.add( object );
 
-				object = new THREE.Mesh( new THREE.CylinderGeometry( 25, 75, 100, 40, 5 ), material );
+				object = new THREE.Mesh( new THREE.CylinderBufferGeometry( 25, 75, 100, 40, 5 ), material );
 				object.position.set( - 200, 0, - 400 );
 				scene1.add( object );
 
 				//
-				const points = [];
+				var points = [];
 
-				for ( let i = 0; i < 50; i ++ ) {
+				for ( var i = 0; i < 50; i ++ ) {
 
 					points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * Math.sin( i * 0.1 ) * 15 + 50, ( i - 5 ) * 2 ) );
 
 				}
 
-				object = new THREE.Mesh( new THREE.LatheGeometry( points, 20 ), material );
+				object = new THREE.Mesh( new THREE.LatheBufferGeometry( points, 20 ), material );
 				object.position.set( 200, 0, 400 );
 				scene1.add( object );
 
@@ -412,32 +492,33 @@
 				material = new THREE.MeshBasicMaterial( {
 					color: 0xff0000
 				} );
-				object = new THREE.Mesh( new THREE.BoxGeometry( 200, 200, 200 ), material );
+				object = new THREE.Mesh( new THREE.BoxBufferGeometry( 200, 200, 200 ), material );
 				object.position.set( 0, 0, 0 );
-				object.name = 'CubeHidden';
+				object.name = "CubeHidden";
 				object.visible = false;
 				scene1.add( object );
 
 				// ---------------------------------------------------------------------
-				// Model requiring KHR_mesh_quantization
-				// ---------------------------------------------------------------------
-				const loader = new GLTFLoader();
-				loader.load( 'models/gltf/ShaderBall.glb', function ( gltf ) {
+				//
+				//
+				var loader = new THREE.OBJLoader();
+				loader.load( 'models/obj/walt/WaltHead.obj', function ( obj ) {
 
-					model = gltf.scene;
-					model.scale.setScalar( 50 );
-					model.position.set( 200, - 40, - 200 );
-					scene1.add( model );
+					waltHead = obj;
+					waltHead.scale.multiplyScalar( 1.5 );
+					waltHead.position.set( 400, 0, 0 );
+					scene1.add( waltHead );
 
 				} );
 
+
 				// ---------------------------------------------------------------------
-				// 2nd THREE.Scene
+				// 2nd Scene
 				// ---------------------------------------------------------------------
 				scene2 = new THREE.Scene();
-				object = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100 ), material );
+				object = new THREE.Mesh( new THREE.BoxBufferGeometry( 100, 100, 100 ), material );
 				object.position.set( 0, 0, 0 );
-				object.name = 'Cube2ndScene';
+				object.name = "Cube2ndScene";
 				scene2.name = 'Scene2';
 				scene2.add( object );
 
@@ -446,98 +527,12 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.toneMapping = THREE.ACESFilmicToneMapping;
-				renderer.toneMappingExposure = 1;
 
 				container.appendChild( renderer.domElement );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
-
-				// ---------------------------------------------------------------------
-				// Exporting compressed textures and meshes (KTX2 / Draco / Meshopt)
-				// ---------------------------------------------------------------------
-				const ktx2Loader = new KTX2Loader()
-					.setTranscoderPath( 'jsm/libs/basis/' )
-					.detectSupport( renderer );
-
-				const gltfLoader = new GLTFLoader().setPath( 'models/gltf/' );
-				gltfLoader.setKTX2Loader( ktx2Loader );
-				gltfLoader.setMeshoptDecoder( MeshoptDecoder );
-				gltfLoader.load( 'coffeemat.glb', function ( gltf ) {
-
-					gltf.scene.position.x = 400;
-					gltf.scene.position.z = - 200;
-
-					scene1.add( gltf.scene );
-
-					coffeemat = gltf.scene;
-
-				} );
-
-				//
-
-				const gui = new GUI();
-
-				let h = gui.addFolder( 'Settings' );
-				h.add( params, 'trs' ).name( 'Use TRS' );
-				h.add( params, 'onlyVisible' ).name( 'Only Visible Objects' );
-				h.add( params, 'binary' ).name( 'Binary (GLB)' );
-				h.add( params, 'maxTextureSize', 2, 8192 ).name( 'Max Texture Size' ).step( 1 );
-
-				h = gui.addFolder( 'Export' );
-				h.add( params, 'exportScene1' ).name( 'Export Scene 1' );
-				h.add( params, 'exportScenes' ).name( 'Export Scene 1 and 2' );
-				h.add( params, 'exportSphere' ).name( 'Export Sphere' );
-				h.add( params, 'exportModel' ).name( 'Export Model' );
-				h.add( params, 'exportObjects' ).name( 'Export Sphere With Grid' );
-				h.add( params, 'exportSceneObject' ).name( 'Export Scene 1 and Object' );
-				h.add( params, 'exportCompressedObject' ).name( 'Export Coffeemat (from compressed data)' );
-
-				gui.open();
-
-			}
-
-			function exportScene1() {
-
-				exportGLTF( scene1 );
-
-			}
-
-			function exportScenes() {
-
-				exportGLTF( [ scene1, scene2 ] );
-
-			}
-
-			function exportSphere() {
-
-				exportGLTF( sphere );
-
-			}
-
-			function exportModel() {
-
-				exportGLTF( model );
-
-			}
-
-			function exportObjects() {
-
-				exportGLTF( [ sphere, gridHelper ] );
-
-			}
-
-			function exportSceneObject() {
-
-				exportGLTF( [ scene1, gridHelper ] );
-
-			}
-
-			function exportCompressedObject() {
-
-				exportGLTF( [ coffeemat ] );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -562,7 +557,7 @@
 
 			function render() {
 
-				const timer = Date.now() * 0.0001;
+				var timer = Date.now() * 0.0001;
 
 				camera.position.x = Math.cos( timer ) * 800;
 				camera.position.z = Math.sin( timer ) * 800;

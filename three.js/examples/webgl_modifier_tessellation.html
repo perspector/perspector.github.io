@@ -4,12 +4,42 @@
 		<title>three.js webgl - modifier - tessellation</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				z-index:100;
+			}
+
+			a { color: red }
+		</style>
 	</head>
 
 	<body>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - modifier tessellation</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - modifier tessellation</div>
 		<div id="container"></div>
+
+		<script src="../build/three.js"></script>
+
+		<script src="js/controls/TrackballControls.js"></script>
+
+		<script src="js/modifiers/TessellateModifier.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
 		<script type="x-shader/x-vertex" id="vertexshader">
 
@@ -53,188 +83,179 @@
 
 		</script>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
+		if ( WEBGL.isWebGLAvailable() === false ) {
 
-			import * as THREE from 'three';
+			document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 
-			import Stats from 'three/addons/libs/stats.module.js';
+		}
 
-			import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
-			import { TessellateModifier } from 'three/addons/modifiers/TessellateModifier.js';
-			import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-			import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+		var renderer, scene, camera, stats;
 
-			let renderer, scene, camera, stats;
+		var controls;
 
-			let controls;
+		var mesh, uniforms;
 
-			let mesh, uniforms;
+		var WIDTH = window.innerWidth,
+			HEIGHT = window.innerHeight;
 
-			const WIDTH = window.innerWidth;
-			const HEIGHT = window.innerHeight;
+		var loader = new THREE.FontLoader();
+		loader.load( 'fonts/helvetiker_bold.typeface.json', function ( font ) {
 
-			const loader = new FontLoader();
-			loader.load( 'fonts/helvetiker_bold.typeface.json', function ( font ) {
+			init( font );
+			animate();
 
-				init( font );
-				animate();
+		} );
+
+		function init( font ) {
+
+			camera = new THREE.PerspectiveCamera( 40, WIDTH / HEIGHT, 1, 10000 );
+			camera.position.set( - 100, 100, 200 );
+
+			controls = new THREE.TrackballControls( camera );
+
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0x050505 );
+
+			//
+
+			var geometry = new THREE.TextGeometry( "THREE.JS", {
+
+				font: font,
+
+				size: 40,
+				height: 5,
+				curveSegments: 3,
+
+				bevelThickness: 2,
+				bevelSize: 1,
+				bevelEnabled: true
 
 			} );
 
-			function init( font ) {
+			geometry.center();
 
-				camera = new THREE.PerspectiveCamera( 40, WIDTH / HEIGHT, 1, 10000 );
-				camera.position.set( - 100, 100, 200 );
+			var tessellateModifier = new THREE.TessellateModifier( 8 );
 
-				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0x050505 );
+			for ( var i = 0; i < 6; i ++ ) {
 
-				//
+				tessellateModifier.modify( geometry );
 
-				let geometry = new TextGeometry( 'THREE.JS', {
+			}
 
-					font: font,
+			//
 
-					size: 40,
-					height: 5,
-					curveSegments: 3,
+			geometry = new THREE.BufferGeometry().fromGeometry( geometry );
 
-					bevelThickness: 2,
-					bevelSize: 1,
-					bevelEnabled: true
+			var numFaces = geometry.attributes.position.count / 3;
 
-				} );
+			var colors = new Float32Array( numFaces * 3 * 3 );
+			var displacement = new Float32Array( numFaces * 3 * 3 );
 
-				geometry.center();
+			var color = new THREE.Color();
 
-				const tessellateModifier = new TessellateModifier( 8, 6 );
+			for ( var f = 0; f < numFaces; f ++ ) {
 
-				geometry = tessellateModifier.modify( geometry );
+				var index = 9 * f;
 
-				//
+				var h = 0.2 * Math.random();
+				var s = 0.5 + 0.5 * Math.random();
+				var l = 0.5 + 0.5 * Math.random();
 
-				const numFaces = geometry.attributes.position.count / 3;
+				color.setHSL( h, s, l );
 
-				const colors = new Float32Array( numFaces * 3 * 3 );
-				const displacement = new Float32Array( numFaces * 3 * 3 );
+				var d = 10 * ( 0.5 - Math.random() );
 
-				const color = new THREE.Color();
+				for ( var i = 0; i < 3; i ++ ) {
 
-				for ( let f = 0; f < numFaces; f ++ ) {
+					colors[ index + ( 3 * i ) ] = color.r;
+					colors[ index + ( 3 * i ) + 1 ] = color.g;
+					colors[ index + ( 3 * i ) + 2 ] = color.b;
 
-					const index = 9 * f;
-
-					const h = 0.2 * Math.random();
-					const s = 0.5 + 0.5 * Math.random();
-					const l = 0.5 + 0.5 * Math.random();
-
-					color.setHSL( h, s, l );
-
-					const d = 10 * ( 0.5 - Math.random() );
-
-					for ( let i = 0; i < 3; i ++ ) {
-
-						colors[ index + ( 3 * i ) ] = color.r;
-						colors[ index + ( 3 * i ) + 1 ] = color.g;
-						colors[ index + ( 3 * i ) + 2 ] = color.b;
-
-						displacement[ index + ( 3 * i ) ] = d;
-						displacement[ index + ( 3 * i ) + 1 ] = d;
-						displacement[ index + ( 3 * i ) + 2 ] = d;
-
-					}
+					displacement[ index + ( 3 * i ) ] = d;
+					displacement[ index + ( 3 * i ) + 1 ] = d;
+					displacement[ index + ( 3 * i ) + 2 ] = d;
 
 				}
 
-				geometry.setAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
-				geometry.setAttribute( 'displacement', new THREE.BufferAttribute( displacement, 3 ) );
-
-				//
-
-				uniforms = {
-
-					amplitude: { value: 0.0 }
-
-				};
-
-				const shaderMaterial = new THREE.ShaderMaterial( {
-
-					uniforms: uniforms,
-					vertexShader: document.getElementById( 'vertexshader' ).textContent,
-					fragmentShader: document.getElementById( 'fragmentshader' ).textContent
-
-				} );
-
-				//
-
-				mesh = new THREE.Mesh( geometry, shaderMaterial );
-
-				scene.add( mesh );
-
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( WIDTH, HEIGHT );
-
-				const container = document.getElementById( 'container' );
-				container.appendChild( renderer.domElement );
-
-				controls = new TrackballControls( camera, renderer.domElement );
-
-				stats = new Stats();
-				container.appendChild( stats.dom );
-
-				//
-
-				window.addEventListener( 'resize', onWindowResize );
-
 			}
 
-			function onWindowResize() {
+			geometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+			geometry.addAttribute( 'displacement', new THREE.BufferAttribute( displacement, 3 ) );
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+			//
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+			uniforms = {
 
-			}
+				amplitude: { value: 0.0 }
 
-			function animate() {
+			};
 
-				requestAnimationFrame( animate );
+			var shaderMaterial = new THREE.ShaderMaterial( {
 
-				render();
+				uniforms: uniforms,
+				vertexShader: document.getElementById( 'vertexshader' ).textContent,
+				fragmentShader: document.getElementById( 'fragmentshader' ).textContent
 
-				stats.update();
+			} );
 
-			}
+			//
 
-			function render() {
+			mesh = new THREE.Mesh( geometry, shaderMaterial );
 
-				const time = Date.now() * 0.001;
+			scene.add( mesh );
 
-				uniforms.amplitude.value = 1.0 + Math.sin( time * 0.5 );
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( WIDTH, HEIGHT );
 
-				controls.update();
+			var container = document.getElementById( 'container' );
+			container.appendChild( renderer.domElement );
 
-				renderer.render( scene, camera );
+			stats = new Stats();
+			container.appendChild( stats.dom );
 
-			}
+			//
+
+			window.addEventListener( 'resize', onWindowResize, false );
+
+		}
+
+		function onWindowResize() {
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+		}
+
+		function animate() {
+
+			requestAnimationFrame( animate );
+
+			render();
+
+			stats.update();
+
+		}
+
+		function render() {
+
+			var time = Date.now() * 0.001;
+
+			uniforms.amplitude.value = 1.0 + Math.sin( time * 0.5 );
+
+			controls.update();
+
+			renderer.render( scene, camera );
+
+		}
 
 
-		</script>
+	</script>
 
 </body>
 

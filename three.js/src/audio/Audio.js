@@ -1,49 +1,49 @@
+/**
+ * @author mrdoob / http://mrdoob.com/
+ * @author Reece Aaron Lecrivain / http://reecenotes.com/
+ */
+
 import { Object3D } from '../core/Object3D.js';
 
-class Audio extends Object3D {
+function Audio( listener ) {
 
-	constructor( listener ) {
+	Object3D.call( this );
 
-		super();
+	this.type = 'Audio';
 
-		this.type = 'Audio';
+	this.listener = listener;
+	this.context = listener.context;
 
-		this.listener = listener;
-		this.context = listener.context;
+	this.gain = this.context.createGain();
+	this.gain.connect( listener.getInput() );
 
-		this.gain = this.context.createGain();
-		this.gain.connect( listener.getInput() );
+	this.autoplay = false;
 
-		this.autoplay = false;
+	this.buffer = null;
+	this.detune = 0;
+	this.loop = false;
+	this.startTime = 0;
+	this.offset = 0;
+	this.playbackRate = 1;
+	this.isPlaying = false;
+	this.hasPlaybackControl = true;
+	this.sourceType = 'empty';
 
-		this.buffer = null;
-		this.detune = 0;
-		this.loop = false;
-		this.loopStart = 0;
-		this.loopEnd = 0;
-		this.offset = 0;
-		this.duration = undefined;
-		this.playbackRate = 1;
-		this.isPlaying = false;
-		this.hasPlaybackControl = true;
-		this.source = null;
-		this.sourceType = 'empty';
+	this.filters = [];
 
-		this._startedAt = 0;
-		this._progress = 0;
-		this._connected = false;
+}
 
-		this.filters = [];
+Audio.prototype = Object.assign( Object.create( Object3D.prototype ), {
 
-	}
+	constructor: Audio,
 
-	getOutput() {
+	getOutput: function () {
 
 		return this.gain;
 
-	}
+	},
 
-	setNodeSource( audioNode ) {
+	setNodeSource: function ( audioNode ) {
 
 		this.hasPlaybackControl = false;
 		this.sourceType = 'audioNode';
@@ -52,9 +52,9 @@ class Audio extends Object3D {
 
 		return this;
 
-	}
+	},
 
-	setMediaElementSource( mediaElement ) {
+	setMediaElementSource: function ( mediaElement ) {
 
 		this.hasPlaybackControl = false;
 		this.sourceType = 'mediaNode';
@@ -63,20 +63,9 @@ class Audio extends Object3D {
 
 		return this;
 
-	}
+	},
 
-	setMediaStreamSource( mediaStream ) {
-
-		this.hasPlaybackControl = false;
-		this.sourceType = 'mediaStreamNode';
-		this.source = this.context.createMediaStreamSource( mediaStream );
-		this.connect();
-
-		return this;
-
-	}
-
-	setBuffer( audioBuffer ) {
+	setBuffer: function ( audioBuffer ) {
 
 		this.buffer = audioBuffer;
 		this.sourceType = 'buffer';
@@ -85,9 +74,9 @@ class Audio extends Object3D {
 
 		return this;
 
-	}
+	},
 
-	play( delay = 0 ) {
+	play: function () {
 
 		if ( this.isPlaying === true ) {
 
@@ -103,15 +92,13 @@ class Audio extends Object3D {
 
 		}
 
-		this._startedAt = this.context.currentTime + delay;
+		var source = this.context.createBufferSource();
 
-		const source = this.context.createBufferSource();
 		source.buffer = this.buffer;
 		source.loop = this.loop;
-		source.loopStart = this.loopStart;
-		source.loopEnd = this.loopEnd;
 		source.onended = this.onEnded.bind( this );
-		source.start( this._startedAt, this._progress + this.offset, this.duration );
+		this.startTime = this.context.currentTime;
+		source.start( this.startTime, this.offset );
 
 		this.isPlaying = true;
 
@@ -122,9 +109,9 @@ class Audio extends Object3D {
 
 		return this.connect();
 
-	}
+	},
 
-	pause() {
+	pause: function () {
 
 		if ( this.hasPlaybackControl === false ) {
 
@@ -135,30 +122,18 @@ class Audio extends Object3D {
 
 		if ( this.isPlaying === true ) {
 
-			// update current progress
-
-			this._progress += Math.max( this.context.currentTime - this._startedAt, 0 ) * this.playbackRate;
-
-			if ( this.loop === true ) {
-
-				// ensure _progress does not exceed duration with looped audios
-
-				this._progress = this._progress % ( this.duration || this.buffer.duration );
-
-			}
-
 			this.source.stop();
 			this.source.onended = null;
-
+			this.offset += ( this.context.currentTime - this.startTime ) * this.playbackRate;
 			this.isPlaying = false;
 
 		}
 
 		return this;
 
-	}
+	},
 
-	stop() {
+	stop: function () {
 
 		if ( this.hasPlaybackControl === false ) {
 
@@ -167,28 +142,22 @@ class Audio extends Object3D {
 
 		}
 
-		this._progress = 0;
-
-		if ( this.source !== null ) {
-
-			this.source.stop();
-			this.source.onended = null;
-
-		}
-
+		this.source.stop();
+		this.source.onended = null;
+		this.offset = 0;
 		this.isPlaying = false;
 
 		return this;
 
-	}
+	},
 
-	connect() {
+	connect: function () {
 
 		if ( this.filters.length > 0 ) {
 
 			this.source.connect( this.filters[ 0 ] );
 
-			for ( let i = 1, l = this.filters.length; i < l; i ++ ) {
+			for ( var i = 1, l = this.filters.length; i < l; i ++ ) {
 
 				this.filters[ i - 1 ].connect( this.filters[ i ] );
 
@@ -202,19 +171,17 @@ class Audio extends Object3D {
 
 		}
 
-		this._connected = true;
-
 		return this;
 
-	}
+	},
 
-	disconnect() {
+	disconnect: function () {
 
 		if ( this.filters.length > 0 ) {
 
 			this.source.disconnect( this.filters[ 0 ] );
 
-			for ( let i = 1, l = this.filters.length; i < l; i ++ ) {
+			for ( var i = 1, l = this.filters.length; i < l; i ++ ) {
 
 				this.filters[ i - 1 ].disconnect( this.filters[ i ] );
 
@@ -228,39 +195,37 @@ class Audio extends Object3D {
 
 		}
 
-		this._connected = false;
-
 		return this;
 
-	}
+	},
 
-	getFilters() {
+	getFilters: function () {
 
 		return this.filters;
 
-	}
+	},
 
-	setFilters( value ) {
+	setFilters: function ( value ) {
 
 		if ( ! value ) value = [];
 
-		if ( this._connected === true ) {
+		if ( this.isPlaying === true ) {
 
 			this.disconnect();
-			this.filters = value.slice();
+			this.filters = value;
 			this.connect();
 
 		} else {
 
-			this.filters = value.slice();
+			this.filters = value;
 
 		}
 
 		return this;
 
-	}
+	},
 
-	setDetune( value ) {
+	setDetune: function ( value ) {
 
 		this.detune = value;
 
@@ -274,27 +239,27 @@ class Audio extends Object3D {
 
 		return this;
 
-	}
+	},
 
-	getDetune() {
+	getDetune: function () {
 
 		return this.detune;
 
-	}
+	},
 
-	getFilter() {
+	getFilter: function () {
 
 		return this.getFilters()[ 0 ];
 
-	}
+	},
 
-	setFilter( filter ) {
+	setFilter: function ( filter ) {
 
 		return this.setFilters( filter ? [ filter ] : [] );
 
-	}
+	},
 
-	setPlaybackRate( value ) {
+	setPlaybackRate: function ( value ) {
 
 		if ( this.hasPlaybackControl === false ) {
 
@@ -313,21 +278,21 @@ class Audio extends Object3D {
 
 		return this;
 
-	}
+	},
 
-	getPlaybackRate() {
+	getPlaybackRate: function () {
 
 		return this.playbackRate;
 
-	}
+	},
 
-	onEnded() {
+	onEnded: function () {
 
 		this.isPlaying = false;
 
-	}
+	},
 
-	getLoop() {
+	getLoop: function () {
 
 		if ( this.hasPlaybackControl === false ) {
 
@@ -338,9 +303,9 @@ class Audio extends Object3D {
 
 		return this.loop;
 
-	}
+	},
 
-	setLoop( value ) {
+	setLoop: function ( value ) {
 
 		if ( this.hasPlaybackControl === false ) {
 
@@ -359,31 +324,15 @@ class Audio extends Object3D {
 
 		return this;
 
-	}
+	},
 
-	setLoopStart( value ) {
-
-		this.loopStart = value;
-
-		return this;
-
-	}
-
-	setLoopEnd( value ) {
-
-		this.loopEnd = value;
-
-		return this;
-
-	}
-
-	getVolume() {
+	getVolume: function () {
 
 		return this.gain.gain.value;
 
-	}
+	},
 
-	setVolume( value ) {
+	setVolume: function ( value ) {
 
 		this.gain.gain.setTargetAtTime( value, this.context.currentTime, 0.01 );
 
@@ -391,6 +340,6 @@ class Audio extends Object3D {
 
 	}
 
-}
+} );
 
 export { Audio };

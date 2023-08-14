@@ -1,87 +1,50 @@
-const cacheName = 'threejs-editor';
+// r103
 
-const assets = [
+const staticAssets = [
 	'./',
 
-	'./manifest.json',
-	'./images/icon.png',
+	'../build/three.js',
+	'../examples/js/libs/system.min.js',
 
-	'../files/favicon.ico',
+	'../examples/js/controls/EditorControls.js',
+	'../examples/js/controls/TransformControls.js',
 
-	'../build/three.module.js',
+	'../examples/js/libs/jszip.min.js',
+	'../examples/js/libs/inflate.min.js',
 
-	'../examples/jsm/controls/TransformControls.js',
+	'../examples/js/loaders/AMFLoader.js',
+	'../examples/js/loaders/AWDLoader.js',
+	'../examples/js/loaders/BabylonLoader.js',
+	'../examples/js/loaders/ColladaLoader.js',
+	'../examples/js/loaders/DRACOLoader.js',
+	'../examples/js/loaders/FBXLoader.js',
+	'../examples/js/loaders/GLTFLoader.js',
+	'../examples/js/loaders/deprecated/LegacyGLTFLoader.js',
+	'../examples/js/loaders/KMZLoader.js',
+	'../examples/js/loaders/MD2Loader.js',
+	'../examples/js/loaders/OBJLoader.js',
+	'../examples/js/loaders/MTLLoader.js',
+	'../examples/js/loaders/PlayCanvasLoader.js',
+	'../examples/js/loaders/PLYLoader.js',
+	'../examples/js/loaders/STLLoader.js',
+	'../examples/js/loaders/SVGLoader.js',
+	'../examples/js/loaders/TGALoader.js',
+	'../examples/js/loaders/TDSLoader.js',
+	'../examples/js/loaders/VRMLLoader.js',
+	'../examples/js/loaders/VTKLoader.js',
+	'../examples/js/loaders/ctm/lzma.js',
+	'../examples/js/loaders/ctm/ctm.js',
+	'../examples/js/loaders/ctm/CTMLoader.js',
 
-	'../examples/jsm/libs/chevrotain.module.min.js',
-	'../examples/jsm/libs/fflate.module.js',
+	'../examples/js/exporters/ColladaExporter.js',
+	'../examples/js/exporters/GLTFExporter.js',
+	'../examples/js/exporters/OBJExporter.js',
+	'../examples/js/exporters/STLExporter.js',
 
-	'../examples/jsm/libs/draco/draco_decoder.js',
-	'../examples/jsm/libs/draco/draco_decoder.wasm',
-	'../examples/jsm/libs/draco/draco_encoder.js',
-	'../examples/jsm/libs/draco/draco_wasm_wrapper.js',
-
-	'../examples/jsm/libs/draco/gltf/draco_decoder.js',
-	'../examples/jsm/libs/draco/gltf/draco_decoder.wasm',
-	'../examples/jsm/libs/draco/gltf/draco_wasm_wrapper.js',
-
-	'../examples/jsm/libs/meshopt_decoder.module.js',
-
-	'../examples/jsm/libs/motion-controllers.module.js',
-
-	'../examples/jsm/libs/rhino3dm/rhino3dm.wasm',
-	'../examples/jsm/libs/rhino3dm/rhino3dm.js',
-
-	'../examples/jsm/loaders/3DMLoader.js',
-	'../examples/jsm/loaders/3MFLoader.js',
-	'../examples/jsm/loaders/AMFLoader.js',
-	'../examples/jsm/loaders/ColladaLoader.js',
-	'../examples/jsm/loaders/DRACOLoader.js',
-	'../examples/jsm/loaders/FBXLoader.js',
-	'../examples/jsm/loaders/GLTFLoader.js',
-	'../examples/jsm/loaders/KMZLoader.js',
-	'../examples/jsm/loaders/KTX2Loader.js',
-	'../examples/jsm/loaders/IFCLoader.js',
-	'../examples/jsm/loaders/ifc/web-ifc-api.js',
-	'../examples/jsm/loaders/ifc/web-ifc.wasm',
-	'../examples/jsm/loaders/MD2Loader.js',
-	'../examples/jsm/loaders/OBJLoader.js',
-	'../examples/jsm/loaders/MTLLoader.js',
-	'../examples/jsm/loaders/PCDLoader.js',
-	'../examples/jsm/loaders/PLYLoader.js',
-	'../examples/jsm/loaders/RGBELoader.js',
-	'../examples/jsm/loaders/STLLoader.js',
-	'../examples/jsm/loaders/SVGLoader.js',
-	'../examples/jsm/loaders/TGALoader.js',
-	'../examples/jsm/loaders/TDSLoader.js',
-	'../examples/jsm/loaders/USDZLoader.js',
-	'../examples/jsm/loaders/VOXLoader.js',
-	'../examples/jsm/loaders/VRMLLoader.js',
-	'../examples/jsm/loaders/VTKLoader.js',
-	'../examples/jsm/loaders/XYZLoader.js',
-
-	'../examples/jsm/curves/NURBSCurve.js',
-	'../examples/jsm/curves/NURBSUtils.js',
-
-	'../examples/jsm/interactive/HTMLMesh.js',
-	'../examples/jsm/interactive/InteractiveGroup.js',
-
-	'../examples/jsm/environments/RoomEnvironment.js',
-
-	'../examples/jsm/exporters/DRACOExporter.js',
-	'../examples/jsm/exporters/GLTFExporter.js',
-	'../examples/jsm/exporters/OBJExporter.js',
-	'../examples/jsm/exporters/PLYExporter.js',
-	'../examples/jsm/exporters/STLExporter.js',
-	'../examples/jsm/exporters/USDZExporter.js',
-
-	'../examples/jsm/helpers/VertexNormalsHelper.js',
-
-	'../examples/jsm/webxr/VRButton.js',
-	'../examples/jsm/webxr/XRControllerModelFactory.js',
-
-	'./images/rotate.svg',
-	'./images/scale.svg',
-	'./images/translate.svg',
+	'../examples/js/renderers/Projector.js',
+	'../examples/js/renderers/RaytracingRenderer.js',
+	'../examples/js/renderers/SoftwareRenderer.js',
+	'../examples/js/renderers/SVGRenderer.js',
 
 	'./js/libs/codemirror/codemirror.css',
 	'./js/libs/codemirror/theme/monokai.css',
@@ -90,10 +53,9 @@ const assets = [
 	'./js/libs/codemirror/mode/javascript.js',
 	'./js/libs/codemirror/mode/glsl.js',
 
-	'./js/libs/es-module-shims.js',
 	'./js/libs/esprima.js',
-	'./js/libs/ffmpeg.min.js',
 	'./js/libs/jsonlint.js',
+	'./js/libs/glslprep.min.js',
 
 	'./js/libs/codemirror/addon/dialog.css',
 	'./js/libs/codemirror/addon/show-hint.css',
@@ -118,82 +80,68 @@ const assets = [
 	'./js/libs/ui.js',
 	'./js/libs/ui.three.js',
 
+	'./js/libs/html2canvas.js',
+	'./js/libs/three.html.js',
+
 	'./js/libs/app.js',
 	'./js/Player.js',
 	'./js/Script.js',
 
+	'../examples/js/vr/WebVR.js',
+
 	//
 
 	'./css/main.css',
+	'./css/dark.css',
+	'./css/light.css',
 
-	'./js/EditorControls.js',
 	'./js/Storage.js',
 
 	'./js/Editor.js',
 	'./js/Config.js',
 	'./js/History.js',
 	'./js/Loader.js',
-	'./js/LoaderUtils.js',
 	'./js/Menubar.js',
 	'./js/Menubar.File.js',
 	'./js/Menubar.Edit.js',
 	'./js/Menubar.Add.js',
 	'./js/Menubar.Play.js',
+	// './js/Menubar.View.js',
 	'./js/Menubar.Examples.js',
 	'./js/Menubar.Help.js',
-	'./js/Menubar.View.js',
 	'./js/Menubar.Status.js',
-	'./js/Resizer.js',
 	'./js/Sidebar.js',
 	'./js/Sidebar.Scene.js',
 	'./js/Sidebar.Project.js',
-	'./js/Sidebar.Project.Materials.js',
-	'./js/Sidebar.Project.Renderer.js',
-	'./js/Sidebar.Project.Video.js',
 	'./js/Sidebar.Settings.js',
-	'./js/Sidebar.Settings.History.js',
 	'./js/Sidebar.Settings.Shortcuts.js',
 	'./js/Sidebar.Settings.Viewport.js',
 	'./js/Sidebar.Properties.js',
 	'./js/Sidebar.Object.js',
 	'./js/Sidebar.Geometry.js',
+	'./js/Sidebar.Geometry.Geometry.js',
 	'./js/Sidebar.Geometry.BufferGeometry.js',
 	'./js/Sidebar.Geometry.Modifiers.js',
 	'./js/Sidebar.Geometry.BoxGeometry.js',
-	'./js/Sidebar.Geometry.CapsuleGeometry.js',
 	'./js/Sidebar.Geometry.CircleGeometry.js',
 	'./js/Sidebar.Geometry.CylinderGeometry.js',
-	'./js/Sidebar.Geometry.DodecahedronGeometry.js',
-	'./js/Sidebar.Geometry.ExtrudeGeometry.js',
 	'./js/Sidebar.Geometry.IcosahedronGeometry.js',
-	'./js/Sidebar.Geometry.LatheGeometry.js',
-	'./js/Sidebar.Geometry.OctahedronGeometry.js',
 	'./js/Sidebar.Geometry.PlaneGeometry.js',
-	'./js/Sidebar.Geometry.RingGeometry.js',
 	'./js/Sidebar.Geometry.SphereGeometry.js',
-	'./js/Sidebar.Geometry.ShapeGeometry.js',
-	'./js/Sidebar.Geometry.TetrahedronGeometry.js',
 	'./js/Sidebar.Geometry.TorusGeometry.js',
 	'./js/Sidebar.Geometry.TorusKnotGeometry.js',
 	'./js/Sidebar.Geometry.TubeGeometry.js',
+	'../examples/js/geometries/TeapotBufferGeometry.js',
+	'./js/Sidebar.Geometry.TeapotBufferGeometry.js',
+	'./js/Sidebar.Geometry.LatheGeometry.js',
 	'./js/Sidebar.Material.js',
-	'./js/Sidebar.Material.BooleanProperty.js',
-	'./js/Sidebar.Material.ColorProperty.js',
-	'./js/Sidebar.Material.ConstantProperty.js',
-	'./js/Sidebar.Material.MapProperty.js',
-	'./js/Sidebar.Material.NumberProperty.js',
-	'./js/Sidebar.Material.Program.js',
 	'./js/Sidebar.Animation.js',
 	'./js/Sidebar.Script.js',
+	'./js/Sidebar.History.js',
 	'./js/Strings.js',
 	'./js/Toolbar.js',
 	'./js/Viewport.js',
-	'./js/Viewport.Camera.js',
-	'./js/Viewport.Shading.js',
 	'./js/Viewport.Info.js',
-	'./js/Viewport.Selector.js',
-	'./js/Viewport.ViewHelper.js',
-	'./js/Viewport.VR.js',
 
 	'./js/Command.js',
 	'./js/commands/AddObjectCommand.js',
@@ -212,12 +160,10 @@ const assets = [
 	'./js/commands/RemoveScriptCommand.js',
 	'./js/commands/SetScriptValueCommand.js',
 	'./js/commands/SetMaterialCommand.js',
+	'./js/commands/SetMaterialValueCommand.js',
 	'./js/commands/SetMaterialColorCommand.js',
 	'./js/commands/SetMaterialMapCommand.js',
-	'./js/commands/SetMaterialValueCommand.js',
-	'./js/commands/SetMaterialVectorCommand.js',
 	'./js/commands/SetSceneCommand.js',
-	'./js/commands/Commands.js',
 
 	//
 
@@ -229,68 +175,23 @@ const assets = [
 
 ];
 
-self.addEventListener( 'install', async function () {
+self.addEventListener( 'install', async function ( event ) {
 
-	const cache = await caches.open( cacheName );
-
-	assets.forEach( async function ( asset ) {
-
-		try {
-
-			await cache.add( asset );
-
-		} catch {
-
-			console.warn( '[SW] Cound\'t cache:', asset );
-
-		}
-
-	} );
+	const cache = await caches.open( 'threejs-editor' );
+	cache.addAll( staticAssets );
 
 } );
 
 self.addEventListener( 'fetch', async function ( event ) {
 
 	const request = event.request;
-
-	if ( request.url.startsWith( 'chrome-extension' ) ) return;
-
-	event.respondWith( networkFirst( request ) );
+	event.respondWith( cacheFirst( request ) );
 
 } );
 
-async function networkFirst( request ) {
+async function cacheFirst( request ) {
 
-	try {
-
-		let response = await fetch( request );
-
-		if ( request.url.endsWith( 'editor/' ) || request.url.endsWith( 'editor/index.html' ) ) { // copied from coi-serviceworker
-
-			const newHeaders = new Headers( response.headers );
-			newHeaders.set( 'Cross-Origin-Embedder-Policy', 'require-corp' );
-			newHeaders.set( 'Cross-Origin-Opener-Policy', 'same-origin' );
-
-			response = new Response( response.body, { status: response.status, statusText: response.statusText, headers: newHeaders } );
-
-		}
-
-		const cache = await caches.open( cacheName );
-		cache.put( request, response.clone() );
-		return response;
-
-	} catch {
-
-		const cachedResponse = await caches.match( request );
-
-		if ( cachedResponse === undefined ) {
-
-			console.warn( '[SW] Not cached:', request.url );
-
-		}
-
-		return cachedResponse;
-
-	}
+	const cachedResponse = await caches.match( request );
+	return cachedResponse || fetch( request );
 
 }

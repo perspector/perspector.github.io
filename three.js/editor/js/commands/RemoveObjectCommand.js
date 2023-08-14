@@ -1,60 +1,85 @@
-import { Command } from '../Command.js';
-
-import { ObjectLoader } from 'three';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @constructor
  */
-class RemoveObjectCommand extends Command {
 
-	constructor( editor, object ) {
+var RemoveObjectCommand = function ( object ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'RemoveObjectCommand';
-		this.name = 'Remove Object';
+	this.type = 'RemoveObjectCommand';
+	this.name = 'Remove Object';
 
-		this.object = object;
-		this.parent = ( object !== undefined ) ? object.parent : undefined;
-		if ( this.parent !== undefined ) {
+	this.object = object;
+	this.parent = ( object !== undefined ) ? object.parent : undefined;
+	if ( this.parent !== undefined ) {
 
-			this.index = this.parent.children.indexOf( this.object );
-
-		}
+		this.index = this.parent.children.indexOf( this.object );
 
 	}
 
-	execute() {
+};
 
-		this.editor.removeObject( this.object );
-		this.editor.deselect();
+RemoveObjectCommand.prototype = {
 
-	}
+	execute: function () {
 
-	undo() {
+		var scope = this.editor;
+		this.object.traverse( function ( child ) {
 
-		this.editor.addObject( this.object, this.parent, this.index );
+			scope.removeHelper( child );
+
+		} );
+
+		this.parent.remove( this.object );
+		this.editor.select( this.parent );
+
+		this.editor.signals.objectRemoved.dispatch( this.object );
+		this.editor.signals.sceneGraphChanged.dispatch();
+
+	},
+
+	undo: function () {
+
+		var scope = this.editor;
+
+		this.object.traverse( function ( child ) {
+
+			if ( child.geometry !== undefined ) scope.addGeometry( child.geometry );
+			if ( child.material !== undefined ) scope.addMaterial( child.material );
+
+			scope.addHelper( child );
+
+		} );
+
+		this.parent.children.splice( this.index, 0, this.object );
+		this.object.parent = this.parent;
 		this.editor.select( this.object );
 
-	}
+		this.editor.signals.objectAdded.dispatch( this.object );
+		this.editor.signals.sceneGraphChanged.dispatch();
 
-	toJSON() {
+	},
 
-		const output = super.toJSON( this );
+	toJSON: function () {
 
+		var output = Command.prototype.toJSON.call( this );
 		output.object = this.object.toJSON();
 		output.index = this.index;
 		output.parentUuid = this.parent.uuid;
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.parent = this.editor.objectByUuid( json.parentUuid );
 		if ( this.parent === undefined ) {
@@ -66,16 +91,13 @@ class RemoveObjectCommand extends Command {
 		this.index = json.index;
 
 		this.object = this.editor.objectByUuid( json.object.object.uuid );
-
 		if ( this.object === undefined ) {
 
-			const loader = new ObjectLoader();
+			var loader = new THREE.ObjectLoader();
 			this.object = loader.parse( json.object );
 
 		}
 
 	}
 
-}
-
-export { RemoveObjectCommand };
+};

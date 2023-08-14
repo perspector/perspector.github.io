@@ -1,14 +1,7 @@
 export default /* glsl */`
 #ifdef USE_ENVMAP
 
-	#if defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( PHONG ) || defined( LAMBERT )
-
-		#define ENV_WORLDPOS
-
-	#endif
-
-	#ifdef ENV_WORLDPOS
-		
+	#if defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( PHONG )
 		varying vec3 vWorldPosition;
 
 	#else

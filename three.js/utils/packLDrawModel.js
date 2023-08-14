@@ -1,4 +1,6 @@
-/**
+/*
+ * @author yomboprime / https://github.com/yomboprime/
+ *
  * LDraw object packer
  *
  * Usage:
@@ -16,41 +18,38 @@
  *
  */
 
-const ldrawPath = './';
-const materialsFileName = 'LDConfig.ldr';
+var ldrawPath = './';
+var materialsFileName = 'LDConfig.ldr';
 
 
-import fs from 'fs';
-import path from 'path';
+var fs = require( 'fs' );
+var path = require( 'path' );
 
 if ( process.argv.length !== 3 ) {
-
-	console.log( 'Usage: node packLDrawModel <modelFilePath>' );
-	process.exit( 0 );
-
+	console.log( "Usage: node packLDrawModel <modelFilePath>" );
+	exit ( 0 );
 }
+var fileName = process.argv[ 2 ];
 
-const fileName = process.argv[ 2 ];
-
-const materialsFilePath = path.join( ldrawPath, materialsFileName );
+var materialsFilePath = path.join( ldrawPath, materialsFileName );
 
 console.log( 'Loading materials file "' + materialsFilePath + '"...' );
-const materialsContent = fs.readFileSync( materialsFilePath, { encoding: 'utf8' } );
+var materialsContent = fs.readFileSync( materialsFilePath, { encoding: "utf8" } );
 
 console.log( 'Packing "' + fileName + '"...' );
 
-const objectsPaths = [];
-const objectsContents = [];
-const pathMap = {};
-const listOfNotFound = [];
+var objectsPaths = [];
+var objectsContents = [];
+var pathMap = {};
+var listOfNotFound = [];
 
 // Parse object tree
 parseObject( fileName, true );
 
 // Check if previously files not found are found now
 // (if so, probably they were already embedded)
-let someNotFound = false;
-for ( let i = 0; i < listOfNotFound.length; i ++ ) {
+var someNotFound = false;
+for ( var i = 0; i < listOfNotFound.length; i ++ ) {
 
 	if ( ! pathMap[ listOfNotFound[ i ] ] ) {
 
@@ -62,24 +61,19 @@ for ( let i = 0; i < listOfNotFound.length; i ++ ) {
 }
 
 if ( someNotFound ) {
-
-	console.log( 'Some files were not found, aborting.' );
-	process.exit( - 1 );
-
+	console.log( "Some files were not found, aborting." );
+	process.exit( -1 );
 }
 
 // Obtain packed content
-let packedContent = materialsContent + '\n';
-for ( let i = objectsPaths.length - 1; i >= 0; i -- ) {
-
+var packedContent = materialsContent + "\n";
+for ( var i = objectsPaths.length - 1; i >= 0; i -- ) {
 	packedContent += objectsContents[ i ];
-
 }
-
-packedContent += '\n';
+packedContent += "\n";
 
 // Save output file
-const outPath = fileName + '_Packed.mpd';
+var outPath = fileName + "_Packed.mpd";
 console.log( 'Writing "' + outPath + '"...' );
 fs.writeFileSync( outPath, packedContent );
 
@@ -94,13 +88,13 @@ function parseObject( fileName, isRoot ) {
 
 	console.log( 'Adding "' + fileName + '".' );
 
-	const originalFileName = fileName;
+	var originalFileName = fileName;
 
-	let prefix = '';
-	let objectContent = null;
-	for ( let attempt = 0; attempt < 2; attempt ++ ) {
+	var prefix = "";
+	var objectContent = null;
+	for ( var attempt =  0; attempt < 2; attempt ++ ) {
 
-		prefix = '';
+		prefix = "";
 
 		if ( attempt === 1 ) {
 
@@ -110,53 +104,57 @@ function parseObject( fileName, isRoot ) {
 
 		if ( fileName.startsWith( '48/' ) ) {
 
-			prefix = 'p/';
+			prefix = "p/";
 
-		} else if ( fileName.startsWith( 's/' ) ) {
+		}
+		else if ( fileName.startsWith( 's/' ) ) {
 
-			prefix = 'parts/';
+			prefix = "parts/";
 
 		}
 
-		let absoluteObjectPath = path.join( ldrawPath, fileName );
+		var absoluteObjectPath = path.join( ldrawPath, fileName );
 
 		try {
 
-			objectContent = fs.readFileSync( absoluteObjectPath, { encoding: 'utf8' } );
+			objectContent = fs.readFileSync( absoluteObjectPath, { encoding: "utf8" } );
 			break;
 
-		} catch ( e ) {
+		}
+		catch ( e ) {
 
-			prefix = 'parts/';
+			prefix = "parts/";
 			absoluteObjectPath = path.join( ldrawPath, prefix, fileName );
 
 			try {
 
-				objectContent = fs.readFileSync( absoluteObjectPath, { encoding: 'utf8' } );
+				objectContent = fs.readFileSync( absoluteObjectPath, { encoding: "utf8" } );
 				break;
 
-			} catch ( e ) {
+			}
+			catch ( e ) {
 
-				prefix = 'p/';
+				prefix = "p/";
 				absoluteObjectPath = path.join( ldrawPath, prefix, fileName );
 
 				try {
 
-					objectContent = fs.readFileSync( absoluteObjectPath, { encoding: 'utf8' } );
+					objectContent = fs.readFileSync( absoluteObjectPath, { encoding: "utf8" } );
 					break;
 
-				} catch ( e ) {
+				}
+				catch ( e ) {
 
 					try {
 
-						prefix = 'models/';
+						prefix = "models/";
 						absoluteObjectPath = path.join( ldrawPath, prefix, fileName );
 
-						objectContent = fs.readFileSync( absoluteObjectPath, { encoding: 'utf8' } );
+						objectContent = fs.readFileSync( absoluteObjectPath, { encoding: "utf8" } );
 						break;
 
-					} catch ( e ) {
-
+					}
+					catch ( e ) {
 						if ( attempt === 1 ) {
 
 							// The file has not been found, add to list of not found
@@ -174,7 +172,7 @@ function parseObject( fileName, isRoot ) {
 
 	}
 
-	const objectPath = path.join( prefix, fileName ).trim().replace( /\\/g, '/' );
+	var objectPath = path.join( prefix, fileName );
 
 	if ( ! objectContent ) {
 
@@ -186,33 +184,32 @@ function parseObject( fileName, isRoot ) {
 	if ( objectContent.indexOf( '\r\n' ) !== - 1 ) {
 
 		// This is faster than String.split with regex that splits on both
-		objectContent = objectContent.replace( /\r\n/g, '\n' );
+		objectContent= objectContent.replace( /\r\n/g, '\n' );
 
 	}
 
-	let processedObjectContent = isRoot ? '' : '0 FILE ' + objectPath + '\n';
+	var processedObjectContent = isRoot ? "" : "0 FILE " + objectPath + "\n";
 
-	const lines = objectContent.split( '\n' );
+	var lines = objectContent.split( "\n" );
 
-	for ( let i = 0, n = lines.length; i < n; i ++ ) {
+	for ( var i = 0, n = lines.length; i < n; i ++ ) {
 
-		let line = lines[ i ];
-		let lineLength = line.length;
+		var line = lines[ i ];
+		var lineLength = line.length;
 
 		// Skip spaces/tabs
-		let charIndex = 0;
+		var charIndex = 0;
 		while ( ( line.charAt( charIndex ) === ' ' || line.charAt( charIndex ) === '\t' ) && charIndex < lineLength ) {
 
-			charIndex ++;
+			charIndex++;
 
 		}
-
 		line = line.substring( charIndex );
 		lineLength = line.length;
 		charIndex = 0;
 
 
-		if ( line.startsWith( '0 FILE ' ) ) {
+		if ( line.startsWith( '0 FILE ') ) {
 
 			if ( i === 0 ) {
 
@@ -223,12 +220,12 @@ function parseObject( fileName, isRoot ) {
 
 			// Embedded object was found, add to path map
 
-			const subobjectFileName = line.substring( charIndex ).trim().replace( /\\/g, '/' );
+			var subobjectFileName = line.substring( charIndex ).trim().replace( "\\", "/" );
 
 			if ( subobjectFileName ) {
 
 				// Find name in path cache
-				const subobjectPath = pathMap[ subobjectFileName ];
+				var subobjectPath = pathMap[ subobjectFileName ];
 
 				if ( ! subobjectPath ) {
 
@@ -241,35 +238,34 @@ function parseObject( fileName, isRoot ) {
 		}
 
 		if ( line.startsWith( '1 ' ) ) {
-
 			// Subobject, add it
 			charIndex = 2;
 
 			// Skip material, position and transform
-			for ( let token = 0; token < 13 && charIndex < lineLength; token ++ ) {
+			for ( var token = 0; token < 13 && charIndex < lineLength; token ++ ) {
 
 				// Skip token
 				while ( line.charAt( charIndex ) !== ' ' && line.charAt( charIndex ) !== '\t' && charIndex < lineLength ) {
 
-					charIndex ++;
+					charIndex++;
 
 				}
 
 				// Skip spaces/tabs
 				while ( ( line.charAt( charIndex ) === ' ' || line.charAt( charIndex ) === '\t' ) && charIndex < lineLength ) {
 
-					charIndex ++;
+					charIndex++;
 
 				}
 
 			}
 
-			const subobjectFileName = line.substring( charIndex ).trim().replace( /\\/g, '/' );
+			var subobjectFileName = line.substring( charIndex ).trim().replace( "\\", "/" );
 
 			if ( subobjectFileName ) {
 
 				// Find name in path cache
-				let subobjectPath = pathMap[ subobjectFileName ];
+				var subobjectPath = pathMap[ subobjectFileName ];
 
 				if ( ! subobjectPath ) {
 
@@ -280,13 +276,14 @@ function parseObject( fileName, isRoot ) {
 
 				pathMap[ subobjectFileName ] = subobjectPath ? subobjectPath : subobjectFileName;
 
-				processedObjectContent += line.substring( 0, charIndex ) + pathMap[ subobjectFileName ] + '\n';
+				processedObjectContent += line.substring( 0, charIndex ) + pathMap[ subobjectFileName ] + "\n";
 
 			}
 
-		} else {
+		}
+		else {
 
-			processedObjectContent += line + '\n';
+			processedObjectContent += line + "\n";
 
 		}
 
@@ -300,5 +297,4 @@ function parseObject( fileName, isRoot ) {
 	}
 
 	return objectPath;
-
 }

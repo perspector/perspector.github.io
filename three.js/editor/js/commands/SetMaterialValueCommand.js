@@ -1,33 +1,36 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param attributeName string
  * @param newValue number, string, boolean or object
  * @constructor
  */
-class SetMaterialValueCommand extends Command {
 
-	constructor( editor, object, attributeName, newValue, materialSlot ) {
+var SetMaterialValueCommand = function ( object, attributeName, newValue, materialSlot ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'SetMaterialValueCommand';
-		this.name = `Set Material.${attributeName}`;
-		this.updatable = true;
+	this.type = 'SetMaterialValueCommand';
+	this.name = 'Set Material.' + attributeName;
+	this.updatable = true;
 
-		this.object = object;
-		this.material = this.editor.getObjectMaterial( object, materialSlot );
+	this.object = object;
+	this.material = this.editor.getObjectMaterial( object, materialSlot );
 
-		this.oldValue = ( this.material !== undefined ) ? this.material[ attributeName ] : undefined;
-		this.newValue = newValue;
+	this.oldValue = ( this.material !== undefined ) ? this.material[ attributeName ] : undefined;
+	this.newValue = newValue;
 
-		this.attributeName = attributeName;
+	this.attributeName = attributeName;
 
-	}
+};
 
-	execute() {
+SetMaterialValueCommand.prototype = {
+
+	execute: function () {
 
 		this.material[ this.attributeName ] = this.newValue;
 		this.material.needsUpdate = true;
@@ -35,9 +38,9 @@ class SetMaterialValueCommand extends Command {
 		this.editor.signals.objectChanged.dispatch( this.object );
 		this.editor.signals.materialChanged.dispatch( this.material );
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		this.material[ this.attributeName ] = this.oldValue;
 		this.material.needsUpdate = true;
@@ -45,17 +48,17 @@ class SetMaterialValueCommand extends Command {
 		this.editor.signals.objectChanged.dispatch( this.object );
 		this.editor.signals.materialChanged.dispatch( this.material );
 
-	}
+	},
 
-	update( cmd ) {
+	update: function ( cmd ) {
 
 		this.newValue = cmd.newValue;
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.attributeName = this.attributeName;
@@ -64,11 +67,11 @@ class SetMaterialValueCommand extends Command {
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.attributeName = json.attributeName;
 		this.oldValue = json.oldValue;
@@ -77,6 +80,4 @@ class SetMaterialValueCommand extends Command {
 
 	}
 
-}
-
-export { SetMaterialValueCommand };
+};

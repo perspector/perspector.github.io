@@ -1,34 +1,43 @@
+/**
+ * @author mrdoob / http://mrdoob.com/
+ * @author Mugen87 / http://github.com/Mugen87
+ */
+
 import { Box3 } from '../math/Box3.js';
 import { LineSegments } from '../objects/LineSegments.js';
 import { LineBasicMaterial } from '../materials/LineBasicMaterial.js';
 import { BufferAttribute } from '../core/BufferAttribute.js';
 import { BufferGeometry } from '../core/BufferGeometry.js';
 
-const _box = /*@__PURE__*/ new Box3();
+function BoxHelper( object, color ) {
 
-class BoxHelper extends LineSegments {
+	this.object = object;
 
-	constructor( object, color = 0xffff00 ) {
+	if ( color === undefined ) color = 0xffff00;
 
-		const indices = new Uint16Array( [ 0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7 ] );
-		const positions = new Float32Array( 8 * 3 );
+	var indices = new Uint16Array( [ 0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7 ] );
+	var positions = new Float32Array( 8 * 3 );
 
-		const geometry = new BufferGeometry();
-		geometry.setIndex( new BufferAttribute( indices, 1 ) );
-		geometry.setAttribute( 'position', new BufferAttribute( positions, 3 ) );
+	var geometry = new BufferGeometry();
+	geometry.setIndex( new BufferAttribute( indices, 1 ) );
+	geometry.addAttribute( 'position', new BufferAttribute( positions, 3 ) );
 
-		super( geometry, new LineBasicMaterial( { color: color, toneMapped: false } ) );
+	LineSegments.call( this, geometry, new LineBasicMaterial( { color: color } ) );
 
-		this.object = object;
-		this.type = 'BoxHelper';
+	this.matrixAutoUpdate = false;
 
-		this.matrixAutoUpdate = false;
+	this.update();
 
-		this.update();
+}
 
-	}
+BoxHelper.prototype = Object.create( LineSegments.prototype );
+BoxHelper.prototype.constructor = BoxHelper;
 
-	update( object ) {
+BoxHelper.prototype.update = ( function () {
+
+	var box = new Box3();
+
+	return function update( object ) {
 
 		if ( object !== undefined ) {
 
@@ -38,17 +47,17 @@ class BoxHelper extends LineSegments {
 
 		if ( this.object !== undefined ) {
 
-			_box.setFromObject( this.object );
+			box.setFromObject( this.object );
 
 		}
 
-		if ( _box.isEmpty() ) return;
+		if ( box.isEmpty() ) return;
 
-		const min = _box.min;
-		const max = _box.max;
+		var min = box.min;
+		var max = box.max;
 
 		/*
-			5____4
+		  5____4
 		1/___0/|
 		| 6__|_7
 		2/___3/
@@ -63,8 +72,8 @@ class BoxHelper extends LineSegments {
 		7: max.x, min.y, min.z
 		*/
 
-		const position = this.geometry.attributes.position;
-		const array = position.array;
+		var position = this.geometry.attributes.position;
+		var array = position.array;
 
 		array[ 0 ] = max.x; array[ 1 ] = max.y; array[ 2 ] = max.z;
 		array[ 3 ] = min.x; array[ 4 ] = max.y; array[ 5 ] = max.z;
@@ -79,35 +88,33 @@ class BoxHelper extends LineSegments {
 
 		this.geometry.computeBoundingSphere();
 
-	}
+	};
 
-	setFromObject( object ) {
+} )();
 
-		this.object = object;
-		this.update();
+BoxHelper.prototype.setFromObject = function ( object ) {
 
-		return this;
+	this.object = object;
+	this.update();
 
-	}
+	return this;
 
-	copy( source, recursive ) {
+};
 
-		super.copy( source, recursive );
+BoxHelper.prototype.copy = function ( source ) {
 
-		this.object = source.object;
+	LineSegments.prototype.copy.call( this, source );
 
-		return this;
+	this.object = source.object;
 
-	}
+	return this;
 
-	dispose() {
+};
 
-		this.geometry.dispose();
-		this.material.dispose();
+BoxHelper.prototype.clone = function () {
 
-	}
+	return new this.constructor().copy( this );
 
-}
-
+};
 
 export { BoxHelper };

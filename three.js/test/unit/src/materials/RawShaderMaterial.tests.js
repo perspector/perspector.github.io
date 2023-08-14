@@ -1,51 +1,32 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { RawShaderMaterial } from '../../../../src/materials/RawShaderMaterial.js';
-
-import { ShaderMaterial } from '../../../../src/materials/ShaderMaterial.js';
+import { RawShaderMaterial } from '../../../../src/materials/RawShaderMaterial';
 
 export default QUnit.module( 'Materials', () => {
 
 	QUnit.module( 'RawShaderMaterial', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new RawShaderMaterial();
-			assert.strictEqual(
-				object instanceof ShaderMaterial, true,
-				'RawShaderMaterial extends from ShaderMaterial'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new RawShaderMaterial();
-			assert.ok( object, 'Can instantiate a RawShaderMaterial.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new RawShaderMaterial();
-			assert.ok(
-				object.type === 'RawShaderMaterial',
-				'RawShaderMaterial.type should be RawShaderMaterial'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isRawShaderMaterial', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isRawShaderMaterial", ( assert ) => {
 
-			const object = new RawShaderMaterial();
-			assert.ok(
-				object.isRawShaderMaterial,
-				'RawShaderMaterial.isRawShaderMaterial should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

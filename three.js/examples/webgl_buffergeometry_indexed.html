@@ -4,36 +4,52 @@
 		<title>three.js webgl - buffergeometry - indexed</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #cccccc;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+
+				background-color: #050505;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+				color: #0080ff;
+			}
+
+		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - buffergeometry - indexed</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - buffergeometry - indexed</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src="./js/libs/dat.gui.min.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var camera, scene, renderer, stats;
 
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-			let camera, scene, renderer, stats;
-
-			let mesh;
+			var mesh;
 
 			init();
 			animate();
@@ -50,47 +66,50 @@
 
 				//
 
-				const light = new THREE.HemisphereLight();
-				light.intensity = 3;
-				scene.add( light );
+				var ambientLight = new THREE.AmbientLight( 0x222222 );
+				scene.add( ambientLight );
+
+				var light1 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+				light1.position.set( 1, 1, 1 );
+				scene.add( light1 );
+
+				var light2 = new THREE.DirectionalLight( 0xffffff, 1 );
+				light2.position.set( 0, - 1, 0 );
+				scene.add( light2 );
 
 				//
 
-				const geometry = new THREE.BufferGeometry();
+				var geometry = new THREE.BufferGeometry();
 
-				const indices = [];
+				var indices = [];
 
-				const vertices = [];
-				const normals = [];
-				const colors = [];
+				var vertices = [];
+				var normals = [];
+				var colors = [];
 
-				const size = 20;
-				const segments = 10;
+				var size = 20;
+				var segments = 10;
 
-				const halfSize = size / 2;
-				const segmentSize = size / segments;
-
-				const _color = new THREE.Color();
+				var halfSize = size / 2;
+				var segmentSize = size / segments;
 
 				// generate vertices, normals and color data for a simple grid geometry
 
-				for ( let i = 0; i <= segments; i ++ ) {
+				for ( var i = 0; i <= segments; i ++ ) {
 
-					const y = ( i * segmentSize ) - halfSize;
+					var y = ( i * segmentSize ) - halfSize;
 
-					for ( let j = 0; j <= segments; j ++ ) {
+					for ( var j = 0; j <= segments; j ++ ) {
 
-						const x = ( j * segmentSize ) - halfSize;
+						var x = ( j * segmentSize ) - halfSize;
 
 						vertices.push( x, - y, 0 );
 						normals.push( 0, 0, 1 );
 
-						const r = ( x / size ) + 0.5;
-						const g = ( y / size ) + 0.5;
+						var r = ( x / size ) + 0.5;
+						var g = ( y / size ) + 0.5;
 
-						_color.setRGB( r, g, 1, THREE.SRGBColorSpace );
-
-						colors.push( _color.r, _color.g, _color.b );
+						colors.push( r, g, 1 );
 
 					}
 
@@ -98,14 +117,14 @@
 
 				// generate indices (data for element array buffer)
 
-				for ( let i = 0; i < segments; i ++ ) {
+				for ( var i = 0; i < segments; i ++ ) {
 
-					for ( let j = 0; j < segments; j ++ ) {
+					for ( var j = 0; j < segments; j ++ ) {
 
-						const a = i * ( segments + 1 ) + ( j + 1 );
-						const b = i * ( segments + 1 ) + j;
-						const c = ( i + 1 ) * ( segments + 1 ) + j;
-						const d = ( i + 1 ) * ( segments + 1 ) + ( j + 1 );
+						var a = i * ( segments + 1 ) + ( j + 1 );
+						var b = i * ( segments + 1 ) + j;
+						var c = ( i + 1 ) * ( segments + 1 ) + j;
+						var d = ( i + 1 ) * ( segments + 1 ) + ( j + 1 );
 
 						// generate two faces (triangles) per iteration
 
@@ -119,13 +138,13 @@
 				//
 
 				geometry.setIndex( indices );
-				geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-				geometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
-				geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+				geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+				geometry.addAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
+				geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
 
-				const material = new THREE.MeshPhongMaterial( {
-					side: THREE.DoubleSide,
-					vertexColors: true
+				var material = new THREE.MeshPhongMaterial( {
+					specular: 0x111111, shininess: 250,
+					side: THREE.DoubleSide, vertexColors: THREE.VertexColors
 				} );
 
 				mesh = new THREE.Mesh( geometry, material );
@@ -145,12 +164,12 @@
 
 				//
 
-				const gui = new GUI();
+				var gui = new dat.GUI();
 				gui.add( material, 'wireframe' );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -176,7 +195,7 @@
 
 			function render() {
 
-				const time = Date.now() * 0.001;
+				var time = Date.now() * 0.001;
 
 				mesh.rotation.x = time * 0.25;
 				mesh.rotation.y = time * 0.5;

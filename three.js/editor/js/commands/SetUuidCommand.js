@@ -1,57 +1,60 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param newUuid string
  * @constructor
  */
-class SetUuidCommand extends Command {
 
-	constructor( editor, object, newUuid ) {
+var SetUuidCommand = function ( object, newUuid ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'SetUuidCommand';
-		this.name = 'Update UUID';
+	this.type = 'SetUuidCommand';
+	this.name = 'Update UUID';
 
-		this.object = object;
+	this.object = object;
 
-		this.oldUuid = ( object !== undefined ) ? object.uuid : undefined;
-		this.newUuid = newUuid;
+	this.oldUuid = ( object !== undefined ) ? object.uuid : undefined;
+	this.newUuid = newUuid;
 
-	}
+};
 
-	execute() {
+SetUuidCommand.prototype = {
+
+	execute: function () {
 
 		this.object.uuid = this.newUuid;
 		this.editor.signals.objectChanged.dispatch( this.object );
 		this.editor.signals.sceneGraphChanged.dispatch();
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		this.object.uuid = this.oldUuid;
 		this.editor.signals.objectChanged.dispatch( this.object );
 		this.editor.signals.sceneGraphChanged.dispatch();
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.oldUuid = this.oldUuid;
 		output.newUuid = this.newUuid;
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.oldUuid = json.oldUuid;
 		this.newUuid = json.newUuid;
@@ -65,6 +68,4 @@ class SetUuidCommand extends Command {
 
 	}
 
-}
-
-export { SetUuidCommand };
+};

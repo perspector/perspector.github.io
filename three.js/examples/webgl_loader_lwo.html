@@ -1,95 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - LWOLoader</title>
+		<title>three.js webgl - LWO loader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a {
+				color: #046;
+				font-weight: bold;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - LWOLoader
-			<P>Lightwave Object loader by <a href="https://discoverthreejs.com/" target="_blank" rel="noopener">Discover three.js</a></P>
-			Models by <a href="https://onthez.com/" target="_blank" rel="noopener">on the z</a> - Environment images from <a href="https://hdrihaven.com/" target="_blank" rel="noopener">HDRI Haven</a>
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - LWOLoader<br />
+			<P>Loader for Lightwave LWO V3 file format, by <a href="https://discoverthreejs.com/" target="_blank" rel="noopener">Discover three.js</a></P>
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/loaders/LWOLoader.js"></script>
+
+		<script src="js/controls/OrbitControls.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { LWOLoader } from 'three/addons/loaders/LWOLoader.js';
-
-			let camera, scene, renderer;
-
-			init();
+			var container, stats, controls;
+			var camera, scene, renderer;
 
 			function init() {
 
-				const container = document.createElement( 'div' );
+				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200 );
-				camera.position.set( - 0.7, 14.6, 43.2 );
+				camera.position.set( 5, 4, 20 );
+
+				controls = new THREE.OrbitControls( camera );
+				controls.target.y = 4;
+				controls.update();
 
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xa0a0a0 );
 
-				const ambientLight = new THREE.AmbientLight( 0xbbbbbb );
-				scene.add( ambientLight );
+				var ambientLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 2 );
 
-				const light1 = new THREE.DirectionalLight( 0xc1c1c1, 3 );
-				light1.position.set( 0, 200, 100 );
-				scene.add( light1 );
+				var mainLight = new THREE.DirectionalLight( 0xffffff, 2 );
+				mainLight.position.set( 10, 10, - 10 );
 
-				const grid = new THREE.GridHelper( 200, 20, 0x000000, 0x000000 );
-				grid.material.opacity = 0.3;
+				scene.add( ambientLight, mainLight );
+
+				var grid = new THREE.GridHelper( 200, 20, 0x000000, 0x000000 );
+				grid.material.opacity = 0.2;
 				grid.material.transparent = true;
 				scene.add( grid );
 
-				const loader = new LWOLoader();
-				loader.load( 'models/lwo/Objects/LWO3/Demo.lwo', function ( object ) {
+				var loader = new THREE.LWOLoader();
+				loader.load( 'models/lwo/StandardMaterials.lwo', function ( lwo ) {
 
-					const phong = object.meshes[ 0 ];
-					phong.position.set( - 2, 12, 0 );
+					const mesh = lwo.meshes[ 0 ];
 
-					const standard = object.meshes[ 1 ];
-					standard.position.set( 2, 12, 0 );
+					mesh.position.set( 3, 6, 0 );
 
-					const rocket = object.meshes[ 2 ];
-					rocket.position.set( 0, 10.5, - 1 );
-
-					scene.add( phong, standard, rocket );
+					scene.add( mesh );
 
 				} );
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.setAnimationLoop( animation );
-				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+				renderer.physicallyCorrectLights = true;
+
+				renderer.gammaFactor = 2.2;
+				renderer.gammaOutput = true;
+
 				container.appendChild( renderer.domElement );
 
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.target.set( 1.33, 10, - 6.7 );
-				controls.update();
+				renderer.setAnimationLoop( function () {
 
-				window.addEventListener( 'resize', onWindowResize );
+					stats.begin();
+
+					renderer.render( scene, camera );
+
+					stats.end();
+
+				} );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				// stats
+				stats = new Stats();
+				container.appendChild( stats.dom );
 
 			}
 
@@ -102,11 +130,7 @@
 
 			}
 
-			function animation() {
-
-				renderer.render( scene, camera );
-
-			}
+			init();
 
 		</script>
 

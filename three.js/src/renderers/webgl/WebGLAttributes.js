@@ -1,46 +1,36 @@
-function WebGLAttributes( gl, capabilities ) {
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-	const isWebGL2 = capabilities.isWebGL2;
+function WebGLAttributes( gl ) {
 
-	const buffers = new WeakMap();
+	var buffers = new WeakMap();
 
 	function createBuffer( attribute, bufferType ) {
 
-		const array = attribute.array;
-		const usage = attribute.usage;
+		var array = attribute.array;
+		var usage = attribute.dynamic ? gl.DYNAMIC_DRAW : gl.STATIC_DRAW;
 
-		const buffer = gl.createBuffer();
+		var buffer = gl.createBuffer();
 
 		gl.bindBuffer( bufferType, buffer );
 		gl.bufferData( bufferType, array, usage );
 
 		attribute.onUploadCallback();
 
-		let type;
+		var type = gl.FLOAT;
 
 		if ( array instanceof Float32Array ) {
 
 			type = gl.FLOAT;
 
+		} else if ( array instanceof Float64Array ) {
+
+			console.warn( 'THREE.WebGLAttributes: Unsupported data buffer format: Float64Array.' );
+
 		} else if ( array instanceof Uint16Array ) {
 
-			if ( attribute.isFloat16BufferAttribute ) {
-
-				if ( isWebGL2 ) {
-
-					type = gl.HALF_FLOAT;
-
-				} else {
-
-					throw new Error( 'THREE.WebGLAttributes: Usage of Float16BufferAttribute requires WebGL2.' );
-
-				}
-
-			} else {
-
-				type = gl.UNSIGNED_SHORT;
-
-			}
+			type = gl.UNSIGNED_SHORT;
 
 		} else if ( array instanceof Int16Array ) {
 
@@ -62,14 +52,6 @@ function WebGLAttributes( gl, capabilities ) {
 
 			type = gl.UNSIGNED_BYTE;
 
-		} else if ( array instanceof Uint8ClampedArray ) {
-
-			type = gl.UNSIGNED_BYTE;
-
-		} else {
-
-			throw new Error( 'THREE.WebGLAttributes: Unsupported buffer data format: ' + array );
-
 		}
 
 		return {
@@ -83,36 +65,33 @@ function WebGLAttributes( gl, capabilities ) {
 
 	function updateBuffer( buffer, attribute, bufferType ) {
 
-		const array = attribute.array;
-		const updateRange = attribute.updateRange;
+		var array = attribute.array;
+		var updateRange = attribute.updateRange;
 
 		gl.bindBuffer( bufferType, buffer );
 
-		if ( updateRange.count === - 1 ) {
+		if ( attribute.dynamic === false ) {
+
+			gl.bufferData( bufferType, array, gl.STATIC_DRAW );
+
+		} else if ( updateRange.count === - 1 ) {
 
 			// Not using update ranges
 
 			gl.bufferSubData( bufferType, 0, array );
 
+		} else if ( updateRange.count === 0 ) {
+
+			console.error( 'THREE.WebGLObjects.updateBuffer: dynamic THREE.BufferAttribute marked as needsUpdate but updateRange.count is 0, ensure you are using set methods or updating manually.' );
+
 		} else {
 
-			if ( isWebGL2 ) {
-
-				gl.bufferSubData( bufferType, updateRange.offset * array.BYTES_PER_ELEMENT,
-					array, updateRange.offset, updateRange.count );
-
-			} else {
-
-				gl.bufferSubData( bufferType, updateRange.offset * array.BYTES_PER_ELEMENT,
-					array.subarray( updateRange.offset, updateRange.offset + updateRange.count ) );
-
-			}
+			gl.bufferSubData( bufferType, updateRange.offset * array.BYTES_PER_ELEMENT,
+				array.subarray( updateRange.offset, updateRange.offset + updateRange.count ) );
 
 			updateRange.count = - 1; // reset range
 
 		}
-
-		attribute.onUploadCallback();
 
 	}
 
@@ -130,7 +109,7 @@ function WebGLAttributes( gl, capabilities ) {
 
 		if ( attribute.isInterleavedBufferAttribute ) attribute = attribute.data;
 
-		const data = buffers.get( attribute );
+		var data = buffers.get( attribute );
 
 		if ( data ) {
 
@@ -144,28 +123,9 @@ function WebGLAttributes( gl, capabilities ) {
 
 	function update( attribute, bufferType ) {
 
-		if ( attribute.isGLBufferAttribute ) {
-
-			const cached = buffers.get( attribute );
-
-			if ( ! cached || cached.version < attribute.version ) {
-
-				buffers.set( attribute, {
-					buffer: attribute.buffer,
-					type: attribute.type,
-					bytesPerElement: attribute.elementSize,
-					version: attribute.version
-				} );
-
-			}
-
-			return;
-
-		}
-
 		if ( attribute.isInterleavedBufferAttribute ) attribute = attribute.data;
 
-		const data = buffers.get( attribute );
+		var data = buffers.get( attribute );
 
 		if ( data === undefined ) {
 

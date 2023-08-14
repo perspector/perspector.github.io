@@ -1,84 +1,116 @@
-import * as THREE from 'three';
+/**
+ * @author Temdog007 / http://github.com/Temdog007
+ */
 
-import { UIDiv, UIRow, UIText, UIInteger, UISelect, UICheckbox, UINumber } from './libs/ui.js';
-import { UIPoints3 } from './libs/ui.three.js';
+Sidebar.Geometry.TubeGeometry = function ( editor, object ) {
 
-import { SetGeometryCommand } from './commands/SetGeometryCommand.js';
+	var strings = editor.strings;
 
-function GeometryParametersPanel( editor, object ) {
+	var signals = editor.signals;
 
-	const strings = editor.strings;
+	var container = new UI.Row();
 
-	const container = new UIDiv();
-
-	const geometry = object.geometry;
-	const parameters = geometry.parameters;
+	var geometry = object.geometry;
+	var parameters = geometry.parameters;
 
 	// points
 
-	const pointsRow = new UIRow();
-	pointsRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/path' ) ).setWidth( '90px' ) );
+	var lastPointIdx = 0;
+	var pointsUI = [];
 
-	const points = new UIPoints3().setValue( parameters.path.points ).onChange( update );
+	var pointsRow = new UI.Row();
+	pointsRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/path' ) ).setWidth( '90px' ) );
+
+	var points = new UI.Span().setDisplay( 'inline-block' );
 	pointsRow.add( points );
+
+	var pointsList = new UI.Div();
+	points.add( pointsList );
+
+	var parameterPoints = parameters.path.points;
+	for ( var i = 0; i < parameterPoints.length; i ++ ) {
+
+		var point = parameterPoints[ i ];
+		pointsList.add( createPointRow( point.x, point.y, point.z ) );
+
+	}
+
+	var addPointButton = new UI.Button( '+' ).onClick( function () {
+
+		if ( pointsUI.length === 0 ) {
+
+			pointsList.add( createPointRow( 0, 0, 0 ) );
+
+		} else {
+
+			var point = pointsUI[ pointsUI.length - 1 ];
+
+			pointsList.add( createPointRow( point.x.getValue(), point.y.getValue(), point.z.getValue() ) );
+
+		}
+
+		update();
+
+	} );
+	points.add( addPointButton );
 
 	container.add( pointsRow );
 
 	// radius
 
-	const radiusRow = new UIRow();
-	const radius = new UINumber( parameters.radius ).onChange( update );
+	var radiusRow = new UI.Row();
+	var radius = new UI.Number( parameters.radius ).onChange( update );
 
-	radiusRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/radius' ) ).setWidth( '90px' ) );
+	radiusRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/radius' ) ).setWidth( '90px' ) );
 	radiusRow.add( radius );
 
 	container.add( radiusRow );
 
 	// tubularSegments
 
-	const tubularSegmentsRow = new UIRow();
-	const tubularSegments = new UIInteger( parameters.tubularSegments ).onChange( update );
+	var tubularSegmentsRow = new UI.Row();
+	var tubularSegments = new UI.Integer( parameters.tubularSegments ).onChange( update );
 
-	tubularSegmentsRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/tubularsegments' ) ).setWidth( '90px' ) );
+	tubularSegmentsRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/tubularsegments' ) ).setWidth( '90px' ) );
 	tubularSegmentsRow.add( tubularSegments );
 
 	container.add( tubularSegmentsRow );
 
 	// radialSegments
 
-	const radialSegmentsRow = new UIRow();
-	const radialSegments = new UIInteger( parameters.radialSegments ).onChange( update );
+	var radialSegmentsRow = new UI.Row();
+	var radialSegments = new UI.Integer( parameters.radialSegments ).onChange( update );
 
-	radialSegmentsRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/radialsegments' ) ).setWidth( '90px' ) );
+	radialSegmentsRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/radialsegments' ) ).setWidth( '90px' ) );
 	radialSegmentsRow.add( radialSegments );
 
 	container.add( radialSegmentsRow );
 
 	// closed
 
-	const closedRow = new UIRow();
-	const closed = new UICheckbox( parameters.closed ).onChange( update );
+	var closedRow = new UI.Row();
+	var closed = new UI.Checkbox( parameters.closed ).onChange( update );
 
-	closedRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/closed' ) ).setWidth( '90px' ) );
+	closedRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/closed' ) ).setWidth( '90px' ) );
 	closedRow.add( closed );
 
 	container.add( closedRow );
 
 	// curveType
 
-	const curveTypeRow = new UIRow();
-	const curveType = new UISelect().setOptions( { centripetal: 'centripetal', chordal: 'chordal', catmullrom: 'catmullrom' } ).setValue( parameters.path.curveType ).onChange( update );
+	var curveTypeRow = new UI.Row();
+	var curveType = new UI.Select().setOptions( { centripetal: 'centripetal', chordal: 'chordal', catmullrom: 'catmullrom' } ).setValue( parameters.path.curveType ).onChange( update );
 
-	curveTypeRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/curvetype' ) ).setWidth( '90px' ), curveType );
+	curveTypeRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/curvetype' ) ).setWidth( '90px' ), curveType );
 
 	container.add( curveTypeRow );
 
 	// tension
 
-	const tensionRow = new UIRow().setDisplay( curveType.getValue() == 'catmullrom' ? '' : 'none' );
-	const tension = new UINumber( parameters.path.tension ).setStep( 0.01 ).onChange( update );
+	var tensionRow = new UI.Row().setDisplay( curveType.getValue() == 'catmullrom' ? '' : 'none' );
+	var tension = new UI.Number( parameters.path.tension ).setStep( 0.01 ).onChange( update );
 
-	tensionRow.add( new UIText( strings.getKey( 'sidebar/geometry/tube_geometry/tension' ) ).setWidth( '90px' ), tension );
+	tensionRow.add( new UI.Text( strings.getKey( 'sidebar/geometry/tube_geometry/tension' ) ).setWidth( '90px' ), tension );
 
 	container.add( tensionRow );
 
@@ -86,10 +118,25 @@ function GeometryParametersPanel( editor, object ) {
 
 	function update() {
 
+		var points = [];
+		var count = 0;
+
+		for ( var i = 0; i < pointsUI.length; i ++ ) {
+
+			var pointUI = pointsUI[ i ];
+
+			if ( ! pointUI ) continue;
+
+			points.push( new THREE.Vector3( pointUI.x.getValue(), pointUI.y.getValue(), pointUI.z.getValue() ) );
+			count ++;
+			pointUI.lbl.setValue( count );
+
+		}
+
 		tensionRow.setDisplay( curveType.getValue() == 'catmullrom' ? '' : 'none' );
 
-		editor.execute( new SetGeometryCommand( editor, object, new THREE.TubeGeometry(
-			new THREE.CatmullRomCurve3( points.getValue(), closed.getValue(), curveType.getValue(), tension.getValue() ),
+		editor.execute( new SetGeometryCommand( object, new THREE[ geometry.type ](
+			new THREE.CatmullRomCurve3( points, closed.getValue(), curveType.getValue(), tension.getValue() ),
 			tubularSegments.getValue(),
 			radius.getValue(),
 			radialSegments.getValue(),
@@ -98,8 +145,41 @@ function GeometryParametersPanel( editor, object ) {
 
 	}
 
+	function createPointRow( x, y, z ) {
+
+		var pointRow = new UI.Div();
+		var lbl = new UI.Text( lastPointIdx + 1 ).setWidth( '20px' );
+		var txtX = new UI.Number( x ).setWidth( '30px' ).onChange( update );
+		var txtY = new UI.Number( y ).setWidth( '30px' ).onChange( update );
+		var txtZ = new UI.Number( z ).setWidth( '30px' ).onChange( update );
+		var idx = lastPointIdx;
+		var btn = new UI.Button( '-' ).onClick( function () {
+
+			deletePointRow( idx );
+
+		} );
+
+		pointsUI.push( { row: pointRow, lbl: lbl, x: txtX, y: txtY, z: txtZ } );
+		lastPointIdx ++;
+		pointRow.add( lbl, txtX, txtY, txtZ, btn );
+
+		return pointRow;
+
+	}
+
+	function deletePointRow( idx ) {
+
+		if ( ! pointsUI[ idx ] ) return;
+
+		pointsList.remove( pointsUI[ idx ].row );
+		pointsUI[ idx ] = null;
+
+		update();
+
+	}
+
 	return container;
 
-}
+};
 
-export { GeometryParametersPanel };
+Sidebar.Geometry.TubeBufferGeometry = Sidebar.Geometry.TubeGeometry;

@@ -1,11 +1,15 @@
+/**
+ * @author Mugen87 / https://github.com/Mugen87
+ */
+
 import { WebGLLights } from './WebGLLights.js';
 
-function WebGLRenderState( extensions, capabilities ) {
+function WebGLRenderState() {
 
-	const lights = new WebGLLights( extensions, capabilities );
+	var lights = new WebGLLights();
 
-	const lightsArray = [];
-	const shadowsArray = [];
+	var lightsArray = [];
+	var shadowsArray = [];
 
 	function init() {
 
@@ -26,19 +30,13 @@ function WebGLRenderState( extensions, capabilities ) {
 
 	}
 
-	function setupLights( useLegacyLights ) {
+	function setupLights( camera ) {
 
-		lights.setup( lightsArray, useLegacyLights );
-
-	}
-
-	function setupLightsView( camera ) {
-
-		lights.setupView( lightsArray, camera );
+		lights.setup( lightsArray, shadowsArray, camera );
 
 	}
 
-	const state = {
+	var state = {
 		lightsArray: lightsArray,
 		shadowsArray: shadowsArray,
 
@@ -49,7 +47,6 @@ function WebGLRenderState( extensions, capabilities ) {
 		init: init,
 		state: state,
 		setupLights: setupLights,
-		setupLightsView: setupLightsView,
 
 		pushLight: pushLight,
 		pushShadow: pushShadow
@@ -57,30 +54,42 @@ function WebGLRenderState( extensions, capabilities ) {
 
 }
 
-function WebGLRenderStates( extensions, capabilities ) {
+function WebGLRenderStates() {
 
-	let renderStates = new WeakMap();
+	var renderStates = {};
 
-	function get( scene, renderCallDepth = 0 ) {
+	function onSceneDispose( event ) {
 
-		const renderStateArray = renderStates.get( scene );
-		let renderState;
+		var scene = event.target;
 
-		if ( renderStateArray === undefined ) {
+		scene.removeEventListener( 'dispose', onSceneDispose );
 
-			renderState = new WebGLRenderState( extensions, capabilities );
-			renderStates.set( scene, [ renderState ] );
+		delete renderStates[ scene.id ];
+
+	}
+
+	function get( scene, camera ) {
+
+		var renderState;
+
+		if ( renderStates[ scene.id ] === undefined ) {
+
+			renderState = new WebGLRenderState();
+			renderStates[ scene.id ] = {};
+			renderStates[ scene.id ][ camera.id ] = renderState;
+
+			scene.addEventListener( 'dispose', onSceneDispose );
 
 		} else {
 
-			if ( renderCallDepth >= renderStateArray.length ) {
+			if ( renderStates[ scene.id ][ camera.id ] === undefined ) {
 
-				renderState = new WebGLRenderState( extensions, capabilities );
-				renderStateArray.push( renderState );
+				renderState = new WebGLRenderState();
+				renderStates[ scene.id ][ camera.id ] = renderState;
 
 			} else {
 
-				renderState = renderStateArray[ renderCallDepth ];
+				renderState = renderStates[ scene.id ][ camera.id ];
 
 			}
 
@@ -92,7 +101,7 @@ function WebGLRenderStates( extensions, capabilities ) {
 
 	function dispose() {
 
-		renderStates = new WeakMap();
+		renderStates = {};
 
 	}
 

@@ -1,57 +1,60 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param script javascript object
  * @param attributeName string
  * @param newValue string, object
  * @constructor
  */
-class SetScriptValueCommand extends Command {
 
-	constructor( editor, object, script, attributeName, newValue ) {
+var SetScriptValueCommand = function ( object, script, attributeName, newValue ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'SetScriptValueCommand';
-		this.name = `Set Script.${attributeName}`;
-		this.updatable = true;
+	this.type = 'SetScriptValueCommand';
+	this.name = 'Set Script.' + attributeName;
+	this.updatable = true;
 
-		this.object = object;
-		this.script = script;
+	this.object = object;
+	this.script = script;
 
-		this.attributeName = attributeName;
-		this.oldValue = ( script !== undefined ) ? script[ this.attributeName ] : undefined;
-		this.newValue = newValue;
+	this.attributeName = attributeName;
+	this.oldValue = ( script !== undefined ) ? script[ this.attributeName ] : undefined;
+	this.newValue = newValue;
 
-	}
+};
 
-	execute() {
+SetScriptValueCommand.prototype = {
+
+	execute: function () {
 
 		this.script[ this.attributeName ] = this.newValue;
 
 		this.editor.signals.scriptChanged.dispatch();
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		this.script[ this.attributeName ] = this.oldValue;
 
 		this.editor.signals.scriptChanged.dispatch();
 
-	}
+	},
 
-	update( cmd ) {
+	update: function ( cmd ) {
 
 		this.newValue = cmd.newValue;
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.index = this.editor.scripts[ this.object.uuid ].indexOf( this.script );
@@ -61,11 +64,11 @@ class SetScriptValueCommand extends Command {
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.oldValue = json.oldValue;
 		this.newValue = json.newValue;
@@ -75,6 +78,4 @@ class SetScriptValueCommand extends Command {
 
 	}
 
-}
-
-export { SetScriptValueCommand };
+};

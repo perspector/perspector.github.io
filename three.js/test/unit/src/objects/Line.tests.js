@@ -1,96 +1,47 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Line } from '../../../../src/objects/Line.js';
-
-import { Object3D } from '../../../../src/core/Object3D.js';
+import { Line } from '../../../../src/objects/Line';
 
 export default QUnit.module( 'Objects', () => {
 
 	QUnit.module( 'Line', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const line = new Line();
-			assert.strictEqual(
-				line instanceof Object3D, true,
-				'Line extends from Object3D'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new Line();
-			assert.ok( object, 'Can instantiate a Line.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new Line();
-			assert.ok(
-				object.type === 'Line',
-				'Line.type should be Line'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'geometry', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isLine", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'material', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isLine', ( assert ) => {
+		QUnit.todo( "raycast", ( assert ) => {
 
-			const object = new Line();
-			assert.ok(
-				object.isLine,
-				'Line.isLine should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'copy', ( assert ) => {
+		QUnit.todo( "clone", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'computeLineDistances', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'raycast', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'updateMorphTargets', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'clone', ( assert ) => {
-
-			// inherited from Object3D, test instance specific behaviour.
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
 
 	} );
 

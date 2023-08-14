@@ -4,11 +4,28 @@
 		<title>three.js webgl - svg loader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-			body {
-				background-color: #b0b0b0;
-			}
+		body {
+			color: #ffffff;
+			font-family: Monospace;
+			font-size: 13px;
+			text-align: center;
+			font-weight: bold;
+			background-color: #000000;
+			margin: 0px;
+			overflow: hidden;
+		}
+
+		#info {
+			position: absolute;
+			top: 0px;
+			width: 100%;
+			padding: 5px;
+		}
+
+		a {
+			color: #ffffff;
+		}
 		</style>
 	</head>
 
@@ -16,38 +33,27 @@
 
 		<div id="container"></div>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - SVGLoader
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - SVGLoader
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script type="text/javascript" src="../build/three.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/loaders/SVGLoader.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src='js/libs/dat.gui.min.js'></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
-
-			let renderer, scene, camera, gui, guiData;
+			var renderer, stats, scene, camera, gui, guiData;
 
 			init();
+			animate();
 
 			//
 
 			function init() {
 
-				const container = document.getElementById( 'container' );
+				var container = document.getElementById( 'container' );
 
 				//
 
@@ -63,13 +69,17 @@
 
 				//
 
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.addEventListener( 'change', render );
+				var controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.screenSpacePanning = true;
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
 
 				guiData = {
 					currentURL: 'models/svg/tiger.svg',
@@ -77,7 +87,7 @@
 					drawStrokes: true,
 					fillShapesWireframe: false,
 					strokesWireframe: false
-				};
+				}
 
 				loadSVG( guiData.currentURL );
 
@@ -89,40 +99,22 @@
 
 				if ( gui ) gui.destroy();
 
-				gui = new GUI();
+				gui = new dat.GUI( { width: 350 } );
 
 				gui.add( guiData, 'currentURL', {
 
-					'Tiger': 'models/svg/tiger.svg',
-					'Joins and caps': 'models/svg/lineJoinsAndCaps.svg',
-					'Hexagon': 'models/svg/hexagon.svg',
-					'Energy': 'models/svg/energy.svg',
-					'Test 1': 'models/svg/tests/1.svg',
-					'Test 2': 'models/svg/tests/2.svg',
-					'Test 3': 'models/svg/tests/3.svg',
-					'Test 4': 'models/svg/tests/4.svg',
-					'Test 5': 'models/svg/tests/5.svg',
-					'Test 6': 'models/svg/tests/6.svg',
-					'Test 7': 'models/svg/tests/7.svg',
-					'Test 8': 'models/svg/tests/8.svg',
-					'Test 9': 'models/svg/tests/9.svg',
-					'Units': 'models/svg/tests/units.svg',
-					'Ordering': 'models/svg/tests/ordering.svg',
-					'Defs': 'models/svg/tests/testDefs/Svg-defs.svg',
-					'Defs2': 'models/svg/tests/testDefs/Svg-defs2.svg',
-					'Defs3': 'models/svg/tests/testDefs/Wave-defs.svg',
-					'Defs4': 'models/svg/tests/testDefs/defs4.svg',
-					'Defs5': 'models/svg/tests/testDefs/defs5.svg',
-					'Style CSS inside defs': 'models/svg/style-css-inside-defs.svg',
-					'Multiple CSS classes': 'models/svg/multiple-css-classes.svg',
-					'Zero Radius': 'models/svg/zero-radius.svg',
-					'Styles in svg tag': 'models/svg/tests/styles.svg',
-					'Round join': 'models/svg/tests/roundJoinPrecisionIssue.svg',
-					'Ellipse Transformations': 'models/svg/tests/ellipseTransform.svg',
-					'singlePointTest': 'models/svg/singlePointTest.svg',
-					'singlePointTest2': 'models/svg/singlePointTest2.svg',
-					'singlePointTest3': 'models/svg/singlePointTest3.svg',
-					'emptyPath': 'models/svg/emptyPath.svg',
+					"Tiger": 'models/svg/tiger.svg',
+					"Three.js": 'models/svg/threejs.svg',
+					"Joins and caps": 'models/svg/lineJoinsAndCaps.svg',
+					"Hexagon": 'models/svg/hexagon.svg',
+					"Test 1": 'models/svg/tests/1.svg',
+					"Test 2": 'models/svg/tests/2.svg',
+					"Test 3": 'models/svg/tests/3.svg',
+					"Test 4": 'models/svg/tests/4.svg',
+					"Test 5": 'models/svg/tests/5.svg',
+					"Test 6": 'models/svg/tests/6.svg',
+					"Test 7": 'models/svg/tests/7.svg',
+					"Test 8": 'models/svg/tests/8.svg'
 
 				} ).name( 'SVG File' ).onChange( update );
 
@@ -151,46 +143,48 @@
 
 				//
 
-				const helper = new THREE.GridHelper( 160, 10, 0x8d8d8d, 0xc1c1c1 );
+				var helper = new THREE.GridHelper( 160, 10 );
 				helper.rotation.x = Math.PI / 2;
 				scene.add( helper );
 
 				//
 
-				const loader = new SVGLoader();
+				var loader = new THREE.SVGLoader();
 
 				loader.load( url, function ( data ) {
 
-					const group = new THREE.Group();
+					var paths = data.paths;
+
+					var group = new THREE.Group();
 					group.scale.multiplyScalar( 0.25 );
 					group.position.x = - 70;
 					group.position.y = 70;
 					group.scale.y *= - 1;
-			
-					let renderOrder = 0;
 
-					for ( const path of data.paths ) {
+					for ( var i = 0; i < paths.length; i ++ ) {
 
-						const fillColor = path.userData.style.fill;
+						var path = paths[ i ];
 
-						if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none' ) {
+						var fillColor = path.userData.style.fill;
+						if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none') {
 
-							const material = new THREE.MeshBasicMaterial( {
+							var material = new THREE.MeshBasicMaterial( {
 								color: new THREE.Color().setStyle( fillColor ),
 								opacity: path.userData.style.fillOpacity,
-								transparent: true,
+								transparent: path.userData.style.fillOpacity < 1,
 								side: THREE.DoubleSide,
 								depthWrite: false,
 								wireframe: guiData.fillShapesWireframe
 							} );
 
-							const shapes = SVGLoader.createShapes( path );
+							var shapes = path.toShapes( true );
 
-							for ( const shape of shapes ) {
+							for ( var j = 0; j < shapes.length; j ++ ) {
 
-								const geometry = new THREE.ShapeGeometry( shape );
-								const mesh = new THREE.Mesh( geometry, material );
-								mesh.renderOrder = renderOrder ++;
+								var shape = shapes[ j ];
+
+								var geometry = new THREE.ShapeBufferGeometry( shape );
+								var mesh = new THREE.Mesh( geometry, material );
 
 								group.add( mesh );
 
@@ -198,27 +192,28 @@
 
 						}
 
-						const strokeColor = path.userData.style.stroke;
+						var strokeColor = path.userData.style.stroke;
 
 						if ( guiData.drawStrokes && strokeColor !== undefined && strokeColor !== 'none' ) {
 
-							const material = new THREE.MeshBasicMaterial( {
+							var material = new THREE.MeshBasicMaterial( {
 								color: new THREE.Color().setStyle( strokeColor ),
 								opacity: path.userData.style.strokeOpacity,
-								transparent: true,
+								transparent: path.userData.style.strokeOpacity < 1,
 								side: THREE.DoubleSide,
 								depthWrite: false,
 								wireframe: guiData.strokesWireframe
 							} );
 
-							for ( const subPath of path.subPaths ) {
+							for ( var j = 0, jl = path.subPaths.length; j < jl; j ++ ) {
 
-								const geometry = SVGLoader.pointsToStroke( subPath.getPoints(), path.userData.style );
+								subPath = path.subPaths[ j ];
+
+								var geometry = THREE.SVGLoader.pointsToStroke( subPath.getPoints(), path.userData.style );
 
 								if ( geometry ) {
 
-									const mesh = new THREE.Mesh( geometry, material );
-									mesh.renderOrder = renderOrder ++;
+									var mesh = new THREE.Mesh( geometry, material );
 
 									group.add( mesh );
 
@@ -232,8 +227,6 @@
 
 					scene.add( group );
 
-					render();
-
 				} );
 
 			}
@@ -244,7 +237,15 @@
 				camera.updateProjectionMatrix();
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
 				render();
+				stats.update();
 
 			}
 

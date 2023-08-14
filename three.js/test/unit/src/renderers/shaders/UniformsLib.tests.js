@@ -1,6 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { UniformsLib } from '../../../../../src/renderers/shaders/UniformsLib.js';
+import { UniformsLib } from '../../../../../src/renderers/shaders/UniformsLib';
 
 export default QUnit.module( 'Renderers', () => {
 
@@ -8,10 +11,16 @@ export default QUnit.module( 'Renderers', () => {
 
 		QUnit.module( 'UniformsLib', () => {
 
-			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			// PUBLIC STUFF
+			QUnit.todo( "merge", ( assert ) => {
 
-				assert.ok( UniformsLib, 'UniformsLib is defined.' );
+				assert.ok( false, "everything's gonna be alright" );
+
+			} );
+
+			QUnit.todo( "clone", ( assert ) => {
+
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

@@ -4,22 +4,35 @@
 		<title>three.js WebGL  - postprocessing - FXAA</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-			body {
-				background-color: #fff;
-				color: #222;
+			html, body {
+				height: 100%;
 			}
 
-			a {
-				color: #08f;
+			body {
+				background: #ffffff;
+				padding: 0;
+				margin: 0;
+				font-family: Monospace;
+				font-size: 13px;
+				overflow: hidden;
+			}
+
+			#info {
+				top: 0px;
+				width: 100%;
+				color: #000000;
+				margin: 6px 0px;
+				text-align: center;
+			}
+
+			#info a {
+				color: #000000;
 			}
 
 			#container {
-				position: absolute;
-				top: 70px;
 				width: 100%;
-				bottom: 0px;
+				height: calc(100% - 80px);
 			}
 		</style>
 	</head>
@@ -28,59 +41,56 @@
 
 		<div id="info">
 			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - postprocessing - FXAA<br />
-			Left: No FXAA, Right: FXAA
+			Left scene processed with FXAA, right scene is rendered without anti-aliasing.
 		</div>
 		<div id="container">
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/WebGL.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/shaders/CopyShader.js"></script>
+
+		<script src="js/postprocessing/EffectComposer.js"></script>
+		<script src="js/postprocessing/RenderPass.js"></script>
+		<script src="js/postprocessing/ShaderPass.js"></script>
+		<script src="js/shaders/FXAAShader.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var camera, scene, renderer, clock, group;
 
-			import * as THREE from 'three';
-
-			import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-			import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-			import { ColorCorrectionShader } from 'three/addons/shaders/ColorCorrectionShader.js';
-			import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
-
-			let camera, scene, renderer, clock, group, container;
-
-			let composer1, composer2, fxaaPass;
+			var composer1, composer2, fxaaPass;
 
 			init();
 			animate();
 
 			function init() {
 
-				container = document.getElementById( 'container' );
+				var container = document.getElementById( 'container' );
 
-				camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 2000 );
+				camera = new THREE.PerspectiveCamera( 45, ( window.innerWidth * 0.5 ) / window.innerHeight, 1, 2000 );
 				camera.position.z = 500;
 
 				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xffffff );
+				scene.fog = new THREE.Fog( 0xcccccc, 100, 1500 );
 
 				clock = new THREE.Clock();
 
 				//
 
-				const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x8d8d8d, 3 );
+				var hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444 );
 				hemiLight.position.set( 0, 1000, 0 );
 				scene.add( hemiLight );
 
-				const dirLight = new THREE.DirectionalLight( 0xffffff, 2.5 );
+				var dirLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
 				dirLight.position.set( - 3000, 1000, - 1000 );
 				scene.add( dirLight );
 
@@ -88,12 +98,12 @@
 
 				group = new THREE.Group();
 
-				const geometry = new THREE.TetrahedronGeometry( 10 );
-				const material = new THREE.MeshStandardMaterial( { color: 0xf73232, flatShading: true } );
+				var geometry = new THREE.TetrahedronBufferGeometry( 10 );
+				var material = new THREE.MeshStandardMaterial( { color: 0xee0808, flatShading: true } );
 
-				for ( let i = 0; i < 100; i ++ ) {
+				for ( var i = 0; i < 100; i ++ ) {
 
-					const mesh = new THREE.Mesh( geometry, material );
+					var mesh = new THREE.Mesh( geometry, material );
 
 					mesh.position.x = Math.random() * 500 - 250;
 					mesh.position.y = Math.random() * 500 - 250;
@@ -114,61 +124,55 @@
 				//
 
 				renderer = new THREE.WebGLRenderer();
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( container.offsetWidth, container.offsetHeight );
 				renderer.autoClear = false;
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
 				//
 
-				const renderPass = new RenderPass( scene, camera );
-				renderPass.clearColor = new THREE.Color( 0, 0, 0 );
-				renderPass.clearAlpha = 0;
+				var renderPass = new THREE.RenderPass( scene, camera );
 
 				//
 
-				fxaaPass = new ShaderPass( FXAAShader );
+				fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );
 
-				const colorCorrectionPass = new ShaderPass( ColorCorrectionShader );
+				var pixelRatio = renderer.getPixelRatio();
 
-				composer1 = new EffectComposer( renderer );
+				fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * pixelRatio );
+				fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * pixelRatio );
+
+				composer1 = new THREE.EffectComposer( renderer );
 				composer1.addPass( renderPass );
-				composer1.addPass( colorCorrectionPass );
+				composer1.addPass( fxaaPass );
 
 				//
 
-				const pixelRatio = renderer.getPixelRatio();
+				var copyPass = new THREE.ShaderPass( THREE.CopyShader );
 
-				fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( container.offsetWidth * pixelRatio );
-				fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( container.offsetHeight * pixelRatio );
-
-				composer2 = new EffectComposer( renderer );
+				composer2 = new THREE.EffectComposer( renderer );
 				composer2.addPass( renderPass );
-				composer2.addPass( colorCorrectionPass );
-
-				// FXAA is engineered to be applied towards the end of engine post processing after conversion to low dynamic range and conversion to the sRGB color space for display.´
-
-				composer2.addPass( fxaaPass );
+				composer2.addPass( copyPass );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
 			function onWindowResize() {
 
-				camera.aspect = container.offsetWidth / container.offsetHeight;
+				camera.aspect = ( window.innerWidth * 0.5 ) / window.innerHeight;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( container.offsetWidth, container.offsetHeight );
-				composer1.setSize( container.offsetWidth, container.offsetHeight );
-				composer2.setSize( container.offsetWidth, container.offsetHeight );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				composer1.setSize( window.innerWidth, window.innerHeight );
+				composer2.setSize( window.innerWidth, window.innerHeight );
 
-				const pixelRatio = renderer.getPixelRatio();
+				var pixelRatio = renderer.getPixelRatio();
 
-				fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( container.offsetWidth * pixelRatio );
-				fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( container.offsetHeight * pixelRatio );
+				fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * pixelRatio );
+				fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * pixelRatio );
 
 			}
 
@@ -176,19 +180,17 @@
 
 				requestAnimationFrame( animate );
 
-				const halfWidth = container.offsetWidth / 2;
+				var halfWidth = window.innerWidth / 2;
 
 				group.rotation.y += clock.getDelta() * 0.1;
 
-				renderer.setScissorTest( true );
+				renderer.setViewport( 0, 0, halfWidth, window.innerHeight );
 
-				renderer.setScissor( 0, 0, halfWidth - 1, container.offsetHeight );
 				composer1.render();
 
-				renderer.setScissor( halfWidth, 0, halfWidth, container.offsetHeight );
-				composer2.render();
+				renderer.setViewport( halfWidth, 0, halfWidth, window.innerHeight );
 
-				renderer.setScissorTest( false );
+				composer2.render();
 
 			}
 

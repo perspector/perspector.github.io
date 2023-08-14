@@ -1,15 +1,19 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ * @author Anonymous
+ */
 /* global QUnit */
 
-import { TorusKnotGeometry } from '../../../../src/geometries/TorusKnotGeometry.js';
-
-import { BufferGeometry } from '../../../../src/core/BufferGeometry.js';
-import { runStdGeometryTests } from '../../utils/qunit-utils.js';
+import { runStdGeometryTests } from '../../qunit-utils';
+import {
+	TorusKnotBufferGeometry
+} from '../../../../src/geometries/TorusKnotGeometry';
 
 export default QUnit.module( 'Geometries', () => {
 
-	QUnit.module( 'TorusKnotGeometry', ( hooks ) => {
+	QUnit.module( 'TorusKnotBufferGeometry', ( hooks ) => {
 
-		let geometries = undefined;
+		var geometries = undefined;
 		hooks.beforeEach( function () {
 
 			const parameters = {
@@ -22,56 +26,27 @@ export default QUnit.module( 'Geometries', () => {
 			};
 
 			geometries = [
-				new TorusKnotGeometry(),
-				new TorusKnotGeometry( parameters.radius ),
-				new TorusKnotGeometry( parameters.radius, parameters.tube ),
-				new TorusKnotGeometry( parameters.radius, parameters.tube, parameters.tubularSegments ),
-				new TorusKnotGeometry( parameters.radius, parameters.tube, parameters.tubularSegments, parameters.radialSegments ),
-				new TorusKnotGeometry( parameters.radius, parameters.tube, parameters.tubularSegments, parameters.radialSegments, parameters.p, parameters.q ),
+				new TorusKnotBufferGeometry(),
+				new TorusKnotBufferGeometry( parameters.radius ),
+				new TorusKnotBufferGeometry( parameters.radius, parameters.tube ),
+				new TorusKnotBufferGeometry( parameters.radius, parameters.tube, parameters.tubularSegments ),
+				new TorusKnotBufferGeometry( parameters.radius, parameters.tube, parameters.tubularSegments, parameters.radialSegments ),
+				new TorusKnotBufferGeometry( parameters.radius, parameters.tube, parameters.tubularSegments, parameters.radialSegments, parameters.p, parameters.q ),
 			];
 
 		} );
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new TorusKnotGeometry();
-			assert.strictEqual(
-				object instanceof BufferGeometry, true,
-				'TorusKnotGeometry extends from BufferGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new TorusKnotGeometry();
-			assert.ok( object, 'Can instantiate a TorusKnotGeometry.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new TorusKnotGeometry();
-			assert.ok(
-				object.type === 'TorusKnotGeometry',
-				'TorusKnotGeometry.type should be TorusKnotGeometry'
-			);
-
-		} );
-
-		QUnit.todo( 'parameters', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// STATIC
-		QUnit.todo( 'fromJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

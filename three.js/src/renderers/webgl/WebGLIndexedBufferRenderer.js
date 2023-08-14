@@ -1,8 +1,10 @@
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
+
 function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
 
-	const isWebGL2 = capabilities.isWebGL2;
-
-	let mode;
+	var mode;
 
 	function setMode( value ) {
 
@@ -10,7 +12,7 @@ function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
 
 	}
 
-	let type, bytesPerElement;
+	var type, bytesPerElement;
 
 	function setIndex( value ) {
 
@@ -23,25 +25,21 @@ function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
 
 		gl.drawElements( mode, count, type, start * bytesPerElement );
 
-		info.update( count, mode, 1 );
+		info.update( count, mode );
 
 	}
 
-	function renderInstances( start, count, primcount ) {
+	function renderInstances( geometry, start, count ) {
 
-		if ( primcount === 0 ) return;
+		var extension;
 
-		let extension, methodName;
-
-		if ( isWebGL2 ) {
+		if ( capabilities.isWebGL2 ) {
 
 			extension = gl;
-			methodName = 'drawElementsInstanced';
 
 		} else {
 
-			extension = extensions.get( 'ANGLE_instanced_arrays' );
-			methodName = 'drawElementsInstancedANGLE';
+			var extension = extensions.get( 'ANGLE_instanced_arrays' );
 
 			if ( extension === null ) {
 
@@ -52,9 +50,9 @@ function WebGLIndexedBufferRenderer( gl, extensions, info, capabilities ) {
 
 		}
 
-		extension[ methodName ]( mode, count, type, start * bytesPerElement, primcount );
+		extension[ capabilities.isWebGL2 ? 'drawElementsInstanced' : 'drawElementsInstancedANGLE' ]( mode, count, type, start * bytesPerElement, geometry.maxInstancedCount );
 
-		info.update( count, mode, primcount );
+		info.update( count, mode, geometry.maxInstancedCount );
 
 	}
 

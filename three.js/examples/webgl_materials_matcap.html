@@ -4,41 +4,61 @@
 		<title>three.js webgl - materials - matcap</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			a {
+				color: #ffa;
+				font-weight: bold;
+			}
+
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 0; /* to not conflict with dat.gui */
+				display:block;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl materials matcap<br />
-			Drag-and-drop JPG, PNG, WebP, AVIF, or EXR MatCap image files<br/>
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl materials matcap<br />
+			Drag-and-drop alternate MatCap image files<br/>
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/loaders/GLTFLoader.js"></script>
+
+		<script src="js/libs/dat.gui.min.js"></script>
+
+		<script src="js/WebGL.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var mesh, renderer, scene, camera;
 
-			import * as THREE from 'three';
+			var image;
 
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-			import { EXRLoader } from 'three/addons/loaders/EXRLoader.js';
-
-			let mesh, renderer, scene, camera;
-
-			const API = {
-				color: 0xffffff, // sRGB
+			var API = {
+				color: 0xffffff,
 				exposure: 1.0
 			};
 
@@ -53,46 +73,44 @@
 				document.body.appendChild( renderer.domElement );
 
 				// tone mapping
-				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				renderer.toneMapping = THREE.LinearToneMapping;
 			 	renderer.toneMappingExposure = API.exposure;
 
+				renderer.gammaOutput = true;
 
 				// scene
 				scene = new THREE.Scene();
 
 				// camera
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
-				camera.position.set( 0, 0, 13 );
+				camera.position.set( 0, 0, 12 );
 
 				// controls
-				const controls = new OrbitControls( camera, renderer.domElement );
+				var controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.addEventListener( 'change', render );
 				controls.enableZoom = false;
-				controls.enablePan = false;
 
 				// manager
-				const manager = new THREE.LoadingManager( render );
+				var manager = new THREE.LoadingManager( render );
 
 				// matcap
-				const loaderEXR = new EXRLoader( manager );
-				const matcap = loaderEXR.load( 'textures/matcaps/040full.exr' );
+				var loader = new THREE.TextureLoader( manager );
 
-				// normalmap
-				const loader = new THREE.TextureLoader( manager );
+				var matcap = loader.load( 'textures/matcaps/matcap-porcelain-white.jpg', function () {
 
-				const normalmap = loader.load( 'models/gltf/LeePerrySmith/Infinite-Level_02_Tangent_SmoothUV.jpg' );
+					matcap.encoding = THREE.sRGBEncoding;
+
+				} );
 
 				// model
-				new GLTFLoader( manager ).load( 'models/gltf/LeePerrySmith/LeePerrySmith.glb', function ( gltf ) {
+				new THREE.GLTFLoader( manager ).load( 'models/gltf/LeePerrySmith/LeePerrySmith.glb', function ( gltf ) {
 
 					mesh = gltf.scene.children[ 0 ];
-					mesh.position.y = - 0.25;
 
 					mesh.material = new THREE.MeshMatcapMaterial( {
 
-						color: new THREE.Color().setHex( API.color ).convertSRGBToLinear(),
-						matcap: matcap,
-						normalMap: normalmap
+						color: API.color,
+						matcap: matcap
 
 					} );
 
@@ -101,22 +119,20 @@
 				} );
 
 				// gui
-				const gui = new GUI();
+				var gui = new dat.GUI();
 
 				gui.addColor( API, 'color' )
 					.listen()
 					.onChange( function () {
 
-						mesh.material.color.set( API.color ).convertSRGBToLinear();
-						render();
+						mesh.material.color.set( API.color ); render();
 
 					} );
 
 				gui.add( API, 'exposure', 0, 2 )
 					.onChange( function () {
 
-						renderer.toneMappingExposure = API.exposure;
-						render();
+						renderer.toneMappingExposure = API.exposure; render();
 
 					} );
 
@@ -125,7 +141,22 @@
 				// drag 'n drop
 				initDragAndDrop();
 
-				window.addEventListener( 'resize', onWindowResize );
+				// corner div
+				var div = document.createElement( 'div' );
+				div.style.position = 'absolute';
+				div.style.top = '10px';
+				div.style.left = '10px';
+				document.body.appendChild( div );
+
+				image = document.createElement( 'img' );
+				image.style.width = '128px';
+				image.style.height = '128px';
+				image.style.display = 'block';
+				image.style.margin = '0 0 10px 0';
+				image.src = 'textures/matcaps/matcap-porcelain-white.jpg';
+				div.appendChild( image );
+
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -147,10 +178,10 @@
 			}
 
 			//
-			// drag and drop anywhere in document
-			//
 
-			function updateMatcap( texture ) {
+			// drag and drop anywhere in document
+
+			function imgCallback( event ) {
 
 				if ( mesh.material.matcap ) {
 
@@ -158,94 +189,15 @@
 
 				}
 
-				mesh.material.matcap = texture;
+				mesh.material.matcap = new THREE.Texture( event.target );
+				mesh.material.matcap.needsUpdate = true;
 
-				texture.needsUpdate = true;
+				mesh.material.matcap.encoding = THREE.sRGBEncoding; // assume it is sRGB
+				mesh.material.needsUpdate = true;
 
-				mesh.material.needsUpdate = true; // because the color space can change
+				image.src = mesh.material.matcap.image.src; // corner div
 
 				render();
-
-			}
-
-			function handleJPG( event ) { // PNG, WebP, AVIF, too
-
-				function imgCallback( event ) {
-
-					const texture = new THREE.Texture( event.target );
-
-					texture.colorSpace = THREE.SRGBColorSpace;
-
-					updateMatcap( texture );
-
-				}
-
-				const img = new Image();
-
-				img.onload = imgCallback;
-
-				img.src = event.target.result;
-
-			}
-
-			function handleEXR( event ) {
-
-				const contents = event.target.result;
-
-				const loader = new EXRLoader();
-
-				loader.setDataType( THREE.HalfFloatType );
-
-				const texData = loader.parse( contents );
-
-				const texture = new THREE.DataTexture();
-
-				texture.image.width = texData.width;
-				texture.image.height = texData.height;
-				texture.image.data = texData.data;
-
-				texture.format = texData.format;
-				texture.type = texData.type;
-				texture.colorSpace = THREE.LinearSRGBColorSpace;
-				texture.minFilter = THREE.LinearFilter;
-				texture.magFilter = THREE.LinearFilter;
-				texture.generateMipmaps = false;
-				texture.flipY = false;
-
-				updateMatcap( texture );
-
-			}
-
-			function loadFile( file ) {
-
-				const filename = file.name;
-				const extension = filename.split( '.' ).pop().toLowerCase();
-
-				if ( extension === 'exr' ) {
-
-					const reader = new FileReader();
-
-					reader.addEventListener( 'load', function ( event ) {
-
-						handleEXR( event );
-
-					} );
-
-					reader.readAsArrayBuffer( file );
-
-				} else { // 'jpg', 'png'
-
-					const reader = new FileReader();
-
-					reader.addEventListener( 'load', function ( event ) {
-
-						handleJPG( event );
-
-					} );
-
-					reader.readAsDataURL( file );
-
-				}
 
 			}
 
@@ -256,15 +208,27 @@
 					event.preventDefault();
 					event.dataTransfer.dropEffect = 'copy';
 
-				} );
+				}, false );
 
 				document.addEventListener( 'drop', function ( event ) {
 
 					event.preventDefault();
 
-					loadFile( event.dataTransfer.files[ 0 ] );
+					var reader = new FileReader();
 
-				} );
+					reader.addEventListener( 'load', function ( event ) {
+
+						var img = new Image();
+
+						img.onload = imgCallback;
+
+						img.src = event.currentTarget.result;
+
+					}, false );
+
+					reader.readAsDataURL( event.dataTransfer.files[ 0 ] );
+
+				}, false );
 
 			}
 

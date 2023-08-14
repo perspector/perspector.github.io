@@ -1,21 +1,25 @@
-function Config() {
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-	const name = 'threejs-editor';
+var Config = function () {
 
-	const storage = {
+	var name = 'threejs-editor';
+
+	var storage = {
 		'language': 'en',
 
 		'autosave': true,
+		'theme': 'css/light.css',
 
 		'project/title': '',
 		'project/editable': false,
-		'project/vr': false,
 
+		'project/renderer': 'WebGLRenderer',
 		'project/renderer/antialias': true,
 		'project/renderer/shadows': true,
-		'project/renderer/shadowType': 1, // PCF
-		'project/renderer/toneMapping': 0, // NoToneMapping
-		'project/renderer/toneMappingExposure': 1,
+
+		'project/vr': false,
 
 		'settings/history': false,
 
@@ -32,9 +36,9 @@ function Config() {
 
 	} else {
 
-		const data = JSON.parse( window.localStorage[ name ] );
+		var data = JSON.parse( window.localStorage[ name ] );
 
-		for ( const key in data ) {
+		for ( var key in data ) {
 
 			storage[ key ] = data[ key ];
 
@@ -52,7 +56,7 @@ function Config() {
 
 		setKey: function () { // key, value, key, value ...
 
-			for ( let i = 0, l = arguments.length; i < l; i += 2 ) {
+			for ( var i = 0, l = arguments.length; i < l; i += 2 ) {
 
 				storage[ arguments[ i ] ] = arguments[ i + 1 ];
 
@@ -72,6 +76,4 @@ function Config() {
 
 	};
 
-}
-
-export { Config };
+};

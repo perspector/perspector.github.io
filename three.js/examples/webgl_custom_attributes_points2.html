@@ -4,12 +4,37 @@
 		<title>three.js webgl - custom attributes [particles][billboards]</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				z-index:100;
+			}
+
+		</style>
 	</head>
 
 	<body>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - custom attributes example - particles - billboards</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - custom attributes example - particles - billboards</div>
 		<div id="container"></div>
+
+		<script src="../build/three.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
 		<script type="x-shader/x-vertex" id="vertexshader">
 
@@ -35,13 +60,13 @@
 		<script type="x-shader/x-fragment" id="fragmentshader">
 
 			uniform vec3 color;
-			uniform sampler2D pointTexture;
+			uniform sampler2D texture;
 
 			varying vec3 vColor;
 
 			void main() {
 
-				vec4 color = vec4( color * vColor, 1.0 ) * texture2D( pointTexture, gl_PointCoord );
+				vec4 color = vec4( color * vColor, 1.0 ) * texture2D( texture, gl_PointCoord );
 
 				gl_FragColor = color;
 
@@ -49,248 +74,225 @@
 
 		</script>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		if ( WEBGL.isWebGLAvailable() === false ) {
 
-		<script type="module">
+			document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 
-			import * as THREE from 'three';
+		}
 
-			import Stats from 'three/addons/libs/stats.module.js';
+		var renderer, scene, camera, stats;
+		var sphere, length1;
 
-			import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
+		var WIDTH = window.innerWidth;
+		var HEIGHT = window.innerHeight;
 
-			let renderer, scene, camera, stats;
-			let sphere, length1;
+		init();
+		animate();
 
-			const WIDTH = window.innerWidth;
-			const HEIGHT = window.innerHeight;
+		function init() {
 
-			init();
-			animate();
+			camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 10000 );
+			camera.position.z = 300;
 
-			function init() {
+			scene = new THREE.Scene();
 
-				camera = new THREE.PerspectiveCamera( 45, WIDTH / HEIGHT, 1, 10000 );
-				camera.position.z = 300;
+			var radius = 100, segments = 68, rings = 38;
 
-				scene = new THREE.Scene();
+			var vertices1 = new THREE.SphereGeometry( radius, segments, rings ).vertices;
+			var vertices2 = new THREE.BoxGeometry( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 ).vertices;
 
-				const radius = 100, segments = 68, rings = 38;
+			length1 = vertices1.length;
 
-				let sphereGeometry = new THREE.SphereGeometry( radius, segments, rings );
-				let boxGeometry = new THREE.BoxGeometry( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 );
+			var vertices = vertices1.concat( vertices2 );
 
-				// if normal and uv attributes are not removed, mergeVertices() can't consolidate identical vertices with different normal/uv data
+			var positions = new Float32Array( vertices.length * 3 );
+			var colors = new Float32Array( vertices.length * 3 );
+			var sizes = new Float32Array( vertices.length );
 
-				sphereGeometry.deleteAttribute( 'normal' );
-				sphereGeometry.deleteAttribute( 'uv' );
+			var vertex;
+			var color = new THREE.Color();
 
-				boxGeometry.deleteAttribute( 'normal' );
-				boxGeometry.deleteAttribute( 'uv' );
+			for ( var i = 0, l = vertices.length; i < l; i ++ ) {
 
-				sphereGeometry = BufferGeometryUtils.mergeVertices( sphereGeometry );
-				boxGeometry = BufferGeometryUtils.mergeVertices( boxGeometry );
+				vertex = vertices[ i ];
+				vertex.toArray( positions, i * 3 );
 
-				const combinedGeometry = BufferGeometryUtils.mergeGeometries( [ sphereGeometry, boxGeometry ] );
-				const positionAttribute = combinedGeometry.getAttribute( 'position' );
+				if ( i < length1 ) {
 
-				const colors = [];
-				const sizes = [];
+					color.setHSL( 0.01 + 0.1 * ( i / length1 ), 0.99, ( vertex.y + radius ) / ( 4 * radius ) );
 
-				const color = new THREE.Color();
-				const vertex = new THREE.Vector3();
+				} else {
 
-				length1 = sphereGeometry.getAttribute( 'position' ).count;
-
-				for ( let i = 0, l = positionAttribute.count; i < l; i ++ ) {
-
-					vertex.fromBufferAttribute( positionAttribute, i );
-
-					if ( i < length1 ) {
-
-						color.setHSL( 0.01 + 0.1 * ( i / length1 ), 0.99, ( vertex.y + radius ) / ( 4 * radius ) );
-
-					} else {
-
-						color.setHSL( 0.6, 0.75, 0.25 + vertex.y / ( 2 * radius ) );
-
-					}
-
-					color.toArray( colors, i * 3 );
-
-					sizes[ i ] = i < length1 ? 10 : 40;
+					color.setHSL( 0.6, 0.75, 0.25 + vertex.y / ( 2 * radius ) );
 
 				}
 
-				const geometry = new THREE.BufferGeometry();
-				geometry.setAttribute( 'position', positionAttribute );
-				geometry.setAttribute( 'size', new THREE.Float32BufferAttribute( sizes, 1 ) );
-				geometry.setAttribute( 'ca', new THREE.Float32BufferAttribute( colors, 3 ) );
+				color.toArray( colors, i * 3 );
 
-				//
-
-				const texture = new THREE.TextureLoader().load( 'textures/sprites/disc.png' );
-				texture.wrapS = THREE.RepeatWrapping;
-				texture.wrapT = THREE.RepeatWrapping;
-
-				const material = new THREE.ShaderMaterial( {
-
-					uniforms: {
-						color: { value: new THREE.Color( 0xffffff ) },
-						pointTexture: { value: texture }
-					},
-					vertexShader: document.getElementById( 'vertexshader' ).textContent,
-					fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-					transparent: true
-
-				} );
-
-				//
-
-				sphere = new THREE.Points( geometry, material );
-				scene.add( sphere );
-
-				//
-
-				renderer = new THREE.WebGLRenderer();
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( WIDTH, HEIGHT );
-
-				const container = document.getElementById( 'container' );
-				container.appendChild( renderer.domElement );
-
-				stats = new Stats();
-				container.appendChild( stats.dom );
-
-				//
-
-				window.addEventListener( 'resize', onWindowResize );
+				sizes[ i ] = i < length1 ? 10 : 40;
 
 			}
 
-			function onWindowResize() {
+			var geometry = new THREE.BufferGeometry();
+			geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+			geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+			geometry.addAttribute( 'ca', new THREE.BufferAttribute( colors, 3 ) );
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+			//
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+			var texture = new THREE.TextureLoader().load( "textures/sprites/disc.png" );
+			texture.wrapS = THREE.RepeatWrapping;
+			texture.wrapT = THREE.RepeatWrapping;
+
+			var material = new THREE.ShaderMaterial( {
+
+				uniforms: {
+					color: { value: new THREE.Color( 0xffffff ) },
+					texture: { value: texture }
+				},
+				vertexShader: document.getElementById( 'vertexshader' ).textContent,
+				fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+				transparent: true
+
+			} );
+
+			//
+
+			sphere = new THREE.Points( geometry, material );
+			scene.add( sphere );
+
+			//
+
+			renderer = new THREE.WebGLRenderer();
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( WIDTH, HEIGHT );
+
+			var container = document.getElementById( 'container' );
+			container.appendChild( renderer.domElement );
+
+			stats = new Stats();
+			container.appendChild( stats.dom );
+
+			//
+
+			window.addEventListener( 'resize', onWindowResize, false );
+
+		}
+
+		function onWindowResize() {
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+		}
+
+		function sortPoints() {
+
+			var vector = new THREE.Vector3();
+
+			// Model View Projection matrix
+
+			var matrix = new THREE.Matrix4();
+			matrix.multiplyMatrices( camera.projectionMatrix, camera.matrixWorldInverse );
+			matrix.multiply( sphere.matrixWorld );
+
+			//
+
+			var geometry = sphere.geometry;
+
+			var index = geometry.getIndex();
+			var positions = geometry.getAttribute( 'position' ).array;
+			var length = positions.length / 3;
+
+			if ( index === null ) {
+
+				var array = new Uint16Array( length );
+
+				for ( var i = 0; i < length; i ++ ) {
+
+					array[ i ] = i;
+
+				}
+
+				index = new THREE.BufferAttribute( array, 1 );
+
+				geometry.setIndex( index );
 
 			}
 
-			function sortPoints() {
+			var sortArray = [];
 
-				const vector = new THREE.Vector3();
+			for ( var i = 0; i < length; i ++ ) {
 
-				// Model View Projection matrix
+				vector.fromArray( positions, i * 3 );
+				vector.applyMatrix4( matrix );
 
-				const matrix = new THREE.Matrix4();
-				matrix.multiplyMatrices( camera.projectionMatrix, camera.matrixWorldInverse );
-				matrix.multiply( sphere.matrixWorld );
-
-				//
-
-				const geometry = sphere.geometry;
-
-				let index = geometry.getIndex();
-				const positions = geometry.getAttribute( 'position' ).array;
-				const length = positions.length / 3;
-
-				if ( index === null ) {
-
-					const array = new Uint16Array( length );
-
-					for ( let i = 0; i < length; i ++ ) {
-
-						array[ i ] = i;
-
-					}
-
-					index = new THREE.BufferAttribute( array, 1 );
-
-					geometry.setIndex( index );
-
-				}
-
-				const sortArray = [];
-
-				for ( let i = 0; i < length; i ++ ) {
-
-					vector.fromArray( positions, i * 3 );
-					vector.applyMatrix4( matrix );
-
-					sortArray.push( [ vector.z, i ] );
-
-				}
-
-				function numericalSort( a, b ) {
-
-					return b[ 0 ] - a[ 0 ];
-
-				}
-
-				sortArray.sort( numericalSort );
-
-				const indices = index.array;
-
-				for ( let i = 0; i < length; i ++ ) {
-
-					indices[ i ] = sortArray[ i ][ 1 ];
-
-				}
-
-				geometry.index.needsUpdate = true;
+				sortArray.push( [ vector.z, i ] );
 
 			}
 
-			function animate() {
+			function numericalSort( a, b ) {
 
-				requestAnimationFrame( animate );
-
-				render();
-				stats.update();
+				return b[ 0 ] - a[ 0 ];
 
 			}
 
-			function render() {
+			sortArray.sort( numericalSort );
 
-				const time = Date.now() * 0.005;
+			var indices = index.array;
 
-				sphere.rotation.y = 0.02 * time;
-				sphere.rotation.z = 0.02 * time;
+			for ( var i = 0; i < length; i ++ ) {
 
-				const geometry = sphere.geometry;
-				const attributes = geometry.attributes;
+				indices[ i ] = sortArray[ i ][ 1 ];
 
-				for ( let i = 0; i < attributes.size.array.length; i ++ ) {
+			}
 
-					if ( i < length1 ) {
+			geometry.index.needsUpdate = true;
 
-						attributes.size.array[ i ] = 16 + 12 * Math.sin( 0.1 * i + time );
+		}
 
-					}
+		function animate() {
+
+			requestAnimationFrame( animate );
+
+			render();
+			stats.update();
+
+		}
+
+		function render() {
+
+			var time = Date.now() * 0.005;
+
+			sphere.rotation.y = 0.02 * time;
+			sphere.rotation.z = 0.02 * time;
+
+			var geometry = sphere.geometry;
+			var attributes = geometry.attributes;
+
+			for ( var i = 0; i < attributes.size.array.length; i ++ ) {
+
+				if ( i < length1 ) {
+
+					attributes.size.array[ i ] = 16 + 12 * Math.sin( 0.1 * i + time );
 
 				}
 
-				attributes.size.needsUpdate = true;
-
-				sortPoints();
-
-				renderer.render( scene, camera );
-
 			}
 
-		</script>
+			attributes.size.needsUpdate = true;
+
+			sortPoints();
+
+			renderer.render( scene, camera );
+
+		}
+
+	</script>
 
 </body>
 

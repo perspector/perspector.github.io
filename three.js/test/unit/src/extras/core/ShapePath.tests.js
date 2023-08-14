@@ -1,6 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { ShapePath } from '../../../../../src/extras/core/ShapePath.js';
+import { ShapePath } from '../../../../../src/extras/core/ShapePath';
 
 export default QUnit.module( 'Extras', () => {
 
@@ -9,76 +12,46 @@ export default QUnit.module( 'Extras', () => {
 		QUnit.module( 'ShapePath', () => {
 
 			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			QUnit.todo( "Instancing", ( assert ) => {
 
-				const object = new ShapePath();
-				assert.ok( object, 'Can instantiate a ShapePath.' );
-
-			} );
-
-			// PROPERTIES
-			QUnit.test( 'type', ( assert ) => {
-
-				const object = new ShapePath();
-				assert.ok(
-					object.type === 'ShapePath',
-					'ShapePath.type should be ShapePath'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'color', ( assert ) => {
+			// PUBLIC STUFF
+			QUnit.todo( "moveTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'subPaths', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'currentPath', ( assert ) => {
+			QUnit.todo( "lineTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			// PUBLIC
-			QUnit.todo( 'moveTo', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'lineTo', ( assert ) => {
+			QUnit.todo( "quadraticCurveTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'quadraticCurveTo', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'bezierCurveTo', ( assert ) => {
+			QUnit.todo( "bezierCurveTo", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'splineThru', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'toShapes', ( assert ) => {
+			QUnit.todo( "splineThru", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
+
+			} );
+
+			QUnit.todo( "toShapes", ( assert ) => {
+
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

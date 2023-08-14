@@ -4,33 +4,24 @@
 		<title>three.js webgl - clipping planes</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				margin: 0px;
+				background-color: #000000;
+				overflow: hidden;
+			}
+		</style>
 	</head>
 	<body>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src="js/libs/dat.gui.min.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-			let camera, scene, renderer, startTime, object, stats;
+			var camera, scene, renderer, startTime, object, stats;
 
 			init();
 			animate();
@@ -45,9 +36,9 @@
 
 				// Lights
 
-				scene.add( new THREE.AmbientLight( 0xcccccc ) );
+				scene.add( new THREE.AmbientLight( 0x505050 ) );
 
-				const spotLight = new THREE.SpotLight( 0xffffff, 60 );
+				var spotLight = new THREE.SpotLight( 0xffffff );
 				spotLight.angle = Math.PI / 5;
 				spotLight.penumbra = 0.2;
 				spotLight.position.set( 2, 3, 3 );
@@ -58,7 +49,7 @@
 				spotLight.shadow.mapSize.height = 1024;
 				scene.add( spotLight );
 
-				const dirLight = new THREE.DirectionalLight( 0x55505a, 3 );
+				var dirLight = new THREE.DirectionalLight( 0x55505a, 1 );
 				dirLight.position.set( 0, 3, 0 );
 				dirLight.castShadow = true;
 				dirLight.shadow.camera.near = 1;
@@ -75,12 +66,12 @@
 
 				// ***** Clipping planes: *****
 
-				const localPlane = new THREE.Plane( new THREE.Vector3( 0, - 1, 0 ), 0.8 );
-				const globalPlane = new THREE.Plane( new THREE.Vector3( - 1, 0, 0 ), 0.1 );
+				var localPlane = new THREE.Plane( new THREE.Vector3( 0, - 1, 0 ), 0.8 );
+				var globalPlane = new THREE.Plane( new THREE.Vector3( - 1, 0, 0 ), 0.1 );
 
 				// Geometry
 
-				const material = new THREE.MeshPhongMaterial( {
+				var material = new THREE.MeshPhongMaterial( {
 					color: 0x80ee10,
 					shininess: 100,
 					side: THREE.DoubleSide,
@@ -91,14 +82,14 @@
 
 				} );
 
-				const geometry = new THREE.TorusKnotGeometry( 0.4, 0.08, 95, 20 );
+				var geometry = new THREE.TorusKnotBufferGeometry( 0.4, 0.08, 95, 20 );
 
 				object = new THREE.Mesh( geometry, material );
 				object.castShadow = true;
 				scene.add( object );
 
-				const ground = new THREE.Mesh(
-					new THREE.PlaneGeometry( 9, 9, 1, 1 ),
+				var ground = new THREE.Mesh(
+					new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
 					new THREE.MeshPhongMaterial( { color: 0xa0adaf, shininess: 150 } )
 				);
 
@@ -117,24 +108,24 @@
 				renderer.shadowMap.enabled = true;
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 				document.body.appendChild( renderer.domElement );
 
 				// ***** Clipping setup (renderer): *****
-				const globalPlanes = [ globalPlane ],
+				var globalPlanes = [ globalPlane ],
 					Empty = Object.freeze( [] );
 				renderer.clippingPlanes = Empty; // GUI sets it to globalPlanes
 				renderer.localClippingEnabled = true;
 
 				// Controls
 
-				const controls = new OrbitControls( camera, renderer.domElement );
+				var controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.target.set( 0, 1, 0 );
 				controls.update();
 
 				// GUI
 
-				const gui = new GUI(),
+				var gui = new dat.GUI(),
 					folderLocal = gui.addFolder( 'Local Clipping' ),
 					propsLocal = {
 
@@ -224,8 +215,8 @@
 
 			function animate() {
 
-				const currentTime = Date.now();
-				const time = ( currentTime - startTime ) / 1000;
+				var currentTime = Date.now();
+				var time = ( currentTime - startTime ) / 1000;
 
 				requestAnimationFrame( animate );
 

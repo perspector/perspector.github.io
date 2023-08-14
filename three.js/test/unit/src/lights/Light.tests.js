@@ -1,15 +1,16 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Light } from '../../../../src/lights/Light.js';
-
-import { Object3D } from '../../../../src/core/Object3D.js';
-import { runStdLightTests } from '../../utils/qunit-utils.js';
+import { runStdLightTests } from '../../qunit-utils';
+import { Light } from '../../../../src/lights/Light';
 
 export default QUnit.module( 'Lights', () => {
 
 	QUnit.module( 'Light', ( hooks ) => {
 
-		let lights = undefined;
+		var lights = undefined;
 		hooks.beforeEach( function () {
 
 			const parameters = {
@@ -26,77 +27,35 @@ export default QUnit.module( 'Lights', () => {
 		} );
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new Light();
-			assert.strictEqual(
-				object instanceof Object3D, true,
-				'Light extends from Object3D'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new Light();
-			assert.ok( object, 'Can instantiate a Light.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new Light();
-			assert.ok(
-				object.type === 'Light',
-				'Light.type should be Light'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'color', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isLight", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'intensity', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isLight', ( assert ) => {
+		QUnit.todo( "copy", ( assert ) => {
 
-			const object = new Light();
-			assert.ok(
-				object.isLight,
-				'Light.isLight should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.test( 'dispose', ( assert ) => {
+		QUnit.todo( "toJSON", ( assert ) => {
 
-			assert.expect( 0 );
-
-			// empty, test exists
-			const object = new Light();
-			object.dispose();
-
-		} );
-
-		QUnit.todo( 'copy', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'toJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

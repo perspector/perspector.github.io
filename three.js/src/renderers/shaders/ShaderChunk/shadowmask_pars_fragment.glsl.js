@@ -5,48 +5,45 @@ float getShadowMask() {
 
 	#ifdef USE_SHADOWMAP
 
-	#if NUM_DIR_LIGHT_SHADOWS > 0
+	#if NUM_DIR_LIGHTS > 0
 
-	DirectionalLightShadow directionalLight;
+	DirectionalLight directionalLight;
 
-	#pragma unroll_loop_start
-	for ( int i = 0; i < NUM_DIR_LIGHT_SHADOWS; i ++ ) {
+	#pragma unroll_loop
+	for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
 
-		directionalLight = directionalLightShadows[ i ];
-		shadow *= receiveShadow ? getShadow( directionalShadowMap[ i ], directionalLight.shadowMapSize, directionalLight.shadowBias, directionalLight.shadowRadius, vDirectionalShadowCoord[ i ] ) : 1.0;
+		directionalLight = directionalLights[ i ];
+		shadow *= bool( directionalLight.shadow ) ? getShadow( directionalShadowMap[ i ], directionalLight.shadowMapSize, directionalLight.shadowBias, directionalLight.shadowRadius, vDirectionalShadowCoord[ i ] ) : 1.0;
 
 	}
-	#pragma unroll_loop_end
 
 	#endif
 
-	#if NUM_SPOT_LIGHT_SHADOWS > 0
+	#if NUM_SPOT_LIGHTS > 0
 
-	SpotLightShadow spotLight;
+	SpotLight spotLight;
 
-	#pragma unroll_loop_start
-	for ( int i = 0; i < NUM_SPOT_LIGHT_SHADOWS; i ++ ) {
+	#pragma unroll_loop
+	for ( int i = 0; i < NUM_SPOT_LIGHTS; i ++ ) {
 
-		spotLight = spotLightShadows[ i ];
-		shadow *= receiveShadow ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotLightCoord[ i ] ) : 1.0;
+		spotLight = spotLights[ i ];
+		shadow *= bool( spotLight.shadow ) ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotShadowCoord[ i ] ) : 1.0;
 
 	}
-	#pragma unroll_loop_end
 
 	#endif
 
-	#if NUM_POINT_LIGHT_SHADOWS > 0
+	#if NUM_POINT_LIGHTS > 0
 
-	PointLightShadow pointLight;
+	PointLight pointLight;
 
-	#pragma unroll_loop_start
-	for ( int i = 0; i < NUM_POINT_LIGHT_SHADOWS; i ++ ) {
+	#pragma unroll_loop
+	for ( int i = 0; i < NUM_POINT_LIGHTS; i ++ ) {
 
-		pointLight = pointLightShadows[ i ];
-		shadow *= receiveShadow ? getPointShadow( pointShadowMap[ i ], pointLight.shadowMapSize, pointLight.shadowBias, pointLight.shadowRadius, vPointShadowCoord[ i ], pointLight.shadowCameraNear, pointLight.shadowCameraFar ) : 1.0;
+		pointLight = pointLights[ i ];
+		shadow *= bool( pointLight.shadow ) ? getPointShadow( pointShadowMap[ i ], pointLight.shadowMapSize, pointLight.shadowBias, pointLight.shadowRadius, vPointShadowCoord[ i ], pointLight.shadowCameraNear, pointLight.shadowCameraFar ) : 1.0;
 
 	}
-	#pragma unroll_loop_end
 
 	#endif
 

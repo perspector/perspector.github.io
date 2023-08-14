@@ -1,47 +1,32 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { CanvasTexture } from '../../../../src/textures/CanvasTexture.js';
-
-import { Texture } from '../../../../src/textures/Texture.js';
+import { CanvasTexture } from '../../../../src/textures/CanvasTexture';
 
 export default QUnit.module( 'Textures', () => {
 
 	QUnit.module( 'CanvasTexture', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new CanvasTexture();
-			assert.strictEqual(
-				object instanceof Texture, true,
-				'CanvasTexture extends from Texture'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new CanvasTexture();
-			assert.ok( object, 'Can instantiate a CanvasTexture.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.todo( 'needsUpdate', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isCanvasTexture', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isCanvasTexture", ( assert ) => {
 
-			const object = new CanvasTexture();
-			assert.ok(
-				object.isCanvasTexture,
-				'CanvasTexture.isCanvasTexture should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

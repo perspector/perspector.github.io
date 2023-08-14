@@ -1,16 +1,21 @@
 import { LightShadow } from './LightShadow.js';
 import { OrthographicCamera } from '../cameras/OrthographicCamera.js';
 
-class DirectionalLightShadow extends LightShadow {
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-	constructor() {
+function DirectionalLightShadow( ) {
 
-		super( new OrthographicCamera( - 5, 5, 5, - 5, 0.5, 500 ) );
-
-		this.isDirectionalLightShadow = true;
-
-	}
+	LightShadow.call( this, new OrthographicCamera( - 5, 5, 5, - 5, 0.5, 500 ) );
 
 }
+
+DirectionalLightShadow.prototype = Object.assign( Object.create( LightShadow.prototype ), {
+
+	constructor: DirectionalLightShadow
+
+} );
+
 
 export { DirectionalLightShadow };

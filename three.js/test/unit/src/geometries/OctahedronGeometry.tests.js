@@ -1,15 +1,19 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ * @author Anonymous
+ */
 /* global QUnit */
 
-import { OctahedronGeometry } from '../../../../src/geometries/OctahedronGeometry.js';
-
-import { PolyhedronGeometry } from '../../../../src/geometries/PolyhedronGeometry.js';
-import { runStdGeometryTests } from '../../utils/qunit-utils.js';
+import { runStdGeometryTests } from '../../qunit-utils';
+import {
+	OctahedronBufferGeometry
+} from '../../../../src/geometries/OctahedronGeometry';
 
 export default QUnit.module( 'Geometries', () => {
 
-	QUnit.module( 'OctahedronGeometry', ( hooks ) => {
+	QUnit.module( 'OctahedronBufferGeometry', ( hooks ) => {
 
-		let geometries = undefined;
+		var geometries = undefined;
 		hooks.beforeEach( function () {
 
 			const parameters = {
@@ -18,53 +22,24 @@ export default QUnit.module( 'Geometries', () => {
 			};
 
 			geometries = [
-				new OctahedronGeometry(),
-				new OctahedronGeometry( parameters.radius ),
-				new OctahedronGeometry( parameters.radius, parameters.detail ),
+				new OctahedronBufferGeometry(),
+				new OctahedronBufferGeometry( parameters.radius ),
+				new OctahedronBufferGeometry( parameters.radius, parameters.detail ),
 			];
 
 		} );
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new OctahedronGeometry();
-			assert.strictEqual(
-				object instanceof PolyhedronGeometry, true,
-				'OctahedronGeometry extends from PolyhedronGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new OctahedronGeometry();
-			assert.ok( object, 'Can instantiate an OctahedronGeometry.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new OctahedronGeometry();
-			assert.ok(
-				object.type === 'OctahedronGeometry',
-				'OctahedronGeometry.type should be OctahedronGeometry'
-			);
-
-		} );
-
-		QUnit.todo( 'parameters', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// STATIC
-		QUnit.todo( 'fromJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

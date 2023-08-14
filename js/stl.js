@@ -20,13 +20,14 @@ function STLViewer(elem, model) {
         1000 // far
     );
     renderer.setSize(elem.clientWidth, elem.clientHeight);
+    
     elem.appendChild(renderer.domElement);
 
     window.addEventListener('resize', function () {
         renderer.setSize(elem.clientWidth, elem.clientHeight);
         camera.aspect = elem.clientWidth / elem.clientHeight;
 
-        camera.position.set(30, 0, 0);
+        //camera.position.set(30, 0, 0);
         //var box = getBox(1, 1, 1);
 
         //scene.add(box);

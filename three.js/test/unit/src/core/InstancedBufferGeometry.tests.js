@@ -1,9 +1,10 @@
+/**
+ * @author simonThiele / https://github.com/simonThiele
+ */
 /* global QUnit */
 
-import { InstancedBufferGeometry } from '../../../../src/core/InstancedBufferGeometry.js';
-
-import { BufferGeometry } from '../../../../src/core/BufferGeometry.js';
-import { BufferAttribute } from '../../../../src/core/BufferAttribute.js';
+import { InstancedBufferGeometry } from '../../../../src/core/InstancedBufferGeometry';
+import { BufferAttribute } from '../../../../src/core/BufferAttribute';
 
 export default QUnit.module( 'Core', () => {
 
@@ -24,92 +25,60 @@ export default QUnit.module( 'Core', () => {
 		}
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new InstancedBufferGeometry();
-			assert.strictEqual(
-				object instanceof BufferGeometry, true,
-				'InstancedBufferGeometry extends from BufferGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new InstancedBufferGeometry();
-			assert.ok( object, 'Can instantiate an InstancedBufferGeometry.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new InstancedBufferGeometry();
-			assert.ok(
-				object.type === 'InstancedBufferGeometry',
-				'InstancedBufferGeometry.type should be InstancedBufferGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'instanceCount', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.test( "copy", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
+			var instanceMock1 = {};
+			var instanceMock2 = {};
+			var indexMock = createClonableMock();
+			var defaultAttribute1 = new BufferAttribute( new Float32Array( [ 1 ] ) );
+			var defaultAttribute2 = new BufferAttribute( new Float32Array( [ 2 ] ) );
 
-		} );
-
-		// PUBLIC
-		QUnit.test( 'isInstancedBufferGeometry', ( assert ) => {
-
-			const object = new InstancedBufferGeometry();
-			assert.ok(
-				object.isInstancedBufferGeometry,
-				'InstancedBufferGeometry.isInstancedBufferGeometry should be true'
-			);
-
-		} );
-
-		QUnit.test( 'copy', ( assert ) => {
-
-			const instanceMock1 = {};
-			const instanceMock2 = {};
-			const indexMock = createClonableMock();
-			const defaultAttribute1 = new BufferAttribute( new Float32Array( [ 1 ] ) );
-			const defaultAttribute2 = new BufferAttribute( new Float32Array( [ 2 ] ) );
-
-			const instance = new InstancedBufferGeometry();
+			var instance = new InstancedBufferGeometry();
 
 			instance.addGroup( 0, 10, instanceMock1 );
 			instance.addGroup( 10, 5, instanceMock2 );
 			instance.setIndex( indexMock );
-			instance.setAttribute( 'defaultAttribute1', defaultAttribute1 );
-			instance.setAttribute( 'defaultAttribute2', defaultAttribute2 );
+			instance.addAttribute( 'defaultAttribute1', defaultAttribute1 );
+			instance.addAttribute( 'defaultAttribute2', defaultAttribute2 );
 
-			const copiedInstance = new InstancedBufferGeometry().copy( instance );
+			var copiedInstance = new InstancedBufferGeometry().copy( instance );
 
-			assert.ok( copiedInstance instanceof InstancedBufferGeometry, 'the clone has the correct type' );
+			assert.ok( copiedInstance instanceof InstancedBufferGeometry, "the clone has the correct type" );
 
-			assert.equal( copiedInstance.index, indexMock, 'index was copied' );
-			assert.equal( copiedInstance.index.callCount, 1, 'index.clone was called once' );
+			assert.equal( copiedInstance.index, indexMock, "index was copied" );
+			assert.equal( copiedInstance.index.callCount, 1, "index.clone was called once" );
 
-			assert.ok( copiedInstance.attributes[ 'defaultAttribute1' ] instanceof BufferAttribute, 'attribute was created' );
-			assert.deepEqual( copiedInstance.attributes[ 'defaultAttribute1' ].array, defaultAttribute1.array, 'attribute was copied' );
-			assert.deepEqual( copiedInstance.attributes[ 'defaultAttribute2' ].array, defaultAttribute2.array, 'attribute was copied' );
+			assert.ok( copiedInstance.attributes[ 'defaultAttribute1' ] instanceof BufferAttribute, "attribute was created" );
+			assert.deepEqual( copiedInstance.attributes[ 'defaultAttribute1' ].array, defaultAttribute1.array, "attribute was copied" );
+			assert.deepEqual( copiedInstance.attributes[ 'defaultAttribute2' ].array, defaultAttribute2.array, "attribute was copied" );
 
-			assert.equal( copiedInstance.groups[ 0 ].start, 0, 'group was copied' );
-			assert.equal( copiedInstance.groups[ 0 ].count, 10, 'group was copied' );
-			assert.equal( copiedInstance.groups[ 0 ].materialIndex, instanceMock1, 'group was copied' );
+			assert.equal( copiedInstance.groups[ 0 ].start, 0, "group was copied" );
+			assert.equal( copiedInstance.groups[ 0 ].count, 10, "group was copied" );
+			assert.equal( copiedInstance.groups[ 0 ].materialIndex, instanceMock1, "group was copied" );
 
-			assert.equal( copiedInstance.groups[ 1 ].start, 10, 'group was copied' );
-			assert.equal( copiedInstance.groups[ 1 ].count, 5, 'group was copied' );
-			assert.equal( copiedInstance.groups[ 1 ].materialIndex, instanceMock2, 'group was copied' );
+			assert.equal( copiedInstance.groups[ 1 ].start, 10, "group was copied" );
+			assert.equal( copiedInstance.groups[ 1 ].count, 5, "group was copied" );
+			assert.equal( copiedInstance.groups[ 1 ].materialIndex, instanceMock2, "group was copied" );
 
 		} );
 
-		QUnit.todo( 'toJSON', ( assert ) => {
+		QUnit.todo( "clone", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

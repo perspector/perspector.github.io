@@ -4,36 +4,40 @@
 		<title>three.js webgl - loaders - 3DS loader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+		</style>
 	</head>
 
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - 3DS loader
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - 3DS loader
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/controls/TrackballControls.js"></script>
+		<script src="js/loaders/TDSLoader.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
-			import { TDSLoader } from 'three/addons/loaders/TDSLoader.js';
-
-			let container, controls;
-			let camera, scene, renderer;
+			var container, controls;
+			var camera, scene, renderer;
 
 			init();
 			animate();
@@ -46,25 +50,27 @@
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 10 );
 				camera.position.z = 2;
 
-				scene = new THREE.Scene();
-				scene.add( new THREE.AmbientLight( 0xffffff, 3 ) );
+				controls = new THREE.TrackballControls( camera );
 
-				const directionalLight = new THREE.DirectionalLight( 0xffeedd, 3 );
+				scene = new THREE.Scene();
+				scene.add( new THREE.HemisphereLight() );
+
+				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 				directionalLight.position.set( 0, 0, 2 );
 				scene.add( directionalLight );
 
 				//3ds files dont store normal maps
-				const normal = new THREE.TextureLoader().load( 'models/3ds/portalgun/textures/normal.jpg' );
+				var loader = new THREE.TextureLoader();
+				var normal = loader.load( 'models/3ds/portalgun/textures/normal.jpg' );
 
-				const loader = new TDSLoader( );
+				var loader = new THREE.TDSLoader( );
 				loader.setResourcePath( 'models/3ds/portalgun/textures/' );
 				loader.load( 'models/3ds/portalgun/portalgun.3ds', function ( object ) {
 
 					object.traverse( function ( child ) {
 
-						if ( child.isMesh ) {
+						if ( child instanceof THREE.Mesh ) {
 
-							child.material.specular.setScalar( 0.1 );
 							child.material.normalMap = normal;
 
 						}
@@ -75,14 +81,12 @@
 
 				} );
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
-				controls = new TrackballControls( camera, renderer.domElement );
-
-				window.addEventListener( 'resize', resize );
+				window.addEventListener( 'resize', resize, false );
 
 			}
 

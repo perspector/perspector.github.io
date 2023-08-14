@@ -1,221 +1,307 @@
-import { Vector3 } from 'three';
-
-
 /**
- * Generates 2D-Coordinates in a very fast way.
- *
- * Based on work by:
- * @link http://www.openprocessing.org/sketch/15493
- *
- * @param center     Center of Hilbert curve.
- * @param size       Total width of Hilbert curve.
- * @param iterations Number of subdivisions.
- * @param v0         Corner index -X, -Z.
- * @param v1         Corner index -X, +Z.
- * @param v2         Corner index +X, +Z.
- * @param v3         Corner index +X, -Z.
+ * @author mrdoob / http://mrdoob.com/
+ * @author alteredq / http://alteredqualia.com/
  */
-function hilbert2D( center = new Vector3( 0, 0, 0 ), size = 10, iterations = 1, v0 = 0, v1 = 1, v2 = 2, v3 = 3 ) {
 
-	const half = size / 2;
+import {
+	Mesh,
+	Vector3
+} from "../../../build/three.module.js";
 
-	const vec_s = [
-		new Vector3( center.x - half, center.y, center.z - half ),
-		new Vector3( center.x - half, center.y, center.z + half ),
-		new Vector3( center.x + half, center.y, center.z + half ),
-		new Vector3( center.x + half, center.y, center.z - half )
-	];
+var GeometryUtils = {
 
-	const vec = [
-		vec_s[ v0 ],
-		vec_s[ v1 ],
-		vec_s[ v2 ],
-		vec_s[ v3 ]
-	];
+	// Merge two geometries or geometry and geometry from object (using object's transform)
 
-	// Recurse iterations
-	if ( 0 <= -- iterations ) {
+	merge: function ( geometry1, geometry2, materialIndexOffset ) {
 
-		return [
-			...hilbert2D( vec[ 0 ], half, iterations, v0, v3, v2, v1 ),
-			...hilbert2D( vec[ 1 ], half, iterations, v0, v1, v2, v3 ),
-			...hilbert2D( vec[ 2 ], half, iterations, v0, v1, v2, v3 ),
-			...hilbert2D( vec[ 3 ], half, iterations, v2, v1, v0, v3 )
-		];
+		console.warn( 'THREE.GeometryUtils: .merge() has been moved to Geometry. Use geometry.merge( geometry2, matrix, materialIndexOffset ) instead.' );
 
-	}
+		var matrix;
 
-	// Return complete Hilbert Curve.
-	return vec;
+		if ( geometry2 instanceof Mesh ) {
 
-}
+			geometry2.matrixAutoUpdate && geometry2.updateMatrix();
 
-/**
- * Generates 3D-Coordinates in a very fast way.
- *
- * Based on work by:
- * @link https://openprocessing.org/user/5654
- *
- * @param center     Center of Hilbert curve.
- * @param size       Total width of Hilbert curve.
- * @param iterations Number of subdivisions.
- * @param v0         Corner index -X, +Y, -Z.
- * @param v1         Corner index -X, +Y, +Z.
- * @param v2         Corner index -X, -Y, +Z.
- * @param v3         Corner index -X, -Y, -Z.
- * @param v4         Corner index +X, -Y, -Z.
- * @param v5         Corner index +X, -Y, +Z.
- * @param v6         Corner index +X, +Y, +Z.
- * @param v7         Corner index +X, +Y, -Z.
- */
-function hilbert3D( center = new Vector3( 0, 0, 0 ), size = 10, iterations = 1, v0 = 0, v1 = 1, v2 = 2, v3 = 3, v4 = 4, v5 = 5, v6 = 6, v7 = 7 ) {
+			matrix = geometry2.matrix;
+			geometry2 = geometry2.geometry;
 
-	// Default Vars
-	const half = size / 2;
+		}
 
-	const vec_s = [
-		new Vector3( center.x - half, center.y + half, center.z - half ),
-		new Vector3( center.x - half, center.y + half, center.z + half ),
-		new Vector3( center.x - half, center.y - half, center.z + half ),
-		new Vector3( center.x - half, center.y - half, center.z - half ),
-		new Vector3( center.x + half, center.y - half, center.z - half ),
-		new Vector3( center.x + half, center.y - half, center.z + half ),
-		new Vector3( center.x + half, center.y + half, center.z + half ),
-		new Vector3( center.x + half, center.y + half, center.z - half )
-	];
+		geometry1.merge( geometry2, matrix, materialIndexOffset );
 
-	const vec = [
-		vec_s[ v0 ],
-		vec_s[ v1 ],
-		vec_s[ v2 ],
-		vec_s[ v3 ],
-		vec_s[ v4 ],
-		vec_s[ v5 ],
-		vec_s[ v6 ],
-		vec_s[ v7 ]
-	];
+	},
 
-	// Recurse iterations
-	if ( -- iterations >= 0 ) {
+	// Get random point in triangle (via barycentric coordinates)
+	// 	(uniform distribution)
+	// 	http://www.cgafaq.info/wiki/Random_Point_In_Triangle
 
-		return [
-			...hilbert3D( vec[ 0 ], half, iterations, v0, v3, v4, v7, v6, v5, v2, v1 ),
-			...hilbert3D( vec[ 1 ], half, iterations, v0, v7, v6, v1, v2, v5, v4, v3 ),
-			...hilbert3D( vec[ 2 ], half, iterations, v0, v7, v6, v1, v2, v5, v4, v3 ),
-			...hilbert3D( vec[ 3 ], half, iterations, v2, v3, v0, v1, v6, v7, v4, v5 ),
-			...hilbert3D( vec[ 4 ], half, iterations, v2, v3, v0, v1, v6, v7, v4, v5 ),
-			...hilbert3D( vec[ 5 ], half, iterations, v4, v3, v2, v5, v6, v1, v0, v7 ),
-			...hilbert3D( vec[ 6 ], half, iterations, v4, v3, v2, v5, v6, v1, v0, v7 ),
-			...hilbert3D( vec[ 7 ], half, iterations, v6, v5, v2, v1, v0, v3, v4, v7 )
-		];
+	randomPointInTriangle: function () {
 
-	}
+		var vector = new Vector3();
 
-	// Return complete Hilbert Curve.
-	return vec;
+		return function ( vectorA, vectorB, vectorC ) {
 
-}
+			var point = new Vector3();
 
-/**
- * Generates a Gosper curve (lying in the XY plane)
- *
- * https://gist.github.com/nitaku/6521802
- *
- * @param size The size of a single gosper island.
- */
-function gosper( size = 1 ) {
+			var a = Math.random();
+			var b = Math.random();
 
-	function fractalize( config ) {
+			if ( ( a + b ) > 1 ) {
 
-		let output;
-		let input = config.axiom;
+				a = 1 - a;
+				b = 1 - b;
 
-		for ( let i = 0, il = config.steps; 0 <= il ? i < il : i > il; 0 <= il ? i ++ : i -- ) {
+			}
 
-			output = '';
+			var c = 1 - a - b;
 
-			for ( let j = 0, jl = input.length; j < jl; j ++ ) {
+			point.copy( vectorA );
+			point.multiplyScalar( a );
 
-				const char = input[ j ];
+			vector.copy( vectorB );
+			vector.multiplyScalar( b );
 
-				if ( char in config.rules ) {
+			point.add( vector );
 
-					output += config.rules[ char ];
+			vector.copy( vectorC );
+			vector.multiplyScalar( c );
+
+			point.add( vector );
+
+			return point;
+
+		};
+
+	}(),
+
+	// Get random point in face (triangle)
+	// (uniform distribution)
+
+	randomPointInFace: function ( face, geometry ) {
+
+		var vA, vB, vC;
+
+		vA = geometry.vertices[ face.a ];
+		vB = geometry.vertices[ face.b ];
+		vC = geometry.vertices[ face.c ];
+
+		return GeometryUtils.randomPointInTriangle( vA, vB, vC );
+
+	},
+
+	// Get uniformly distributed random points in mesh
+	// 	- create array with cumulative sums of face areas
+	//  - pick random number from 0 to total area
+	//  - find corresponding place in area array by binary search
+	//	- get random point in face
+
+	randomPointsInGeometry: function ( geometry, n ) {
+
+		var face, i,
+			faces = geometry.faces,
+			vertices = geometry.vertices,
+			il = faces.length,
+			totalArea = 0,
+			cumulativeAreas = [],
+			vA, vB, vC;
+
+		// precompute face areas
+
+		for ( i = 0; i < il; i ++ ) {
+
+			face = faces[ i ];
+
+			vA = vertices[ face.a ];
+			vB = vertices[ face.b ];
+			vC = vertices[ face.c ];
+
+			face._area = GeometryUtils.triangleArea( vA, vB, vC );
+
+			totalArea += face._area;
+
+			cumulativeAreas[ i ] = totalArea;
+
+		}
+
+		// binary search cumulative areas array
+
+		function binarySearchIndices( value ) {
+
+			function binarySearch( start, end ) {
+
+				// return closest larger index
+				// if exact number is not found
+
+				if ( end < start )
+					return start;
+
+				var mid = start + Math.floor( ( end - start ) / 2 );
+
+				if ( cumulativeAreas[ mid ] > value ) {
+
+					return binarySearch( start, mid - 1 );
+
+				} else if ( cumulativeAreas[ mid ] < value ) {
+
+					return binarySearch( mid + 1, end );
 
 				} else {
 
-					output += char;
+					return mid;
 
 				}
 
 			}
 
-			input = output;
+			var result = binarySearch( 0, cumulativeAreas.length - 1 );
+			return result;
 
 		}
 
-		return output;
+		// pick random face weighted by face area
 
-	}
+		var r, index,
+			result = [];
 
-	function toPoints( config ) {
+		var stats = {};
 
-		let currX = 0, currY = 0;
-		let angle = 0;
-		const path = [ 0, 0, 0 ];
-		const fractal = config.fractal;
+		for ( i = 0; i < n; i ++ ) {
 
-		for ( let i = 0, l = fractal.length; i < l; i ++ ) {
+			r = Math.random() * totalArea;
 
-			const char = fractal[ i ];
+			index = binarySearchIndices( r );
 
-			if ( char === '+' ) {
+			result[ i ] = GeometryUtils.randomPointInFace( faces[ index ], geometry );
 
-				angle += config.angle;
+			if ( ! stats[ index ] ) {
 
-			} else if ( char === '-' ) {
+				stats[ index ] = 1;
 
-				angle -= config.angle;
+			} else {
 
-			} else if ( char === 'F' ) {
-
-				currX += config.size * Math.cos( angle );
-				currY += - config.size * Math.sin( angle );
-				path.push( currX, currY, 0 );
+				stats[ index ] += 1;
 
 			}
 
 		}
 
-		return path;
+		return result;
+
+	},
+
+	randomPointsInBufferGeometry: function ( geometry, n ) {
+
+		var i,
+			vertices = geometry.attributes.position.array,
+			totalArea = 0,
+			cumulativeAreas = [],
+			vA, vB, vC;
+
+		// precompute face areas
+		vA = new Vector3();
+		vB = new Vector3();
+		vC = new Vector3();
+
+		// geometry._areas = [];
+		var il = vertices.length / 9;
+
+		for ( i = 0; i < il; i ++ ) {
+
+			vA.set( vertices[ i * 9 + 0 ], vertices[ i * 9 + 1 ], vertices[ i * 9 + 2 ] );
+			vB.set( vertices[ i * 9 + 3 ], vertices[ i * 9 + 4 ], vertices[ i * 9 + 5 ] );
+			vC.set( vertices[ i * 9 + 6 ], vertices[ i * 9 + 7 ], vertices[ i * 9 + 8 ] );
+
+			totalArea += GeometryUtils.triangleArea( vA, vB, vC );
+
+			cumulativeAreas.push( totalArea );
+
+		}
+
+		// binary search cumulative areas array
+
+		function binarySearchIndices( value ) {
+
+			function binarySearch( start, end ) {
+
+				// return closest larger index
+				// if exact number is not found
+
+				if ( end < start )
+					return start;
+
+				var mid = start + Math.floor( ( end - start ) / 2 );
+
+				if ( cumulativeAreas[ mid ] > value ) {
+
+					return binarySearch( start, mid - 1 );
+
+				} else if ( cumulativeAreas[ mid ] < value ) {
+
+					return binarySearch( mid + 1, end );
+
+				} else {
+
+					return mid;
+
+				}
+
+			}
+
+			var result = binarySearch( 0, cumulativeAreas.length - 1 );
+			return result;
+
+		}
+
+		// pick random face weighted by face area
+
+		var r, index,
+			result = [];
+
+		for ( i = 0; i < n; i ++ ) {
+
+			r = Math.random() * totalArea;
+
+			index = binarySearchIndices( r );
+
+			// result[ i ] = GeometryUtils.randomPointInFace( faces[ index ], geometry, true );
+			vA.set( vertices[ index * 9 + 0 ], vertices[ index * 9 + 1 ], vertices[ index * 9 + 2 ] );
+			vB.set( vertices[ index * 9 + 3 ], vertices[ index * 9 + 4 ], vertices[ index * 9 + 5 ] );
+			vC.set( vertices[ index * 9 + 6 ], vertices[ index * 9 + 7 ], vertices[ index * 9 + 8 ] );
+			result[ i ] = GeometryUtils.randomPointInTriangle( vA, vB, vC );
+
+		}
+
+		return result;
+
+	},
+
+	// Get triangle area (half of parallelogram)
+	// http://mathworld.wolfram.com/TriangleArea.html
+
+	triangleArea: function () {
+
+		var vector1 = new Vector3();
+		var vector2 = new Vector3();
+
+		return function ( vectorA, vectorB, vectorC ) {
+
+			vector1.subVectors( vectorB, vectorA );
+			vector2.subVectors( vectorC, vectorA );
+			vector1.cross( vector2 );
+
+			return 0.5 * vector1.length();
+
+		};
+
+	}(),
+
+	center: function ( geometry ) {
+
+		console.warn( 'THREE.GeometryUtils: .center() has been moved to Geometry. Use geometry.center() instead.' );
+		return geometry.center();
 
 	}
 
-	//
-
-	const gosper = fractalize( {
-		axiom: 'A',
-		steps: 4,
-		rules: {
-			A: 'A+BF++BF-FA--FAFA-BF+',
-			B: '-FA+BFBF++BF+FA--FA-B'
-		}
-	} );
-
-	const points = toPoints( {
-		fractal: gosper,
-		size: size,
-		angle: Math.PI / 3 // 60 degrees
-	} );
-
-	return points;
-
-}
-
-
-
-export {
-	hilbert2D,
-	hilbert3D,
-	gosper,
 };
+
+export { GeometryUtils };

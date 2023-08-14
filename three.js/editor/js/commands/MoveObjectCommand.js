@@ -1,75 +1,76 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param newParent THREE.Object3D
  * @param newBefore THREE.Object3D
  * @constructor
  */
-class MoveObjectCommand extends Command {
 
-	constructor( editor, object, newParent, newBefore ) {
+var MoveObjectCommand = function ( object, newParent, newBefore ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'MoveObjectCommand';
-		this.name = 'Move Object';
+	this.type = 'MoveObjectCommand';
+	this.name = 'Move Object';
 
-		this.object = object;
-		this.oldParent = ( object !== undefined ) ? object.parent : undefined;
-		this.oldIndex = ( this.oldParent !== undefined ) ? this.oldParent.children.indexOf( this.object ) : undefined;
-		this.newParent = newParent;
+	this.object = object;
+	this.oldParent = ( object !== undefined ) ? object.parent : undefined;
+	this.oldIndex = ( this.oldParent !== undefined ) ? this.oldParent.children.indexOf( this.object ) : undefined;
+	this.newParent = newParent;
 
-		if ( newBefore !== undefined ) {
+	if ( newBefore !== undefined ) {
 
-			this.newIndex = ( newParent !== undefined ) ? newParent.children.indexOf( newBefore ) : undefined;
+		this.newIndex = ( newParent !== undefined ) ? newParent.children.indexOf( newBefore ) : undefined;
 
-		} else {
+	} else {
 
-			this.newIndex = ( newParent !== undefined ) ? newParent.children.length : undefined;
-
-		}
-
-		if ( this.oldParent === this.newParent && this.newIndex > this.oldIndex ) {
-
-			this.newIndex --;
-
-		}
-
-		this.newBefore = newBefore;
+		this.newIndex = ( newParent !== undefined ) ? newParent.children.length : undefined;
 
 	}
 
-	execute() {
+	if ( this.oldParent === this.newParent && this.newIndex > this.oldIndex ) {
+
+		this.newIndex --;
+
+	}
+
+	this.newBefore = newBefore;
+
+};
+
+MoveObjectCommand.prototype = {
+
+	execute: function () {
 
 		this.oldParent.remove( this.object );
 
-		const children = this.newParent.children;
+		var children = this.newParent.children;
 		children.splice( this.newIndex, 0, this.object );
 		this.object.parent = this.newParent;
 
-		this.object.dispatchEvent( { type: 'added' } );
 		this.editor.signals.sceneGraphChanged.dispatch();
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		this.newParent.remove( this.object );
 
-		const children = this.oldParent.children;
+		var children = this.oldParent.children;
 		children.splice( this.oldIndex, 0, this.object );
 		this.object.parent = this.oldParent;
 
-		this.object.dispatchEvent( { type: 'added' } );
 		this.editor.signals.sceneGraphChanged.dispatch();
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.newParentUuid = this.newParent.uuid;
@@ -79,11 +80,11 @@ class MoveObjectCommand extends Command {
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.object = this.editor.objectByUuid( json.objectUuid );
 		this.oldParent = this.editor.objectByUuid( json.oldParentUuid );
@@ -92,20 +93,15 @@ class MoveObjectCommand extends Command {
 			this.oldParent = this.editor.scene;
 
 		}
-
 		this.newParent = this.editor.objectByUuid( json.newParentUuid );
-
 		if ( this.newParent === undefined ) {
 
 			this.newParent = this.editor.scene;
 
 		}
-
 		this.newIndex = json.newIndex;
 		this.oldIndex = json.oldIndex;
 
 	}
 
-}
-
-export { MoveObjectCommand };
+};

@@ -1,71 +1,45 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { PolyhedronGeometry } from '../../../../src/geometries/PolyhedronGeometry.js';
-
-import { BufferGeometry } from '../../../../src/core/BufferGeometry.js';
-import { runStdGeometryTests } from '../../utils/qunit-utils.js';
+import { runStdGeometryTests } from '../../qunit-utils';
+import {
+	PolyhedronBufferGeometry
+} from '../../../../src/geometries/PolyhedronGeometry';
 
 export default QUnit.module( 'Geometries', () => {
 
-	QUnit.module( 'PolyhedronGeometry', ( hooks ) => {
+	QUnit.module( 'PolyhedronBufferGeometry', ( hooks ) => {
 
-		let geometries = undefined;
+		var geometries = undefined;
 		hooks.beforeEach( function () {
 
-			const vertices = [
+			var vertices = [
 				1, 1, 1, 	- 1, - 1, 1, 	- 1, 1, - 1, 	1, - 1, - 1
 			];
 
-			const indices = [
+			var indices = [
 				2, 1, 0, 	0, 3, 2,	1, 3, 0,	2, 3, 1
 			];
 
 			geometries = [
-				new PolyhedronGeometry( vertices, indices ),
+				new PolyhedronBufferGeometry( vertices, indices )
 			];
 
 		} );
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new PolyhedronGeometry();
-			assert.strictEqual(
-				object instanceof BufferGeometry, true,
-				'PolyhedronGeometry extends from BufferGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new PolyhedronGeometry();
-			assert.ok( object, 'Can instantiate a PolyhedronGeometry.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new PolyhedronGeometry();
-			assert.ok(
-				object.type === 'PolyhedronGeometry',
-				'PolyhedronGeometry.type should be PolyhedronGeometry'
-			);
-
-		} );
-
-		QUnit.todo( 'parameters', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// STATIC
-		QUnit.todo( 'fromJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

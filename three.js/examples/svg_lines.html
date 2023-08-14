@@ -4,41 +4,48 @@
 		<title>three.js svg - lines</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-			svg {
-				display: block;
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
 			}
+
+			a {
+				color:#0078ff;
+			}
+
+			#info {
+				position: absolute;
+				top: 10px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+				z-index:100;
+			}
+
+			a:hover {
+				color: #0080ff;
+			}
+
 		</style>
 	</head>
 	<body>
 
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> svg - lines
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> svg - lines
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="js/renderers/Projector.js"></script>
+		<script src="js/renderers/SVGRenderer.js"></script>
 
-		<script type="module">
+		<script>
 
-			import * as THREE from 'three';
-
-			import { SVGRenderer } from 'three/addons/renderers/SVGRenderer.js';
-
-			THREE.ColorManagement.enabled = false;
-
-			let camera, scene, renderer;
+			var camera, scene, renderer;
 
 			init();
 			animate();
@@ -51,56 +58,56 @@
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0, 0, 0 );
 
-				renderer = new SVGRenderer();
+				renderer = new THREE.SVGRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 
 				//
 
-				const vertices = [];
-				const divisions = 50;
+				var vertices = [];
+				var divisions = 50;
 
-				for ( let i = 0; i <= divisions; i ++ ) {
+				for ( var i = 0; i <= divisions; i ++ ) {
 
-					const v = ( i / divisions ) * ( Math.PI * 2 );
+					var v = ( i / divisions ) * ( Math.PI * 2 );
 
-					const x = Math.sin( v );
-					const z = Math.cos( v );
+					var x = Math.sin( v );
+					var z = Math.cos( v );
 
 					vertices.push( x, 0, z );
 
 				}
 
-				const geometry = new THREE.BufferGeometry();
-				geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+				var geometry = new THREE.BufferGeometry();
+				geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
 
 				//
 
-				for ( let i = 1; i <= 3; i ++ ) {
+				for ( var i = 1; i <= 3; i ++ ) {
 
-					const material = new THREE.LineBasicMaterial( {
+					var material = new THREE.LineBasicMaterial( {
 						color: Math.random() * 0xffffff,
 						linewidth: 10
 					} );
-					const line = new THREE.Line( geometry, material );
+					var line = new THREE.Line( geometry, material );
 					line.scale.setScalar( i / 3 );
 					scene.add( line );
 
 				}
 
-				const material = new THREE.LineDashedMaterial( {
+				var material = new THREE.LineDashedMaterial( {
 					color: 'blue',
 					linewidth: 1,
 					dashSize: 10,
 					gapSize: 10
 				} );
-				const line = new THREE.Line( geometry, material );
+				var line = new THREE.Line( geometry, material );
 				line.scale.setScalar( 2 );
 				scene.add( line );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -115,8 +122,8 @@
 
 			function animate() {
 
-				let count = 0;
-				const time = performance.now() / 1000;
+				var count = 0;
+				var time = performance.now() / 1000;
 
 				scene.traverse( function ( child ) {
 

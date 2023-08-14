@@ -1,58 +1,25 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { StereoCamera } from '../../../../src/cameras/StereoCamera.js';
+import { StereoCamera } from '../../../../src/cameras/StereoCamera';
 
 export default QUnit.module( 'Cameras', () => {
 
 	QUnit.module( 'StereoCamera', () => {
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new StereoCamera();
-			assert.ok( object, 'Can instantiate a StereoCamera.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new StereoCamera();
-			assert.ok(
-				object.type === 'StereoCamera',
-				'StereoCamera.type should be StereoCamera'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'aspect', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "update", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'eyeSep', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'cameraL', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'cameraR', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// PUBLIC
-		QUnit.todo( 'update', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

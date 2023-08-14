@@ -1,31 +1,34 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param script javascript object
  * @constructor
  */
-class RemoveScriptCommand extends Command {
 
-	constructor( editor, object, script ) {
+var RemoveScriptCommand = function ( object, script ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'RemoveScriptCommand';
-		this.name = 'Remove Script';
+	this.type = 'RemoveScriptCommand';
+	this.name = 'Remove Script';
 
-		this.object = object;
-		this.script = script;
-		if ( this.object && this.script ) {
+	this.object = object;
+	this.script = script;
+	if ( this.object && this.script ) {
 
-			this.index = this.editor.scripts[ this.object.uuid ].indexOf( this.script );
-
-		}
+		this.index = this.editor.scripts[ this.object.uuid ].indexOf( this.script );
 
 	}
 
-	execute() {
+};
+
+RemoveScriptCommand.prototype = {
+
+	execute: function () {
 
 		if ( this.editor.scripts[ this.object.uuid ] === undefined ) return;
 
@@ -37,9 +40,9 @@ class RemoveScriptCommand extends Command {
 
 		this.editor.signals.scriptRemoved.dispatch( this.script );
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		if ( this.editor.scripts[ this.object.uuid ] === undefined ) {
 
@@ -51,11 +54,11 @@ class RemoveScriptCommand extends Command {
 
 		this.editor.signals.scriptAdded.dispatch( this.script );
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.script = this.script;
@@ -63,11 +66,11 @@ class RemoveScriptCommand extends Command {
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.script = json.script;
 		this.index = json.index;
@@ -75,6 +78,4 @@ class RemoveScriptCommand extends Command {
 
 	}
 
-}
-
-export { RemoveScriptCommand };
+};

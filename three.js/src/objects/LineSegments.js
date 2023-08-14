@@ -2,54 +2,84 @@ import { Line } from './Line.js';
 import { Vector3 } from '../math/Vector3.js';
 import { Float32BufferAttribute } from '../core/BufferAttribute.js';
 
-const _start = /*@__PURE__*/ new Vector3();
-const _end = /*@__PURE__*/ new Vector3();
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-class LineSegments extends Line {
+function LineSegments( geometry, material ) {
 
-	constructor( geometry, material ) {
+	Line.call( this, geometry, material );
 
-		super( geometry, material );
+	this.type = 'LineSegments';
 
-		this.isLineSegments = true;
+}
 
-		this.type = 'LineSegments';
+LineSegments.prototype = Object.assign( Object.create( Line.prototype ), {
 
-	}
+	constructor: LineSegments,
 
-	computeLineDistances() {
+	isLineSegments: true,
 
-		const geometry = this.geometry;
+	computeLineDistances: ( function () {
 
-		// we assume non-indexed geometry
+		var start = new Vector3();
+		var end = new Vector3();
 
-		if ( geometry.index === null ) {
+		return function computeLineDistances() {
 
-			const positionAttribute = geometry.attributes.position;
-			const lineDistances = [];
+			var geometry = this.geometry;
 
-			for ( let i = 0, l = positionAttribute.count; i < l; i += 2 ) {
+			if ( geometry.isBufferGeometry ) {
 
-				_start.fromBufferAttribute( positionAttribute, i );
-				_end.fromBufferAttribute( positionAttribute, i + 1 );
+				// we assume non-indexed geometry
 
-				lineDistances[ i ] = ( i === 0 ) ? 0 : lineDistances[ i - 1 ];
-				lineDistances[ i + 1 ] = lineDistances[ i ] + _start.distanceTo( _end );
+				if ( geometry.index === null ) {
+
+					var positionAttribute = geometry.attributes.position;
+					var lineDistances = [];
+
+					for ( var i = 0, l = positionAttribute.count; i < l; i += 2 ) {
+
+						start.fromBufferAttribute( positionAttribute, i );
+						end.fromBufferAttribute( positionAttribute, i + 1 );
+
+						lineDistances[ i ] = ( i === 0 ) ? 0 : lineDistances[ i - 1 ];
+						lineDistances[ i + 1 ] = lineDistances[ i ] + start.distanceTo( end );
+
+					}
+
+					geometry.addAttribute( 'lineDistance', new Float32BufferAttribute( lineDistances, 1 ) );
+
+				} else {
+
+					console.warn( 'THREE.LineSegments.computeLineDistances(): Computation only possible with non-indexed BufferGeometry.' );
+
+				}
+
+			} else if ( geometry.isGeometry ) {
+
+				var vertices = geometry.vertices;
+				var lineDistances = geometry.lineDistances;
+
+				for ( var i = 0, l = vertices.length; i < l; i += 2 ) {
+
+					start.copy( vertices[ i ] );
+					end.copy( vertices[ i + 1 ] );
+
+					lineDistances[ i ] = ( i === 0 ) ? 0 : lineDistances[ i - 1 ];
+					lineDistances[ i + 1 ] = lineDistances[ i ] + start.distanceTo( end );
+
+				}
 
 			}
 
-			geometry.setAttribute( 'lineDistance', new Float32BufferAttribute( lineDistances, 1 ) );
+			return this;
 
-		} else {
+		};
 
-			console.warn( 'THREE.LineSegments.computeLineDistances(): Computation only possible with non-indexed BufferGeometry.' );
+	}() )
 
-		}
+} );
 
-		return this;
-
-	}
-
-}
 
 export { LineSegments };

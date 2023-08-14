@@ -1,6 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { ShaderChunk } from '../../../../../src/renderers/shaders/ShaderChunk.js';
+import { ShaderChunk } from '../../../../../src/renderers/shaders/ShaderChunk';
 
 export default QUnit.module( 'Renderers', () => {
 
@@ -8,10 +11,9 @@ export default QUnit.module( 'Renderers', () => {
 
 		QUnit.module( 'ShaderChunk', () => {
 
-			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			QUnit.todo( 'write me !', ( assert ) => {
 
-				assert.ok( ShaderChunk, 'ShaderChunk is defined.' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

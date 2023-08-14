@@ -4,12 +4,37 @@
 		<title>three.js webgl - shader [Monjori]</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a { color: #ffffff; }
+
+		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - shader demo. featuring <a href="http://www.pouet.net/prod.php?which=52761" target="_blank" rel="noopener">Monjori by Mic</a></div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - shader demo. featuring <a href="http://www.pouet.net/prod.php?which=52761" target="_blank" rel="noopener">Monjori by Mic</a></div>
+
+		<script src="../build/three.js"></script>
+
+		<script src="js/WebGL.js"></script>
 
 		<script id="vertexShader" type="x-shader/x-vertex">
 
@@ -63,45 +88,38 @@
 
 		</script>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var container;
 
-			import * as THREE from 'three';
+			var camera, scene, renderer;
 
-			let camera, scene, renderer;
-
-			let uniforms;
+			var uniforms;
 
 			init();
 			animate();
 
 			function init() {
 
-				const container = document.getElementById( 'container' );
+				container = document.getElementById( 'container' );
 
 				camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
 
 				scene = new THREE.Scene();
 
-				const geometry = new THREE.PlaneGeometry( 2, 2 );
+				var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
 				uniforms = {
-					time: { value: 1.0 }
+					"time": { value: 1.0 }
 				};
 
-				const material = new THREE.ShaderMaterial( {
+				var material = new THREE.ShaderMaterial( {
 
 					uniforms: uniforms,
 					vertexShader: document.getElementById( 'vertexShader' ).textContent,
@@ -109,15 +127,16 @@
 
 				} );
 
-				const mesh = new THREE.Mesh( geometry, material );
+				var mesh = new THREE.Mesh( geometry, material );
 				scene.add( mesh );
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
-				window.addEventListener( 'resize', onWindowResize );
+				onWindowResize();
+
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -129,11 +148,11 @@
 
 			//
 
-			function animate() {
+			function animate( timestamp ) {
 
 				requestAnimationFrame( animate );
 
-				uniforms[ 'time' ].value = performance.now() / 1000;
+				uniforms[ "time" ].value = timestamp / 1000;
 
 				renderer.render( scene, camera );
 

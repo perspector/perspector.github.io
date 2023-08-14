@@ -1,52 +1,55 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param attributeName string
  * @param newValue integer representing a hex color value
  * @constructor
  */
-class SetColorCommand extends Command {
 
-	constructor( editor, object, attributeName, newValue ) {
+var SetColorCommand = function ( object, attributeName, newValue ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'SetColorCommand';
-		this.name = `Set ${attributeName}`;
-		this.updatable = true;
+	this.type = 'SetColorCommand';
+	this.name = 'Set ' + attributeName;
+	this.updatable = true;
 
-		this.object = object;
-		this.attributeName = attributeName;
-		this.oldValue = ( object !== undefined ) ? this.object[ this.attributeName ].getHex() : undefined;
-		this.newValue = newValue;
+	this.object = object;
+	this.attributeName = attributeName;
+	this.oldValue = ( object !== undefined ) ? this.object[ this.attributeName ].getHex() : undefined;
+	this.newValue = newValue;
 
-	}
+};
 
-	execute() {
+SetColorCommand.prototype = {
+
+	execute: function () {
 
 		this.object[ this.attributeName ].setHex( this.newValue );
 		this.editor.signals.objectChanged.dispatch( this.object );
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		this.object[ this.attributeName ].setHex( this.oldValue );
 		this.editor.signals.objectChanged.dispatch( this.object );
 
-	}
+	},
 
-	update( cmd ) {
+	update: function ( cmd ) {
 
 		this.newValue = cmd.newValue;
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.attributeName = this.attributeName;
@@ -55,11 +58,11 @@ class SetColorCommand extends Command {
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.object = this.editor.objectByUuid( json.objectUuid );
 		this.attributeName = json.attributeName;
@@ -68,6 +71,4 @@ class SetColorCommand extends Command {
 
 	}
 
-}
-
-export { SetColorCommand };
+};

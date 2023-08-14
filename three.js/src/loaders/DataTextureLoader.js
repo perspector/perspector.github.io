@@ -1,57 +1,39 @@
-import { LinearFilter, LinearMipmapLinearFilter, ClampToEdgeWrapping } from '../constants.js';
+import { LinearFilter, LinearMipMapLinearFilter, ClampToEdgeWrapping } from '../constants.js';
 import { FileLoader } from './FileLoader.js';
 import { DataTexture } from '../textures/DataTexture.js';
-import { Loader } from './Loader.js';
+import { DefaultLoadingManager } from './LoadingManager.js';
 
 /**
- * Abstract Base class to load generic binary textures formats (rgbe, hdr, ...)
+ * @author Nikos M. / https://github.com/foo123/
  *
- * Sub classes have to implement the parse() method which will be used in load().
+ * Abstract Base class to load generic binary textures formats (rgbe, hdr, ...)
  */
 
-class DataTextureLoader extends Loader {
+function DataTextureLoader( manager ) {
 
-	constructor( manager ) {
+	this.manager = ( manager !== undefined ) ? manager : DefaultLoadingManager;
 
-		super( manager );
+	// override in sub classes
+	this._parser = null;
 
-	}
+}
 
-	load( url, onLoad, onProgress, onError ) {
+Object.assign( DataTextureLoader.prototype, {
 
-		const scope = this;
+	load: function ( url, onLoad, onProgress, onError ) {
 
-		const texture = new DataTexture();
+		var scope = this;
 
-		const loader = new FileLoader( this.manager );
+		var texture = new DataTexture();
+
+		var loader = new FileLoader( this.manager );
 		loader.setResponseType( 'arraybuffer' );
-		loader.setRequestHeader( this.requestHeader );
 		loader.setPath( this.path );
-		loader.setWithCredentials( scope.withCredentials );
 		loader.load( url, function ( buffer ) {
 
-			let texData;
+			var texData = scope._parser( buffer );
 
-			try {
-
-				texData = scope.parse( buffer );
-
-			} catch ( error ) {
-
-				if ( onError !== undefined ) {
-
-					onError( error );
-
-				} else {
-
-					console.error( error );
-					return;
-
-				}
-
-			}
-
-			if ( ! texData ) return onError(); // TODO: Remove this when all loaders properly throw errors
+			if ( ! texData ) return;
 
 			if ( texData.image !== undefined ) {
 
@@ -69,32 +51,15 @@ class DataTextureLoader extends Loader {
 			texture.wrapT = texData.wrapT !== undefined ? texData.wrapT : ClampToEdgeWrapping;
 
 			texture.magFilter = texData.magFilter !== undefined ? texData.magFilter : LinearFilter;
-			texture.minFilter = texData.minFilter !== undefined ? texData.minFilter : LinearFilter;
+			texture.minFilter = texData.minFilter !== undefined ? texData.minFilter : LinearMipMapLinearFilter;
 
 			texture.anisotropy = texData.anisotropy !== undefined ? texData.anisotropy : 1;
-
-			if ( texData.colorSpace !== undefined ) {
-
-				texture.colorSpace = texData.colorSpace;
-
-			} else if ( texData.encoding !== undefined ) { // @deprecated, r152
-
-				texture.encoding = texData.encoding;
-
-			}
-
-			if ( texData.flipY !== undefined ) {
-
-				texture.flipY = texData.flipY;
-
-			}
 
 			if ( texData.format !== undefined ) {
 
 				texture.format = texData.format;
 
 			}
-
 			if ( texData.type !== undefined ) {
 
 				texture.type = texData.type;
@@ -104,19 +69,12 @@ class DataTextureLoader extends Loader {
 			if ( texData.mipmaps !== undefined ) {
 
 				texture.mipmaps = texData.mipmaps;
-				texture.minFilter = LinearMipmapLinearFilter; // presumably...
 
 			}
 
 			if ( texData.mipmapCount === 1 ) {
 
 				texture.minFilter = LinearFilter;
-
-			}
-
-			if ( texData.generateMipmaps !== undefined ) {
-
-				texture.generateMipmaps = texData.generateMipmaps;
 
 			}
 
@@ -129,9 +87,16 @@ class DataTextureLoader extends Loader {
 
 		return texture;
 
+	},
+
+	setPath: function ( value ) {
+
+		this.path = value;
+		return this;
+
 	}
 
-}
+} );
 
 
 export { DataTextureLoader };

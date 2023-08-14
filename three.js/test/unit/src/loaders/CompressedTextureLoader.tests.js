@@ -1,36 +1,31 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { CompressedTextureLoader } from '../../../../src/loaders/CompressedTextureLoader.js';
-
-import { Loader } from '../../../../src/loaders/Loader.js';
+import { CompressedTextureLoader } from '../../../../src/loaders/CompressedTextureLoader';
 
 export default QUnit.module( 'Loaders', () => {
 
 	QUnit.module( 'CompressedTextureLoader', () => {
 
-		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
-
-			const object = new CompressedTextureLoader();
-			assert.strictEqual(
-				object instanceof Loader, true,
-				'CompressedTextureLoader extends from Loader'
-			);
-
-		} );
-
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new CompressedTextureLoader();
-			assert.ok( object, 'Can instantiate a CompressedTextureLoader.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.todo( 'load', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "load", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
+
+		} );
+
+		QUnit.todo( "setPath", ( assert ) => {
+
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

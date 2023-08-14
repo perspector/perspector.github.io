@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<base href="../../../../" />
+		<script src="list.js"></script>
 		<script src="page.js"></script>
 		<link type="text/css" rel="stylesheet" href="page.css" />
 	</head>
@@ -35,7 +36,7 @@
 		uniform vec3 cameraPosition;
 		</code>
 		<code>
-		// default vertex attributes provided by BufferGeometry
+		// default vertex attributes provided by Geometry and BufferGeometry
 		attribute vec3 position;
 		attribute vec3 normal;
 		attribute vec2 uv;
@@ -55,13 +56,7 @@
 		<h3>Vertex shader (conditional):</h3>
 		<div>
 		<code>
-		#ifdef USE_TANGENT
-			attribute vec4 tangent;
-		#endif
-		#if defined( USE_COLOR_ALPHA )
-			// vertex color attribute with alpha
-			attribute vec4 color;
-		#elif defined( USE_COLOR )
+		#ifdef USE_COLOR
 			// vertex color attribute
 			attribute vec3 color;
 		#endif
@@ -97,16 +92,6 @@
 			attribute vec4 skinWeight;
 		#endif
 		</code>
-		<code>
-		#ifdef USE_INSTANCING
-			// Note that modelViewMatrix is not set when rendering an instanced model,
-			// but can be calculated from viewMatrix * modelMatrix.
-			//
-			// Basic Usage:
-			//   gl_Position = projectionMatrix * viewMatrix * modelMatrix * instanceMatrix * vec4(position, 1.0);
-			attribute mat4 instanceMatrix;
-		#endif
-		</code>
 		</div>
 
 		<h3>Fragment shader:</h3>
@@ -120,31 +105,28 @@
 
 		<h2>Constructor</h2>
 
-		<h3>[name]( [param:WebGLRenderer renderer], [param:String cacheKey], [param:Object parameters] )</h3>
-		<p>For parameters see [page:WebGLRenderer WebGLRenderer].</p>
+		<h3>[name]( [param:WebGLRenderer renderer], [param:Object code], [param:Material material], [param:Object parameters] )</h3>
+		<p>For parameters see [page:WebGLRenderer WebGLRenderer]</p>
 
 		<h2>Properties</h2>
 
-		<h3>[property:String name]</h3>
-		<p>The name of the respective shader program.</p>
-
 		<h3>[property:String id]</h3>
-		<p>The identifier of this instance.</p>
+		<p></p>
 
-		<h3>[property:String cacheKey]</h3>
-		<p>This key enables the reusability of a single [name] for different materials.</p>
+		<h3>[property:String code]</h3>
+		<p></p>
 
 		<h3>[property:Integer usedTimes]</h3>
-		<p>How many times this instance is used for rendering render items.</p>
+		<p></p>
 
 		<h3>[property:Object program]</h3>
-		<p>The actual shader program.</p>
+		<p></p>
 
 		<h3>[property:WebGLShader vertexShader]</h3>
-		<p>The vertex shader.</p>
+		<p></p>
 
 		<h3>[property:WebGLShader fragmentShader]</h3>
-		<p>The fragment shader.</p>
+		<p></p>
 
 		<h2>Methods</h2>
 
@@ -158,15 +140,8 @@
 		Returns a name-value mapping of all active vertex attribute locations.
 		</p>
 
-		<h3>[method:undefined destroy]()</h3>
-		<p>
-		Destroys an instance of [name].
-		</p>
-
 		<h2>Source</h2>
 
-		<p>
-			[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
-		</p>
+		[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
 	</body>
 </html>

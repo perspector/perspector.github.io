@@ -1,36 +1,25 @@
-import { LinearSRGBColorSpace } from '../../constants.js';
-
 /**
  * Uniform Utilities
  */
 
 export function cloneUniforms( src ) {
 
-	const dst = {};
+	var dst = {};
 
-	for ( const u in src ) {
+	for ( var u in src ) {
 
 		dst[ u ] = {};
 
-		for ( const p in src[ u ] ) {
+		for ( var p in src[ u ] ) {
 
-			const property = src[ u ][ p ];
+			var property = src[ u ][ p ];
 
 			if ( property && ( property.isColor ||
 				property.isMatrix3 || property.isMatrix4 ||
 				property.isVector2 || property.isVector3 || property.isVector4 ||
-				property.isTexture || property.isQuaternion ) ) {
+				property.isTexture ) ) {
 
-				if ( property.isRenderTargetTexture ) {
-
-					console.warn( 'UniformsUtils: Textures of render targets cannot be cloned via cloneUniforms() or mergeUniforms().' );
-					dst[ u ][ p ] = null;
-
-				} else {
-
-					dst[ u ][ p ] = property.clone();
-
-				}
+				dst[ u ][ p ] = property.clone();
 
 			} else if ( Array.isArray( property ) ) {
 
@@ -52,13 +41,13 @@ export function cloneUniforms( src ) {
 
 export function mergeUniforms( uniforms ) {
 
-	const merged = {};
+	var merged = {};
 
-	for ( let u = 0; u < uniforms.length; u ++ ) {
+	for ( var u = 0; u < uniforms.length; u ++ ) {
 
-		const tmp = cloneUniforms( uniforms[ u ] );
+		var tmp = cloneUniforms( uniforms[ u ] );
 
-		for ( const p in tmp ) {
+		for ( var p in tmp ) {
 
 			merged[ p ] = tmp[ p ];
 
@@ -70,35 +59,8 @@ export function mergeUniforms( uniforms ) {
 
 }
 
-export function cloneUniformsGroups( src ) {
-
-	const dst = [];
-
-	for ( let u = 0; u < src.length; u ++ ) {
-
-		dst.push( src[ u ].clone() );
-
-	}
-
-	return dst;
-
-}
-
-export function getUnlitUniformColorSpace( renderer ) {
-
-	if ( renderer.getRenderTarget() === null ) {
-
-		// https://github.com/mrdoob/three.js/pull/23937#issuecomment-1111067398
-		return renderer.outputColorSpace;
-
-	}
-
-	return LinearSRGBColorSpace;
-
-}
-
 // Legacy
 
-const UniformsUtils = { clone: cloneUniforms, merge: mergeUniforms };
+var UniformsUtils = { clone: cloneUniforms, merge: mergeUniforms };
 
 export { UniformsUtils };

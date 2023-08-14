@@ -6,27 +6,23 @@ import { Matrix3 } from '../../math/Matrix3.js';
  * Uniforms library for shared webgl shaders
  */
 
-const UniformsLib = {
+var UniformsLib = {
 
 	common: {
 
-		diffuse: { value: /*@__PURE__*/ new Color( 0xffffff ) },
+		diffuse: { value: new Color( 0xeeeeee ) },
 		opacity: { value: 1.0 },
 
 		map: { value: null },
-		mapTransform: { value: /*@__PURE__*/ new Matrix3() },
+		uvTransform: { value: new Matrix3() },
 
 		alphaMap: { value: null },
-		alphaMapTransform: { value: /*@__PURE__*/ new Matrix3() },
-
-		alphaTest: { value: 0 }
 
 	},
 
 	specularmap: {
 
 		specularMap: { value: null },
-		specularMapTransform: { value: /*@__PURE__*/ new Matrix3() }
 
 	},
 
@@ -34,32 +30,35 @@ const UniformsLib = {
 
 		envMap: { value: null },
 		flipEnvMap: { value: - 1 },
-		reflectivity: { value: 1.0 }, // basic, lambert, phong
-		ior: { value: 1.5 }, // physical
-		refractionRatio: { value: 0.98 }, // basic, lambert, phong
+		reflectivity: { value: 1.0 },
+		refractionRatio: { value: 0.98 },
+		maxMipLevel: { value: 0 }
 
 	},
 
 	aomap: {
 
 		aoMap: { value: null },
-		aoMapIntensity: { value: 1 },
-		aoMapTransform: { value: /*@__PURE__*/ new Matrix3() }
+		aoMapIntensity: { value: 1 }
 
 	},
 
 	lightmap: {
 
 		lightMap: { value: null },
-		lightMapIntensity: { value: 1 },
-		lightMapTransform: { value: /*@__PURE__*/ new Matrix3() }
+		lightMapIntensity: { value: 1 }
+
+	},
+
+	emissivemap: {
+
+		emissiveMap: { value: null }
 
 	},
 
 	bumpmap: {
 
 		bumpMap: { value: null },
-		bumpMapTransform: { value: /*@__PURE__*/ new Matrix3() },
 		bumpScale: { value: 1 }
 
 	},
@@ -67,38 +66,27 @@ const UniformsLib = {
 	normalmap: {
 
 		normalMap: { value: null },
-		normalMapTransform: { value: /*@__PURE__*/ new Matrix3() },
-		normalScale: { value: /*@__PURE__*/ new Vector2( 1, 1 ) }
+		normalScale: { value: new Vector2( 1, 1 ) }
 
 	},
 
 	displacementmap: {
 
 		displacementMap: { value: null },
-		displacementMapTransform: { value: /*@__PURE__*/ new Matrix3() },
 		displacementScale: { value: 1 },
 		displacementBias: { value: 0 }
 
 	},
 
-	emissivemap: {
+	roughnessmap: {
 
-		emissiveMap: { value: null },
-		emissiveMapTransform: { value: /*@__PURE__*/ new Matrix3() }
+		roughnessMap: { value: null }
 
 	},
 
 	metalnessmap: {
 
-		metalnessMap: { value: null },
-		metalnessMapTransform: { value: /*@__PURE__*/ new Matrix3() }
-
-	},
-
-	roughnessmap: {
-
-		roughnessMap: { value: null },
-		roughnessMapTransform: { value: /*@__PURE__*/ new Matrix3() }
+		metalnessMap: { value: null }
 
 	},
 
@@ -113,7 +101,7 @@ const UniformsLib = {
 		fogDensity: { value: 0.00025 },
 		fogNear: { value: 1 },
 		fogFar: { value: 2000 },
-		fogColor: { value: /*@__PURE__*/ new Color( 0xffffff ) }
+		fogColor: { value: new Color( 0xffffff ) }
 
 	},
 
@@ -125,12 +113,10 @@ const UniformsLib = {
 
 		directionalLights: { value: [], properties: {
 			direction: {},
-			color: {}
-		} },
+			color: {},
 
-		directionalLightShadows: { value: [], properties: {
+			shadow: {},
 			shadowBias: {},
-			shadowNormalBias: {},
 			shadowRadius: {},
 			shadowMapSize: {}
 		} },
@@ -145,30 +131,25 @@ const UniformsLib = {
 			distance: {},
 			coneCos: {},
 			penumbraCos: {},
-			decay: {}
-		} },
+			decay: {},
 
-		spotLightShadows: { value: [], properties: {
+			shadow: {},
 			shadowBias: {},
-			shadowNormalBias: {},
 			shadowRadius: {},
 			shadowMapSize: {}
 		} },
 
-		spotLightMap: { value: [] },
 		spotShadowMap: { value: [] },
-		spotLightMatrix: { value: [] },
+		spotShadowMatrix: { value: [] },
 
 		pointLights: { value: [], properties: {
 			color: {},
 			position: {},
 			decay: {},
-			distance: {}
-		} },
+			distance: {},
 
-		pointLightShadows: { value: [], properties: {
+			shadow: {},
 			shadowBias: {},
-			shadowNormalBias: {},
 			shadowRadius: {},
 			shadowMapSize: {},
 			shadowCameraNear: {},
@@ -190,38 +171,29 @@ const UniformsLib = {
 			position: {},
 			width: {},
 			height: {}
-		} },
-
-		ltc_1: { value: null },
-		ltc_2: { value: null }
+		} }
 
 	},
 
 	points: {
 
-		diffuse: { value: /*@__PURE__*/ new Color( 0xffffff ) },
+		diffuse: { value: new Color( 0xeeeeee ) },
 		opacity: { value: 1.0 },
 		size: { value: 1.0 },
 		scale: { value: 1.0 },
 		map: { value: null },
-		alphaMap: { value: null },
-		alphaMapTransform: { value: /*@__PURE__*/ new Matrix3() },
-		alphaTest: { value: 0 },
-		uvTransform: { value: /*@__PURE__*/ new Matrix3() }
+		uvTransform: { value: new Matrix3() }
 
 	},
 
 	sprite: {
 
-		diffuse: { value: /*@__PURE__*/ new Color( 0xffffff ) },
+		diffuse: { value: new Color( 0xeeeeee ) },
 		opacity: { value: 1.0 },
-		center: { value: /*@__PURE__*/ new Vector2( 0.5, 0.5 ) },
+		center: { value: new Vector2( 0.5, 0.5 ) },
 		rotation: { value: 0.0 },
 		map: { value: null },
-		mapTransform: { value: /*@__PURE__*/ new Matrix3() },
-		alphaMap: { value: null },
-		alphaMapTransform: { value: /*@__PURE__*/ new Matrix3() },
-		alphaTest: { value: 0 }
+		uvTransform: { value: new Matrix3() }
 
 	}
 

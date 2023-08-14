@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - buffergeometry - particles</title>
+		<title>three.js webgl - buffergeometry [particles]</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #cccccc;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+
+				background-color: #050505;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+				color: #0080ff;
+			}
+		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - buffergeometry - particles</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - buffergeometry - particles</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var container, stats;
 
-			import * as THREE from 'three';
+			var camera, scene, renderer;
 
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			let container, stats;
-
-			let camera, scene, renderer;
-
-			let points;
+			var points;
 
 			init();
 			animate();
@@ -54,47 +69,47 @@
 
 				//
 
-				const particles = 500000;
+				var particles = 500000;
 
-				const geometry = new THREE.BufferGeometry();
+				var geometry = new THREE.BufferGeometry();
 
-				const positions = [];
-				const colors = [];
+				var positions = [];
+				var colors = [];
 
-				const color = new THREE.Color();
+				var color = new THREE.Color();
 
-				const n = 1000, n2 = n / 2; // particles spread in the cube
+				var n = 1000, n2 = n / 2; // particles spread in the cube
 
-				for ( let i = 0; i < particles; i ++ ) {
+				for ( var i = 0; i < particles; i ++ ) {
 
 					// positions
 
-					const x = Math.random() * n - n2;
-					const y = Math.random() * n - n2;
-					const z = Math.random() * n - n2;
+					var x = Math.random() * n - n2;
+					var y = Math.random() * n - n2;
+					var z = Math.random() * n - n2;
 
 					positions.push( x, y, z );
 
 					// colors
 
-					const vx = ( x / n ) + 0.5;
-					const vy = ( y / n ) + 0.5;
-					const vz = ( z / n ) + 0.5;
+					var vx = ( x / n ) + 0.5;
+					var vy = ( y / n ) + 0.5;
+					var vz = ( z / n ) + 0.5;
 
-					color.setRGB( vx, vy, vz, THREE.SRGBColorSpace );
+					color.setRGB( vx, vy, vz );
 
 					colors.push( color.r, color.g, color.b );
 
 				}
 
-				geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
-				geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+				geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
 
 				geometry.computeBoundingSphere();
 
 				//
 
-				const material = new THREE.PointsMaterial( { size: 15, vertexColors: true } );
+				var material = new THREE.PointsMaterial( { size: 15, vertexColors: THREE.VertexColors } );
 
 				points = new THREE.Points( geometry, material );
 				scene.add( points );
@@ -114,7 +129,7 @@
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -140,7 +155,7 @@
 
 			function render() {
 
-				const time = Date.now() * 0.001;
+				var time = Date.now() * 0.001;
 
 				points.rotation.x = time * 0.25;
 				points.rotation.y = time * 0.5;

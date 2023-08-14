@@ -4,7 +4,6 @@ export default /* glsl */`
 	#ifdef USE_LOGDEPTHBUF_EXT
 
 		varying float vFragDepth;
-		varying float vIsPerspective;
 
 	#else
 

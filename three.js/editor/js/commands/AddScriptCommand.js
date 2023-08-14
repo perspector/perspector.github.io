@@ -1,26 +1,29 @@
-import { Command } from '../Command.js';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param script javascript object
  * @constructor
  */
-class AddScriptCommand extends Command {
 
-	constructor( editor, object, script ) {
+var AddScriptCommand = function ( object, script ) {
 
-		super( editor );
+	Command.call( this );
 
-		this.type = 'AddScriptCommand';
-		this.name = 'Add Script';
+	this.type = 'AddScriptCommand';
+	this.name = 'Add Script';
 
-		this.object = object;
-		this.script = script;
+	this.object = object;
+	this.script = script;
 
-	}
+};
 
-	execute() {
+AddScriptCommand.prototype = {
+
+	execute: function () {
 
 		if ( this.editor.scripts[ this.object.uuid ] === undefined ) {
 
@@ -32,13 +35,13 @@ class AddScriptCommand extends Command {
 
 		this.editor.signals.scriptAdded.dispatch( this.script );
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		if ( this.editor.scripts[ this.object.uuid ] === undefined ) return;
 
-		const index = this.editor.scripts[ this.object.uuid ].indexOf( this.script );
+		var index = this.editor.scripts[ this.object.uuid ].indexOf( this.script );
 
 		if ( index !== - 1 ) {
 
@@ -48,28 +51,26 @@ class AddScriptCommand extends Command {
 
 		this.editor.signals.scriptRemoved.dispatch( this.script );
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.script = this.script;
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.script = json.script;
 		this.object = this.editor.objectByUuid( json.objectUuid );
 
 	}
 
-}
-
-export { AddScriptCommand };
+};

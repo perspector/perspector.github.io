@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<base href="../../../" />
+		<script src="list.js"></script>
 		<script src="page.js"></script>
 		<link type="text/css" rel="stylesheet" href="page.css" />
 	</head>
@@ -22,7 +23,7 @@
 		<h2>构造函数</h2>
 
 
-		<h3>[name]( [param:Array mipmaps], [param:Number width], [param:Number height], [param:Constant format], [param:Constant type], [param:Constant mapping], [param:Constant wrapS], [param:Constant wrapT], [param:Constant magFilter], [param:Constant minFilter], [param:Number anisotropy], , [param:Constant colorSpace] )</h3>
+		<h3>[name]( [param:Array mipmaps], [param:Number width], [param:Number height], [param:Constant format], [param:Constant type], [param:Constant mapping], [param:Constant wrapS], [param:Constant wrapT], [param:Constant magFilter], [param:Constant minFilter], [param:Number anisotropy] )</h3>
 		<p>
 		[page:Array mipmaps] -- mipmaps数组中需要包含具有数据、宽、高的对象。mipmaps应当具有正确的格式与类型。<br />
 
@@ -51,49 +52,37 @@
 		其默认值为[page:Textures THREE.LinearFilter]。请参阅[page:Textures magnification filter constants]（放大滤镜常量）来了解其它选项。<br />
 
 		[page:Constant minFilter] -- 当一个纹素覆盖小于一个像素时，贴图将如何采样。
-		其默认值为[page:Textures THREE.LinearMipmapLinearFilter]。请参阅[page:Textures minification filter constants]（缩小滤镜常量）来了解其它选项。<br />
+		其默认值为[page:Textures THREE.LinearMipMapLinearFilter]。请参阅[page:Textures minification filter constants]（缩小滤镜常量）来了解其它选项。<br />
 
 		[page:Number anisotropy] -- 沿着轴，通过具有最高纹素密度的像素的样本数。
 		默认情况下，这个值为1。设置一个较高的值将会产生比基本的mipmap更清晰的效果，代价是需要使用更多纹理样本。
-		使用[page:WebGLrenderer.getMaxAnisotropy renderer.getMaxAnisotropy]() 来查询GPU中各向异性的最大有效值；这个值通常是2的幂。<br />
-
-		[page:Constant colorSpace] -- The default is [page:Textures THREE.NoColorSpace].
-		See [page:Textures color space constants] for other choices.<br /><br />
+		使用[page:WebGLrenderer.getMaxAnisotropy renderer.getMaxAnisotropy]() 来查询GPU中各向异性的最大有效值；这个值通常是2的幂。<br /><br />
 		</p>
 
 
 		<h2>属性</h2>
 
-		共有属性请参见其基类[page:Texture Texture]。
+		请参阅其基类[page:Texture Texture]来了解共有属性。
 
-		<h3>[property:Boolean flipY]</h3>
+		<h3>[property:boolean flipY]</h3>
 
 		<p>
 			默认值为false。翻转纹理在压缩的纹理贴图中无法工作。
 		</p>
 
-		<h3>[property:Boolean generateMipmaps]</h3>
+		<h3>[property:boolean generateMipmaps]</h3>
 
 		<p>
 			默认值为false。无法为压缩的纹理贴图生成Mipmap。
 		</p>
 
-		<h3>[property:Boolean isCompressedTexture]</h3>
-		<p>
-			Read-only flag to check if a given object is of type [name].
-		</p>
-
 
 		<h2>方法</h2>
 
-		<p>
-		共有方法请参见其基类[page:Texture Texture]。
-		</p>
+
 
 		<h2>源代码</h2>
 
-		<p>
-			[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
-		</p>
+		[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]
 	</body>
 </html>

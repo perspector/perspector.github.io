@@ -1,6 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-// import { WebGLMorphtargets } from '../../../../../src/renderers/webgl/WebGLMorphtargets.js';
+import { WebGLMorphtargets } from '../../../../../src/renderers/webgl/WebGLMorphtargets';
 
 export default QUnit.module( 'Renderers', () => {
 
@@ -9,16 +12,16 @@ export default QUnit.module( 'Renderers', () => {
 		QUnit.module( 'WebGLMorphtargets', () => {
 
 			// INSTANCING
-			QUnit.todo( 'Instancing', ( assert ) => {
+			QUnit.todo( "Instancing", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
 			// PUBLIC STUFF
-			QUnit.todo( 'update', ( assert ) => {
+			QUnit.todo( "update", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

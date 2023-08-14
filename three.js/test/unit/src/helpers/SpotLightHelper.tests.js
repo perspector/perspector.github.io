@@ -1,100 +1,38 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { SpotLightHelper } from '../../../../src/helpers/SpotLightHelper.js';
-
-import { Object3D } from '../../../../src/core/Object3D.js';
-import { SpotLight } from '../../../../src/lights/SpotLight.js';
+import { SpotLightHelper } from '../../../../src/helpers/SpotLightHelper';
 
 export default QUnit.module( 'Helpers', () => {
 
 	QUnit.module( 'SpotLightHelper', () => {
 
-		const parameters = {
-			color: 0xaaaaaa,
-			intensity: 0.5,
-			distance: 100,
-			angle: 0.8,
-			penumbra: 8,
-			decay: 2
-		};
-
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const light = new SpotLight( parameters.color );
-			const object = new SpotLightHelper( light, parameters.color );
-			assert.strictEqual(
-				object instanceof Object3D, true,
-				'SpotLightHelper extends from Object3D'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const light = new SpotLight( parameters.color );
-			const object = new SpotLightHelper( light, parameters.color );
-			assert.ok( object, 'Can instantiate a SpotLightHelper.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "dispose", ( assert ) => {
 
-			const light = new SpotLight( parameters.color );
-			const object = new SpotLightHelper( light, parameters.color );
-			assert.ok(
-				object.type === 'SpotLightHelper',
-				'SpotLightHelper.type should be SpotLightHelper'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'light', ( assert ) => {
+		QUnit.todo( "update", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'matrix', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'matrixAutoUpdate', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'color', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'cone', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// PUBLIC
-		QUnit.test( 'dispose', ( assert ) => {
-
-			assert.expect( 0 );
-
-			const light = new SpotLight( parameters.color );
-			const object = new SpotLightHelper( light, parameters.color );
-			object.dispose();
-
-		} );
-
-		QUnit.todo( 'update', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

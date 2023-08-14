@@ -1,31 +1,26 @@
-import { Box3, Vector3 } from 'three';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
+Menubar.Edit = function ( editor ) {
 
-import { AddObjectCommand } from './commands/AddObjectCommand.js';
-import { RemoveObjectCommand } from './commands/RemoveObjectCommand.js';
-import { SetPositionCommand } from './commands/SetPositionCommand.js';
-import { clone } from '../../examples/jsm/utils/SkeletonUtils.js';
+	var strings = editor.strings;
 
-function MenubarEdit( editor ) {
-
-	const strings = editor.strings;
-
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setClass( 'menu' );
 
-	const title = new UIPanel();
+	var title = new UI.Panel();
 	title.setClass( 'title' );
 	title.setTextContent( strings.getKey( 'menubar/edit' ) );
 	container.add( title );
 
-	const options = new UIPanel();
+	var options = new UI.Panel();
 	options.setClass( 'options' );
 	container.add( options );
 
 	// Undo
 
-	const undo = new UIRow();
+	var undo = new UI.Row();
 	undo.setClass( 'option' );
 	undo.setTextContent( strings.getKey( 'menubar/edit/undo' ) );
 	undo.onClick( function () {
@@ -37,7 +32,7 @@ function MenubarEdit( editor ) {
 
 	// Redo
 
-	const redo = new UIRow();
+	var redo = new UI.Row();
 	redo.setClass( 'option' );
 	redo.setTextContent( strings.getKey( 'menubar/edit/redo' ) );
 	redo.onClick( function () {
@@ -49,7 +44,7 @@ function MenubarEdit( editor ) {
 
 	// Clear History
 
-	let option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/edit/clear_history' ) );
 	option.onClick( function () {
@@ -66,7 +61,7 @@ function MenubarEdit( editor ) {
 
 	editor.signals.historyChanged.add( function () {
 
-		const history = editor.history;
+		var history = editor.history;
 
 		undo.setClass( 'option' );
 		redo.setClass( 'option' );
@@ -87,75 +82,128 @@ function MenubarEdit( editor ) {
 
 	// ---
 
-	options.add( new UIHorizontalRule() );
-
-	// Center
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/edit/center' ) );
-	option.onClick( function () {
-
-		const object = editor.selected;
-
-		if ( object === null || object.parent === null ) return; // avoid centering the camera or scene
-
-		const aabb = new Box3().setFromObject( object );
-		const center = aabb.getCenter( new Vector3() );
-		const newPosition = new Vector3();
-
-		newPosition.x = object.position.x + ( object.position.x - center.x );
-		newPosition.y = object.position.y + ( object.position.y - center.y );
-		newPosition.z = object.position.z + ( object.position.z - center.z );
-
-		editor.execute( new SetPositionCommand( editor, object, newPosition ) );
-
-	} );
-	options.add( option );
+	options.add( new UI.HorizontalRule() );
 
 	// Clone
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/edit/clone' ) );
 	option.onClick( function () {
 
-		let object = editor.selected;
+		var object = editor.selected;
 
-		if ( object === null || object.parent === null ) return; // avoid cloning the camera or scene
+		if ( object.parent === null ) return; // avoid cloning the camera or scene
 
-		object = clone( object );
+		object = object.clone();
 
-		editor.execute( new AddObjectCommand( editor, object ) );
+		editor.execute( new AddObjectCommand( object ) );
 
 	} );
 	options.add( option );
 
 	// Delete
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/edit/delete' ) );
 	option.onClick( function () {
 
-		const object = editor.selected;
+		var object = editor.selected;
 
-		if ( object !== null && object.parent !== null ) {
+		var parent = object.parent;
+		if ( parent === undefined ) return; // avoid deleting the camera or scene
 
-			editor.execute( new RemoveObjectCommand( editor, object ) );
-
-		}
+		editor.execute( new RemoveObjectCommand( object ) );
 
 	} );
 	options.add( option );
 
-	//
+	// Minify shaders
 
-	options.add( new UIHorizontalRule() );
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( strings.getKey( 'menubar/edit/minify_shaders' ) );
+	option.onClick( function() {
+
+		var root = editor.selected || editor.scene;
+
+		var errors = [];
+		var nMaterialsChanged = 0;
+
+		var path = [];
+
+		function getPath ( object ) {
+
+			path.length = 0;
+
+			var parent = object.parent;
+			if ( parent !== undefined ) getPath( parent );
+
+			path.push( object.name || object.uuid );
+
+			return path;
+
+		}
+
+		var cmds = [];
+		root.traverse( function ( object ) {
+
+			var material = object.material;
+
+			if ( material.isShaderMaterial ) {
+
+				try {
+
+					var shader = glslprep.minifyGlsl( [
+							material.vertexShader, material.fragmentShader ] );
+
+					cmds.push( new SetMaterialValueCommand( object, 'vertexShader', shader[ 0 ] ) );
+					cmds.push( new SetMaterialValueCommand( object, 'fragmentShader', shader[ 1 ] ) );
+
+					++nMaterialsChanged;
+
+				} catch ( e ) {
+
+					var path = getPath( object ).join( "/" );
+
+					if ( e instanceof glslprep.SyntaxError )
+
+						errors.push( path + ":" +
+								e.line + ":" + e.column + ": " + e.message );
+
+					else {
+
+						errors.push( path +
+								": Unexpected error (see console for details)." );
+
+						console.error( e.stack || e );
+
+					}
+
+				}
+
+			}
+
+		} );
+
+		if ( nMaterialsChanged > 0 ) {
+
+			editor.execute( new MultiCmdsCommand( cmds ), 'Minify Shaders' );
+
+		}
+
+		window.alert( nMaterialsChanged +
+				" material(s) were changed.\n" + errors.join( "\n" ) );
+
+	} );
+	options.add( option );
+
+	options.add( new UI.HorizontalRule() );
 
 	// Set textures to sRGB. See #15903
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/edit/fixcolormaps' ) );
 	option.onClick( function () {
@@ -165,17 +213,17 @@ function MenubarEdit( editor ) {
 	} );
 	options.add( option );
 
-	const colorMaps = [ 'map', 'envMap', 'emissiveMap' ];
+	var colorMaps = [ 'map', 'envMap', 'emissiveMap' ];
 
 	function fixColorMap( obj ) {
 
-		const material = obj.material;
+		var material = obj.material;
 
 		if ( material !== undefined ) {
 
 			if ( Array.isArray( material ) === true ) {
 
-				for ( let i = 0; i < material.length; i ++ ) {
+				for ( var i = 0; i < material.length; i ++ ) {
 
 					fixMaterial( material[ i ] );
 
@@ -195,15 +243,15 @@ function MenubarEdit( editor ) {
 
 	function fixMaterial( material ) {
 
-		let needsUpdate = material.needsUpdate;
+		var needsUpdate = material.needsUpdate;
 
-		for ( let i = 0; i < colorMaps.length; i ++ ) {
+		for ( var i = 0; i < colorMaps.length; i ++ ) {
 
-			const map = material[ colorMaps[ i ] ];
+			var map = material[ colorMaps[ i ] ];
 
 			if ( map ) {
 
-				map.colorSpace = THREE.SRGBColorSpace;
+				map.encoding = THREE.sRGBEncoding;
 				needsUpdate = true;
 
 			}
@@ -216,6 +264,4 @@ function MenubarEdit( editor ) {
 
 	return container;
 
-}
-
-export { MenubarEdit };
+};

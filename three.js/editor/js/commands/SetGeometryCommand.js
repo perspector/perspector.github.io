@@ -1,30 +1,31 @@
-import { Command } from '../Command.js';
-import { ObjectLoader } from 'three';
+/**
+ * @author dforrer / https://github.com/dforrer
+ * Developed as part of a project at University of Applied Sciences and Arts Northwestern Switzerland (www.fhnw.ch)
+ */
 
 /**
- * @param editor Editor
  * @param object THREE.Object3D
  * @param newGeometry THREE.Geometry
  * @constructor
  */
 
-class SetGeometryCommand extends Command {
+var SetGeometryCommand = function ( object, newGeometry ) {
 
-	constructor( editor, object, newGeometry ) {
+	Command.call( this );
 
-		super( editor );
+	this.type = 'SetGeometryCommand';
+	this.name = 'Set Geometry';
+	this.updatable = true;
 
-		this.type = 'SetGeometryCommand';
-		this.name = 'Set Geometry';
-		this.updatable = true;
+	this.object = object;
+	this.oldGeometry = ( object !== undefined ) ? object.geometry : undefined;
+	this.newGeometry = newGeometry;
 
-		this.object = object;
-		this.oldGeometry = ( object !== undefined ) ? object.geometry : undefined;
-		this.newGeometry = newGeometry;
+};
 
-	}
+SetGeometryCommand.prototype = {
 
-	execute() {
+	execute: function () {
 
 		this.object.geometry.dispose();
 		this.object.geometry = this.newGeometry;
@@ -33,9 +34,9 @@ class SetGeometryCommand extends Command {
 		this.editor.signals.geometryChanged.dispatch( this.object );
 		this.editor.signals.sceneGraphChanged.dispatch();
 
-	}
+	},
 
-	undo() {
+	undo: function () {
 
 		this.object.geometry.dispose();
 		this.object.geometry = this.oldGeometry;
@@ -44,17 +45,17 @@ class SetGeometryCommand extends Command {
 		this.editor.signals.geometryChanged.dispatch( this.object );
 		this.editor.signals.sceneGraphChanged.dispatch();
 
-	}
+	},
 
-	update( cmd ) {
+	update: function ( cmd ) {
 
 		this.newGeometry = cmd.newGeometry;
 
-	}
+	},
 
-	toJSON() {
+	toJSON: function () {
 
-		const output = super.toJSON( this );
+		var output = Command.prototype.toJSON.call( this );
 
 		output.objectUuid = this.object.uuid;
 		output.oldGeometry = this.object.geometry.toJSON();
@@ -62,26 +63,24 @@ class SetGeometryCommand extends Command {
 
 		return output;
 
-	}
+	},
 
-	fromJSON( json ) {
+	fromJSON: function ( json ) {
 
-		super.fromJSON( json );
+		Command.prototype.fromJSON.call( this, json );
 
 		this.object = this.editor.objectByUuid( json.objectUuid );
 
 		this.oldGeometry = parseGeometry( json.oldGeometry );
 		this.newGeometry = parseGeometry( json.newGeometry );
 
-		function parseGeometry( data ) {
+		function parseGeometry ( data ) {
 
-			const loader = new ObjectLoader();
+			var loader = new THREE.ObjectLoader();
 			return loader.parseGeometries( [ data ] )[ data.uuid ];
 
 		}
 
 	}
 
-}
-
-export { SetGeometryCommand };
+};

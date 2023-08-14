@@ -1,9 +1,11 @@
+/**
+ * @author zz85 / http://joshuakoo.com
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { CatmullRomCurve3 } from '../../../../../src/extras/curves/CatmullRomCurve3.js';
-
-import { Curve } from '../../../../../src/extras/core/Curve.js';
-import { Vector3 } from '../../../../../src/math/Vector3.js';
+import { CatmullRomCurve3 } from '../../../../../src/extras/curves/CatmullRomCurve3';
+import { Vector3 } from '../../../../../src/math/Vector3';
 
 export default QUnit.module( 'Extras', () => {
 
@@ -12,7 +14,7 @@ export default QUnit.module( 'Extras', () => {
 		QUnit.module( 'CatmullRomCurve3', () => {
 
 			/* eslint-disable */
-			const positions = [
+			var positions = [
 				new Vector3( - 60, - 100,   60 ),
 				new Vector3( - 60,    20,   60 ),
 				new Vector3( - 60,   120,   60 ),
@@ -22,101 +24,39 @@ export default QUnit.module( 'Extras', () => {
 			/* eslint-enable */
 
 			// INHERITANCE
-			QUnit.test( 'Extending', ( assert ) => {
+			QUnit.todo( "Extending", ( assert ) => {
 
-				const object = new CatmullRomCurve3();
-				assert.strictEqual(
-					object instanceof Curve, true,
-					'CatmullRomCurve3 extends from Curve'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
 			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			QUnit.todo( "Instancing", ( assert ) => {
 
-				const object = new CatmullRomCurve3();
-				assert.ok( object, 'Can instantiate a CatmullRomCurve3.' );
-
-			} );
-
-			// PROPERTIES
-			QUnit.test( 'type', ( assert ) => {
-
-				const object = new CatmullRomCurve3();
-				assert.ok(
-					object.type === 'CatmullRomCurve3',
-					'CatmullRomCurve3.type should be CatmullRomCurve3'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'points', ( assert ) => {
+			// PUBLIC STUFF
+			QUnit.todo( "isCatmullRomCurve3", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'closed', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'curveType', ( assert ) => {
+			QUnit.todo( "getPoint", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'tension', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			// PUBLIC
-			QUnit.test( 'isCatmullRomCurve3', ( assert ) => {
-
-				const object = new CatmullRomCurve3();
-				assert.ok(
-					object.isCatmullRomCurve3,
-					'CatmullRomCurve3.isCatmullRomCurve3 should be true'
-				);
-
-			} );
-
-			QUnit.todo( 'getPoint', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'copy', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'toJSON', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'fromJSON', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
 			// OTHERS
-			QUnit.test( 'catmullrom check', ( assert ) => {
+			QUnit.test( "catmullrom check", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				const expectedPoints = [
+				var expectedPoints = [
 
 					new Vector3( - 60, - 100, 60 ),
 					new Vector3( - 60, - 51.04, 60 ),
@@ -132,7 +72,7 @@ export default QUnit.module( 'Extras', () => {
 
 				];
 
-				const points = curve.getPoints( 10 );
+				var points = curve.getPoints( 10 );
 
 				assert.equal( points.length, expectedPoints.length, 'correct number of points.' );
 
@@ -146,13 +86,13 @@ export default QUnit.module( 'Extras', () => {
 
 			} );
 
-			QUnit.test( 'chordal basic check', ( assert ) => {
+			QUnit.test( "chordal basic check", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 
 				curve.curveType = 'chordal';
 
-				const expectedPoints = [
+				var expectedPoints = [
 					new Vector3( - 60, - 100, 60 ),
 					new Vector3( - 60, - 52, 60 ),
 					new Vector3( - 60, - 4, 60 ),
@@ -166,7 +106,7 @@ export default QUnit.module( 'Extras', () => {
 					new Vector3( 60.00000000000001, - 100, - 60.00000000000001 )
 				];
 
-				const points = curve.getPoints( 10 );
+				var points = curve.getPoints( 10 );
 
 				assert.equal( points.length, expectedPoints.length, 'correct number of points.' );
 
@@ -180,12 +120,12 @@ export default QUnit.module( 'Extras', () => {
 
 			} );
 
-			QUnit.test( 'centripetal basic check', ( assert ) => {
+			QUnit.test( "centripetal basic check", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'centripetal';
 
-				const expectedPoints = [
+				var expectedPoints = [
 					new Vector3( - 60, - 100, 60 ),
 					new Vector3( - 60, - 51.47527724919028, 60 ),
 					new Vector3( - 60, - 3.300369665587032, 60 ),
@@ -199,7 +139,7 @@ export default QUnit.module( 'Extras', () => {
 					new Vector3( 59.99999999999999, - 100, - 59.99999999999999 ),
 				];
 
-				const points = curve.getPoints( 10 );
+				var points = curve.getPoints( 10 );
 
 				assert.equal( points.length, expectedPoints.length, 'correct number of points.' );
 
@@ -213,13 +153,13 @@ export default QUnit.module( 'Extras', () => {
 
 			} );
 
-			QUnit.test( 'closed catmullrom basic check', ( assert ) => {
+			QUnit.test( "closed catmullrom basic check", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 				curve.closed = true;
 
-				const expectedPoints = [
+				var expectedPoints = [
 					new Vector3( - 60, - 100, 60 ),
 					new Vector3( - 67.5, - 46.25, 67.5 ),
 					new Vector3( - 60, 20, 60 ),
@@ -233,7 +173,7 @@ export default QUnit.module( 'Extras', () => {
 					new Vector3( - 60, - 100, 60 ),
 				];
 
-				const points = curve.getPoints( 10 );
+				var points = curve.getPoints( 10 );
 
 				assert.equal( points.length, expectedPoints.length, 'correct number of points.' );
 
@@ -250,64 +190,64 @@ export default QUnit.module( 'Extras', () => {
 			//
 			// curve.type = 'catmullrom'; only from here on
 			//
-			QUnit.test( 'getLength/getLengths', ( assert ) => {
+			QUnit.test( "getLength/getLengths", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				const length = curve.getLength();
-				const expectedLength = 551.549686276872;
+				var length = curve.getLength();
+				var expectedLength = 551.549686276872;
 
-				assert.numEqual( length, expectedLength, 'Correct length of curve' );
+				assert.numEqual( length, expectedLength, "Correct length of curve" );
 
-				const expectedLengths = [
+				var expectedLengths = [
 					0,
 					120,
 					220,
 					416.9771560359221,
 					536.9771560359221
 				];
-				const lengths = curve.getLengths( expectedLengths.length - 1 );
+				var lengths = curve.getLengths( expectedLengths.length - 1 );
 
-				assert.strictEqual( lengths.length, expectedLengths.length, 'Correct number of segments' );
+				assert.strictEqual( lengths.length, expectedLengths.length, "Correct number of segments" );
 
 				lengths.forEach( function ( segment, i ) {
 
-					assert.numEqual( segment, expectedLengths[ i ], 'segment[' + i + '] correct' );
+					assert.numEqual( segment, expectedLengths[ i ], "segment[" + i + "] correct" );
 
 				} );
 
 			} );
 
-			QUnit.test( 'getPointAt', ( assert ) => {
+			QUnit.test( "getPointAt", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				const expectedPoints = [
+				var expectedPoints = [
 					new Vector3( - 60, - 100, 60 ),
 					new Vector3( - 64.84177333183106, 64.86956465359813, 64.84177333183106 ),
 					new Vector3( - 28.288507045700854, 104.83101184518996, 28.288507045700854 ),
 					new Vector3( 60, - 100, - 60 )
 				];
 
-				const points = [
-					curve.getPointAt( 0, new Vector3() ),
-					curve.getPointAt( 0.3, new Vector3() ),
-					curve.getPointAt( 0.5, new Vector3() ),
-					curve.getPointAt( 1, new Vector3() )
+				var points = [
+					curve.getPointAt( 0 ),
+					curve.getPointAt( 0.3 ),
+					curve.getPointAt( 0.5 ),
+					curve.getPointAt( 1 )
 				];
 
-				assert.deepEqual( points, expectedPoints, 'Correct points' );
+				assert.deepEqual( points, expectedPoints, "Correct points" );
 
 			} );
 
-			QUnit.test( 'getTangent/getTangentAt', ( assert ) => {
+			QUnit.test( "getTangent/getTangentAt", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				let expectedTangents = [
+				var expectedTangents = [
 					new Vector3( 0, 1, 0 ),
 					new Vector3( - 0.0001090274561657922, 0.9999999881130137, 0.0001090274561657922 ),
 					new Vector3( 0.7071067811865475, - 2.0930381713877622e-13, - 0.7071067811865475 ),
@@ -315,26 +255,26 @@ export default QUnit.module( 'Extras', () => {
 					new Vector3( - 0.00019991333100812723, - 0.9999999600346592, 0.00019991333100812723 )
 				];
 
-				let tangents = [
-					curve.getTangent( 0, new Vector3() ),
-					curve.getTangent( 0.25, new Vector3() ),
-					curve.getTangent( 0.5, new Vector3() ),
-					curve.getTangent( 0.75, new Vector3() ),
-					curve.getTangent( 1, new Vector3() )
+				var tangents = [
+					curve.getTangent( 0 ),
+					curve.getTangent( 0.25 ),
+					curve.getTangent( 0.5 ),
+					curve.getTangent( 0.75 ),
+					curve.getTangent( 1 )
 				];
 
 				expectedTangents.forEach( function ( exp, i ) {
 
-					const tangent = tangents[ i ];
+					var tangent = tangents[ i ];
 
-					assert.numEqual( tangent.x, exp.x, 'getTangent #' + i + ': x correct' );
-					assert.numEqual( tangent.y, exp.y, 'getTangent #' + i + ': y correct' );
+					assert.numEqual( tangent.x, exp.x, "getTangent #" + i + ": x correct" );
+					assert.numEqual( tangent.y, exp.y, "getTangent #" + i + ": y correct" );
 
 				} );
 
 				//
 
-				expectedTangents = [
+				var expectedTangents = [
 					new Vector3( 0, 1, 0 ),
 					new Vector3( - 0.10709018822205997, 0.9884651653817284, 0.10709018822205997 ),
 					new Vector3( 0.6396363672964268, - 0.4262987629159402, - 0.6396363672964268 ),
@@ -342,31 +282,31 @@ export default QUnit.module( 'Extras', () => {
 					new Vector3( - 0.00019991333100812723, - 0.9999999600346592, 0.00019991333100812723 )
 				];
 
-				tangents = [
-					curve.getTangentAt( 0, new Vector3() ),
-					curve.getTangentAt( 0.25, new Vector3() ),
-					curve.getTangentAt( 0.5, new Vector3() ),
-					curve.getTangentAt( 0.75, new Vector3() ),
-					curve.getTangentAt( 1, new Vector3() )
+				var tangents = [
+					curve.getTangentAt( 0 ),
+					curve.getTangentAt( 0.25 ),
+					curve.getTangentAt( 0.5 ),
+					curve.getTangentAt( 0.75 ),
+					curve.getTangentAt( 1 )
 				];
 
 				expectedTangents.forEach( function ( exp, i ) {
 
-					const tangent = tangents[ i ];
+					var tangent = tangents[ i ];
 
-					assert.numEqual( tangent.x, exp.x, 'getTangentAt #' + i + ': x correct' );
-					assert.numEqual( tangent.y, exp.y, 'getTangentAt #' + i + ': y correct' );
+					assert.numEqual( tangent.x, exp.x, "getTangentAt #" + i + ": x correct" );
+					assert.numEqual( tangent.y, exp.y, "getTangentAt #" + i + ": y correct" );
 
 				} );
 
 			} );
 
-			QUnit.test( 'computeFrenetFrames', ( assert ) => {
+			QUnit.test( "computeFrenetFrames", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				const expected = {
+				var expected = {
 					binormals: [
 						new Vector3( - 1, 0, 0 ),
 						new Vector3( - 0.28685061854203, 0.6396363672964267, - 0.7131493814579701 ),
@@ -384,15 +324,15 @@ export default QUnit.module( 'Extras', () => {
 					]
 				};
 
-				const frames = curve.computeFrenetFrames( 2, false );
+				var frames = curve.computeFrenetFrames( 2, false );
 
 				Object.keys( expected ).forEach( function ( group, i ) {
 
 					expected[ group ].forEach( function ( vec, j ) {
 
-						assert.numEqual( frames[ group ][ j ].x, vec.x, 'Frenet frames [' + i + ', ' + j + '].x correct' );
-						assert.numEqual( frames[ group ][ j ].y, vec.y, 'Frenet frames [' + i + ', ' + j + '].y correct' );
-						assert.numEqual( frames[ group ][ j ].z, vec.z, 'Frenet frames [' + i + ', ' + j + '].z correct' );
+						assert.numEqual( frames[ group ][ j ].x, vec.x, "Frenet frames [" + i + ", " + j + "].x correct" );
+						assert.numEqual( frames[ group ][ j ].y, vec.y, "Frenet frames [" + i + ", " + j + "].y correct" );
+						assert.numEqual( frames[ group ][ j ].z, vec.z, "Frenet frames [" + i + ", " + j + "].z correct" );
 
 					} );
 
@@ -400,29 +340,29 @@ export default QUnit.module( 'Extras', () => {
 
 			} );
 
-			QUnit.test( 'getUtoTmapping', ( assert ) => {
+			QUnit.test( "getUtoTmapping", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				const start = curve.getUtoTmapping( 0, 0 );
-				const end = curve.getUtoTmapping( 0, curve.getLength() );
-				const somewhere = curve.getUtoTmapping( 0.5, 500 );
+				var start = curve.getUtoTmapping( 0, 0 );
+				var end = curve.getUtoTmapping( 0, curve.getLength() );
+				var somewhere = curve.getUtoTmapping( 0.5, 500 );
 
-				const expectedSomewhere = 0.8964116382083199;
+				var expectedSomewhere = 0.8964116382083199;
 
-				assert.strictEqual( start, 0, 'getUtoTmapping( 0, 0 ) is the starting point' );
-				assert.strictEqual( end, 1, 'getUtoTmapping( 0, length ) is the ending point' );
-				assert.numEqual( somewhere, expectedSomewhere, 'getUtoTmapping( 0.5, 500 ) is correct' );
+				assert.strictEqual( start, 0, "getUtoTmapping( 0, 0 ) is the starting point" );
+				assert.strictEqual( end, 1, "getUtoTmapping( 0, length ) is the ending point" );
+				assert.numEqual( somewhere, expectedSomewhere, "getUtoTmapping( 0.5, 500 ) is correct" );
 
 			} );
 
-			QUnit.test( 'getSpacedPoints', ( assert ) => {
+			QUnit.test( "getSpacedPoints", ( assert ) => {
 
-				const curve = new CatmullRomCurve3( positions );
+				var curve = new CatmullRomCurve3( positions );
 				curve.curveType = 'catmullrom';
 
-				const expectedPoints = [
+				var expectedPoints = [
 					new Vector3( - 60, - 100, 60 ),
 					new Vector3( - 60, 10.311489426555056, 60 ),
 					new Vector3( - 65.05889864636504, 117.99691802595966, 65.05889864636504 ),
@@ -431,10 +371,10 @@ export default QUnit.module( 'Extras', () => {
 					new Vector3( 60, - 100, - 60 )
 				];
 
-				const points = curve.getSpacedPoints();
+				var points = curve.getSpacedPoints();
 
-				assert.strictEqual( points.length, expectedPoints.length, 'Correct number of points' );
-				assert.deepEqual( points, expectedPoints, 'Correct points calculated' );
+				assert.strictEqual( points.length, expectedPoints.length, "Correct number of points" );
+				assert.deepEqual( points, expectedPoints, "Correct points calculated" );
 
 			} );
 

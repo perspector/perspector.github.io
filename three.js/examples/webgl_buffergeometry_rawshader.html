@@ -4,12 +4,41 @@
 		<title>three.js webgl - raw shader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+				color: #ffffff;
+			}
+
+			#webglmessage a { color:#da0 }
+		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - raw shader demo</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - raw shader demo</div>
+
+		<script src="../build/three.js"></script>
+
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
 		<script id="vertexShader" type="x-shader/x-vertex">
 
@@ -57,28 +86,17 @@
 
 		</script>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var container, stats;
 
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			let container, stats;
-
-			let camera, scene, renderer;
+			var camera, scene, renderer;
 
 			init();
 			animate();
@@ -94,22 +112,20 @@
 				scene.background = new THREE.Color( 0x101010 );
 
 				// geometry
-				// nr of triangles with 3 vertices per triangle
-				const vertexCount = 200 * 3;
 
-				const geometry = new THREE.BufferGeometry();
+				var triangles = 500;
 
-				const positions = [];
-				const colors = [];
+				var geometry = new THREE.BufferGeometry();
 
-				for ( let i = 0; i < vertexCount; i ++ ) {
+				var positions = [];
+				var colors = [];
 
-					// adding x,y,z
+				for ( var i = 0; i < triangles; i ++ ) {
+
 					positions.push( Math.random() - 0.5 );
 					positions.push( Math.random() - 0.5 );
 					positions.push( Math.random() - 0.5 );
 
-					// adding r,g,b,a
 					colors.push( Math.random() * 255 );
 					colors.push( Math.random() * 255 );
 					colors.push( Math.random() * 255 );
@@ -117,17 +133,17 @@
 
 				}
 
-				const positionAttribute = new THREE.Float32BufferAttribute( positions, 3 );
-				const colorAttribute = new THREE.Uint8BufferAttribute( colors, 4 );
+				var positionAttribute = new THREE.Float32BufferAttribute( positions, 3 );
+				var colorAttribute = new THREE.Uint8BufferAttribute( colors, 4 );
 
 				colorAttribute.normalized = true; // this will map the buffer values to 0.0f - +1.0f in the shader
 
-				geometry.setAttribute( 'position', positionAttribute );
-				geometry.setAttribute( 'color', colorAttribute );
+				geometry.addAttribute( 'position', positionAttribute );
+				geometry.addAttribute( 'color', colorAttribute );
 
 				// material
 
-				const material = new THREE.RawShaderMaterial( {
+				var material = new THREE.RawShaderMaterial( {
 
 					uniforms: {
 						time: { value: 1.0 }
@@ -139,7 +155,7 @@
 
 				} );
 
-				const mesh = new THREE.Mesh( geometry, material );
+				var mesh = new THREE.Mesh( geometry, material );
 				scene.add( mesh );
 
 				renderer = new THREE.WebGLRenderer();
@@ -150,7 +166,7 @@
 				stats = new Stats();
 				container.appendChild( stats.dom );
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -176,9 +192,9 @@
 
 			function render() {
 
-				const time = performance.now();
+				var time = performance.now();
 
-				const object = scene.children[ 0 ];
+				var object = scene.children[ 0 ];
 
 				object.rotation.y = time * 0.0005;
 				object.material.uniforms.time.value = time * 0.005;

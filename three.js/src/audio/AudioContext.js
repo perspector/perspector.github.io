@@ -1,25 +1,29 @@
-let _context;
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-class AudioContext {
+var context;
 
-	static getContext() {
+var AudioContext = {
 
-		if ( _context === undefined ) {
+	getContext: function () {
 
-			_context = new ( window.AudioContext || window.webkitAudioContext )();
+		if ( context === undefined ) {
+
+			context = new ( window.AudioContext || window.webkitAudioContext )();
 
 		}
 
-		return _context;
+		return context;
+
+	},
+
+	setContext: function ( value ) {
+
+		context = value;
 
 	}
 
-	static setContext( value ) {
-
-		_context = value;
-
-	}
-
-}
+};
 
 export { AudioContext };

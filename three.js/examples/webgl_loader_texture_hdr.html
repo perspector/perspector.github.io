@@ -4,41 +4,57 @@
 		<title>three.js webgl - materials - HDR texture loader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				color: #fff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				color:#fff;
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+
+			}
+
+			a { color: red; }
+
+		</style>
 	</head>
 	<body>
 
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl HDR (RGBE) texture loader example<br/>
-			Image courtesy of <a href="http://www.pauldebevec.com/Research/HDR/" target="_blank" rel="noopener">Paul Debevec</a>.
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - webgl HDR (RGBE) texture loader example
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/loaders/RGBELoader.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/libs/dat.gui.min.js"></script>
+
+		<script src="js/WebGL.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-			import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
-
-			const params = {
-				exposure: 2.0
+			var params = {
+				exposure: 1.0
 			};
 
-			let renderer, scene, camera;
+			var renderer, scene, camera;
 
 			init();
 
@@ -52,49 +68,54 @@
 				renderer.toneMapping = THREE.ReinhardToneMapping;
 				renderer.toneMappingExposure = params.exposure;
 
+				renderer.gammaOutput = true;
 
 				scene = new THREE.Scene();
 
-				const aspect = window.innerWidth / window.innerHeight;
+				var aspect = window.innerWidth / window.innerHeight;
 
 				camera = new THREE.OrthographicCamera( - aspect, aspect, 1, - 1, 0, 1 );
 
-				new RGBELoader()
-					.load( 'textures/memorial.hdr', function ( texture, textureData ) {
+				new THREE.RGBELoader().load( 'textures/miranda_uncropped.hdr', function ( texture, textureData ) {
 
-						//console.log( textureData );
-						//console.log( texture );
+					//console.log( textureData );
+					//console.log( texture );
 
-						const material = new THREE.MeshBasicMaterial( { map: texture } );
+					texture.encoding = THREE.RGBEEncoding;
+					texture.minFilter = THREE.NearestFilter;
+					texture.magFilter = THREE.NearestFilter;
+					texture.flipY = true;
 
-						const quad = new THREE.PlaneGeometry( 1.5 * textureData.width / textureData.height, 1.5 );
+					var material = new THREE.MeshBasicMaterial( { map: texture } );
 
-						const mesh = new THREE.Mesh( quad, material );
+					var quad = new THREE.PlaneBufferGeometry( textureData.width / textureData.height, 1 );
 
-						scene.add( mesh );
+					var mesh = new THREE.Mesh( quad, material );
 
-						render();
+					scene.add( mesh );
 
-					} );
+					render();
+
+				} );
 
 				//
 
-				const gui = new GUI();
+				var gui = new dat.GUI();
 
-				gui.add( params, 'exposure', 0, 4, 0.01 ).onChange( render );
+				gui.add( params, 'exposure', 0, 2 ).onChange( render );
 				gui.open();
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
 			function onWindowResize() {
 
-				const aspect = window.innerWidth / window.innerHeight;
+				var aspect = window.innerWidth / window.innerHeight;
 
-				const frustumHeight = camera.top - camera.bottom;
+				var frustumHeight = camera.top - camera.bottom;
 
 				camera.left = - frustumHeight * aspect / 2;
 				camera.right = frustumHeight * aspect / 2;

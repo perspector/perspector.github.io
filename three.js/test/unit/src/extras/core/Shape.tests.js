@@ -1,8 +1,9 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Shape } from '../../../../../src/extras/core/Shape.js';
-
-import { Path } from '../../../../../src/extras/core/Path.js';
+import { Shape } from '../../../../../src/extras/core/Shape';
 
 export default QUnit.module( 'Extras', () => {
 
@@ -11,75 +12,35 @@ export default QUnit.module( 'Extras', () => {
 		QUnit.module( 'Shape', () => {
 
 			// INHERITANCE
-			QUnit.test( 'Extending', ( assert ) => {
+			QUnit.todo( "Extending", ( assert ) => {
 
-				const object = new Shape();
-				assert.strictEqual(
-					object instanceof Path, true,
-					'Shape extends from Path'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
 			// INSTANCING
-			QUnit.test( 'Instancing', ( assert ) => {
+			QUnit.todo( "Instancing", ( assert ) => {
 
-				const object = new Shape();
-				assert.ok( object, 'Can instantiate a Shape.' );
-
-			} );
-
-			// PROPERTIES
-			QUnit.test( 'type', ( assert ) => {
-
-				const object = new Shape();
-				assert.ok(
-					object.type === 'Shape',
-					'Shape.type should be Shape'
-				);
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'uuid', ( assert ) => {
+			// PUBLIC STUFF
+			QUnit.todo( "getPointsHoles", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'holes', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			// PUBLIC
-			QUnit.todo( 'getPointsHoles', ( assert ) => {
+			QUnit.todo( "extractAllPoints", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'extractPoints', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 
-			QUnit.todo( 'copy', ( assert ) => {
+			QUnit.todo( "extractPoints", ( assert ) => {
 
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'toJSON', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
-
-			} );
-
-			QUnit.todo( 'fromJSON', ( assert ) => {
-
-				assert.ok( false, 'everything\'s gonna be alright' );
+				assert.ok( false, "everything's gonna be alright" );
 
 			} );
 

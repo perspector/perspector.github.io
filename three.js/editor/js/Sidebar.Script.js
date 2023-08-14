@@ -1,38 +1,36 @@
-import { UIPanel, UIBreak, UIText, UIButton, UIRow, UIInput } from './libs/ui.js';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-import { AddScriptCommand } from './commands/AddScriptCommand.js';
-import { SetScriptValueCommand } from './commands/SetScriptValueCommand.js';
-import { RemoveScriptCommand } from './commands/RemoveScriptCommand.js';
+Sidebar.Script = function ( editor ) {
 
-function SidebarScript( editor ) {
+	var strings = editor.strings;
 
-	const strings = editor.strings;
+	var signals = editor.signals;
 
-	const signals = editor.signals;
-
-	const container = new UIPanel();
+	var container = new UI.Panel();
 	container.setDisplay( 'none' );
 
-	container.add( new UIText( strings.getKey( 'sidebar/script' ) ).setTextTransform( 'uppercase' ) );
-	container.add( new UIBreak() );
-	container.add( new UIBreak() );
+	container.add( new UI.Text( strings.getKey( 'sidebar/script' ) ).setTextTransform( 'uppercase' ) );
+	container.add( new UI.Break() );
+	container.add( new UI.Break() );
 
 	//
 
-	const scriptsContainer = new UIRow();
+	var scriptsContainer = new UI.Row();
 	container.add( scriptsContainer );
 
-	const newScript = new UIButton( strings.getKey( 'sidebar/script/new' ) );
+	var newScript = new UI.Button( strings.getKey( 'sidebar/script/new' ) );
 	newScript.onClick( function () {
 
-		const script = { name: '', source: 'function update( event ) {}' };
-		editor.execute( new AddScriptCommand( editor, editor.selected, script ) );
+		var script = { name: '', source: 'function update( event ) {}' };
+		editor.execute( new AddScriptCommand( editor.selected, script ) );
 
 	} );
 	container.add( newScript );
 
 	/*
-	let loadScript = new UI.Button( 'Load' );
+	var loadScript = new UI.Button( 'Load' );
 	loadScript.setMarginLeft( '4px' );
 	container.add( loadScript );
 	*/
@@ -44,7 +42,7 @@ function SidebarScript( editor ) {
 		scriptsContainer.clear();
 		scriptsContainer.setDisplay( 'none' );
 
-		const object = editor.selected;
+		var object = editor.selected;
 
 		if ( object === null ) {
 
@@ -52,25 +50,25 @@ function SidebarScript( editor ) {
 
 		}
 
-		const scripts = editor.scripts[ object.uuid ];
+		var scripts = editor.scripts[ object.uuid ];
 
 		if ( scripts !== undefined && scripts.length > 0 ) {
 
 			scriptsContainer.setDisplay( 'block' );
 
-			for ( let i = 0; i < scripts.length; i ++ ) {
+			for ( var i = 0; i < scripts.length; i ++ ) {
 
 				( function ( object, script ) {
 
-					const name = new UIInput( script.name ).setWidth( '130px' ).setFontSize( '12px' );
+					var name = new UI.Input( script.name ).setWidth( '130px' ).setFontSize( '12px' );
 					name.onChange( function () {
 
-						editor.execute( new SetScriptValueCommand( editor, editor.selected, script, 'name', this.getValue() ) );
+						editor.execute( new SetScriptValueCommand( editor.selected, script, 'name', this.getValue() ) );
 
 					} );
 					scriptsContainer.add( name );
 
-					const edit = new UIButton( strings.getKey( 'sidebar/script/edit' ) );
+					var edit = new UI.Button( strings.getKey( 'sidebar/script/edit' ) );
 					edit.setMarginLeft( '4px' );
 					edit.onClick( function () {
 
@@ -79,22 +77,22 @@ function SidebarScript( editor ) {
 					} );
 					scriptsContainer.add( edit );
 
-					const remove = new UIButton( strings.getKey( 'sidebar/script/remove' ) );
+					var remove = new UI.Button( strings.getKey( 'sidebar/script/remove' ) );
 					remove.setMarginLeft( '4px' );
 					remove.onClick( function () {
 
 						if ( confirm( 'Are you sure?' ) ) {
 
-							editor.execute( new RemoveScriptCommand( editor, editor.selected, script ) );
+							editor.execute( new RemoveScriptCommand( editor.selected, script ) );
 
 						}
 
 					} );
 					scriptsContainer.add( remove );
 
-					scriptsContainer.add( new UIBreak() );
+					scriptsContainer.add( new UI.Break() );
 
-				} )( object, scripts[ i ] );
+				} )( object, scripts[ i ] )
 
 			}
 
@@ -126,6 +124,4 @@ function SidebarScript( editor ) {
 
 	return container;
 
-}
-
-export { SidebarScript };
+};

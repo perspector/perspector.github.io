@@ -4,62 +4,62 @@
 		<title>three.js webgl - loaders - MMD loader</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			body {
+				font-family: Monospace;
 				background-color: #fff;
-				color: #444;
+				color: #000;
+				margin: 0px;
+				overflow: hidden;
 			}
-			a {
-				color: #08f;
+			#info {
+				color: #000;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				display:block;
 			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
 		</style>
 	</head>
 
 	<body>
 		<div id="info">
-		<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - MMDLoader test<br />
+		<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - MMDLoader test<br />
 		<a href="https://github.com/mrdoob/three.js/tree/master/examples/models/mmd#readme" target="_blank" rel="noopener">MMD Assets license</a><br />
 		Copyright
-		<a href="https://sites.google.com/view/evpvp/" target="_blank" rel="noopener">Model Data</a>
+		<a href="http://www.geocities.jp/higuchuu4/index_e.htm" target="_blank" rel="noopener">Model Data</a>
 		<a href="http://www.nicovideo.jp/watch/sm13147122" target="_blank" rel="noopener">Dance Data</a>
 		</div>
 
-		<script src="jsm/libs/ammo.wasm.js"></script>
+		<script src="../build/three.js"></script>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="js/libs/mmdparser.min.js"></script>
+		<script src="js/libs/ammo.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="js/loaders/TGALoader.js"></script>
+		<script src="js/loaders/MMDLoader.js"></script>
+		<script src="js/effects/OutlineEffect.js"></script>
+		<script src="js/animation/CCDIKSolver.js"></script>
+		<script src="js/animation/MMDPhysics.js"></script>
+		<script src="js/animation/MMDAnimationHelper.js"></script>
 
-		<script type="module">
+		<script src="js/controls/OrbitControls.js"></script>
 
-			import * as THREE from 'three';
+		<script src="js/libs/stats.min.js"></script>
+		<script src="js/libs/dat.gui.min.js"></script>
 
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		<script>
 
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { OutlineEffect } from 'three/addons/effects/OutlineEffect.js';
-			import { MMDLoader } from 'three/addons/loaders/MMDLoader.js';
-			import { MMDAnimationHelper } from 'three/addons/animation/MMDAnimationHelper.js';
+			var container, stats;
 
-			let stats;
+			var mesh, camera, scene, renderer, effect;
+			var helper, ikHelper, physicsHelper;
 
-			let mesh, camera, scene, renderer, effect;
-			let helper, ikHelper, physicsHelper;
+			var clock = new THREE.Clock();
 
-			const clock = new THREE.Clock();
-
-			Ammo().then( function ( AmmoLib ) {
+			Ammo().then( function( AmmoLib ) {
 
 				Ammo = AmmoLib;
 
@@ -71,7 +71,7 @@
 
 			function init() {
 
-				const container = document.createElement( 'div' );
+				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
@@ -82,14 +82,14 @@
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xffffff );
 
-				const gridHelper = new THREE.PolarGridHelper( 30, 0 );
+				var gridHelper = new THREE.PolarGridHelper( 30, 10 );
 				gridHelper.position.y = - 10;
 				scene.add( gridHelper );
 
-				const ambient = new THREE.AmbientLight( 0xaaaaaa, 3 );
+				var ambient = new THREE.AmbientLight( 0x666666 );
 				scene.add( ambient );
 
-				const directionalLight = new THREE.DirectionalLight( 0xffffff, 3 );
+				var directionalLight = new THREE.DirectionalLight( 0x887766 );
 				directionalLight.position.set( - 1, 1, 1 ).normalize();
 				scene.add( directionalLight );
 
@@ -100,7 +100,7 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
-				effect = new OutlineEffect( renderer );
+				effect = new THREE.OutlineEffect( renderer );
 
 				// STATS
 
@@ -113,7 +113,7 @@
 
 					if ( xhr.lengthComputable ) {
 
-						const percentComplete = xhr.loaded / xhr.total * 100;
+						var percentComplete = xhr.loaded / xhr.total * 100;
 						console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
 
 					}
@@ -121,14 +121,14 @@
 				}
 
 
-				const modelFile = 'models/mmd/miku/miku_v2.pmd';
-				const vmdFiles = [ 'models/mmd/vmds/wavefile_v2.vmd' ];
+				var modelFile = 'models/mmd/miku/miku_v2.pmd';
+				var vmdFiles = [ 'models/mmd/vmds/wavefile_v2.vmd' ];
 
-				helper = new MMDAnimationHelper( {
+				helper = new THREE.MMDAnimationHelper( {
 					afterglow: 2.0
 				} );
 
-				const loader = new MMDLoader();
+				var loader = new THREE.MMDLoader();
 
 				loader.loadWithAnimation( modelFile, vmdFiles, function ( mmd ) {
 
@@ -153,16 +153,36 @@
 
 				}, onProgress, null );
 
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.minDistance = 10;
-				controls.maxDistance = 100;
+				var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				var phongMaterials;
+				var originalMaterials;
+
+				function makePhongMaterials( materials ) {
+
+					var array = [];
+
+					for ( var i = 0, il = materials.length; i < il; i ++ ) {
+
+						var m = new THREE.MeshPhongMaterial();
+						m.copy( materials[ i ] );
+						m.needsUpdate = true;
+
+						array.push( m );
+
+					}
+
+					phongMaterials = array;
+
+				}
 
 				function initGui() {
 
-					const api = {
+					var api = {
 						'animation': true,
+						'gradient mapping': true,
 						'ik': true,
 						'outline': true,
 						'physics': true,
@@ -170,11 +190,28 @@
 						'show rigid bodies': false
 					};
 
-					const gui = new GUI();
+					var gui = new dat.GUI();
 
 					gui.add( api, 'animation' ).onChange( function () {
 
 						helper.enable( 'animation', api[ 'animation' ] );
+
+					} );
+
+					gui.add( api, 'gradient mapping' ).onChange( function () {
+
+						if ( originalMaterials === undefined ) originalMaterials = mesh.material;
+						if ( phongMaterials === undefined ) makePhongMaterials( mesh.material );
+
+						if ( api[ 'gradient mapping' ] ) {
+
+							mesh.material = originalMaterials;
+
+						} else {
+
+							mesh.material = phongMaterials;
+
+						}
 
 					} );
 

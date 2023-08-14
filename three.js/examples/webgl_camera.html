@@ -4,47 +4,49 @@
 		<title>three.js webgl - cameras</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-			b {
-				color: lightgreen;
+			body {
+				color: #808080;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
 			}
+
+			#info {
+				position: absolute;
+				top: 5px; width: 100%;
+				z-index: 100;
+			}
+
+			a {color: #0080ff; }
+			b { color: lightgreen }
+
 		</style>
 	</head>
 	<body>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - cameras<br/>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - cameras<br/>
 		<b>O</b> orthographic <b>P</b> perspective
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script>
 
-		<script type="module">
+			var SCREEN_WIDTH = window.innerWidth;
+			var SCREEN_HEIGHT = window.innerHeight;
+			var aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			let SCREEN_WIDTH = window.innerWidth;
-			let SCREEN_HEIGHT = window.innerHeight;
-			let aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
-
-			let container, stats;
-			let camera, scene, renderer, mesh;
-			let cameraRig, activeCamera, activeHelper;
-			let cameraPerspective, cameraOrtho;
-			let cameraPerspectiveHelper, cameraOrthoHelper;
-			const frustumSize = 600;
+			var container, stats;
+			var camera, scene, renderer, mesh;
+			var cameraRig, activeCamera, activeHelper;
+			var cameraPerspective, cameraOrtho;
+			var cameraPerspectiveHelper, cameraOrthoHelper;
+			var frustumSize = 600;
 
 			init();
 			animate();
@@ -93,20 +95,20 @@
 				//
 
 				mesh = new THREE.Mesh(
-					new THREE.SphereGeometry( 100, 16, 8 ),
+					new THREE.SphereBufferGeometry( 100, 16, 8 ),
 					new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: true } )
 				);
 				scene.add( mesh );
 
-				const mesh2 = new THREE.Mesh(
-					new THREE.SphereGeometry( 50, 16, 8 ),
+				var mesh2 = new THREE.Mesh(
+					new THREE.SphereBufferGeometry( 50, 16, 8 ),
 					new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } )
 				);
 				mesh2.position.y = 150;
 				mesh.add( mesh2 );
 
-				const mesh3 = new THREE.Mesh(
-					new THREE.SphereGeometry( 5, 16, 8 ),
+				var mesh3 = new THREE.Mesh(
+					new THREE.SphereBufferGeometry( 5, 16, 8 ),
 					new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true } )
 				);
 				mesh3.position.z = 150;
@@ -114,20 +116,20 @@
 
 				//
 
-				const geometry = new THREE.BufferGeometry();
-				const vertices = [];
+				var geometry = new THREE.BufferGeometry();
+				var vertices = [];
 
-				for ( let i = 0; i < 10000; i ++ ) {
+				for ( var i = 0; i < 10000; i ++ ) {
 
-					vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ); // x
-					vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ); // y
-					vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ); // z
+					vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // x
+					vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // y
+					vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // z
 
 				}
 
-				geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+				geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
 
-				const particles = new THREE.Points( geometry, new THREE.PointsMaterial( { color: 0x888888 } ) );
+				var particles = new THREE.Points( geometry, new THREE.PointsMaterial( { color: 0x888888 } ) );
 				scene.add( particles );
 
 				//
@@ -146,8 +148,8 @@
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
-				document.addEventListener( 'keydown', onKeyDown );
+				window.addEventListener( 'resize', onWindowResize, false );
+				document.addEventListener( 'keydown', onKeyDown, false );
 
 			}
 
@@ -213,7 +215,7 @@
 
 			function render() {
 
-				const r = Date.now() * 0.0005;
+				var r = Date.now() * 0.0005;
 
 				mesh.position.x = 700 * Math.cos( r );
 				mesh.position.z = 700 * Math.sin( r );

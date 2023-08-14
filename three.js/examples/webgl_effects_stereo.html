@@ -4,43 +4,63 @@
 		<title>three.js webgl - effects - stereo</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				background:#777;
+				padding:0;
+				margin:0;
+				font-weight: bold;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				z-index:1000;
+			}
+
+			a {
+				color: #ffffff;
+			}
+
+			#webglmessage a { color:#da0 }
+		</style>
 	</head>
 
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - effects - stereo. skybox by <a href="http://www.zfight.com/" target="_blank" rel="noopener">Jochum Skoglund</a>
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - effects - stereo. skybox by <a href="http://www.zfight.com/" target="_blank" rel="noopener">Jochum Skoglund</a>
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/effects/StereoEffect.js"></script>
+
+		<script src="js/WebGL.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var container, camera, scene, renderer, effect;
 
-			import * as THREE from 'three';
+			var spheres = [];
 
-			import { StereoEffect } from 'three/addons/effects/StereoEffect.js';
+			var mouseX = 0, mouseY = 0;
 
-			let container, camera, scene, renderer, effect;
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
 
-			const spheres = [];
-
-			let mouseX = 0, mouseY = 0;
-
-			let windowHalfX = window.innerWidth / 2;
-			let windowHalfY = window.innerHeight / 2;
-
-			document.addEventListener( 'mousemove', onDocumentMouseMove );
+			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 			init();
 			animate();
@@ -58,18 +78,18 @@
 					.setPath( 'textures/cube/Park3Med/' )
 					.load( [ 'px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg' ] );
 
-				const geometry = new THREE.SphereGeometry( 100, 32, 16 );
+				var geometry = new THREE.SphereBufferGeometry( 100, 32, 16 );
 
-				const textureCube = new THREE.CubeTextureLoader()
+				var textureCube = new THREE.CubeTextureLoader()
 					.setPath( 'textures/cube/Park3Med/' )
 					.load( [ 'px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg' ] );
 				textureCube.mapping = THREE.CubeRefractionMapping;
 
-				const material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.95 } );
+				var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.95 } );
 
-				for ( let i = 0; i < 500; i ++ ) {
+				for ( var i = 0; i < 500; i ++ ) {
 
-					const mesh = new THREE.Mesh( geometry, material );
+					var mesh = new THREE.Mesh( geometry, material );
 					mesh.position.x = Math.random() * 10000 - 5000;
 					mesh.position.y = Math.random() * 10000 - 5000;
 					mesh.position.z = Math.random() * 10000 - 5000;
@@ -86,12 +106,12 @@
 				renderer.setPixelRatio( window.devicePixelRatio );
 				container.appendChild( renderer.domElement );
 
-				effect = new StereoEffect( renderer );
+				effect = new THREE.StereoEffect( renderer );
 				effect.setSize( window.innerWidth, window.innerHeight );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -126,15 +146,15 @@
 
 			function render() {
 
-				const timer = 0.0001 * Date.now();
+				var timer = 0.0001 * Date.now();
 
 				camera.position.x += ( mouseX - camera.position.x ) * .05;
 				camera.position.y += ( - mouseY - camera.position.y ) * .05;
 				camera.lookAt( scene.position );
 
-				for ( let i = 0, il = spheres.length; i < il; i ++ ) {
+				for ( var i = 0, il = spheres.length; i < il; i ++ ) {
 
-					const sphere = spheres[ i ];
+					var sphere = spheres[ i ];
 
 					sphere.position.x = 5000 * Math.cos( timer + i );
 					sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );

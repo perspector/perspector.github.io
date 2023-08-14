@@ -4,40 +4,54 @@
 		<title>three.js webgl - collada - skinning</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				background:#777;
+				padding:0;
+				margin:0;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+			}
+
+			a {
+				color: #ffffff;
+			}
+		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> collada loader - skinning<br/>
-			Dancing Stormtrooper by <a href="https://sketchfab.com/strykerdoesgames" target="_blank" rel="noopener">StrykerDoesAnimation</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC Attribution</a>
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> collada loader - skinning
+			| Dancing Stormtrooper by <a href="https://sketchfab.com/strykerdoesgames" target="_blank" rel="noopener">StrykerDoesAnimation</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC Attribution</a>
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<script src="js/loaders/ColladaLoader.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
-
-			import * as THREE from 'three';
-
-			import Stats from 'three/addons/libs/stats.module.js';
-
-			import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-			let container, stats, clock, controls;
-			let camera, scene, renderer, mixer;
+			var container, stats, clock, controls;
+			var camera, scene, renderer, mixer;
 
 			init();
 			animate();
@@ -55,14 +69,24 @@
 
 				// collada
 
-				const loader = new ColladaLoader();
+				var loader = new THREE.ColladaLoader();
 				loader.load( './models/collada/stormtrooper/stormtrooper.dae', function ( collada ) {
 
-					const avatar = collada.scene;
-					const animations = avatar.animations;
+					var animations = collada.animations;
+					var avatar = collada.scene;
+
+					avatar.traverse( function ( node ) {
+
+						if ( node.isSkinnedMesh ) {
+
+							node.frustumCulled = false;
+
+						}
+
+					} );
 
 					mixer = new THREE.AnimationMixer( avatar );
-					mixer.clipAction( animations[ 0 ] ).play();
+					var action = mixer.clipAction( animations[ 0 ] ).play();
 
 					scene.add( avatar );
 
@@ -70,17 +94,17 @@
 
 				//
 
-				const gridHelper = new THREE.GridHelper( 10, 20, 0xc1c1c1, 0x8d8d8d );
+				var gridHelper = new THREE.GridHelper( 10, 20 );
 				scene.add( gridHelper );
 
 				//
 
-				const ambientLight = new THREE.AmbientLight( 0xffffff, 0.6 );
+				var ambientLight = new THREE.AmbientLight( 0xffffff, 0.2 );
 				scene.add( ambientLight );
 
-				const directionalLight = new THREE.DirectionalLight( 0xffffff, 3 );
-				directionalLight.position.set( 1.5, 1, - 1.5 );
-				scene.add( directionalLight );
+				var pointLight = new THREE.PointLight( 0xffffff, 0.8 );
+				scene.add( camera );
+				camera.add( pointLight );
 
 				//
 
@@ -91,7 +115,7 @@
 
 				//
 
-				controls = new OrbitControls( camera, renderer.domElement );
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.screenSpacePanning = true;
 				controls.minDistance = 5;
 				controls.maxDistance = 40;
@@ -105,7 +129,7 @@
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -129,7 +153,7 @@
 
 			function render() {
 
-				const delta = clock.getDelta();
+				var delta = clock.getDelta();
 
 				if ( mixer !== undefined ) {
 

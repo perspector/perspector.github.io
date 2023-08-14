@@ -4,49 +4,57 @@
 		<title>three.js webgl - geometry - vertex colors</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
 			body {
+				color: #808080;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+
 				background-color: #fff;
-				color: #444;
+				margin: 0px;
+				overflow: hidden;
 			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
 			a {
-				color: #08f;
+
+				color: #0080ff;
 			}
+
 		</style>
 	</head>
 	<body>
 
 		<div id="container"></div>
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - vertex colors</div>
+		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - vertex colors</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
+		<script src="js/WebGL.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
 			}
-		</script>
 
-		<script type="module">
+			var container, stats;
 
-			import * as THREE from 'three';
+			var camera, scene, renderer;
 
-			import Stats from 'three/addons/libs/stats.module.js';
+			var mouseX = 0, mouseY = 0;
 
-			let container, stats;
-
-			let camera, scene, renderer;
-
-			let mouseX = 0, mouseY = 0;
-
-			let windowHalfX = window.innerWidth / 2;
-			let windowHalfY = window.innerHeight / 2;
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
 
 			init();
 			animate();
@@ -61,30 +69,30 @@
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xffffff );
 
-				const light = new THREE.DirectionalLight( 0xffffff, 3 );
+				var light = new THREE.DirectionalLight( 0xffffff );
 				light.position.set( 0, 0, 1 );
 				scene.add( light );
 
 				// shadow
 
-				const canvas = document.createElement( 'canvas' );
+				var canvas = document.createElement( 'canvas' );
 				canvas.width = 128;
 				canvas.height = 128;
 
-				const context = canvas.getContext( '2d' );
-				const gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+				var context = canvas.getContext( '2d' );
+				var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 				gradient.addColorStop( 0.1, 'rgba(210,210,210,1)' );
 				gradient.addColorStop( 1, 'rgba(255,255,255,1)' );
 
 				context.fillStyle = gradient;
 				context.fillRect( 0, 0, canvas.width, canvas.height );
 
-				const shadowTexture = new THREE.CanvasTexture( canvas );
+				var shadowTexture = new THREE.CanvasTexture( canvas );
 
-				const shadowMaterial = new THREE.MeshBasicMaterial( { map: shadowTexture } );
-				const shadowGeo = new THREE.PlaneGeometry( 300, 300, 1, 1 );
+				var shadowMaterial = new THREE.MeshBasicMaterial( { map: shadowTexture } );
+				var shadowGeo = new THREE.PlaneBufferGeometry( 300, 300, 1, 1 );
 
-				let shadowMesh;
+				var shadowMesh;
 
 				shadowMesh = new THREE.Mesh( shadowGeo, shadowMaterial );
 				shadowMesh.position.y = - 250;
@@ -103,61 +111,61 @@
 				shadowMesh.rotation.x = - Math.PI / 2;
 				scene.add( shadowMesh );
 
-				const radius = 200;
+				var radius = 200;
 
-				const geometry1 = new THREE.IcosahedronGeometry( radius, 1 );
+				var geometry1 = new THREE.IcosahedronBufferGeometry( radius, 1 );
 
-				const count = geometry1.attributes.position.count;
-				geometry1.setAttribute( 'color', new THREE.BufferAttribute( new Float32Array( count * 3 ), 3 ) );
+				var count = geometry1.attributes.position.count;
+				geometry1.addAttribute( 'color', new THREE.BufferAttribute( new Float32Array( count * 3 ), 3 ) );
 
-				const geometry2 = geometry1.clone();
-				const geometry3 = geometry1.clone();
+				var geometry2 = geometry1.clone();
+				var geometry3 = geometry1.clone();
 
-				const color = new THREE.Color();
-				const positions1 = geometry1.attributes.position;
-				const positions2 = geometry2.attributes.position;
-				const positions3 = geometry3.attributes.position;
-				const colors1 = geometry1.attributes.color;
-				const colors2 = geometry2.attributes.color;
-				const colors3 = geometry3.attributes.color;
+				var color = new THREE.Color();
+				var positions1 = geometry1.attributes.position;
+				var positions2 = geometry2.attributes.position;
+				var positions3 = geometry3.attributes.position;
+				var colors1 = geometry1.attributes.color;
+				var colors2 = geometry2.attributes.color;
+				var colors3 = geometry3.attributes.color;
 
-				for ( let i = 0; i < count; i ++ ) {
+				for ( var i = 0; i < count; i ++ ) {
 
-					color.setHSL( ( positions1.getY( i ) / radius + 1 ) / 2, 1.0, 0.5, THREE.SRGBColorSpace );
+					color.setHSL( ( positions1.getY( i ) / radius + 1 ) / 2, 1.0, 0.5 );
 					colors1.setXYZ( i, color.r, color.g, color.b );
 
-					color.setHSL( 0, ( positions2.getY( i ) / radius + 1 ) / 2, 0.5, THREE.SRGBColorSpace );
+					color.setHSL( 0, ( positions2.getY( i ) / radius + 1 ) / 2, 0.5 );
 					colors2.setXYZ( i, color.r, color.g, color.b );
 
-					color.setRGB( 1, 0.8 - ( positions3.getY( i ) / radius + 1 ) / 2, 0, THREE.SRGBColorSpace );
+					color.setRGB( 1, 0.8 - ( positions3.getY( i ) / radius + 1 ) / 2, 0 );
 					colors3.setXYZ( i, color.r, color.g, color.b );
 
 				}
 
-				const material = new THREE.MeshPhongMaterial( {
+				var material = new THREE.MeshPhongMaterial( {
 					color: 0xffffff,
 					flatShading: true,
-					vertexColors: true,
+					vertexColors: THREE.VertexColors,
 					shininess: 0
 				} );
 
-				const wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
+				var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
 
-				let mesh = new THREE.Mesh( geometry1, material );
-				let wireframe = new THREE.Mesh( geometry1, wireframeMaterial );
+				var mesh = new THREE.Mesh( geometry1, material );
+				var wireframe = new THREE.Mesh( geometry1, wireframeMaterial );
 				mesh.add( wireframe );
 				mesh.position.x = - 400;
 				mesh.rotation.x = - 1.87;
 				scene.add( mesh );
 
-				mesh = new THREE.Mesh( geometry2, material );
-				wireframe = new THREE.Mesh( geometry2, wireframeMaterial );
+				var mesh = new THREE.Mesh( geometry2, material );
+				var wireframe = new THREE.Mesh( geometry2, wireframeMaterial );
 				mesh.add( wireframe );
 				mesh.position.x = 400;
 				scene.add( mesh );
 
-				mesh = new THREE.Mesh( geometry3, material );
-				wireframe = new THREE.Mesh( geometry3, wireframeMaterial );
+				var mesh = new THREE.Mesh( geometry3, material );
+				var wireframe = new THREE.Mesh( geometry3, wireframeMaterial );
 				mesh.add( wireframe );
 				scene.add( mesh );
 
@@ -169,11 +177,11 @@
 				stats = new Stats();
 				container.appendChild( stats.dom );
 
-				document.addEventListener( 'mousemove', onDocumentMouseMove );
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 

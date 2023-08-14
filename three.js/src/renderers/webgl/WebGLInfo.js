@@ -1,11 +1,15 @@
+/**
+ * @author Mugen87 / https://github.com/Mugen87
+ */
+
 function WebGLInfo( gl ) {
 
-	const memory = {
+	var memory = {
 		geometries: 0,
 		textures: 0
 	};
 
-	const render = {
+	var render = {
 		frame: 0,
 		calls: 0,
 		triangles: 0,
@@ -15,12 +19,19 @@ function WebGLInfo( gl ) {
 
 	function update( count, mode, instanceCount ) {
 
+		instanceCount = instanceCount || 1;
+
 		render.calls ++;
 
 		switch ( mode ) {
 
 			case gl.TRIANGLES:
 				render.triangles += instanceCount * ( count / 3 );
+				break;
+
+			case gl.TRIANGLE_STRIP:
+			case gl.TRIANGLE_FAN:
+				render.triangles += instanceCount * ( count - 2 );
 				break;
 
 			case gl.LINES:
@@ -49,6 +60,7 @@ function WebGLInfo( gl ) {
 
 	function reset() {
 
+		render.frame ++;
 		render.calls = 0;
 		render.triangles = 0;
 		render.points = 0;

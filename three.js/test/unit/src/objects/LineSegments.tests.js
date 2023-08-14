@@ -1,57 +1,35 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Object3D } from '../../../../src/core/Object3D.js';
-import { Line } from '../../../../src/objects/Line.js';
-import { LineSegments } from '../../../../src/objects/LineSegments.js';
+import { LineSegments } from '../../../../src/objects/LineSegments';
 
 export default QUnit.module( 'Objects', () => {
 
 	QUnit.module( 'LineSegments', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const lineSegments = new LineSegments();
-			assert.strictEqual( lineSegments instanceof Object3D, true, 'LineSegments extends from Object3D' );
-			assert.strictEqual( lineSegments instanceof Line, true, 'LineSegments extends from Line' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new LineSegments();
-			assert.ok( object, 'Can instantiate a LineSegments.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new LineSegments();
-			assert.ok(
-				object.type === 'LineSegments',
-				'LineSegments.type should be LineSegments'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.test( 'isLineSegments', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "isLineSegments", ( assert ) => {
 
-			const object = new LineSegments();
-			assert.ok(
-				object.isLineSegments,
-				'LineSegments.isLineSegments should be true'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'computeLineDistances', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
 
 	} );
 

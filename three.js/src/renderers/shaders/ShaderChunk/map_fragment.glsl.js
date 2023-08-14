@@ -1,7 +1,10 @@
 export default /* glsl */`
 #ifdef USE_MAP
 
-	diffuseColor *= texture2D( map, vMapUv );
+	vec4 texelColor = texture2D( map, vUv );
+
+	texelColor = mapTexelToLinear( texelColor );
+	diffuseColor *= texelColor;
 
 #endif
 `;

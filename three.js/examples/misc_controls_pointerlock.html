@@ -4,80 +4,93 @@
 		<title>three.js - pointerlock controls</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
 		<style>
-			#blocker {
-				position: absolute;
+			html, body {
 				width: 100%;
 				height: 100%;
+			}
+
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+				font-family: arial;
+			}
+
+			#blocker {
+
+				position: absolute;
+
+				width: 100%;
+				height: 100%;
+
 				background-color: rgba(0,0,0,0.5);
+
 			}
 
 			#instructions {
+
 				width: 100%;
 				height: 100%;
 
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;
 
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+
+				color: #ffffff;
 				text-align: center;
-				font-size: 14px;
+
 				cursor: pointer;
+
 			}
+
 		</style>
 	</head>
 	<body>
+		<script src="../build/three.js"></script>
+		<script src="js/controls/PointerLockControls.js"></script>
+
 		<div id="blocker">
+
 			<div id="instructions">
-				<p style="font-size:36px">
-					Click to play
-				</p>
-				<p>
-					Move: WASD<br/>
-					Jump: SPACE<br/>
-					Look: MOUSE
-				</p>
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
 			</div>
+
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script>
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+			var camera, scene, renderer, controls;
 
-		<script type="module">
+			var objects = [];
 
-			import * as THREE from 'three';
+			var raycaster;
 
-			import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+			var moveForward = false;
+			var moveBackward = false;
+			var moveLeft = false;
+			var moveRight = false;
+			var canJump = false;
 
-			let camera, scene, renderer, controls;
-
-			const objects = [];
-
-			let raycaster;
-
-			let moveForward = false;
-			let moveBackward = false;
-			let moveLeft = false;
-			let moveRight = false;
-			let canJump = false;
-
-			let prevTime = performance.now();
-			const velocity = new THREE.Vector3();
-			const direction = new THREE.Vector3();
-			const vertex = new THREE.Vector3();
-			const color = new THREE.Color();
+			var prevTime = performance.now();
+			var velocity = new THREE.Vector3();
+			var direction = new THREE.Vector3();
+			var vertex = new THREE.Vector3();
+			var color = new THREE.Color();
 
 			init();
 			animate();
@@ -85,26 +98,25 @@
 			function init() {
 
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
-				camera.position.y = 10;
 
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xffffff );
 				scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
 
-				const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 2.5 );
+				var light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
 				light.position.set( 0.5, 1, 0.75 );
 				scene.add( light );
 
-				controls = new PointerLockControls( camera, document.body );
+				controls = new THREE.PointerLockControls( camera );
 
-				const blocker = document.getElementById( 'blocker' );
-				const instructions = document.getElementById( 'instructions' );
+				var blocker = document.getElementById( 'blocker' );
+				var instructions = document.getElementById( 'instructions' );
 
 				instructions.addEventListener( 'click', function () {
 
 					controls.lock();
 
-				} );
+				}, false );
 
 				controls.addEventListener( 'lock', function () {
 
@@ -122,31 +134,31 @@
 
 				scene.add( controls.getObject() );
 
-				const onKeyDown = function ( event ) {
+				var onKeyDown = function ( event ) {
 
-					switch ( event.code ) {
+					switch ( event.keyCode ) {
 
-						case 'ArrowUp':
-						case 'KeyW':
+						case 38: // up
+						case 87: // w
 							moveForward = true;
 							break;
 
-						case 'ArrowLeft':
-						case 'KeyA':
+						case 37: // left
+						case 65: // a
 							moveLeft = true;
 							break;
 
-						case 'ArrowDown':
-						case 'KeyS':
+						case 40: // down
+						case 83: // s
 							moveBackward = true;
 							break;
 
-						case 'ArrowRight':
-						case 'KeyD':
+						case 39: // right
+						case 68: // d
 							moveRight = true;
 							break;
 
-						case 'Space':
+						case 32: // space
 							if ( canJump === true ) velocity.y += 350;
 							canJump = false;
 							break;
@@ -155,27 +167,27 @@
 
 				};
 
-				const onKeyUp = function ( event ) {
+				var onKeyUp = function ( event ) {
 
-					switch ( event.code ) {
+					switch ( event.keyCode ) {
 
-						case 'ArrowUp':
-						case 'KeyW':
+						case 38: // up
+						case 87: // w
 							moveForward = false;
 							break;
 
-						case 'ArrowLeft':
-						case 'KeyA':
+						case 37: // left
+						case 65: // a
 							moveLeft = false;
 							break;
 
-						case 'ArrowDown':
-						case 'KeyS':
+						case 40: // down
+						case 83: // s
 							moveBackward = false;
 							break;
 
-						case 'ArrowRight':
-						case 'KeyD':
+						case 39: // right
+						case 68: // d
 							moveRight = false;
 							break;
 
@@ -183,21 +195,21 @@
 
 				};
 
-				document.addEventListener( 'keydown', onKeyDown );
-				document.addEventListener( 'keyup', onKeyUp );
+				document.addEventListener( 'keydown', onKeyDown, false );
+				document.addEventListener( 'keyup', onKeyUp, false );
 
 				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
 				// floor
 
-				let floorGeometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+				var floorGeometry = new THREE.PlaneBufferGeometry( 2000, 2000, 100, 100 );
 				floorGeometry.rotateX( - Math.PI / 2 );
 
 				// vertex displacement
 
-				let position = floorGeometry.attributes.position;
+				var position = floorGeometry.attributes.position;
 
-				for ( let i = 0, l = position.count; i < l; i ++ ) {
+				for ( var i = 0, l = position.count; i < l; i ++ ) {
 
 					vertex.fromBufferAttribute( position, i );
 
@@ -212,44 +224,45 @@
 				floorGeometry = floorGeometry.toNonIndexed(); // ensure each face has unique vertices
 
 				position = floorGeometry.attributes.position;
-				const colorsFloor = [];
+				var colors = [];
 
-				for ( let i = 0, l = position.count; i < l; i ++ ) {
+				for ( var i = 0, l = position.count; i < l; i ++ ) {
 
-					color.setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace );
-					colorsFloor.push( color.r, color.g, color.b );
+					color.setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					colors.push( color.r, color.g, color.b );
 
 				}
 
-				floorGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colorsFloor, 3 ) );
+				floorGeometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
 
-				const floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: true } );
+				var floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
 
-				const floor = new THREE.Mesh( floorGeometry, floorMaterial );
+				var floor = new THREE.Mesh( floorGeometry, floorMaterial );
 				scene.add( floor );
 
 				// objects
 
-				const boxGeometry = new THREE.BoxGeometry( 20, 20, 20 ).toNonIndexed();
+				var boxGeometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+				boxGeometry = boxGeometry.toNonIndexed(); // ensure each face has unique vertices
 
 				position = boxGeometry.attributes.position;
-				const colorsBox = [];
+				colors = [];
 
-				for ( let i = 0, l = position.count; i < l; i ++ ) {
+				for ( var i = 0, l = position.count; i < l; i ++ ) {
 
-					color.setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace );
-					colorsBox.push( color.r, color.g, color.b );
+					color.setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
+					colors.push( color.r, color.g, color.b );
 
 				}
 
-				boxGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colorsBox, 3 ) );
+				boxGeometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
 
-				for ( let i = 0; i < 500; i ++ ) {
+				for ( var i = 0; i < 500; i ++ ) {
 
-					const boxMaterial = new THREE.MeshPhongMaterial( { specular: 0xffffff, flatShading: true, vertexColors: true } );
-					boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace );
+					var boxMaterial = new THREE.MeshPhongMaterial( { specular: 0xffffff, flatShading: true, vertexColors: THREE.VertexColors } );
+					boxMaterial.color.setHSL( Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
 
-					const box = new THREE.Mesh( boxGeometry, boxMaterial );
+					var box = new THREE.Mesh( boxGeometry, boxMaterial );
 					box.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
 					box.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
 					box.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
@@ -268,7 +281,7 @@
 
 				//
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -285,18 +298,17 @@
 
 				requestAnimationFrame( animate );
 
-				const time = performance.now();
-
 				if ( controls.isLocked === true ) {
 
 					raycaster.ray.origin.copy( controls.getObject().position );
 					raycaster.ray.origin.y -= 10;
 
-					const intersections = raycaster.intersectObjects( objects, false );
+					var intersections = raycaster.intersectObjects( objects );
 
-					const onObject = intersections.length > 0;
+					var onObject = intersections.length > 0;
 
-					const delta = ( time - prevTime ) / 1000;
+					var time = performance.now();
+					var delta = ( time - prevTime ) / 1000;
 
 					velocity.x -= velocity.x * 10.0 * delta;
 					velocity.z -= velocity.z * 10.0 * delta;
@@ -304,7 +316,7 @@
 					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
 					direction.z = Number( moveForward ) - Number( moveBackward );
-					direction.x = Number( moveRight ) - Number( moveLeft );
+					direction.x = Number( moveLeft ) - Number( moveRight );
 					direction.normalize(); // this ensures consistent movements in all directions
 
 					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
@@ -316,11 +328,9 @@
 						canJump = true;
 
 					}
-
-					controls.moveRight( - velocity.x * delta );
-					controls.moveForward( - velocity.z * delta );
-
+					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().position.y += ( velocity.y * delta ); // new behavior
+					controls.getObject().translateZ( velocity.z * delta );
 
 					if ( controls.getObject().position.y < 10 ) {
 
@@ -331,9 +341,9 @@
 
 					}
 
-				}
+					prevTime = time;
 
-				prevTime = time;
+				}
 
 				renderer.render( scene, camera );
 

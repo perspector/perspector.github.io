@@ -4,9 +4,33 @@
 		<title>three.js webgl - 2D texture array</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				background:#000;
+				padding:0;
+				margin:0;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+			}
+
+			#info a {
+				color: #ffffff;
+			}
+		</style>
 	</head>
 	<script id="vs" type="x-shader/x-vertex">
+	#version 300 es
+
 	uniform vec2 size;
 	out vec2 vUv;
 
@@ -23,6 +47,8 @@
 	</script>
 
 	<script id="fs" type="x-shader/x-fragment">
+	#version 300 es
+
 	precision highp float;
 	precision highp int;
 	precision highp sampler2DArray;
@@ -30,68 +56,54 @@
 	uniform sampler2DArray diffuse;
 	in vec2 vUv;
 	uniform int depth;
-
-	out vec4 outColor;
+	out vec4 out_FragColor;
 
 	void main() {
 
 		vec4 color = texture( diffuse, vec3( vUv, depth ) );
 
 		// lighten a bit
-		outColor = vec4( color.rrr * 1.5, 1.0 );
+		out_FragColor = vec4( color.rrr * 1.5, 1.0 );
 
 	}
 	</script>
 	<body>
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - 2D Texture array<br />
+			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - 2D Texture array<br />
 			Scanned head data by
 			<a href="https://www.codeproject.com/Articles/352270/Getting-started-with-Volume-Rendering" target="_blank" rel="noopener">Divine Augustine</a><br />
 			licensed under
 			<a href="https://www.codeproject.com/info/cpol10.aspx" target="_blank" rel="noopener">CPOL</a>
 		</div>
 
-		<!-- Import maps polyfill -->
-		<!-- Remove this when import maps will be widely supported -->
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="../build/three.js"></script>
+		<!--<script src="js/controls/OrbitControls.js"></script>-->
 
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
+		<script src="js/libs/jszip.min.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+		<script src="js/WebGL.js"></script>
 
-		<script type="module">
+		<script>
 
-			import * as THREE from 'three';
+			if ( WEBGL.isWebGL2Available() === false ) {
 
-			import Stats from 'three/addons/libs/stats.module.js';
-			import { unzipSync } from 'three/addons/libs/fflate.module.js';
-
-			import WebGL from 'three/addons/capabilities/WebGL.js';
-
-			if ( WebGL.isWebGL2Available() === false ) {
-
-				document.body.appendChild( WebGL.getWebGL2ErrorMessage() );
+				document.body.appendChild( WEBGL.getWebGL2ErrorMessage() );
 
 			}
 
-			let camera, scene, mesh, renderer, stats;
+			var camera, scene, mesh, renderer, stats;
 
-			const planeWidth = 50;
-			const planeHeight = 50;
+			var planeWidth = 50;
+			var planeHeight = 50;
 
-			let depthStep = 0.4;
+			var depthStep = 0.4;
 
 			init();
 			animate();
 
 			function init() {
 
-				const container = document.createElement( 'div' );
+				var container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000 );
@@ -105,25 +117,27 @@
 					.setResponseType( 'arraybuffer' )
 					.load( 'textures/3d/head256x256x109.zip', function ( data ) {
 
-						const zip = unzipSync( new Uint8Array( data ) );
-						const array = new Uint8Array( zip[ 'head256x256x109' ].buffer );
+						var zip = new JSZip( data );
+						var array = zip.files[ 'head256x256x109' ].asUint8Array();
 
-						const texture = new THREE.DataArrayTexture( array, 256, 256, 109 );
+						var texture = new THREE.DataTexture2DArray( array, 256, 256, 109 );
+
 						texture.format = THREE.RedFormat;
+						texture.type = THREE.UnsignedByteType;
+
 						texture.needsUpdate = true;
 
-						const material = new THREE.ShaderMaterial( {
+						var material = new THREE.ShaderMaterial( {
 							uniforms: {
 								diffuse: { value: texture },
-								depth: { value: 55 },
+								depth: { value: 0 },
 								size: { value: new THREE.Vector2( planeWidth, planeHeight ) }
 							},
 							vertexShader: document.getElementById( 'vs' ).textContent.trim(),
-							fragmentShader: document.getElementById( 'fs' ).textContent.trim(),
-							glslVersion: THREE.GLSL3
+							fragmentShader: document.getElementById( 'fs' ).textContent.trim()
 						} );
 
-						const geometry = new THREE.PlaneGeometry( planeWidth, planeHeight );
+						var geometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
 
 						mesh = new THREE.Mesh( geometry, material );
 
@@ -131,9 +145,14 @@
 
 					} );
 
+				// var controls = new THREE.OrbitControls( camera );
+
 				// 2D Texture array is available on WebGL 2.0
 
-				renderer = new THREE.WebGLRenderer();
+				var canvas = document.createElement( 'canvas' );
+				var context = canvas.getContext( 'webgl2' );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true, canvas: canvas, context: context } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
@@ -141,7 +160,7 @@
 				stats = new Stats();
 				container.appendChild( stats.dom );
 
-				window.addEventListener( 'resize', onWindowResize );
+				window.addEventListener( 'resize', onWindowResize, false );
 
 			}
 
@@ -160,7 +179,7 @@
 
 				if ( mesh ) {
 
-					let value = mesh.material.uniforms[ 'depth' ].value;
+					var value = mesh.material.uniforms[ "depth" ].value;
 
 					value += depthStep;
 
@@ -173,7 +192,7 @@
 
 					}
 
-					mesh.material.uniforms[ 'depth' ].value = value;
+					mesh.material.uniforms[ "depth" ].value = value;
 
 				}
 

@@ -1,29 +1,37 @@
-import * as THREE from 'three';
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
 
-import { zipSync, strToU8 } from 'three/addons/libs/fflate.module.js';
+Menubar.File = function ( editor ) {
 
-import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
+	var NUMBER_PRECISION = 6;
 
-function MenubarFile( editor ) {
+	function parseNumber( key, value ) {
 
-	const config = editor.config;
-	const strings = editor.strings;
+		return typeof value === 'number' ? parseFloat( value.toFixed( NUMBER_PRECISION ) ) : value;
 
-	const container = new UIPanel();
+	}
+
+	//
+
+	var config = editor.config;
+	var strings = editor.strings;
+
+	var container = new UI.Panel();
 	container.setClass( 'menu' );
 
-	const title = new UIPanel();
+	var title = new UI.Panel();
 	title.setClass( 'title' );
 	title.setTextContent( strings.getKey( 'menubar/file' ) );
 	container.add( title );
 
-	const options = new UIPanel();
+	var options = new UI.Panel();
 	options.setClass( 'options' );
 	container.add( options );
 
 	// New
 
-	let option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/new' ) );
 	option.onClick( function () {
@@ -39,18 +47,18 @@ function MenubarFile( editor ) {
 
 	//
 
-	options.add( new UIHorizontalRule() );
+	options.add( new UI.HorizontalRule() );
 
 	// Import
 
-	const form = document.createElement( 'form' );
+	var form = document.createElement( 'form' );
 	form.style.display = 'none';
 	document.body.appendChild( form );
 
-	const fileInput = document.createElement( 'input' );
+	var fileInput = document.createElement( 'input' );
 	fileInput.multiple = true;
 	fileInput.type = 'file';
-	fileInput.addEventListener( 'change', function () {
+	fileInput.addEventListener( 'change', function ( event ) {
 
 		editor.loader.loadFiles( fileInput.files );
 		form.reset();
@@ -58,7 +66,7 @@ function MenubarFile( editor ) {
 	} );
 	form.appendChild( fileInput );
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/import' ) );
 	option.onClick( function () {
@@ -70,16 +78,16 @@ function MenubarFile( editor ) {
 
 	//
 
-	options.add( new UIHorizontalRule() );
+	options.add( new UI.HorizontalRule() );
 
 	// Export Geometry
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/geometry' ) );
 	option.onClick( function () {
 
-		const object = editor.selected;
+		var object = editor.selected;
 
 		if ( object === null ) {
 
@@ -88,7 +96,7 @@ function MenubarFile( editor ) {
 
 		}
 
-		const geometry = object.geometry;
+		var geometry = object.geometry;
 
 		if ( geometry === undefined ) {
 
@@ -97,11 +105,11 @@ function MenubarFile( editor ) {
 
 		}
 
-		let output = geometry.toJSON();
+		var output = geometry.toJSON();
 
 		try {
 
-			output = JSON.stringify( output, null, '\t' );
+			output = JSON.stringify( output, parseNumber, '\t' );
 			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
 		} catch ( e ) {
@@ -117,12 +125,12 @@ function MenubarFile( editor ) {
 
 	// Export Object
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/object' ) );
 	option.onClick( function () {
 
-		const object = editor.selected;
+		var object = editor.selected;
 
 		if ( object === null ) {
 
@@ -131,11 +139,11 @@ function MenubarFile( editor ) {
 
 		}
 
-		let output = object.toJSON();
+		var output = object.toJSON();
 
 		try {
 
-			output = JSON.stringify( output, null, '\t' );
+			output = JSON.stringify( output, parseNumber, '\t' );
 			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
 		} catch ( e ) {
@@ -151,16 +159,16 @@ function MenubarFile( editor ) {
 
 	// Export Scene
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/scene' ) );
 	option.onClick( function () {
 
-		let output = editor.scene.toJSON();
+		var output = editor.scene.toJSON();
 
 		try {
 
-			output = JSON.stringify( output, null, '\t' );
+			output = JSON.stringify( output, parseNumber, '\t' );
 			output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
 		} catch ( e ) {
@@ -176,87 +184,60 @@ function MenubarFile( editor ) {
 
 	//
 
-	options.add( new UIHorizontalRule() );
+	options.add( new UI.HorizontalRule() );
 
-	// Export DRC
+	// Export DAE
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/export/drc' ) );
-	option.onClick( async function () {
+	option.setTextContent( strings.getKey( 'menubar/file/export/dae' ) );
+	option.onClick( function () {
 
-		const object = editor.selected;
+		var exporter = new THREE.ColladaExporter();
 
-		if ( object === null || object.isMesh === undefined ) {
+		exporter.parse( editor.scene, function ( result ) {
 
-			alert( 'No mesh selected' );
-			return;
+			saveString( result.data, 'scene.dae' );
 
-		}
-
-		const { DRACOExporter } = await import( 'three/addons/exporters/DRACOExporter.js' );
-
-		const exporter = new DRACOExporter();
-
-		const options = {
-			decodeSpeed: 5,
-			encodeSpeed: 5,
-			encoderMethod: DRACOExporter.MESH_EDGEBREAKER_ENCODING,
-			quantization: [ 16, 8, 8, 8, 8 ],
-			exportUvs: true,
-			exportNormals: true,
-			exportColor: object.geometry.hasAttribute( 'color' )
-		};
-
-		// TODO: Change to DRACOExporter's parse( geometry, onParse )?
-		const result = exporter.parse( object, options );
-		saveArrayBuffer( result, 'model.drc' );
+		} );
 
 	} );
 	options.add( option );
 
 	// Export GLB
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/glb' ) );
-	option.onClick( async function () {
+	option.onClick( function () {
 
-		const scene = editor.scene;
-		const animations = getAnimations( scene );
+		var exporter = new THREE.GLTFExporter();
 
-		const { GLTFExporter } = await import( 'three/addons/exporters/GLTFExporter.js' );
-
-		const exporter = new GLTFExporter();
-
-		exporter.parse( scene, function ( result ) {
+		exporter.parse( editor.scene, function ( result ) {
 
 			saveArrayBuffer( result, 'scene.glb' );
 
-		}, undefined, { binary: true, animations: animations } );
+			// forceIndices: true, forcePowerOfTwoTextures: true
+			// to allow compatibility with facebook
+		}, { binary: true, forceIndices: true, forcePowerOfTwoTextures: true } );
 
 	} );
 	options.add( option );
 
 	// Export GLTF
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/gltf' ) );
-	option.onClick( async function () {
+	option.onClick( function () {
 
-		const scene = editor.scene;
-		const animations = getAnimations( scene );
+		var exporter = new THREE.GLTFExporter();
 
-		const { GLTFExporter } = await import( 'three/addons/exporters/GLTFExporter.js' );
-
-		const exporter = new GLTFExporter();
-
-		exporter.parse( scene, function ( result ) {
+		exporter.parse( editor.scene, function ( result ) {
 
 			saveString( JSON.stringify( result, null, 2 ), 'scene.gltf' );
 
-		}, undefined, { animations: animations } );
+		} );
 
 
 	} );
@@ -264,12 +245,12 @@ function MenubarFile( editor ) {
 
 	// Export OBJ
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/obj' ) );
-	option.onClick( async function () {
+	option.onClick( function () {
 
-		const object = editor.selected;
+		var object = editor.selected;
 
 		if ( object === null ) {
 
@@ -278,65 +259,21 @@ function MenubarFile( editor ) {
 
 		}
 
-		const { OBJExporter } = await import( 'three/addons/exporters/OBJExporter.js' );
-
-		const exporter = new OBJExporter();
+		var exporter = new THREE.OBJExporter();
 
 		saveString( exporter.parse( object ), 'model.obj' );
 
 	} );
 	options.add( option );
 
-	// Export PLY (ASCII)
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/export/ply' ) );
-	option.onClick( async function () {
-
-		const { PLYExporter } = await import( 'three/addons/exporters/PLYExporter.js' );
-
-		const exporter = new PLYExporter();
-
-		exporter.parse( editor.scene, function ( result ) {
-
-			saveArrayBuffer( result, 'model.ply' );
-
-		} );
-
-	} );
-	options.add( option );
-
-	// Export PLY (Binary)
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/export/ply_binary' ) );
-	option.onClick( async function () {
-
-		const { PLYExporter } = await import( 'three/addons/exporters/PLYExporter.js' );
-
-		const exporter = new PLYExporter();
-
-		exporter.parse( editor.scene, function ( result ) {
-
-			saveArrayBuffer( result, 'model-binary.ply' );
-
-		}, { binary: true } );
-
-	} );
-	options.add( option );
-
 	// Export STL (ASCII)
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/stl' ) );
-	option.onClick( async function () {
+	option.onClick( function () {
 
-		const { STLExporter } = await import( 'three/addons/exporters/STLExporter.js' );
-
-		const exporter = new STLExporter();
+		var exporter = new THREE.STLExporter();
 
 		saveString( exporter.parse( editor.scene ), 'model.stl' );
 
@@ -345,136 +282,127 @@ function MenubarFile( editor ) {
 
 	// Export STL (Binary)
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/export/stl_binary' ) );
-	option.onClick( async function () {
+	option.onClick( function () {
 
-		const { STLExporter } = await import( 'three/addons/exporters/STLExporter.js' );
-
-		const exporter = new STLExporter();
+		var exporter = new THREE.STLExporter();
 
 		saveArrayBuffer( exporter.parse( editor.scene, { binary: true } ), 'model-binary.stl' );
 
 	} );
 	options.add( option );
 
-	// Export USDZ
-
-	option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/export/usdz' ) );
-	option.onClick( async function () {
-
-		const { USDZExporter } = await import( 'three/addons/exporters/USDZExporter.js' );
-
-		const exporter = new USDZExporter();
-
-		saveArrayBuffer( await exporter.parse( editor.scene ), 'model.usdz' );
-
-	} );
-	options.add( option );
-
 	//
 
-	options.add( new UIHorizontalRule() );
+	options.add( new UI.HorizontalRule() );
 
 	// Publish
 
-	option = new UIRow();
+	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/publish' ) );
 	option.onClick( function () {
 
-		const toZip = {};
+		var zip = new JSZip();
 
 		//
 
-		let output = editor.toJSON();
+		var output = editor.toJSON();
 		output.metadata.type = 'App';
 		delete output.history;
 
-		output = JSON.stringify( output, null, '\t' );
+		var vr = output.project.vr;
+
+		output = JSON.stringify( output, parseNumber, '\t' );
 		output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
-		toZip[ 'app.json' ] = strToU8( output );
+		zip.file( 'app.json', output );
 
 		//
 
-		const title = config.getKey( 'project/title' );
+		var title = config.getKey( 'project/title' );
 
-		const manager = new THREE.LoadingManager( function () {
+		var manager = new THREE.LoadingManager( function () {
 
-			const zipped = zipSync( toZip, { level: 9 } );
-
-			const blob = new Blob( [ zipped.buffer ], { type: 'application/zip' } );
-
-			save( blob, ( title !== '' ? title : 'untitled' ) + '.zip' );
+			save( zip.generate( { type: 'blob' } ), ( title !== '' ? title : 'untitled' ) + '.zip' );
 
 		} );
 
-		const loader = new THREE.FileLoader( manager );
+		var loader = new THREE.FileLoader( manager );
 		loader.load( 'js/libs/app/index.html', function ( content ) {
 
 			content = content.replace( '<!-- title -->', title );
 
-			const includes = [];
+			var includes = [];
+
+			if ( vr ) {
+
+				includes.push( '<script src="js/WebVR.js"></script>' );
+
+			}
 
 			content = content.replace( '<!-- includes -->', includes.join( '\n\t\t' ) );
 
-			let editButton = '';
+			var editButton = '';
 
 			if ( config.getKey( 'project/editable' ) ) {
 
 				editButton = [
-					'			let button = document.createElement( \'a\' );',
+					'',
+					'			var button = document.createElement( \'a\' );',
 					'			button.href = \'https://threejs.org/editor/#file=\' + location.href.split( \'/\' ).slice( 0, - 1 ).join( \'/\' ) + \'/app.json\';',
-					'			button.style.cssText = \'position: absolute; bottom: 20px; right: 20px; padding: 10px 16px; color: #fff; border: 1px solid #fff; border-radius: 20px; text-decoration: none;\';',
+					'			button.style.cssText = \'position: absolute; bottom: 20px; right: 20px; padding: 12px 14px; color: #fff; border: 1px solid #fff; border-radius: 4px; text-decoration: none;\';',
 					'			button.target = \'_blank\';',
 					'			button.textContent = \'EDIT\';',
 					'			document.body.appendChild( button );',
+					''
 				].join( '\n' );
-
 			}
 
-			content = content.replace( '\t\t\t/* edit button */', editButton );
+			content = content.replace( '\n\t\t\t/* edit button */\n', editButton );
 
-			toZip[ 'index.html' ] = strToU8( content );
+			zip.file( 'index.html', content );
 
 		} );
 		loader.load( 'js/libs/app.js', function ( content ) {
 
-			toZip[ 'js/app.js' ] = strToU8( content );
+			zip.file( 'js/app.js', content );
 
 		} );
-		loader.load( '../build/three.module.js', function ( content ) {
+		loader.load( '../build/three.min.js', function ( content ) {
 
-			toZip[ 'js/three.module.js' ] = strToU8( content );
-
-		} );
-		loader.load( '../examples/jsm/webxr/VRButton.js', function ( content ) {
-
-			toZip[ 'js/VRButton.js' ] = strToU8( content );
+			zip.file( 'js/three.min.js', content );
 
 		} );
+
+		if ( vr ) {
+
+			loader.load( '../examples/js/vr/WebVR.js', function ( content ) {
+
+				zip.file( 'js/WebVR.js', content );
+
+			} );
+
+		}
 
 	} );
 	options.add( option );
 
 	//
 
-	const link = document.createElement( 'a' );
+	var link = document.createElement( 'a' );
+	link.style.display = 'none';
+	document.body.appendChild( link ); // Firefox workaround, see #6594
+
 	function save( blob, filename ) {
-
-		if ( link.href ) {
-
-			URL.revokeObjectURL( link.href );
-
-		}
 
 		link.href = URL.createObjectURL( blob );
 		link.download = filename || 'data.json';
-		link.dispatchEvent( new MouseEvent( 'click' ) );
+		link.click();
+
+		// URL.revokeObjectURL( url ); breaks Firefox...
 
 	}
 
@@ -490,22 +418,6 @@ function MenubarFile( editor ) {
 
 	}
 
-	function getAnimations( scene ) {
-
-		const animations = [];
-
-		scene.traverse( function ( object ) {
-
-			animations.push( ... object.animations );
-
-		} );
-
-		return animations;
-
-	}
-
 	return container;
 
-}
-
-export { MenubarFile };
+};

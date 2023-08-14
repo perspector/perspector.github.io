@@ -1,80 +1,48 @@
+/**
+ * @author simonThiele / https://github.com/simonThiele
+ */
 /* global QUnit */
 
-import { InstancedBufferAttribute } from '../../../../src/core/InstancedBufferAttribute.js';
-
-import { BufferAttribute } from '../../../../src/core/BufferAttribute.js';
+import { InstancedBufferAttribute } from '../../../../src/core/InstancedBufferAttribute';
 
 export default QUnit.module( 'Core', () => {
 
 	QUnit.module( 'InstancedBufferAttribute', () => {
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new BufferAttribute();
-			assert.strictEqual(
-				object instanceof BufferAttribute, true,
-				'BufferAttribute extends from BufferAttribute'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.test( "Instancing", ( assert ) => {
 
-			// array, itemSize
-			let instance = new InstancedBufferAttribute( new Float32Array( 10 ), 2 );
-			assert.ok( instance.meshPerAttribute === 1, 'Can instantiate an InstancedBufferGeometry.' );
+			var instance = new InstancedBufferAttribute( new Float32Array( 10 ), 2 );
+			assert.ok( instance.meshPerAttribute === 1, "ok" );
 
-			// array, itemSize, normalized, meshPerAttribute
-			instance = new InstancedBufferAttribute( new Float32Array( 10 ), 2, false, 123 );
-			assert.ok(
-				instance.meshPerAttribute === 123,
-				'Can instantiate an InstancedBufferGeometry with array, itemSize, normalized, and meshPerAttribute.'
-			);
+			var instance = new InstancedBufferAttribute( new Float32Array( 10 ), 2, 123 );
+			assert.ok( instance.meshPerAttribute === 123, "ok" );
 
 		} );
 
-		// PROPERTIES
-		QUnit.todo( 'meshPerAttribute', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.test( "copy", ( assert ) => {
 
-			assert.ok( false, 'everything\'s gonna be alright' );
+			var array = new Float32Array( [ 1, 2, 3, 7, 8, 9 ] );
+			var instance = new InstancedBufferAttribute( array, 2, 123 );
+			var copiedInstance = instance.copy( instance );
 
-		} );
+			assert.ok( copiedInstance instanceof InstancedBufferAttribute, "the clone has the correct type" );
+			assert.ok( copiedInstance.itemSize === 2, "itemSize was copied" );
+			assert.ok( copiedInstance.meshPerAttribute === 123, "meshPerAttribute was copied" );
 
-		// PUBLIC
-		QUnit.test( 'isInstancedBufferAttribute', ( assert ) => {
+			for ( var i = 0; i < array.length; i ++ ) {
 
-			const object = new InstancedBufferAttribute();
-			assert.ok(
-				object.isInstancedBufferAttribute,
-				'InstancedBufferAttribute.isInstancedBufferAttribute should be true'
-			);
-
-		} );
-
-		QUnit.test( 'copy', ( assert ) => {
-
-			const array = new Float32Array( [ 1, 2, 3, 7, 8, 9 ] );
-			const instance = new InstancedBufferAttribute( array, 2, true, 123 );
-			const copiedInstance = instance.copy( instance );
-
-			assert.ok( copiedInstance instanceof InstancedBufferAttribute, 'the clone has the correct type' );
-			assert.ok( copiedInstance.itemSize === 2, 'itemSize was copied' );
-			assert.ok( copiedInstance.normalized === true, 'normalized was copied' );
-			assert.ok( copiedInstance.meshPerAttribute === 123, 'meshPerAttribute was copied' );
-
-			for ( let i = 0; i < array.length; i ++ ) {
-
-				assert.ok( copiedInstance.array[ i ] === array[ i ], 'array was copied' );
+				assert.ok( copiedInstance.array[ i ] === array[ i ], "array was copied" );
 
 			}
-
-		} );
-
-		QUnit.todo( 'toJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
 
 		} );
 

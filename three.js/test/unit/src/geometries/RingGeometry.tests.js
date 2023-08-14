@@ -1,15 +1,19 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ * @author Anonymous
+ */
 /* global QUnit */
 
-import { RingGeometry } from '../../../../src/geometries/RingGeometry.js';
-
-import { BufferGeometry } from '../../../../src/core/BufferGeometry.js';
-import { runStdGeometryTests } from '../../utils/qunit-utils.js';
+import { runStdGeometryTests } from '../../qunit-utils';
+import {
+	RingBufferGeometry
+} from '../../../../src/geometries/RingGeometry';
 
 export default QUnit.module( 'Geometries', () => {
 
-	QUnit.module( 'RingGeometry', ( hooks ) => {
+	QUnit.module( 'RingBufferGeometry', ( hooks ) => {
 
-		let geometries = undefined;
+		var geometries = undefined;
 		hooks.beforeEach( function () {
 
 			const parameters = {
@@ -22,57 +26,28 @@ export default QUnit.module( 'Geometries', () => {
 			};
 
 			geometries = [
-				new RingGeometry(),
-				new RingGeometry( parameters.innerRadius ),
-				new RingGeometry( parameters.innerRadius, parameters.outerRadius ),
-				new RingGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments ),
-				new RingGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments ),
-				new RingGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart ),
-				new RingGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart, parameters.thetaLength ),
+				new RingBufferGeometry(),
+				new RingBufferGeometry( parameters.innerRadius ),
+				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius ),
+				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments ),
+				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments ),
+				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart ),
+				new RingBufferGeometry( parameters.innerRadius, parameters.outerRadius, parameters.thetaSegments, parameters.phiSegments, parameters.thetaStart, parameters.thetaLength ),
 			];
 
 		} );
 
 		// INHERITANCE
-		QUnit.test( 'Extending', ( assert ) => {
+		QUnit.todo( "Extending", ( assert ) => {
 
-			const object = new RingGeometry();
-			assert.strictEqual(
-				object instanceof BufferGeometry, true,
-				'RingGeometry extends from BufferGeometry'
-			);
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
 		// INSTANCING
-		QUnit.test( 'Instancing', ( assert ) => {
+		QUnit.todo( "Instancing", ( assert ) => {
 
-			const object = new RingGeometry();
-			assert.ok( object, 'Can instantiate a RingGeometry.' );
-
-		} );
-
-		// PROPERTIES
-		QUnit.test( 'type', ( assert ) => {
-
-			const object = new RingGeometry();
-			assert.ok(
-				object.type === 'RingGeometry',
-				'RingGeometry.type should be RingGeometry'
-			);
-
-		} );
-
-		QUnit.todo( 'parameters', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// STATIC
-		QUnit.todo( 'fromJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 

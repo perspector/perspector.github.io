@@ -1,24 +1,32 @@
+/**
+ * @author mrdoob / http://mrdoob.com/
+ */
+
 import { Cache } from './Cache.js';
-import { Loader } from './Loader.js';
-import { createElementNS } from '../utils.js';
+import { DefaultLoadingManager } from './LoadingManager.js';
 
-class ImageLoader extends Loader {
 
-	constructor( manager ) {
+function ImageLoader( manager ) {
 
-		super( manager );
+	this.manager = ( manager !== undefined ) ? manager : DefaultLoadingManager;
 
-	}
+}
 
-	load( url, onLoad, onProgress, onError ) {
+Object.assign( ImageLoader.prototype, {
+
+	crossOrigin: 'anonymous',
+
+	load: function ( url, onLoad, onProgress, onError ) {
+
+		if ( url === undefined ) url = '';
 
 		if ( this.path !== undefined ) url = this.path + url;
 
 		url = this.manager.resolveURL( url );
 
-		const scope = this;
+		var scope = this;
 
-		const cached = Cache.get( url );
+		var cached = Cache.get( url );
 
 		if ( cached !== undefined ) {
 
@@ -36,11 +44,12 @@ class ImageLoader extends Loader {
 
 		}
 
-		const image = createElementNS( 'img' );
+		var image = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'img' );
 
 		function onImageLoad() {
 
-			removeEventListeners();
+			image.removeEventListener( 'load', onImageLoad, false );
+			image.removeEventListener( 'error', onImageError, false );
 
 			Cache.add( url, this );
 
@@ -52,7 +61,8 @@ class ImageLoader extends Loader {
 
 		function onImageError( event ) {
 
-			removeEventListeners();
+			image.removeEventListener( 'load', onImageLoad, false );
+			image.removeEventListener( 'error', onImageError, false );
 
 			if ( onError ) onError( event );
 
@@ -61,17 +71,10 @@ class ImageLoader extends Loader {
 
 		}
 
-		function removeEventListeners() {
-
-			image.removeEventListener( 'load', onImageLoad, false );
-			image.removeEventListener( 'error', onImageError, false );
-
-		}
-
 		image.addEventListener( 'load', onImageLoad, false );
 		image.addEventListener( 'error', onImageError, false );
 
-		if ( url.slice( 0, 5 ) !== 'data:' ) {
+		if ( url.substr( 0, 5 ) !== 'data:' ) {
 
 			if ( this.crossOrigin !== undefined ) image.crossOrigin = this.crossOrigin;
 
@@ -83,9 +86,23 @@ class ImageLoader extends Loader {
 
 		return image;
 
+	},
+
+	setCrossOrigin: function ( value ) {
+
+		this.crossOrigin = value;
+		return this;
+
+	},
+
+	setPath: function ( value ) {
+
+		this.path = value;
+		return this;
+
 	}
 
-}
+} );
 
 
 export { ImageLoader };

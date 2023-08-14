@@ -1,53 +1,36 @@
+/**
+ * @author TristanVALCKE / https://github.com/Itee
+ */
 /* global QUnit */
 
-import { Cache } from '../../../../src/loaders/Cache.js';
+import { Cache } from '../../../../src/loaders/Cache';
 
 export default QUnit.module( 'Loaders', () => {
 
 	QUnit.module( 'Cache', () => {
 
-		// PROPERTIES
-		QUnit.test( 'enabled', ( assert ) => {
+		// PUBLIC STUFF
+		QUnit.todo( "add", ( assert ) => {
 
-			const actual = Cache.enabled;
-			const expected = false;
-			assert.strictEqual( actual, expected, 'Cache defines enabled.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.test( 'files', ( assert ) => {
+		QUnit.todo( "get", ( assert ) => {
 
-			const actual = Cache.files;
-			const expected = {};
-			assert.deepEqual( actual, expected, 'Cache defines files.' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		// PUBLIC
-		QUnit.todo( 'add', ( assert ) => {
+		QUnit.todo( "remove", ( assert ) => {
 
-			// function ( key, file )
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.todo( 'get', ( assert ) => {
+		QUnit.todo( "clear", ( assert ) => {
 
-			// function ( key )
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'remove', ( assert ) => {
-
-			// function ( key )
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		QUnit.todo( 'clear', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
+			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
