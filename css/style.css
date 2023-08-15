@@ -723,7 +723,7 @@ ol ::-moz-list-number {
     }
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1481px) { /*1030px*/
     #menu-icon {
         display: block;
     }
