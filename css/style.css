@@ -1,5 +1,7 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +10,7 @@
     border: none;
     outline: none;
     scroll-behavior: smooth;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Jetbrains Mono', monospace;
 }
 
 :root {
@@ -52,13 +54,14 @@ section {
 }
 
 .header.sticky {
-    border-bottom: .4rem solid rgba(0, 0, 0, .2);
+    border-bottom: .4rem solid rgba(0, 0, 0, 0.2);
 }
 
 .logo {
-    font-size: 2.5rem;
+    font-family: 'Martian Mono', monospace;
+    font-size: 3rem;
     color: var(--text-color);
-    font-weight: 600;
+    /* font-weight: 700; */
 }
 
 .navbar a {
@@ -91,6 +94,7 @@ section {
     line-height: 1.5;
 }
 .home-img {
+    margin-top: -100px;
     align-items: center;
 }
 
@@ -723,7 +727,7 @@ ol ::-moz-list-number {
     }
 }
 
-@media (max-width: 1481px) { /*1030px*/
+@media (max-width: 1586px) { /*1030px*/
     #menu-icon {
         display: block;
     }
