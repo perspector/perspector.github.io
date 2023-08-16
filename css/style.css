@@ -397,6 +397,11 @@ span {
     color: var(--second-bg-color);
 }
 
+.portfolio-layer li {
+    font-size: 1.6rem;
+    color: var(--main-color);
+}
+
 
 
 
@@ -655,14 +660,15 @@ ol ::-moz-list-number {
 }
 
 .footer-text p {
-    display: none;
+    font-size: 1.6rem;
     text-align: center;
 }
-.footer-text::after {
+
+.footer-text a {
     font-size: 1.6rem;
-    white-space: pre-wrap;
     text-align: center;
-    content: "Copyright © 2023 by Benjamin Chase\A All code is licensed under the GNU GPLv3 license.\A Code: https://github.com/perspector/perspector.github.io";
+    color: var(--main-color);
+    text-decoration: var(--main-color) underline 10%;
 }
 
 .footer-icons a {
