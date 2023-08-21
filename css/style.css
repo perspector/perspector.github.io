@@ -431,7 +431,7 @@ span {
 .design-process-container {
     display: grid;
     /* grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); */
-    place-items: end center;
+    /* place-items: end center; */
     /*display: grid;*/
     /*grid-template-columns: repeat(3, 1fr);*/
     /*align-items: center;*/
@@ -473,7 +473,35 @@ ol ::-moz-list-number {
     line-height: 1.5;
 }
 
-.design-process-container table, th, td {
+/* Enables Horizontal Scrolling in Tables (Decision Matrix)*/
+.design-process-container .decision-matrix {
+    overflow-x: auto;
+}
+
+/* SCROLLBAR FOR DECISION MATRIXES */
+
+/* Works on Chrome, Edge, and Safari */
+.decision-matrix::-webkit-scrollbar {
+    width: 12px;
+    height: 17px;
+}
+
+.decision-matrix::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+.decision-matrix::-webkit-scrollbar-thumb {
+    background-color:tomato;
+    border-radius: 20px;
+    border: 3px solid var(--bg-color);
+}
+/* END SCROLLBAR FOR DECISION MATRIXES */
+
+.design-process-container table {
+    border-collapse: collapse;
+}
+
+.design-process-container th, td {
     border-collapse: collapse;
     border: 0.5rem solid;
     border-radius: 0.2rem;
