@@ -5,7 +5,7 @@ Here you can find the open-source code!
 ## Licenses and Copyright
 ### Main Website (perspector.github.io)
 Copyright &copy; 2023 Benjamin Chase\
-Licensed under the GPLv3 License found in the LICENSE file.
+Licensed under the GPLv3 License found in the [LICENSE](LICENSE) file.
 
 ### three.js (Displaying 3D models)
 The MIT License
