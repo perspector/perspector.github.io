@@ -1,7 +1,7 @@
 # [perspector.github.io](https://perspector.github.io)
 [![pages-build-deployment](https://github.com/perspector/perspector.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/perspector/perspector.github.io/actions/workflows/pages/pages-build-deployment)\
 Benjamin Chase's Portfolio Website\
-Here you can find the open-source code for the entire portfolio website!
+Here you can find the open-source code for my GitHub Pages portfolio website!
 
 ## Licenses and Copyright
 ### Main Website (perspector.github.io)
