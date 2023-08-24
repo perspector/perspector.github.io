@@ -1,6 +1,6 @@
 # [perspector.github.io](https://perspector.github.io)
 Benjamin Chase's Portfolio Website\
-Here you can find the open-source code!
+Here you can find the open-source code for the entire portfolio website!
 
 ## Licenses and Copyright
 ### Main Website (perspector.github.io)
