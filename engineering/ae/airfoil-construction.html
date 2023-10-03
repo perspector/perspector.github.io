@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Airfoil Construction and Testing</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 1st Aerospace Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="random-number-generator1.jpeg" alt="before">
+                <img src="random-number-generator2.jpeg" alt="during">
+                <img src="random-number-generator3.jpeg" alt="after">
+            </div>
+
+            <span><h1>Generate Concepts</h1></span>
+            <p>
+                This project involved identifying electrical components and soldering the components to a PCB.
+                This created a random number generator that would output a random number, 1-6, as seen on dice.
+
+                <br><u>Goals:</u>
+                <br>* Identify all electrical components properly. These included resistors, LEDs, ICs, and switches.
+                <br>* Solder all of the components to a PCB without damaging them.
+                <br>* Test the randomness of the random number generator.
+            </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <p>
+                The circuit is soldered correctly and works.
+            </p>
+
+            <span><h1>Construct and Test Prototype</h1></span>
+
+            <!-- <div class="design-process-image-box">
+                <img src="random-number-generator5.jpeg" alt="">
+            </div> -->
+
+            <p>
+                <u>Probability Table:</u>
+                <br>
+                <div class="decision-matrix">
+                        <table>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td>Number Rolled:</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>Tally Count</td>
+                            <td>&#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C</td>
+                            <td>&#x534C &#x534C |</td>
+                            <td>&#x534C |||</td>
+                            <td>&#x534C &#x534C ||</td>
+                            <td>&#x534C &#x534C |||</td>
+                            <td>&#x534C &#x534C |</td>
+                        </tr>
+                        <tr>
+                            <td>Total Count</td>
+                            <td>45</td>
+                            <td>11</td>
+                            <td>8</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>11</td>
+                        </tr>
+                        <tr>
+                            <td>Distribution</td>
+                            <td>45%</td>
+                            <td>11%</td>
+                            <td>8%</td>
+                            <td>12%</td>
+                            <td>13%</td>
+                            <td>11%</td>
+                        </tr>
+                    </table>
+                </div>
+            </p>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <p>
+                Q: Is this random number generator truly <i>random</i>?
+                <br>A: This "random" number generator is not truly random. Ones are favored at 45% distribution,
+                while threes only have half of the truly random 16.67% distribution, 8%.
+                If this generator were truly random, all numbers 1-6 would have an equal 16.67% chance, which they do not.
+                Based on the experience of others with this random number generator, it is likely
+                an issue with the ICs themselves that generate the random numbers.
+
+                <br><br>Q: What is the origin of debugging?
+                <br>A: "Debugging" is the act of fixing and troubleshooting an issue with electronics or code.
+                The term originates from the 1940s when Admiral Grace Hopper found a moth (bug) in
+                the Mark II computer at Harvard University. The moth was stuck in a tape,
+                which caused the computer program to malfunction. (source: Wikipedia "Debugging")
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <p>
+                In this project, I learned how to use multiple components, including resistors, LEDs (Light Emitting Diodes), capacitors,
+                ICs (Integrated Circuits), a slider switch, along with a pushbutton. Resistors, buttons, and switches can be soldered either way,
+                but for LEDs and capacitors, polarity matters. For the ICs, I soldered sockets on in the correct direction first to ensure the ICs
+                did not get fried with the heat of the soldering iron.
+                <br><br>Using proper SI prefixes was also important in the identification of resistors and capacitors, such as kiloohms (kΩ),
+                ohms, and picofarads (pF).
+                <br><br>I only encountered two issues during this project. The first issue was that the soldering iron was not hot enough.
+                This led me to switch to a different soldering iron. The second issue was that the IC sockets fell off of the PCB when flipped over.
+                To solve this issue, I taped the IC sockets to the board so they were stabilized while soldering. I removed the tape afterwords.
+                <br><br>As seen in the probability table above, this random number generator is not truly random.
+                In the future, I would like to conduct research to find out the cause of this issue and make the
+                random number generator more random, and thus fairer.
+                <br><br>This random number generator will not be used in board games, as it would be unethical to
+                use an unfair generator.
+                <br><br>This was a very fun project and a great way to practice my soldering skills!
+            </p>
+            
+            <span><h1>Present Solution</h1></span>
+            <div class="design-process-image-box">
+                <video
+                    controls
+                    source src="random-number-generator1.webm" type="video/webm">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase</p>
+            <p>The code is licensed under the GNU GPLv3 license.</p>
+            <p>Code: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
