@@ -69,123 +69,38 @@
     <section class="design-process" id="design-process">
         <h2 class="heading"><span>Design</span> Process</h2>
         <div class="design-process-container">
-            <span><h1>Define a Problem</h1></span>
+            <span><h1>FoilSim</h1></span>
             <div class="design-process-image-box">
-                <img src="random-number-generator1.jpeg" alt="before">
-                <img src="random-number-generator2.jpeg" alt="during">
-                <img src="random-number-generator3.jpeg" alt="after">
+                <img src="airfoil-construction1.png" alt="">
+                <img src="airfoil-construction2.png" alt="">
             </div>
-
-            <span><h1>Generate Concepts</h1></span>
             <p>
-                This project involved identifying electrical components and soldering the components to a PCB.
-                This created a random number generator that would output a random number, 1-6, as seen on dice.
-
-                <br><u>Goals:</u>
-                <br>* Identify all electrical components properly. These included resistors, LEDs, ICs, and switches.
-                <br>* Solder all of the components to a PCB without damaging them.
-                <br>* Test the randomness of the random number generator.
+                In this project I used NASA's FoilSim III to create an airfoil shape based off of the Selig S1223 airfoil,
+                for maximum lift at low velocity. Many parameters can be adjusted in FoilSim to realistically calculate
+                the lift, drag, coefficient of lift, and coefficient of drag of the airfoil.
+                For example, the flight velocity, altitude, and planet can be selected.
+                For the airfoil itself, angle of attack, camber, thickness, and size can be changed.
+                Through this, the data points of the airfoil can be copied to build the airfoil yourself.
+                <br>FoilSim is available <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/foilsimstudent/">here</a>.
             </p>
 
-            <span><h1>Develop a Solution</h1></span>
-            <p>
-                The circuit is soldered correctly and works.
-            </p>
-
-            <span><h1>Construct and Test Prototype</h1></span>
-
-            <!-- <div class="design-process-image-box">
-                <img src="random-number-generator5.jpeg" alt="">
-            </div> -->
-
-            <p>
-                <u>Probability Table:</u>
-                <br>
-                <div class="decision-matrix">
-                        <table>
-                        <tr>
-                            <!-- <td>&nbsp;</td> -->
-                            <td>Number Rolled:</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>Tally Count</td>
-                            <td>&#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C</td>
-                            <td>&#x534C &#x534C |</td>
-                            <td>&#x534C |||</td>
-                            <td>&#x534C &#x534C ||</td>
-                            <td>&#x534C &#x534C |||</td>
-                            <td>&#x534C &#x534C |</td>
-                        </tr>
-                        <tr>
-                            <td>Total Count</td>
-                            <td>45</td>
-                            <td>11</td>
-                            <td>8</td>
-                            <td>12</td>
-                            <td>13</td>
-                            <td>11</td>
-                        </tr>
-                        <tr>
-                            <td>Distribution</td>
-                            <td>45%</td>
-                            <td>11%</td>
-                            <td>8%</td>
-                            <td>12%</td>
-                            <td>13%</td>
-                            <td>11%</td>
-                        </tr>
-                    </table>
-                </div>
-            </p>
-
-            <span><h1>Evaluate Solution</h1></span>
-            <p>
-                Q: Is this random number generator truly <i>random</i>?
-                <br>A: This "random" number generator is not truly random. Ones are favored at 45% distribution,
-                while threes only have half of the truly random 16.67% distribution, 8%.
-                If this generator were truly random, all numbers 1-6 would have an equal 16.67% chance, which they do not.
-                Based on the experience of others with this random number generator, it is likely
-                an issue with the ICs themselves that generate the random numbers.
-
-                <br><br>Q: What is the origin of debugging?
-                <br>A: "Debugging" is the act of fixing and troubleshooting an issue with electronics or code.
-                The term originates from the 1940s when Admiral Grace Hopper found a moth (bug) in
-                the Mark II computer at Harvard University. The moth was stuck in a tape,
-                which caused the computer program to malfunction. (source: Wikipedia "Debugging")
-            </p>
-
-            <span><h1>Conclusion</h1></span>
-            <p>
-                In this project, I learned how to use multiple components, including resistors, LEDs (Light Emitting Diodes), capacitors,
-                ICs (Integrated Circuits), a slider switch, along with a pushbutton. Resistors, buttons, and switches can be soldered either way,
-                but for LEDs and capacitors, polarity matters. For the ICs, I soldered sockets on in the correct direction first to ensure the ICs
-                did not get fried with the heat of the soldering iron.
-                <br><br>Using proper SI prefixes was also important in the identification of resistors and capacitors, such as kiloohms (kΩ),
-                ohms, and picofarads (pF).
-                <br><br>I only encountered two issues during this project. The first issue was that the soldering iron was not hot enough.
-                This led me to switch to a different soldering iron. The second issue was that the IC sockets fell off of the PCB when flipped over.
-                To solve this issue, I taped the IC sockets to the board so they were stabilized while soldering. I removed the tape afterwords.
-                <br><br>As seen in the probability table above, this random number generator is not truly random.
-                In the future, I would like to conduct research to find out the cause of this issue and make the
-                random number generator more random, and thus fairer.
-                <br><br>This random number generator will not be used in board games, as it would be unethical to
-                use an unfair generator.
-                <br><br>This was a very fun project and a great way to practice my soldering skills!
-            </p>
-            
-            <span><h1>Present Solution</h1></span>
+            <span><h1>Plotting Airfoils with Excel</h1></span>
             <div class="design-process-image-box">
-                <video
-                    controls
-                    source src="random-number-generator1.webm" type="video/webm">
-                </video>
+                <img src="airfoil-construction3.png" alt="">
+                <img src="airfoil-construction4.png" alt="">
             </div>
+            <p>
+                For the first step in this project, I designed two airfoils using FoilSim including a slightly positive camber airfoil
+                and a negative camber airfoil. I recorded the coefficients of lift and drag at angles of attack ranging from -20 degrees
+                to 20 degrees for each airfoil. The data from the charts and the graph illustrated that the airfoil with positive
+                camber produced far greater lift and additionally had a higher coefficient of lift than the negative camber airfoil.
+                I based my final design on this and the specifications of the
+                Selig S1223 airfoil to use a high camber of 8.1% and a thickness of 12.1% to maximize lift at low velocity.
+            </p>
+
+            <span><h1>Data Formatting using Excel</h1></span>
+            <p> 
+            </p>
         </div>
     </section>
 
