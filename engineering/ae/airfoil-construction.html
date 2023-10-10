@@ -99,7 +99,22 @@
             </p>
 
             <span><h1>Data Formatting using Excel</h1></span>
-            <p> 
+            <p>
+                The next step was to format the data points from FoilSim. FoilSim allows the user to copy a table of data points,
+                but they are separated with spaces and include coefficient of lift and velocity at each point.
+                So first, I used the "Convert to Data" feature in Excel to convert the text into columns of data points.
+                Next, I deleted the coefficient of lift and velocity columns as they were unnecessary for this use.
+                Overall, I wanted to import the points into Autodesk Inventor, which does not parse spaces in data.
+                So I used the Find/Replace function in Excel to remove all spaces from the data.
+                After this, I set the textual data points to be "Numbers" in Excel. Then, I added a blank Z column for Excel to use.
+                Finally, I sorted the upper chord points from smallest to greatest and the lower chord points from greatest
+                to smallest to allow Autodesk Inventor to connect them properly.
+                <br>Once the data formatting was complete, I was ready to import the data into Autodesk Inventor.
+                To do this, I created a sketch and imported the data points from the Excel file created previously.
+                To ensure the airfoil had a smooth surface, I used the "Import and Connect with Spline" option.
+                A spline was created, connecting all points except for two end points on the trailing edge.
+                After connecting the last points manually, I could extrude the design to a height of three
+                inches and send it to my 3D printer!
             </p>
         </div>
     </section>
