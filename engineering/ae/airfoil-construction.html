@@ -99,6 +99,10 @@
             </p>
 
             <span><h1>Data Formatting using Excel</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction5.png" alt="">
+                <img src="airfoil-construction6.png" alt="">
+            </div>
             <p>
                 The next step was to format the data points from FoilSim. FoilSim allows the user to copy a table of data points,
                 but they are separated with spaces and include coefficient of lift and velocity at each point.
@@ -107,7 +111,7 @@
                 Overall, I wanted to import the points into Autodesk Inventor, which does not parse spaces in data.
                 So I used the Find/Replace function in Excel to remove all spaces from the data.
                 After this, I set the textual data points to be "Numbers" in Excel. Then, I added a blank Z column for Excel to use.
-                Finally, I sorted the upper chord points from smallest to greatest and the lower chord points from greatest
+                Finally, I sorted the upper camber points from smallest to greatest and the lower camber points from greatest
                 to smallest to allow Autodesk Inventor to connect them properly.
                 <br>Once the data formatting was complete, I was ready to import the data into Autodesk Inventor.
                 To do this, I created a sketch and imported the data points from the Excel file created previously.
@@ -115,6 +119,50 @@
                 A spline was created, connecting all points except for two end points on the trailing edge.
                 After connecting the last points manually, I could extrude the design to a height of three
                 inches and send it to my 3D printer!
+            </p>
+
+            <span><h1>Building the Airfoil</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction7.png" alt="">
+                <img src="airfoil-construction8.png" alt="">
+            </div>
+            <p>
+                To build the airfoil, I used my 3D printer to create my design from Autodesk Inventor.
+                I also sanded the trailing edge due to some overextrusion while printing.
+                The 3D printer did an almost perfect job, but the thin trailing edge was slightly to thick.
+                <br>So I remade the airfoil using foam. To begin with, I created a template drawing in Autodesk
+                Inventor of a box with foam dimensions and in/out lines.
+                The template served as a guide for the hotwire to cut the required shape.
+                I had two versions, one for the upper camber and one for the lower camber.
+                After finishing the design, I used a lasercutter to cut aluminum metal with my template.
+                The next step was to mount each template to the side of the 3" by 5" foam block. I did this using dowels.
+                Then I cut the upper camber with a hot wire, afterwhich I proceeded to also cut the lower camber with the hot wire.
+            </p>
+
+            <span><h1>Purpose and Testing</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction9.png" alt="">
+            </div>
+            <p>
+                In the future, I will test the airfoil's lift (L) and drag (D) to determine the coefficient of lift (C_L)
+                and coefficient of drag (C_D). The tests will be conducted in a wind tunnel to maintain a steady airflow velocity.
+                The airfoil will be mounted to an armature on a load cell which can measure all
+                forces in the X, Y, and Z directions. This will let me determine lift and drag generated at different airflow velocities.
+                Pressure is measured using a pressure sensor mounted in the wind tunnel.
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction10.png" alt="">
+            </div>
+            <p>
+                During this project, I learned how to design an airfoil and export its geometry into Excel.
+                Then, I learned how to import the points into Autodesk Inventor accurately and how to connect them smoothly using a spline.
+                Additionally, I learned how to use a hot wire to cut foam accurately and precisely.
+                <br>Next time, I would like to experiment some more with the hotwire
+                and different temperatures to determine the best way to cut foam.
+                Also, before 3D printing the airfoil, I would print multiple calibration models and potentially redesign the airfoil
+                to reduce the thickness of the trailing edge from printing.
             </p>
         </div>
     </section>
