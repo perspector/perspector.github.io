@@ -93,7 +93,15 @@
                 <img src="majority-vote3.jpeg" alt="Unsimplified Expression">
             </div>
             <p>
-                EXPLANATION OF THE TRUTH TABLE GOES HERE
+                This truth table lists all possible outcomes from the voting.
+                It allows us to see patterns in the output that could eventually be simplified using boolean algebra.
+                In a truth table, there are 2^n rows, where n is the number of input variables.
+                For example, here there are 4 input varaibles (P, V, S, and T), so there are 2^4 = 16 rows.
+                Additionally, in the case of a tie, the President's vote is the deciding factor.
+                This is seen in the truth table when it is:
+                <br>* 1001: P AND NOT V AND NOT S AND T
+                <br>* 1010: P AND NOT V AND S AND NOT T
+                <br>* 1100: P AND V AND NOT S AND NOT T.
             </p>
 
             <span><h1>Unsimplified Circuit</h1></span>
