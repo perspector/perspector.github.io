@@ -88,113 +88,83 @@
             <span><h1>Truth Table with Boolean Algebra</h1></span>
             <div class="design-process-image-box">
                 <img src="majority-vote2.jpeg" alt="Truth Table">
+            </div>
+            <div class="design-process-image-box">
                 <img src="majority-vote3.jpeg" alt="Unsimplified Expression">
             </div>
             <p>
                 EXPLANATION OF THE TRUTH TABLE GOES HERE
             </p>
 
-            <span><h1>Boolean Algebra Simplification</h1></span>
+            <span><h1>Unsimplified Circuit</h1></span>
             <div class="design-process-image-box">
-                <img src="majority-vote4.jpeg" alt="">
+                <img src="majority-vote4.png" alt="">
             </div>
 
+            <span><h1>Boolean Algebra Simplification</h1></span>
             <div class="design-process-image-box">
                 <img src="majority-vote5.jpeg" alt="">
             </div>
 
-            <!-- <div class="design-process-image-box">
-                <img src="random-number-generator5.jpeg" alt="">
-            </div> -->
+            <div class="design-process-image-box">
+                <img src="majority-vote6.jpeg" alt="">
+            </div>
 
+            <span><h1>Simplified Circuit</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote7.png" alt="">
+            </div>
+
+            <span><h1>Bill of Materials</h1></span>
             <p>
-                <u>Probability Table:</u>
                 <br>
                 <div class="decision-matrix">
                         <table>
                         <tr>
                             <!-- <td>&nbsp;</td> -->
-                            <td>Number Rolled:</td>
-                            <td>1</td>
+                            <td><strong>Component</strong></td>
+                            <td><strong>Quantity</strong></td>
+                        </tr>
+                        <tr>
+                            <td>74LS08 2-input AND Gate</td>
                             <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
                         </tr>
                         <tr>
-                            <td>Tally Count</td>
-                            <td>&#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C &#x534C</td>
-                            <td>&#x534C &#x534C |</td>
-                            <td>&#x534C |||</td>
-                            <td>&#x534C &#x534C ||</td>
-                            <td>&#x534C &#x534C |||</td>
-                            <td>&#x534C &#x534C |</td>
+                            <td>74LS32 2-input OR Gate</td>
+                            <td>1</td>
                         </tr>
                         <tr>
-                            <td>Total Count</td>
-                            <td>45</td>
-                            <td>11</td>
-                            <td>8</td>
-                            <td>12</td>
-                            <td>13</td>
-                            <td>11</td>
+                            <td>74LS04 NOT/inverter Gate</td>
+                            <td>1, OPTIONAL</td>
                         </tr>
                         <tr>
-                            <td>Distribution</td>
-                            <td>45%</td>
-                            <td>11%</td>
-                            <td>8%</td>
-                            <td>12%</td>
-                            <td>13%</td>
-                            <td>11%</td>
+                            <td>Red LED</td>
+                            <td>1, OPTIONAL</td>
+                        </tr>
+                        <tr>
+                            <td>Green LED</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>330 Ohm Resistor</td>
+                            <td>2, 1 is optional for red LED</td>
+                        </tr>
+                        <tr>
+                            <td>Wires</td>
+                            <td>About 30</td>
                         </tr>
                     </table>
                 </div>
             </p>
 
-            <span><h1>Evaluate Solution</h1></span>
-            <p>
-                Q: Is this random number generator truly <i>random</i>?
-                <br>A: This "random" number generator is not truly random. Ones are favored at 45% distribution,
-                while threes only have half of the truly random 16.67% distribution, 8%.
-                If this generator were truly random, all numbers 1-6 would have an equal 16.67% chance, which they do not.
-                Based on the experience of others with this random number generator, it is likely
-                an issue with the ICs themselves that generate the random numbers.
-
-                <br><br>Q: What is the origin of debugging?
-                <br>A: "Debugging" is the act of fixing and troubleshooting an issue with electronics or code.
-                The term originates from the 1940s when Admiral Grace Hopper found a moth (bug) in
-                the Mark II computer at Harvard University. The moth was stuck in a tape,
-                which caused the computer program to malfunction. (source: Wikipedia "Debugging")
-            </p>
+            <span><h1>Breadboarding</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote8.jpeg" alt="">
+                <img src="majority-vote9.jpeg" alt="">
+                <img src="majority-vote10.jpeg" alt="">
+            </div>
 
             <span><h1>Conclusion</h1></span>
-            <p>
-                In this project, I learned how to use multiple components, including resistors, LEDs (Light Emitting Diodes), capacitors,
-                ICs (Integrated Circuits), a slider switch, along with a pushbutton. Resistors, buttons, and switches can be soldered either way,
-                but for LEDs and capacitors, polarity matters. For the ICs, I soldered sockets on in the correct direction first to ensure the ICs
-                did not get fried with the heat of the soldering iron.
-                <br><br>Using proper SI prefixes was also important in the identification of resistors and capacitors, such as kiloohms (kΩ),
-                ohms, and picofarads (pF).
-                <br><br>I only encountered two issues during this project. The first issue was that the soldering iron was not hot enough.
-                This led me to switch to a different soldering iron. The second issue was that the IC sockets fell off of the PCB when flipped over.
-                To solve this issue, I taped the IC sockets to the board so they were stabilized while soldering. I removed the tape afterwords.
-                <br><br>As seen in the probability table above, this random number generator is not truly random.
-                In the future, I would like to conduct research to find out the cause of this issue and make the
-                random number generator more random, and thus fairer.
-                <br><br>This random number generator will not be used in board games, as it would be unethical to
-                use an unfair generator.
-                <br><br>This was a very fun project and a great way to practice my soldering skills!
-            </p>
-            
-            <span><h1>Present Solution</h1></span>
-            <div class="design-process-image-box">
-                <video
-                    controls
-                    source src="random-number-generator1.webm" type="video/webm">
-                </video>
-            </div>
         </div>
     </section>
 
