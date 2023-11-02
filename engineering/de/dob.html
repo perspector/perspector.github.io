@@ -94,7 +94,12 @@
 
             <span><h1>Truth Table</h1></span>
             <p>
-                Seven segment displays (SSD) are divided into seven lights that are either on or off. They can display all digits, and some letters, but only one character at a time. In this project, each of the three input switches (X, Y, and Z) controls all segments to turn some on or some off, depending on the combination of switches. Segments are labled A to G (7 segments), and each have separate conditions under which they are on. Below is a truth table to show under which conditions each segment of the SSD will be on.
+                Seven segment displays (SSD) are divided into seven lights that are either on or off.
+                They can display all digits, and some letters, but only one character at a time.
+                In this project, each of the three input switches (X, Y, and Z) controls all segments
+                to turn some on or some off, depending on the combination of switches.
+                Segments are labled A to G (7 segments), and each have separate conditions under which they are on.
+                Below is a truth table to show under which conditions each segment of the SSD will be on.
             </p>
             <div class="design-process-image-box">
                 <img src="dob2.webp" alt="Truth Table">
@@ -102,7 +107,9 @@
             </div>
 
             <p>
-                There are columns A through G, each representing a segment as seen in the other image. Inputs are the X, Y, and Z switches. For example, a zero requires that all segments are on except for G (the center segment). 
+                There are columns A through G, each representing a segment as seen in the other image.
+                Inputs are the X, Y, and Z switches. For example, a zero requires that all segments are
+                on except for G (the center segment). 
             </p>
 
             <span><h1>K-Mapping and Simplification</h1></span>
@@ -116,7 +123,22 @@
                 <img src="dob10.webp" alt="Segment G K-Map">
             </div>
             <p>
-                Previously in the Majority Vote project, I used boolean algebra to simplify the truth table. Boolean algebra can be time consuming and prone to errors. It is also not very visual. Instead, Karnaugh Mapping (K-Mapping) offers a visual approach to simplifying logic expressions using a table to fill in. First, a table with <i>a</i> rows and <i>b</i> columns is created, where <i>a</i> is 4 rows and <i>b</i> is 2 columns. The rows and columns are labled with every AND combination of pairs of input variables, X, Y, and Z. Next, every two rows of the truth table are grouped. After the grouping, the last two pairs of rows in the truth table are switched as shown in the truth table image. Then each pair of truth table rows is transferred to the K-map where the first truth table row goes in the first column, and the second truth table row goes in the second column. This is repeated until all pairs of truth table rows have been transferred. Now comes the grouping. Groups can be made on the K-map in any power of two, but we start with finding larger groups (8, 4, 2, 1).
+                Previously in the Majority Vote project, I used boolean
+                algebra to simplify the truth table.
+                Boolean algebra can be time consuming and prone to errors.
+                It is also not very visual. Instead, Karnaugh Mapping (K-Mapping) offers a visual approach
+                to simplifying logic expressions using a table to fill in.
+                First, a table with <i>a</i> rows and <i>b</i> columns is created,
+                where <i>a</i> is 4 rows and <i>b</i> is 2 columns.
+                The rows and columns are labled with every AND combination of pairs of input variables, X, Y, and Z.
+                Next, every two rows of the truth table are grouped.
+                After the truth table row grouping, the last two pairs of rows in the truth table are switched as shown in the truth table image.
+                Then each pair of truth table rows is transferred to the K-map where
+                the first truth table row goes in the first column, and the second truth table row goes in the second column.
+                This is repeated until all pairs of truth table rows have been transferred.
+                Now comes the grouping in the K-map.
+                Groups can be made on the K-map in any power of two,
+                but you start with finding larger groups (8, 4, 2, 1).
             </p>
             <p>
                 <u>Groups are clusters of 1s in combinations of:</u>
@@ -133,7 +155,10 @@
                 <br>-> When no other options of grouping are available, then the 1 must stay by itself in its own group.
             </p>
             <p>
-                When each table is complete, a sum of produccts is derived from which variables stay the same for each group of 1s. K-mapping automatically gives the simplest solution, which is advantageous over boolean algebra since you do not need to solve for the simplest logic equation. There are seven expressions in total, one corresponding to each segment on the seven segment display.
+                When each table is complete, a sum of produccts is derived from which variables stay the same for each group of 1s.
+                K-mapping automatically gives the simplest solution, which is advantageous over boolean algebra since you do not need
+                to solve for the simplest logic equation. There are seven expressions in total,
+                one corresponding to each segment on the seven segment display.
             </p>
 
             <span><h1>NI MultiSim CAD Design</h1></span>
@@ -141,13 +166,27 @@
                 <img src="dob11.webp" alt="NI MultiSim NAND/NOR Design">
             </div>
             <p>
-                A total of 19 gates are used in this circuit. 3 74LS04 inverters, 1 74LS08 AND gate, 5 74LS32 OR gates, 2 74LS02 NOR gates, and 8 74LS00 NAND gates are used. This would require 7 ICs in total. When I created the circuit on the breadboard, I realized that segments C and F used identical logic, and was able to use one less OR gate. This brought the total down to 6 ICs consisting of 17 gates.
+                A total of 19 gates are used in this circuit. 3 74LS04 inverters, 1 74LS08 AND gate, 5 74LS32 OR gates, 2 74LS02 NOR gates,
+                and 8 74LS00 NAND gates are used. This would require 7 ICs in total. When I created the circuit on the breadboard,
+                I realized that segments C and F used identical logic, and was able to use one less OR gate. This brought the total down
+                to 6 ICs consisting of 17 gates.
             </p>
             <p>
-                NAND and NOR gates are commonly referred to as "Universal Gates" since multiple NAND gates or NOR gates can be used to create any AND, OR, or NOT gate. This can be used to reduce the amount of ICs needed by using spare NAND or NOR gates to replace other components. My circuit could not be simplified using NAND or NOR gates, so I just added them to learn how to use them. My circuit contained more ICs after adding NAND and NOR gates, but most would contain less ICs.
+                NAND and NOR gates are commonly referred to as "Universal Gates" since multiple NAND gates or NOR gates can be used to create
+                any AND, OR, or NOT gate. This can be used to reduce the amount of ICs needed in some circuits by using spare NAND or NOR gates to replace other components.
+                My circuit could not be simplified using NAND or NOR gates, so I just added them to learn how to use them.
+                My circuit contained more ICs after adding NAND and NOR gates, but most would contain less ICs.
             </p>
             <p>
-                Back to seven segment displays (SSDs). Seven segment displays use seven LEDs to display a digit or basic letter in a human-readible format. A useful diagram is in the Truth Table section of this project page. SSDs come in two versions; common cathode and common anode. Common cathode displays take HIGH 5V as input to each LED and must always be connected to ground (GND). Common anode displays are always connected to a HIGH power source, and segments are lit when they are grounded. I used a common cathode display in this project since here HIGH means 1, which can be solved easily using K-mapping and a truth table to find out when a segment should be on. Instead, a common anode display requires you to consider when a segment is grounded, which requires grounding through boolean logic. Every LED has a 220 ohm resistor attached in the circuit to limit the current that the LED recieves. This ensures that the LED will remain in nominal conditions and will not burn-out.
+                Back to seven segment displays (SSDs). Seven segment displays use seven LEDs to display a digit or basic letter in a human-readible format.
+                A useful diagram is in the Truth Table section of this project page. SSDs come in two versions; common cathode and common anode.
+                Common cathode displays take HIGH 5V as input to each LED and must always be connected to ground (GND).
+                Common anode displays are always connected to a HIGH power source, and segments are lit when they are grounded.
+                I used a common cathode display in this project since here HIGH means 1, which can be solved easily using K-mapping and a truth table
+                to find out when a segment should be on. Instead, a common anode display requires you to consider when a segment is grounded,
+                which requires grounding through boolean logic.
+                Every LED has a 220 ohm resistor attached in the circuit to limit the current that the LED recieves.
+                This ensures that the LED will remain in nominal conditions and will not burn-out.
             </p>
 
             <span><h1>Breadboarding</h1></span>
@@ -155,17 +194,27 @@
                 <img src="dob12.webp" alt="Breadbording Process">
                 <img src="dob13.webp" alt="Breadbording Process">
                 <img src="dob14.webp" alt="Breadbording Process">
+                <img src="dob15.webp" alt="Troubleshooting Segments Notes">
+                <img src="dob16.webp" alt="IC Pinout Diagrams">
             </div>
             <p>
                 EXPLANATION OF THE PICTURES
             </p>
             <p>
                 During breadboarding the circuit, I realized that segments C and F used identical logic, so I could eliminate one OR gate.
+                While breadboarding, I also incorrectly incorrectly connected a 74LS00 NAND gate for segment G.
+                Generally, as seen in the IC pinout diagram above, ICs have VCC on pin 14 and GND on pin 7, along with having
+                inputs on the left side and outputs further right. Yet 74LS02 NOR gates have these inputs and outputs reversed.
+                I reversed the inputs and outputs since the NOR gate has reversed inputs and outputs.
+                Knowing this, I assumed that the NAND gates would be the same, but they are not.
+                I learned that NOR gates are the only reversed gates. To locate the issue with segment G,
+                I used a multimeter and wire tracing to determine my mistake.
+                While building the circuit, I cut jumper wires to custom length in order
+                to maintain an organized layout that could easily be troubleshooted. Now all segments work perfectly.
             </p>
 
-            <span><h1>Bill of Materials</h1></span>
+            <span><h1>DOB Bill of Materials</h1></span>
             <p>
-                This is the list of all the components used in the simplified circuit on a breadboard.
                 <br>
                 <div class="decision-matrix">
                         <table>
@@ -175,52 +224,89 @@
                             <td><strong>Quantity</strong></td>
                         </tr>
                         <tr>
-                            <td>74LS08 2-input AND Gate</td>
+                            <td>74LS04 Not/Inverter Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS08 2-Input AND Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS32 2-Input OR Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS00 2-Input NAND Gate</td>
                             <td>2</td>
                         </tr>
                         <tr>
-                            <td>74LS32 2-input OR Gate</td>
+                            <td>74LS02 2-Input NOR Gate</td>
                             <td>1</td>
                         </tr>
                         <tr>
-                            <td>74LS04 NOT/inverter Gate</td>
-                            <td>1, OPTIONAL</td>
-                        </tr>
-                        <tr>
-                            <td>Red LED</td>
-                            <td>1, OPTIONAL</td>
-                        </tr>
-                        <tr>
-                            <td>Green LED</td>
+                            <td>MyDigital Protoboard (SSD, breadboard, switches)</td>
                             <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>330 Ohm Resistor</td>
-                            <td>2, 1 is optional for red LED</td>
                         </tr>
                         <tr>
                             <td>Wires</td>
-                            <td>About 30</td>
+                            <td>About 60</td>
                         </tr>
                     </table>
                 </div>
             </p>
 
             <span><h1>Conclusion</h1></span>
-            <div class="design-process-image-box">
-                <img src="majority-vote8.jpeg" alt="VCC and GND connected">
-                <img src="majority-vote9.jpeg" alt="All logic complete">
-                <img src="majority-vote10.jpeg" alt="Indicator LEDs added">
-            </div>
-
             <p>
-                
+                This project inspired me to create neat, debuggable, and more complex breadboard circuits.
+                Along with breadboard organization, I also learned how to evaluate and simplify truth tables
+                efficiently using Karnaugh Mapping. Before this project, I did not know how to control the
+                output of a seven segment display. It is really just seven LEDs that can be used together
+                to display numbers and some basic letters. If I were to redo the project,
+                I would first find any ways to further simplify the circuit and look at all the IC pinouts
+                while building the circuit.
             </p>
 
-          <span><h1>Creating the Most Efficient Circuit</h1></span>
-          <p>
-              
-          </p>
+            <span><h1>Creating the Most Efficient Circuit</h1></span>
+            <div class="design-process-image-box">
+                <img src="dob17.webp" alt="NI MultiSim AOI Only Design">
+            </div>
+            <p>
+                As far as I can tell, the most efficient solution of this circuit is to exclusively use AOI logic.
+                A screenshot is provided above from NI MultiSim.
+                <br>An AOI only solution uses:
+            </p>
+            <p>
+                <div class="decision-matrix">
+                    <table>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td><strong>Component</strong></td>
+                            <td><strong>Quantity</strong></td>
+                        </tr>
+                        <tr>
+                            <td>74LS04 Not/Inverter Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS08 2-Input AND Gate</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>74LS32 2-Input OR Gate</td>
+                            <td>5 (2 can be removed since C & F are the same)</td>
+                        </tr>
+                        <tr>
+                            <td>MyDigital Protoboard (SSD, breadboard, switches)</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Wires</td>
+                            <td>About 50</td>
+                        </tr>
+                    </table>
+                </div>
+                This means that there are only 5 integrated circuits used instead of 6.
+            </p>
         </div>
     </section>
 
