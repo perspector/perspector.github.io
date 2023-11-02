@@ -135,7 +135,21 @@
             <p>
                 When each table is complete, a sum of produccts is derived from which variables stay the same for each group of 1s. K-mapping automatically gives the simplest solution, which is advantageous over boolean algebra since you do not need to solve for the simplest logic equation. There are seven expressions in total, one corresponding to each segment on the seven segment display.
             </p>
+
             <span><h1>NI MultiSim CAD Design</h1></span>
+            <div class="design-process-image-box">
+                <img src="dob11.webp" alt="NI MultiSim NAND/NOR Design">
+            </div>
+            <p>
+                A total of 19 gates are used in this circuit. 3 74LS04 inverters, 1 74LS08 AND gate, 5 74LS32 OR gates, 2 74LS02 NOR gates, and 8 74LS00 NAND gates are used. This would require 7 ICs in total. When I created the circuit on the breadboard, I realized that segments C and F used identical logic, and was able to use one less OR gate. This brought the total down to 6 ICs consisting of 17 gates.
+            </p>
+            <p>
+                NAND and NOR gates are commonly referred to as "Universal Gates" since multiple NAND gates or NOR gates can be used to create any AND, OR, or NOT gate. This can be used to reduce the amount of ICs needed by using spare NAND or NOR gates to replace other components. My circuit could not be simplified using NAND or NOR gates, so I just added them to learn how to use them. My circuit contained more ICs after adding NAND and NOR gates, but most would contain less ICs.
+            </p>
+            <p>
+                Back to seven segment displays (SSDs). Seven segment displays use seven LEDs to display a digit or basic letter in a human-readible format. A useful diagram is in the Truth Table section of this project page. SSDs come in two versions; common cathode and common anode. Common cathode displays take HIGH 5V as input to each LED and must always be connected to ground (GND). Common anode displays are always connected to a HIGH power source, and segments are lit when they are grounded. I used a common cathode display in this project since here HIGH means 1, which can be solved easily using K-mapping and a truth table to find out when a segment should be on. Instead, a common anode display requires you to consider when a segment is grounded, which requires grounding through boolean logic. Every LED has a 220 ohm resistor attached in the circuit to limit the current that the LED recieves. This ensures that the LED will remain in nominal conditions and will not burn-out.
+            </p>
+
             <span><h1>Breadboarding</h1></span>
 
             <span><h1>Bill of Materials</h1></span>
