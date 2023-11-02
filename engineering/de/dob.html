@@ -105,9 +105,38 @@
                 There are columns A through G, each representing a segment as seen in the other image. Inputs are the X, Y, and Z switches. For example, a zero requires that all segments are on except for G (the center segment). 
             </p>
 
-          <span><h1>K-Mapping and Simplification</h1></span>
-          <span><h1>NI MultiSim CAD Design</h1></span>
-          <span><h1>Breadboarding</h1></span>
+            <span><h1>K-Mapping and Simplification</h1></span>
+            <div class="design-process-image-box">
+                <img src="dob4.webp" alt="Segment A K-Map">
+                <img src="dob5.webp" alt="Segment B K-Map">
+                <img src="dob6.webp" alt="Segment C K-Map">
+                <img src="dob7.webp" alt="Segment D K-Map">
+                <img src="dob8.webp" alt="Segment E K-Map">
+                <img src="dob9.webp" alt="Segment F K-Map">
+                <img src="dob10.webp" alt="Segment G K-Map">
+            </div>
+            <p>
+                Previously in the Majority Vote project, I used boolean algebra to simplify the truth table. Boolean algebra can be time consuming and prone to errors. It is also not very visual. Instead, Karnaugh Mapping (K-Mapping) offers a visual approach to simplifying logic expressions using a table to fill in. First, a table with <i>a</i> rows and <i>b</i> columns is created, where <i>a</i> is 4 rows and <i>b</i> is 2 columns. The rows and columns are labled with every AND combination of pairs of input variables, X, Y, and Z. Next, every two rows of the truth table are grouped. After the grouping, the last two pairs of rows in the truth table are switched as shown in the truth table image. Then each pair of truth table rows is transferred to the K-map where the first truth table row goes in the first column, and the second truth table row goes in the second column. This is repeated until all pairs of truth table rows have been transferred. Now comes the grouping. Groups can be made on the K-map in any power of two, but we start with finding larger groups (8, 4, 2, 1).
+            </p>
+            <p>
+                <u>Groups are clusters of 1s in combinations of:</u>
+                <br>* 8 ones (entire K-map is full in this case)
+                <br>* 4 ones
+                <br>-> A square (2 rows and 2 columns)
+                <br>-> A complete row or column
+                <br>-> A square going over an edge and appearing again on the opposite side (like pacman)
+                <br>-> A one in each corner of the K-map
+                <br>* 2 ones
+                <br>-> 2 adjacent 1s in a row or column
+                <br>-> 2 adjacent 1s over an edge
+                <br>* 1 one
+                <br>-> When no other options of grouping are available, then the 1 must stay by itself in its own group.
+            </p>
+            <p>
+                When each table is complete, a sum of produccts is derived from which variables stay the same for each group of 1s. K-mapping automatically gives the simplest solution, which is advantageous over boolean algebra since you do not need to solve for the simplest logic equation. There are seven expressions in total, one corresponding to each segment on the seven segment display.
+            </p>
+            <span><h1>NI MultiSim CAD Design</h1></span>
+            <span><h1>Breadboarding</h1></span>
 
             <span><h1>Bill of Materials</h1></span>
             <p>
