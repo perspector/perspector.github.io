@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Airfoil Construction and Wind Tunnel Analysis</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 2nd Aerospace Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading">About the Project</h2>
+        <div class="design-process-container">
+            <span><h1>Introduction</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction1.png" alt="">
+                <img src="airfoil-construction2.png" alt="">
+            </div>
+            <p>
+                In this project...
+            </p>
+
+            <span><h1>Designing the Frame</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction3.png" alt="">
+                <img src="airfoil-construction4.png" alt="">
+            </div>
+            <p>
+                SOMETHING
+            </p>
+
+            <span><h1>Material Choice</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction5.png" alt="">
+                <img src="airfoil-construction6.png" alt="">
+            </div>
+            <p>
+                SOMETHING
+            </p>
+            <p>
+                Once the data formatting was complete, I was ready to import the data into Autodesk Inventor.
+                To do this, I created a sketch and imported the data points from the Excel file created previously.
+                To ensure the airfoil had a smooth surface, I used the "Import and Connect with Spline" option.
+                A spline was created, connecting all points except for two end points on the trailing edge.
+                After connecting the last points manually, I could extrude the design to a height of three
+                inches and send it to my 3D printer!
+            </p>
+
+            <span><h1>Adding Forces for Simulation</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction7.png" alt="">
+                <img src="airfoil-construction8.webp" alt="">
+                <img src="airfoil-construction9.webp" alt="">
+            </div>
+            <p>
+                To build the airfoil, I used my 3D printer to create my design from Autodesk Inventor.
+                I also sanded the trailing edge due to some overextrusion while printing.
+                The 3D printer did an almost perfect job, but the thin trailing edge was slightly too thick.
+            </p>
+            <p>
+                This was far easier and thus prone to less error than using manual methods, such as cutting foam.
+                Cutting foam involves creating multiple mirrored templates of the airfoil, and
+                attaching these to a block of foam. Next, the foam is cut using a hot wire foam cutter.
+                During this process, it is easy to melt too much foam, or to shift the templates.
+                A 3D printer can produce a very accurate model of the airfoil, except for the thicker trailing edge.
+                The trailing edge can just be sanded down to retain scale model accuracy through a sharp trailing edge.
+            </p>
+
+            <span><h1>Test Results</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction10.webp" alt="">
+                <img src="airfoil-construction11.webp" alt="">
+                <img src="airfoil-construction12.webp" alt="">
+                <img src="airfoil-construction13.webp" alt="">
+            </div>
+            <p>
+                Wind tunnel tests were conducted to measure the airfoil's lift (L) and drag (D).
+                These values were used to determine the coefficient of lift (C_L) and coefficient of drag (C_D).
+                The tests were be conducted in a wind tunnel to maintain a steady airflow velocity.
+                The airfoil was be mounted to an armature on a load cell which could measure all
+                forces in the X, Y, and Z directions. This let me determine lift and drag generated at different airflow velocities.
+                Pressure was calculated using the altitude (about sea level),
+                and velocity was measured using a airflow velocity sensor (anemometer).
+            </p>
+
+            <span><h1>Criteria Evaluation</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction14.webp" alt="">
+                <img src="airfoil-construction15.webp" alt="">
+                <img src="airfoil-construction16.webp" alt="">
+            </div>
+            <p>
+                Shown above are comparisons between measured lift and drag (lbs) at various angles of attack.
+                Additionally, measured lift to drag ratios at various angles of attack and their respective
+                simulated values are also shown.
+            </p>
+            <p>
+                These results show a direct corellation between similar lift to drag ratios of the tests
+                and simulations at higher angles of attack.
+                The lift to drag ratio approaches 4.0 for both the measured and the simulated values as
+                the angle of attack increases to positive 20 degrees.
+                Conversely, the measured results show a gradual increase in lift to drag ratio from
+                negative 20 degrees to 0 degrees, while the simulation shows negative ratios
+                from -20 to -10 degrees AOA, but sharply increases to 7.8 at -5 degrees AOA.
+                This could be due to issues in the construction of the airfoil or
+                inaccuracy while testing the airfoil using the wind tunnel and load cell.
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction17.webp" alt="">
+            </div>
+            <p>
+                During this project, I learned how to design an airfoil and export its geometry into Excel.
+                Then, I learned how to import the points into Autodesk Inventor accurately and how to connect them smoothly using a spline.
+                Additionally, I learned how to use a hot wire to cut foam accurately and precisely.
+            </p>
+            <p>
+                Next time, I would like to experiment with different types of airfoils and different chord and thickness parameters.
+                It would also be very interesting to see how my airfoil design compares in terms of performance
+                with the Seling S1223 airfoil I based it on.
+                Also, before 3D printing other airfoils, I would print multiple calibration models and potentially redesign the airfoil
+                to reduce the thickness of the trailing edge from printing. This would help to maintain the realistic scale of the model
+                to a full-size airfoil.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase</p>
+            <p>The code is licensed under the GNU GPLv3 license.</p>
+            <p>Code: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
