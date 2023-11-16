@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Majority Vote</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 4th Digital Electronics Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <span><h1>Project Overview</h1></span>
+            <div class="design-process-image-box">
+                <img src="copier-jam1.webp" alt="">
+            </div>
+
+            <p>
+                OVERVIEW AND CONSTRAINTS
+            </p>
+
+            <span><h1>Truth Table</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote2.jpeg" alt="Truth Table">
+            </div>
+
+            <span><h1>Boolean Algebra</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote5.jpeg" alt="">
+            </div>
+
+            <span><h1>K-Map</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote5.jpeg" alt="">
+            </div>
+
+            <span><h1>Printer Construction</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote5.jpeg" alt="">
+            </div>
+
+            <span><h1>Wiring Diagrams</h1></span>
+            <div class="design-process-image-box">
+                <img src="majority-vote5.jpeg" alt="">
+            </div>
+
+            <p>
+                EXPLAIN HOW HARD/EASY FOR YOU TO READ EXTERNAL DIAGRAM; HOW COMPLICATED WAS IT TO INCLUDE FLIP FLOP IN YOUR COMBINATIONAL LOGIC DESIGN
+            </p>
+            <span><h1>Component Implementations</h1></span>
+            <p>
+                EXPLANATION OF PARTS AND FUNCTIONS
+            </p>
+
+            <span><h1>Bill of Materials</h1></span>
+            <p>
+                This is the list of all the components used in the simplified circuit on a breadboard.
+                <br>
+                <div class="decision-matrix">
+                        <table>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td><strong>Component</strong></td>
+                            <td><strong>Quantity</strong></td>
+                        </tr>
+                        <tr>
+                            <td>74LS08 2-input AND Gate</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>74LS32 2-input OR Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS04 NOT/inverter Gate</td>
+                            <td>1, OPTIONAL</td>
+                        </tr>
+                        <tr>
+                            <td>Red LED</td>
+                            <td>1, OPTIONAL</td>
+                        </tr>
+                        <tr>
+                            <td>Green LED</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>330 Ohm Resistor</td>
+                            <td>2, 1 is optional for red LED</td>
+                        </tr>
+                        <tr>
+                            <td>Wires</td>
+                            <td>About 30</td>
+                        </tr>
+                    </table>
+                </div>
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <p>
+                This project taught me how to analyze a situation using inputs and find the output based on rules.
+                I learned how to apply boolean algebra to immensely simplify a Sum of Products equation in order to use less components.
+                In this project, I realized the vast opportunities for improvement in troubleshooting,
+                efficiency, and cost-effectiveness just by simplifying the circuit.
+                This is the reason why Boolean algebra is used in the industry, to reduce costs and space taken by ICs.
+                In the newest electronics, space is a valuable commodity that is very limited by the design constraints,
+                thus demonstrating the need for a simplified circuit to be used. To wrap it up, I went from a simple problem to a truth table showing outputs.
+                After this, I simplified the SOP expression using Boolean algebra to reduce the amount of ICs needed in the circuit.
+                Then I modeled the simplified expression to make a circuit using NI Multisim, and finally I created a physical circuit using a breadboard.
+                And it is always important to remember, that without documentation, a project is no longer a project.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase</p>
+            <p>The code is licensed under the GNU GPLv3 license.</p>
+            <p>Code: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
