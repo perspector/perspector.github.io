@@ -47,7 +47,7 @@
                 <script>
                     var typed = new Typed('#element', {
                         startDelay: 1000,
-                        strings: ["<i>Majority Vote</i>"],
+                        strings: ["<i>Copier Jam</i>"],
                         typeSpeed: 150,
                         cursorChar: "<i>|<i>",
                         loop: false,
@@ -71,7 +71,10 @@
         <div class="design-process-container">
             <span><h1>Project Overview</h1></span>
             <p>
-                OVERVIEW AND CONSTRAINTS
+                Everyone has printer problems. It is very important to know what the issue is in order to fix it. This project involved building a copier jam sensor module that uses boolean logic to detect when there is a jam. When a jam occurs, an LED is lit. Additionally, D-flip-flop is used to keep a buzzer on until a reset switch is toggled. This helps to alert users later if they are not present when the jam occurs. It also tells everyone that someone jammed the copier.
+            </p>
+            <p>
+                Photoresistors needed to be used to detect the jam. Also, the circuit requires resistors to continuously provide power to the circuit, even when the photoresistors do not provide input power.
             </p>
 
             <span><h1>Truth Table</h1></span>
@@ -89,6 +92,14 @@
                 <img src="copier-jam3.webp" alt="">
             </div>
 
+            <span><h1>Simplified Expression</h1></span>
+            <p>
+                From using boolean algebra along with K-Mapping, the Product of Sums (POS) minterms have been simplified to the following expression:
+            </p>
+            <p>
+                F = YZ + XY
+            </p>
+
             <span><h1>Copier Construction</h1></span>
             <div class="design-process-image-box">
                 <img src="copier-jam4.webp" alt="">
@@ -100,11 +111,13 @@
             </div>
 
             <p>
-                EXPLAIN HOW HARD/EASY FOR YOU TO READ EXTERNAL DIAGRAM; HOW COMPLICATED WAS IT TO INCLUDE FLIP FLOP IN YOUR COMBINATIONAL LOGIC DESIGN
+                Reading the external wiring diagram of the flip-flop was pretty simple. I looked at the inputs and outputs of the flip-flop and traced these back to their respective pins on the pinout diagram. My circuit schematic definitely helped in this process.
+                Including the flip-flop was not too hard as the flip-flop only needed the output of the boolean logic as a clock (CLK) input, along with the Q out being the buzzer. Power was supplied to PRESET and D in (Data input). To stop the buzzer, a simple dip switch was implemented to either power or ground the CLEAR pin of the flip-flop.
             </p>
+
             <span><h1>Component Implementations</h1></span>
             <p>
-                EXPLANATION OF PARTS AND FUNCTIONS
+                Resistors were implemented in order to make the photo-transistors function. In the circuit, when the 
             </p>
 
             <span><h1>Bill of Materials</h1></span>
