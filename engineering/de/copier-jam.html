@@ -117,7 +117,9 @@
 
             <span><h1>Component Implementations</h1></span>
             <p>
-                Resistors were implemented in order to make the photo-transistors function. In the circuit, when the 
+                Resistors were implemented in order to make the photo-transistors function. In the circuit, when the photoresistors receive light, they output a logic high. Otherwise, since electricity chooses the easiest path, a small magnitude of power is drawn through a 5.2K ohm resistor on a 5V power supply. This will make it "choose" which source to obtain power from to provide the input.
+                The AOI combinational logic detects when two adjacent photoresistors return a logic LOW (meaning 2 pieces of paper are next to each other). The signal lights an LED directly whenever there is a jam.
+                A flip-flop is also triggered whenever there is a jam, causing a buzzer alarm to sound. The difference between the LED and the buzzer is that the LED turns off when the jam is resolved, but the buzzer stays on until the clear (CLR) switch is toggled. But if you leave the clear switch on, then the buzzer will never sound as the clear switch overrides any input to the flip-flop.
             </p>
 
             <span><h1>Bill of Materials</h1></span>
@@ -165,7 +167,7 @@
 
             <span><h1>Conclusion</h1></span>
             <p>
-                SOMETHING
+                This project used a flip-flop to hold the signal of the jam to keep the buzzer on continuously. It used a combination of sensors, boolean logic, and output devices such as a buzzer to alert a user of a copier jam. This circuit could be very helpful in copiers to identify the source of the jam. I learned how to use clocks and flip-flops, how flip-flops work, along with how to wire phototransistors. This circuit is ethical as it is intended to solve copier jam issues.
             </p>
         </div>
     </section>
