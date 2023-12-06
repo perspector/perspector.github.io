@@ -1,1 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Deli Counter</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 5th Digital Electronics Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <span><h1>Project Overview</h1></span>
+            <div class="design-process-image-box">
+                <img src="deli-counter1.webp" alt="Overview Photo">
+            </div>
+            <p>
+            </p>
+
+            <span><h1>NI MultiSim Circuit</h1></span>
+            <div class="design-process-image-box">
+                <img src="deli-counter2.webp" alt="NI MultiSim Circuit Schematic">
+            </div>
+
+            <span><h1>PLD Circuit</h1></span>
+            <div class="design-process-image-box">
+                <img src="deli-counter3.webp" alt="NI MultiSim Circuit Schematic">
+            </div>
+
+            <p>
+            </p>
+
+          <span><h1>Breadboard Circuit</h1></span>
+            <div class="design-process-image-box">
+                <img src="deli-counter4.webp" alt="Breadboard">
+            </div>
+
+            <span><h1>Bill of Materials</h1></span>
+            <p>
+                This is the list of all the components used in the simplified circuit on a breadboard.
+                <br>
+                <div class="decision-matrix">
+                        <table>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td><strong>Component</strong></td>
+                            <td><strong>Quantity</strong></td>
+                        </tr>
+                        <tr>
+                            <td>74LS08 2-input AND Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS32 2-input OR Gate</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>74LS74 D-Flip-Flop</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>5.2K Ohm Resistor</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Buzzer</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Wires</td>
+                            <td>About 25</td>
+                        </tr>
+                    </table>
+                </div>
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <p>
+                This project used a flip-flop to hold the signal of the jam to keep the buzzer on continuously.
+                It used a combination of sensors, boolean logic, and output devices such as a buzzer to
+                alert a user of a copier jam. This circuit could be very helpful in copiers to
+                identify the source of the jam. I learned how to use clocks and flip-flops, how flip-flops work,
+                along with how to wire photoresistors. This circuit is ethical as it is intended to solve copier jam issues.
+            </p>
+
+            <span><h1>Demonstration Video</h1></span>
+            <div class="design-process-image-box">
+                <video
+                    controls
+                    source src="copier-jam6.webm" type="video/webm">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase</p>
+            <p>The code is licensed under the GNU GPLv3 license.</p>
+            <p>Code: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
