@@ -74,6 +74,11 @@
                 <img src="deli-counter1.webp" alt="Overview Photo">
             </div>
             <p>
+                Many stores and delis have customer counters to organize and keep track of customer orders.
+                You take a small ticket with a printed number, afterwhich your number is called once your order is ready.
+                This project involves creating a number counter using two seven segment displays and flip-flops.
+                The counter counts up from 0, and pauses at 80.
+                Once a reset switch is toggled, which can occur at any time, the counter resets to 0.
             </p>
 
             <span><h1>NI MultiSim Circuit</h1></span>
@@ -87,6 +92,7 @@
             </div>
 
             <p>
+                The PLD design mode is similar to the regular design mode in NI MultiSim. The main difference is that it is geared towards programming microcontrollers. Instead of actual electrical components such as ICs, virtual components are used. An example of this is that in the regular design mode, an AND gate is a 74LS08 IC. However, in PLD mode it is simply AND2 (meaning 2 input AND gate). Another feature of the PLD design mode is input and output pins. These correspond to physical pins on the microcontroller. Input connectors and output connectors take either inputs (such as switch inputs) or outputs (such as an output to an LED).
             </p>
 
           <span><h1>Breadboard Circuit</h1></span>
@@ -106,28 +112,16 @@
                             <td><strong>Quantity</strong></td>
                         </tr>
                         <tr>
-                            <td>74LS08 2-input AND Gate</td>
+                            <td>Digilent PLTW S7 Microcontroller</td>
                             <td>1</td>
                         </tr>
                         <tr>
-                            <td>74LS32 2-input OR Gate</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>74LS74 D-Flip-Flop</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>5.2K Ohm Resistor</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Buzzer</td>
+                            <td>myDigital Protoboard (Breadboard with SSD)</td>
                             <td>1</td>
                         </tr>
                         <tr>
                             <td>Wires</td>
-                            <td>About 25</td>
+                            <td>11</td>
                         </tr>
                     </table>
                 </div>
@@ -135,20 +129,7 @@
 
             <span><h1>Conclusion</h1></span>
             <p>
-                This project used a flip-flop to hold the signal of the jam to keep the buzzer on continuously.
-                It used a combination of sensors, boolean logic, and output devices such as a buzzer to
-                alert a user of a copier jam. This circuit could be very helpful in copiers to
-                identify the source of the jam. I learned how to use clocks and flip-flops, how flip-flops work,
-                along with how to wire photoresistors. This circuit is ethical as it is intended to solve copier jam issues.
             </p>
-
-            <span><h1>Demonstration Video</h1></span>
-            <div class="design-process-image-box">
-                <video
-                    controls
-                    source src="copier-jam6.webm" type="video/webm">
-                </video>
-            </div>
         </div>
     </section>
 
