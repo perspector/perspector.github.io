@@ -92,7 +92,19 @@
             </div>
 
             <p>
-                The PLD design mode is similar to the regular design mode in NI MultiSim. The main difference is that it is geared towards programming microcontrollers. Instead of actual electrical components such as ICs, virtual components are used. An example of this is that in the regular design mode, an AND gate is a 74LS08 IC. However, in PLD mode it is simply AND2 (meaning 2 input AND gate). Another feature of the PLD design mode is input and output pins. These correspond to physical pins on the microcontroller. Input connectors and output connectors take either inputs (such as switch inputs) or outputs (such as an output to an LED).
+                The PLD design mode is similar to the regular design mode in NI MultiSim.
+                The main difference is that it is geared towards programming microcontrollers.
+                Instead of actual electrical components such as ICs, virtual components are used.
+                An example of this is that in the regular design mode, an AND gate is a 74LS08 IC.
+                However, in PLD mode it is simply AND2 (meaning 2 input AND gate).
+                Another feature of the PLD design mode is input and output pins.
+                These correspond to physical pins on the microcontroller.
+                Input connectors and output connectors take either inputs
+                (such as switch inputs) or outputs (such as an output to an LED).
+                Once the logic and circuit are complete, the entire design can be transferred
+                to a microcontroller (in this case the Digilent PLTW S7).
+                The microcontroller will then execute the "code" defined by the circuit schematic.
+                This is effectively programming with circuit logic.
             </p>
 
           <span><h1>Breadboard Circuit</h1></span>
@@ -129,6 +141,18 @@
 
             <span><h1>Conclusion</h1></span>
             <p>
+                In this project, I used both SSI (Small Scale Integration) and MSI (Medium Scale Integration) components.
+                SSI is used in smaller projects that are not mass-produced. These types of circuits require
+                basic components to be wired manually.
+            </p>
+            <p>
+                On the other hand, MSI circuits contain everything needed in a small form factor,
+                which is advantageous in mass production.
+                The basic flip-flops represented an SSI circuit, while the one's part of the circuit used an MSI component.
+                The MSI component contained all flip-flops and connections needed to create a counter, which is very practical.
+            </p>
+            <p>
+                However, the MSI circuit has one main drawback.
             </p>
         </div>
     </section>
