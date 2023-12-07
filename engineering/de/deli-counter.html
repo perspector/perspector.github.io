@@ -141,6 +141,18 @@
 
             <span><h1>Conclusion</h1></span>
             <p>
+                The circuit uses a clock input (CLK) to control the number increments. A CLK signal goes to an AND gate.
+                If the reset switch is also HIGH, then the signal proceeds into the MSB chip.
+                This outputs an incrementing number that represents the ones place and resets when 10, or A is detected.
+                When it is reset, a CLK signal is sent to the flip-flops for the tens place.
+                These 4 flip-flops are in toggle mode since D is connected to NOT Q.
+                At the end of this flip-flop assembly, a single wire is connected to Q of the MSB flip-flop.
+                This receives a HIGH value when the MSB is 1, meaning the display shows an 8.
+                The output of this wire is sent through an inverter (so it becomes a 0) to the AND gate in the beginning to cause the counter to suspend.
+                When the user toggles the reset switch, a signal is sent to the ones place counter and to the tens place counter to activate the CLEAR pin of every flip-flop.
+                This automatically resets the value of every flip-flop to a 0.
+            </p>
+            <p>
                 In this project, I used both SSI (Small Scale Integration) and MSI (Medium Scale Integration) components.
                 SSI is used in smaller projects that are not mass-produced. These types of circuits require
                 basic components to be wired manually.
@@ -152,7 +164,18 @@
                 The MSI component contained all flip-flops and connections needed to create a counter, which is very practical.
             </p>
             <p>
-                However, the MSI circuit has one main drawback.
+                However, the MSI circuit has one main drawback. The MSI IC 74LS93 includes 4 flip-flops, which can be overkill for an application that only needs three.
+                In addition, propagation delay may be increased.
+                This circuit is also asynchronous, meaning there is a "ripple effect."
+                The "ripple effect" is a glitch or ripple in the output display of an asynchronous flip-flop counter system.
+                Each flip-flop has a propagation delay which is the time needed for the flip-flop to function.
+                As each flip-flop is connected in series, onto the previous flip-flop, there is a slight time difference in each output.
+                This causes the ripple sometimes seen in digital displays or clocks.
+            </p>
+            <p>
+                There are multiple ways to make this circuit slightly differently.
+                To suspend or reset the count, AOI logic can be performed.
+                I used a one wire approach that used only one wire and an AND gate to suspend the count at 80 based on when the MSB became a 1.
             </p>
         </div>
     </section>
