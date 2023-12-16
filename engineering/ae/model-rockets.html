@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Model Rocket Design</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 3rd Aerospace Engineering Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <!-- <h2 class="heading"><span>Design</span> Process</h2> -->
+        <div class="design-process-container">
+            <span><h1>Model Rocket Introduction</h1></span>
+            <div class="design-process-image-box">
+                <img src="model-rockets1.webp" alt="Example of a model rocket">
+            </div>
+            <p>
+                Briefly describe model rockets. Include details about the stages of flight for a model rocket, components, etc.
+            </p>
+
+            <span><h1>Design Process</h1></span>
+            <div class="design-process-image-box">
+                <img src="model-rockets2.webp" alt="PLTW Design Process Infographic">
+            </div>
+            <p>
+                The design process I used for the rocket included:
+                <br>1.
+                <br>2.
+                <br>3. 
+                <br>4.
+                <br>5.
+                <br>6.
+                Make sure the steps are describing your rocket design process
+            </p>
+
+            <span><h1>Simulation and Design using OpenRocket</h1></span>
+            <div class="design-process-image-box">
+                <img src="model-rockets3.webp" alt="Final design in OpenRocket">
+                <img src="model-rockets4.webp" alt="Recorded test datasheet">
+            </div>
+            <p>
+                To design my model rocket, I used the free software OpenRocket. In the design, I adjusted:
+                <br>*
+                <br>*
+                <br>*
+                <br>*
+            </p>
+            <p>
+                Benefits of this design include:
+                <br>*
+                <br>*
+                <br>*
+            </p>
+
+            <span><h1>Building the Rocket</h1></span>
+            <div class="design-process-image-box">
+                <img src="model-rockets5.webp" alt="Building process">
+            </div>
+            <p>
+                Steps in the building process:
+                <br>*
+                <br>*
+                <br>*
+                <br>*
+                <br>*
+            </p>
+
+            <span><h1>Finished Model Rocket and Components</h1></span>
+            <div class="design-process-image-box">
+                <img src="model-rockets6.webp" alt="Rocket with all components labeled">
+            </div>
+
+            <span><h1>Test Results</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction14.webp" alt="">
+                <img src="airfoil-construction15.webp" alt="">
+                <img src="airfoil-construction16.webp" alt="">
+            </div>
+            <p>
+                Shown above are comparisons between measured lift and drag (lbs) at various angles of attack.
+                Additionally, measured lift to drag ratios at various angles of attack and their respective
+                simulated values are also shown.
+            </p>
+            <p>
+                These results show a direct corellation between similar lift to drag ratios of the tests
+                and simulations at higher angles of attack.
+                The lift to drag ratio approaches 4.0 for both the measured and the simulated values as
+                the angle of attack increases to positive 20 degrees.
+                Conversely, the measured results show a gradual increase in lift to drag ratio from
+                negative 20 degrees to 0 degrees, while the simulation shows negative ratios
+                from -20 to -10 degrees AOA, but sharply increases to 7.8 at -5 degrees AOA.
+                This could be due to issues in the construction of the airfoil or
+                inaccuracy while testing the airfoil using the wind tunnel and load cell.
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <div class="design-process-image-box">
+                <img src="airfoil-construction17.webp" alt="">
+            </div>
+            <p>
+                During this project, I learned how to design an airfoil and export its geometry into Excel.
+                Then, I learned how to import the points into Autodesk Inventor accurately and how to connect them smoothly using a spline.
+                Additionally, I learned how to use a hot wire to cut foam accurately and precisely.
+            </p>
+            <p>
+                Next time, I would like to experiment with different types of airfoils and different chord and thickness parameters.
+                It would also be very interesting to see how my airfoil design compares in terms of performance
+                with the Seling S1223 airfoil I based it on.
+                Also, before 3D printing other airfoils, I would print multiple calibration models and potentially redesign the airfoil
+                to reduce the thickness of the trailing edge from printing. This would help to maintain the realistic scale of the model
+                to a full-size airfoil.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Benjamin Chase</p>
+            <p>The code is licensed under the GNU GPLv3 license.</p>
+            <p>Code: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
