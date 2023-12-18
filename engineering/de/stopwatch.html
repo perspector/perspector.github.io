@@ -119,13 +119,22 @@
             <p>
                 To design and create my circuit, I started with making the ones place.
                 This process included adding a clock connected to the CNTR_4BIN_S and a reset switch connected to the "clear" pin of the MSI counter.
-                A nine is detected on the MSI counter and goes to LOAD. Also, a zero detected on the MSI counter triggers the SSI (tens place) counters.
+                A nine is detected on the MSI counter and goes to LOAD on the MSI counter.
+                Also, a zero detected on the MSI counter triggers the SSI (tens place) counter by acting as the CLK input of the leftmost J/K flip-flop.
                 The tens place counter consists of three J/K flip-flops wired in a synchronous configuration counting from 0-5.
-                In the tens place, a six is detected for the end count, which is also wired to the reset switch to reset the ones place.
+                All of the CLK pins of these flip-flops are wired to the zero detection output from the ones place.
+                The J/K flip-flops also must be wired to count upwards. In order to do this, all presets must be wired to digital HIGH,
+                J and K of the first flip-flop must also be wired to HIGH, and J/K of the second flip-flop are connected to Q of the first flip-flop.
+                As with any synchronous J/K flip-flop counter, J/K of the third flip-flop are connected to the Q pins of the first and second flip-flops through an and gate.
+                Also in the tens place, a six is detected for the end count through the application of a three-input NAND gate.
+                The NAND gate is wired to all CLR (clear) pins of the J/K flip-flops.
+                This allows the circuit to automatically reset at 60.
+                The reset switch is also connected through an AND gate to the end detection of the J/K flip-flops to allow
+                the circuit to be reset at any time using the aforementioned reset switch.
                 Then both displays are connected to the multiplexer logic so that both seven segment displays can be used.
                 Physical circuitry remained the same in this project as the deli counter.
                 This included wiring Pin 16 of the Digilent PLTW S7 to one of the CLK values, and Pins 9-3 (wires 9-3 in descending order) to segments A-G respectively.
-                To add the reset switch, Pin 20 is connected to Switch 1.
+                To add the reset switch, Pin 20 was connected to Switch 1.
             </p>
             <p>
                 Lin and I made very similar circuits to create a 60 second stopwatch.
