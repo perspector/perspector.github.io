@@ -117,19 +117,29 @@
                 The 74LS193 can count up or down, and resets immediately when the end count is triggered.
             </p>
             <p>
-                To design and create my circuit, I started with making the ones place. This process included adding a clock connected to the CNTR_4BIN_S, a reset switch connected to the "clear" pin of the MSI counter. A nine is detected on the MSI counter and goes to LOAD. Also, a zero detected on the MSI counter triggers the SSI (tens place) counters. The tens place counter consists of three flip-flops.
+                To design and create my circuit, I started with making the ones place.
+                This process included adding a clock connected to the CNTR_4BIN_S and a reset switch connected to the "clear" pin of the MSI counter.
+                A nine is detected on the MSI counter and goes to LOAD. Also, a zero detected on the MSI counter triggers the SSI (tens place) counters.
+                The tens place counter consists of three J/K flip-flops wired in a synchronous configuration counting from 0-5.
+                In the tens place, a six is detected for the end count, which is also wired to the reset switch to reset the ones place.
+                Then both displays are connected to the multiplexer logic so that both seven segment displays can be used.
+                Physical circuitry remained the same in this project as the deli counter.
+                This included wiring Pin 16 of the Digilent PLTW S7 to one of the CLK values, and Pins 9-3 (wires 9-3 in descending order) to segments A-G respectively.
+                To add the reset switch, Pin 20 is connected to Switch 1.
             </p>
             <p>
-                Lin and I made very similar circuits to create a 60 second stopwatch. The only main difference is that Lin used a simple inverter and wire to detect a zero and trigger the tens place. On the other hand, I used two inverters and a NAND gate to detect a zero.
+                Lin and I made very similar circuits to create a 60 second stopwatch.
+                The only main difference is that Lin used a simple inverter and wire to detect a zero and trigger the tens place.
+                On the other hand, I used two inverters and a NAND gate to detect a zero.
             </p>
 
-            <span><h1>Demonstration Video</h1></span>
+            <!-- <span><h1>Demonstration Video</h1></span>
             <div class="design-process-image-box">
                 <video
                     controls
-                    source src="copier-jam6.webm" type="video/webm">
+                    source src="stopwatch3.webm" type="video/webm">
                 </video>
-            </div>
+            </div> -->
         </div>
     </section>
 
