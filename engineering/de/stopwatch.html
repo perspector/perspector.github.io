@@ -97,10 +97,30 @@
                 Also, the 74LS163 counter IC is "WYSIWYG" (What You See Is What You Get), meaning the last number defined by the end count is still visible.
                 This differs from asynchronous counters and the 74LS193 counter as in that case the end count number that is detected only
                 triggers the end signal and is not displayed, as it immediately updates and overwrites the end number.
+                Because of this, a zero in the ones place had to trigger the tens place and the ones place had to "clear" at 9.
             </p>
 
             <span><h1>Conclusion</h1></span>
             <p>
+                During this project, I learned how to create different synchronous counters using both MSI counters and SSI flip-flops.
+                An asynchronous counter has each flip-flop triggered by the previous flip-flop.
+                The propagation delay of the flip-flops causes a "ripple effect" in the output.
+                On the other hand, a synchronous counter uses one clock to trigger all of the flip-flops simultaneously, eliminating the "ripple effect."
+                Another difference between asynchronous and synchronous counters is that synchronous
+                counters need extra AND gates connected to J and K to properly control the output of the counter.
+                Asynchronous counters just connect J and K to VCC (toggle configuration).
+            </p>
+            <p>
+                The MSI counters 74LS163 and 74LS193 are both synchronous counters, but the 74LS163 has multiple disadvantages.
+                Firstly, the 74LS163 can only count up, so it cannot be used in a down counter.
+                Secondly, the 74LS163 requires additional logic to determine when to trigger the tens place, if used in a multi-digit counter system.
+                The 74LS193 can count up or down, and resets immediately when the end count is triggered.
+            </p>
+            <p>
+                To design and create my circuit, I started with making the ones place. This process included adding a clock connected to the CNTR_4BIN_S, a reset switch connected to the "clear" pin of the MSI counter. A nine is detected on the MSI counter and goes to LOAD. Also, a zero detected on the MSI counter triggers the SSI (tens place) counters. The tens place counter consists of three flip-flops.
+            </p>
+            <p>
+                Lin and I made very similar circuits to create a 60 second stopwatch. The only main difference is that Lin used a simple inverter and wire to detect a zero and trigger the tens place. On the other hand, I used two inverters and a NAND gate to detect a zero.
             </p>
 
             <span><h1>Demonstration Video</h1></span>
