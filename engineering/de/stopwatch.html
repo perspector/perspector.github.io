@@ -74,14 +74,29 @@
                 <img src="stopwatch1.webp" alt="Overview Photo">
             </div>
             <p>
-                The goal of this project was to create a 60 second stopwatch. In order to create this stopwatch, I used a synchronous MSI 74LS163 flip-flop for the ones place. D-Flip-Flops were used in a synchronous configuration for the tens place.
+                The goal of this project was to create a 60 second stopwatch.
+                While the previous deli counter project used asynchronous flip-flops, this project required accurate timing.
+                As a result, I needed to use synchronous flip-flops.
+                In order to create this stopwatch, I used a synchronous MSI 74LS163 flip-flop for the ones place.
+                D-Flip-Flops were used in a synchronous configuration for the tens place.
             </p>
 
             <span><h1>PLD Circuit</h1></span>
             <div class="design-process-image-box">
-                <img src="stopwatch2.webp" alt="Truth Table">
+                <img src="stopwatch2.webp" alt="Circuit Schematic">
             </div>
             <p>
+                The circuit used in this stopwatch is very similar to that used in the deli counter project.
+                As in the deli counter, two seven segment displays are multiplexed to display output on both.
+                In addition, the ones place counts up from 0-9.
+            </p>
+            <p>
+                However, this project required accurate timing without the "ripple effect" which was present in the deli counter.
+                To satisfy this requirement, I used synchronous counters such as the 72LS163
+                (shown as CNTR_4BIN_S in the PLD design) and three J/K flip-flops in a synchronous configuration.
+                Also, the 74LS163 counter IC is "WYSIWYG" (What You See Is What You Get), meaning the last number defined by the end count is still visible.
+                This differs from asynchronous counters and the 74LS193 counter as in that case the end count number that is detected only
+                triggers the end signal and is not displayed, as it immediately updates and overwrites the end number.
             </p>
 
             <span><h1>Conclusion</h1></span>
