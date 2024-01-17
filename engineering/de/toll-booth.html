@@ -89,10 +89,21 @@
                 <img src="toll-booth6.webp" alt="Mo, Mc, Go, and Gc expressions">
             </div>
             <p>
-                EXPLANATION OF VARIABLES
+                You might be thinking; <i>What do all of these variables mean?</i>
+                Well, each state (S0, S1 ...) has input variables and output variables.
+                When do we know to open the gate? When the Open Gate button is pressed.
+                When the gate reaches the top, it needs to stop.
+                To detect when the gate is fully opened, we used an "Open Limit" limit switch.
+                The Close Gate button tells the circuit to close the gate.
+                There is another limit switch, "Close Limit" that tells us that the gate is fully closed.
+                Another question; <i>How do we know which state, opening, open, closing, or closed we are in?</i>
+                We use state variables Qa and Qb, which are inputs to the flip-flops, in order for the circuit to know what to do next.
+                Now that we have inputs, we also want the circuit to do something.
+                The circuit also has multiple <i>outputs</i> such as the open LED, closed LED,
+                motor close (tells the motor to close the gate) and motor open (tells the motor to open the gate).
             </p>
             <p>
-                BRIEF DESCRIPTION OF PHYSICAL GATE PROCESS
+                DESCRIPTION OF PHYSICAL GATE PROCESS
             </p>
 
             <span><h>Circuit Schematic</h1></span>
