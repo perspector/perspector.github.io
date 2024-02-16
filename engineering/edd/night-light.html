@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../index.html" class="active">Home</a>
+            <a href="../../index.html#about">About</a>
+            <a href="../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Night Light</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 2nd Engineering Design and Development Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <span><h1>Define a Problem</h1></span>
+            <div class="design-process-image-box">
+                <img src="night-light1.webp1" alt="Final Picture">
+            </div>
+            <p>
+                The goal of this project was to design and build a night light.
+                This included designing and constructing a base, base cover to enclose electronics, and a piece of acrylic to act as a light diffuser.
+                LEDs were used to shine light through the underside of a lasercut piece of acrylic.
+                This would in turn diffuse the light emitted from the LEDs around a shape that was engraved, or cut partially through, the acrylic.
+            </p>
+            <span><h1>Generate Concepts</h1></span>
+            <div class="design-process-image-box">
+                <img src="night-light2.webp" alt="Dial caliper measuring LED, diameter 0.2301 in">
+            </div>
+            <p>
+                Before I could start designing the base of the night light, I needed to gather some measurements for reference and parts.
+                A dial caliper is far superior for accurate and precise when taking small measurements than a ruler since it can measure to more decimal places, can be applied in many different measurement techniques (step, inset, inner diameter, outer diameter, length), and can be calibrated and zeroed.
+                For example, the LEDs I used had a diameter of 0.2301 inches. On an imperial dial caliper, the large number represents whole inches, in this case 0 (not included in this measurement but visible further down the length of the caliper).
+                Next, look for the smaller numbers along the main body of the dial caliper, in this case 2 (representing 0.2). These represent tenths of decimal inches. To find the hundredths of inches, look on the dial face and find the main marking behind the "hand," in this case 30 exactly (representing 0.030).
+                When using scientific or engineering equipment, a standard measurement convention is to estimate to one more decimal place, in this case slightly past the 30 hundredths mark, so about 31 hundredths of an inch.
+                This results in a measurement of 0.2301 inches for the diameter of the LED.
+            </p>
+            <div class="design-process-image-box">
+                <img src="night-light3.webp" alt="Brainstorming sketches">
+            </div>
+            <p>
+                Justification for selected design
+            </p>
+
+
+
+            <div class="design-process-image-box">
+                <img src="night-light.webp" alt="">
+            </div>
+            <p>
+                The night light was constructed using a 3D printer, lasercutter, LEDs, resistors, and an old USB cable.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 - 2024 by Benjamin Chase</p>
+            <p>The code for this website, excluding dependencies, is licensed under the GNU GPLv3 license.</p>
+            <p>Code and license are available at: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
