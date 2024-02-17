@@ -130,17 +130,46 @@
             </div>
 
             <div class="home-img">
-                <div class=stlviewer data-src="/assets/stl/test.stl"></div>
+                <div class=stlviewer data-src="/assets/stl/night-light.stl"></div>
             </div>
 
             <p>
-                Above are pictures of a 3D cad model and a dimensioned engineering drawing of the base of the night light.
+                Above is a dimensioned engineering drawing of the base of the night light along with an interactive 3D model.
             </p>
 
             <div class="design-process-image-box">
-                <img src="night-light.webp" alt="">
+                <img src="https://imgs.xkcd.com/comics/compiling.png" alt="XKCD comic #303 that inspired this night light design">
+                <img src="night-light5.webp" alt="Tracing comic using splines">
+                <img src="night-light6.webp" alt="Extruding base acrylic">
+                <img src="night-light7.webp" alt="Embossing comic splines onto acrylic">
+                <img src="night-light8.webp" alt="Exporting sketch as PDF">
+                <img src="night-light9.webp" alt="Editting PDF in Inkscape">
+                <img src="night-light10.webp" alt="Design imported into Glowforge">
             </div>
+            <p>
+                (First image) To begin with, I traced the comic from XKCD using splines and lines in Autodesk Fusion 360.
+                <br>(Second image) Next, I made the 2D sketch into a 3D body by extruding it to the thickness of the acrylic.
+                <br>(Third image) Now that the basic acrylic shape was created, I could emboss (or engrave/etch) the characters into the acrylic.
+                <br>(Fourth image) To remove most double lines and keeps parts of the acrylic form together later, I created a drawing from the acrylic body in Fusion and exported it as a PDF.
+                Double lines are where overlaping lines are in a file more than once, and the lasercutter interprets this as two separate paths, thus travelling over the path twice. Double lines can result in a fire hazard, and absolutely must be removed!
+                <br>(Fifth image) I still had to check if any double lines remained and that all shapes were closed. To do this, I checked everything in Inkscape, an open-source graphic design software. From there, I made the outer edge a different color. The lasercutter interprets different colors as different functions, either cutting (going all the way through), scoring (going half way through), or engraving (like scoring an entire area, not just a line).
+                From there, I could export the file as an SVG.
+                <br>(Sixth image) Finally, sent the SVG to the Glowforge lasercutter and set the material to medium clear acrylic. The outer edge was cut, and the inner comic was scored.
+                Originally, I wanted to engrave the comic onto the acrylic, but the Glowforge interface did not recognize what I wanted to engrave exactly.
+                <br>Scoring the design yielded superb results and was a viable alternative to engraving.
+            </p>
 
+            <span><h1>Construct and Test Prototype</h1></span>
+            <div class="design-process-image-box">
+                <img src="night-light11.webp" alt="">
+                <img src="night-light12.webp" alt="">
+                <img src="night-light13.webp" alt="">
+            </div>
+            <p>
+                After lasercutting the insert and 3D printing the chairs with black PLA filament and the base with yellow PLA filament, I could put everything together.
+                My 3D printer printed the slots for mounting the acrylic slightly too wide,
+                so I had to pull the chairs slightly further apart while gluing them onto the base to provide tension which would keep the acrylic panel in place.
+            </p>
 
 
 
