@@ -119,8 +119,9 @@
                 <img src="night-light3.webp" alt="Brainstorming sketches">
             </div>
             <p>
-                I chose to create the "compiling" design because it was funny, and would be a fun challenge. The idea to print the seats separately as a different color and mount the LEDs inside the seats worked quite well.
-                The other design ideas were more basic and asthetics would be concentrated mostly in the acrylic design and less on the case itself.
+                The "compiling" design was inspired by Randall Munroe's XKCD #303 (Available <a href="https://xkcd.com/303">here</a>).
+                <br>I chose to create the "compiling" design because it was funny, and would be a fun challenge. The idea to print the seats separately as a different color and mount the LEDs inside the seats worked quite well.
+                The other design ideas were more basic as asthetics would be concentrated mostly on the acrylic design and less on the case itself.
                 The "compiling" design differed from the other ideas I brainstormed due to the unique form of the electronics case.
             </p>
 
@@ -161,24 +162,61 @@
 
             <span><h1>Construct and Test Prototype</h1></span>
             <div class="design-process-image-box">
-                <img src="night-light11.webp" alt="">
-                <img src="night-light12.webp" alt="">
-                <img src="night-light13.webp" alt="">
+                <img src="night-light11.webp" alt="Getting ready to solder">
+                <img src="night-light12.webp" alt="LEDs soldered in parallel with 100 ohm resistor">
+                <img src="night-light13.webp" alt="Finished design">
             </div>
             <p>
+                The night light was constructed using a 3D printer, lasercutter, LEDs, resistors, and an old USB cable.
                 After lasercutting the insert and 3D printing the chairs with black PLA filament and the base with yellow PLA filament, I could put everything together.
                 My 3D printer printed the slots for mounting the acrylic slightly too wide,
                 so I had to pull the chairs slightly further apart while gluing them onto the base to provide tension which would keep the acrylic panel in place.
+                Because of this, I did not have to redesign the base.
             </p>
 
 
 
             <div class="design-process-image-box">
-                <img src="night-light.webp" alt="">
+                <img src="night-light14.webp" alt="5-band resistor table">
+                <img src="night-light15.webp" alt="Circuit schematic">
             </div>
             <p>
-                The night light was constructed using a 3D printer, lasercutter, LEDs, resistors, and an old USB cable.
+                I did not have any 4-band resistors left, so I had to use a 5-band resistor.
+                Reading these is similar to how one would read a 4-band resistor, but the chart has slight differences.
+                <br>The first three bands represent the digits of the resistance.
+                The fourth band is the multiplier, which is multiplied by the resistance determined by the first three digits.
+                The last band represents tolerance, and I used +/- 5%, so gold.
+                <br>I determined that with a 5V 1A power supply and two yellow LEDs wired in parallel, I would need about 100 ohms of resistance with a tolerance of +/- 5% to ensure the LEDs would not burn-out.
+                This is represented by the bands "brown - black - black - black - gold."
+                <br>Image credit: available <a href="https://hollienash.z19.web.core.windows.net/list-of-standard-resistor-values.html">here.</a>
             </p>
+
+            <span><h1>Evaluate Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="night-light16.webp" alt="Picture of parameters in Autodesk Fusion 360">
+            </div>
+            <p>
+                During the process of making this night light, I had to solve multiple issues. Firstly, I needed to ensure a tolerance was added to measurements so that the LEDs would fit properly.
+                To do this, I used principles of parametric design in Autodesk Fusion 360 where measurements are defined as a variable.
+                When updated, the variable changes all measurements that depend on its value automatically.
+                I added acrylic tolerance (too much, oops!), a customizable LED diameter, acrylic tab dimensions for mounting, and a cable diameter for the USB cable.
+                Next time, I would decrease the acrylic tolerance to ensure a snug fit.
+                <br>Additionally, I also had to remove double lines from the SVG file for the acrylic insert using Inkscape to lasercut the acrylic properly.
+                Now I know how to combine lines easily in Inkscape and would not try to engrave it in the Glowforge user interface.
+                Instead, I would move right to scoring the area as I experienced positive results using this method.
+            </p>
+
+            <span><h1>Reflection</h1></span>
+            <p>
+                Overall, this project was a superb way to review skills I had previously used. This project required CAD design, creating CAD drawings, along with accurate and precise measurement.
+                To produce the CAD design, I used my 3D printer for the base and the chairs, along with a Glowforge lasercutter at school to lasercut the clear acrylic insert.
+                I may use these methods and skills for my upcoming capstone project.
+                My wonderful teacher Mrs. Zienty at Worcester Technical High School taught me all these skills and more.
+                <br>Documenting this project has also been a nice review of HTML, and I finally figured out how to implement 3D models outside of the homepage!
+            </p>
+            <div class="design-process-image-box">
+                <img src="night-light17.webp" alt="Photo of the night light in darkness">
+            </div>
         </div>
     </section>
 
