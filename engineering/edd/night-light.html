@@ -7,6 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benjamin Chase</title>
 
+
+
+
+    <!-- START 3D STL VIEWER -->
+    <script type=text/javascript> 
+    window.onload=function() {
+        STLViewerEnable("stlviewer");
+    } 
+    </script>
+    <script src="/three.js/build/three.js"></script>
+    <script src="/three.js/examples/js/WebGL.js"></script>
+    <!-- <script src="/three.js/examples/js/capabilities/WebGL.js"></script> -->
+    
+    <script src="/three.js/examples/js/loaders/STLLoader.js"></script>
+    <!-- <script src="/three.js/examples/js/loaders/STLLoader.js"></script> -->
+    
+    <script src="/three.js/examples/js/controls/OrbitControls.js"></script>
+    <!-- <script src="/three.js/examples/js/controls/OrbitControls.js"></script> -->
+
+    <script src="/js/stl.js"></script>
+    <!-- END 3D STL VIEWER -->
+    
+
+
     <!-- box icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -71,7 +95,7 @@
         <div class="design-process-container">
             <span><h1>Define a Problem</h1></span>
             <div class="design-process-image-box">
-                <img src="night-light1.webp1" alt="Final Picture">
+                <img src="night-light1.webp" alt="Final Picture">
             </div>
             <p>
                 The goal of this project was to design and build a night light.
@@ -95,8 +119,28 @@
                 <img src="night-light3.webp" alt="Brainstorming sketches">
             </div>
             <p>
-                Justification for selected design
+                I chose to create the "compiling" design because it was funny, and would be a fun challenge. The idea to print the seats separately as a different color and mount the LEDs inside the seats worked quite well.
+                The other design ideas were more basic and asthetics would be concentrated mostly in the acrylic design and less on the case itself.
+                The "compiling" design differed from the other ideas I brainstormed due to the unique form of the electronics case.
             </p>
+
+            <span><h1>Develop a Solution</h1></span>
+            <div class="design-process-image-box">
+                <img src="night-light4.webp" alt="Engineering drawing of the base">
+            </div>
+
+            <div class="home-img">
+                <div class=stlviewer data-src="/assets/stl/test.stl"></div>
+            </div>
+
+            <p>
+                Above are pictures of a 3D cad model and a dimensioned engineering drawing of the base of the night light.
+            </p>
+
+            <div class="design-process-image-box">
+                <img src="night-light.webp" alt="">
+            </div>
+
 
 
 
