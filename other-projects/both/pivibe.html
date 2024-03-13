@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="../../../index.html" class="active">Home</a>
+            <a href="../../../index.html#about">About</a>
+            <a href="../../../engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="../../../computer-science/computer-science.html">Computer Science</a>
+            <a href="../../../other-projects/other-projects.html">Other Projects</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>PiVibe - A simple DIY music looper pedal.</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> Uses Raspberry Pi, Python, 3D printing, buttons, and a 20x04 LCD display
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <span><h1>Project Overview</h1></span>
+            <div class="design-process-image-box">
+                <img src="pivibe1.webp" alt="Overview Photo">
+            </div>
+            <span><h1>Demonstration Video</h1></span>
+            <div class="design-process-image-box">
+                <video
+                    controls
+                    source src="pivibe2.webm" type="video/webm">
+                </video>
+            </div>
+
+            <span><h1>Materials</h1></span>
+            <p>
+                This is the list of all the components used in this project with Amazon links (NOT affiliate). These links may be out of date, but I will try to keep them updated. If they are out of date, please email me at benjaminlchase@protonmail.com. Prices are subject to change.
+                <br>
+                <div class="decision-matrix">
+                        <table>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td><strong>Component</strong></td>
+                            <td><strong>Cost</strong></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.raspberrypi.com/products/raspberry-pi-4-model-b/?variant=raspberry-pi-4-model-b-4gb">Raspberry Pi 4 (4GB recommended)</a></td>
+                            <td>$55</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://a.co/d/gRHqbht">20x04 LCD Display with I2C backpack</a></td>
+                            <td>$15 for 2</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://a.co/d/b9MwIq9">Buttons</a></td>
+                            <td>$9</td>
+                        </tr>
+                        <tr>
+                            <td><a href = "https://a.co/d/iLICN67">14 Wires, Female-Female</a></td>
+                            <td>$6 for 40</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://a.co/d/6oqS6U6">1 KY-040 Rotary Encoder</a></td>
+                            <td>$10 for 5</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.raspberrypi.com/products/type-c-power-supply/">Official Raspberry Pi Power Supply</a></td>
+                            <td>$8</td>
+                        </tr>
+                        <tr>
+                            <td>Total Cost</td>
+                            <td>$103 total,
+                                <br>$33 without Raspberry Pi parts</td>
+                        </tr>
+                    </table>
+                </div>
+            </p>
+
+            <span><h1>Build Instructions</h1></span>
+            <div class="design-process-image-box">
+                <img src="pivibe3.webp" alt="">
+            </div>
+            <p>
+            </p>
+
+            <span><h1>Conclusion</h1></span>
+            <p>
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 - 2024 by Benjamin Chase</p>
+            <p>The code for this website, excluding dependencies, is licensed under the GNU GPLv3 license.</p>
+            <p>Code and license are available at: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
