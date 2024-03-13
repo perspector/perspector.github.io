@@ -626,8 +626,13 @@ ol ::-moz-list-number {
 .design-process-container a {
     color: var(--main-color);
     text-decoration: var(--main-color) underline 20%;
-    line-height: 3;
-    font-size: 5rem;
+    /*line-height: 3;*/
+    /*font-size: 5rem;*/
+
+    font-size: min(6vw, 2.5rem); /*2.5rem*/
+    font-weight: 600;
+    line-height: 1.5;
+    text-indent: 50px;
 }
 
 .design-process-image-box img {
