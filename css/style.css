@@ -501,6 +501,16 @@ ol ::-moz-list-number {
     border-collapse: collapse;
 }
 
+.design-process-container table a {
+    color: var(--main-color);
+    text-decoration: var(--main-color) underline 20%;
+
+    font-size: min(6vw, 2.5rem); /*2.5rem*/
+    font-weight: 600;
+    line-height: 1.5;
+    text-indent: 50px;
+}
+
 .design-process-container th, td {
     border-collapse: collapse;
     border: 0.5rem solid;
