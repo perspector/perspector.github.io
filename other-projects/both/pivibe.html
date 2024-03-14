@@ -127,12 +127,46 @@
                 </div>
             </p>
 
+            <span><h1>Getting Software</h1></span>
+            <p>
+                Go to <a href="https://github.com/perspector/pivibe">the PiVibe GitHub repository</a> and follow the instructions there to set up the software.
+            </p>
+
             <span><h1>Build Instructions</h1></span>
             <div class="design-process-image-box">
-                <img src="pivibe3.webp" alt="Complete Exploded View">
+                <img src="pivibe3.webp" alt="Complete exploded view">
+                <img src="pivibe4.webp" alt="Pinout diagram">
             </div>
-            <p>
-            </p>
+
+            <span><h2 class="heading">Base</h2></span>
+            <div class="design-process-image-box">
+                <img src="pivibe5.webp" alt="Base exploded view">
+            </div>
+            <ol>
+                <li>Before mounting the Raspberry Pi inside the base of the case, insert the microSD card with the code into the Raspberry Pi.</li>
+                <li>Take 4 M2.5 screws and mount the Raspberry Pi to the base on the inside.</li>
+                <li>Connect 5 jumper wires between the rotary encoder and the Raspberry Pi as shown in the pinout above.</li>
+                <li>Use 2 M3 screws to mount the rotary encoder to the base.</li>
+                <li>Add the knob to the rotary encoder. You may need to cut it slightly for an adequete fit on the rotary encoder shaft.</li>
+                <li>Optional, but recommended: use a white permanent marker to "paint" the lables on the bottom cover.</li>
+                <li>Screw each of 4 buttons onto the bottom cover. I prefer using a green button for recording a track, blue for recording a song, red for clearing all tracks, and yellow for deleting the last track.</li>
+                <li>Option 1 (parallel ground, more organized): Solder all ground (black) wires of the buttons together. To do this, cut the wires in half, twist each, tin each with solder, and solder them all to one point. Solder another jumper wire from this point and connect to ground on the Raspberry Pi. Add shrink wrap as insulation.</li>
+                <li>Option 2 (individual ground, easier): Connect each ground (black) wire from each button to a ground (GND) pin on the Raspberry Pi.</li>
+                <li>Connect each button trigger jumper wire (colored in the pinout above) to each respective pin shown in the pinout diagram above.</li>
+            </ol>
+
+            <span><h2 class="heading">Top Portion</h2></span>
+            <div class="design-process-image-box">
+                <img src="pivibe6.webp" alt="Top exploded view">
+            </div>
+            <ol>
+                <li>Connect each of 4 jumper wires to VCC, GND, SDA, and SCL on the I2C LCD display backpack. Then connect each of these wires to the corresponding pin on the Raspberry Pi, as shown on the schematic pinout diagram above.</li>
+                <li>Carefully push the bottom cover onto the base as to avoid strain on the wires, but to make it stay in place. No screws are needed.</li>
+                <li>Use an M3 screw to attach the latch to the front of the top part of the case. Using a locking M3 nut is recommended here.</li>
+                <li>Use an M3 screw to attach the kickstand to the left side of the top part of the case. Using a locking M3 nut is also recommended here.</li>
+                <li>Now you can mount the I2C LCD display in the top part of the case. Use 4 M3 screws through first the top cover, and then the display into the top cover itself. Be sure that the display is mounted tightly to the case. Be sure not to leave the screws too loose and far out, but also not too tight as this can strip the plastic or go through the top of the case.</li>
+                <li>Onto the satisfying part! Use 2 M3 screws, one on the left and one on the right to secure the top and bottom case parts together with a hinge. Ensure that these are not too tight, as stripping plastic will make the screws fall out.</li>
+            </ol>
 
             <span><h1>Conclusion</h1></span>
             <p>
