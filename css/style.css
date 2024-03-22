@@ -659,8 +659,8 @@ ol ::-moz-list-number {
     padding: 2rem;
     object-fit:cover;
     /* ADDED MAKE IMAGES SMALLER */
-    max-height: 500px;/*60rem;*/
-    height: 100%;
+    max-height: 500px; /*60rem;*/
+    /*height: 100%;*/
     /* END MAKE IMAGES SMALLER*/
 }
 
