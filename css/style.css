@@ -658,7 +658,7 @@ ol ::-moz-list-number {
     border-radius: 4rem;
     padding: 2rem;
     object-fit:cover;
-    max-height: 100px;
+    max-height: 60rem;
 }
 
 .design-process-image-box {
