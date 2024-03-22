@@ -658,7 +658,10 @@ ol ::-moz-list-number {
     border-radius: 4rem;
     padding: 2rem;
     object-fit:cover;
-    max-height: 60rem;
+    /* ADDED MAKE IMAGES SMALLER */
+    max-height: 500px;/*60rem;*/
+    height: 100%;
+    /* END MAKE IMAGES SMALLER*/
 }
 
 .design-process-image-box {
