@@ -660,6 +660,7 @@ ol ::-moz-list-number {
     object-fit:cover;
     /* ADDED MAKE IMAGES SMALLER */
     max-height: 500px; /*60rem;*/
+    object-fit: scale-down;
     /*height: 100%;*/
     /* END MAKE IMAGES SMALLER*/
 }
