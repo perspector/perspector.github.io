@@ -5,7 +5,7 @@ Here you can find the open-source code for my GitHub Pages portfolio website!
 
 ## Licenses and Copyright
 ### Main Website (perspector.github.io)
-Copyright &copy; 2023 Benjamin Chase\
+Copyright &copy; 2023-2024 Benjamin Chase\
 Licensed under the GPLv3 License found in the [LICENSE](LICENSE) file.
 
 ### three.js (Displaying 3D models)
