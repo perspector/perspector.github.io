@@ -628,6 +628,79 @@
                 <li>To ensure that this code of ethics is upheld by others</li>
                 <li>Never retaliate against individuals reporting violations of this code</li>
             </ul>
+
+
+            <!-- PART G -->
+            <spen><h1>Building Process</h1></spen>
+            <span><h2>Materials Needed</h2></span>
+            <div class="decision-matrix">
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td><strong>Component</strong></td>
+                        <td><strong>Quantity</strong></td>
+                        <td><strong>Cost</strong></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://a.co/d/1J6DA1P">ws2812 Neopixel Strips</a></td>
+                        <td>5 needed, buying 10</td>
+                        <td>$19</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Soldering Iron, Solder, Wires</td>
+                        <td>About 20 wires, 1 soldering iron</td>
+                        <td>About $50, but $0 for us since we already have these</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://a.co/d/3Wrel7Q">Raspberry Pi Zero 2 W (with headers)</a></td>
+                        <td>1</td>
+                        <td>$24, but $0 for us since I already have one</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://a.co/d/8WGssHb">2.4" OLED Display</a></td>
+                        <td>1</td>
+                        <td>$20</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://hatchbox3d.com">3D Printer Filament</a></td>
+                        <td>We may decide to 3D print an enclosure for the electronics, which requires biodegradable plastic PLA (Polylactic Acid) filament. Can be used for more complex 3D designs.</td>
+                        <td>1 spool</td>
+                        <td>$26, but $0 for us since Mrs. Zienty already has filament</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Acrylic/Wood for the case cover</td>
+                        <td>Less than 1 sheet</td>
+                        <td>~$5, Mrs. Gallo will provide this for us</td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td>Total Cost</td>
+                        <td>$144 overall, but only $39 for us with prior materials</td>
+                    </tr>
+                </table>
+            </div>
+            <span><h1>Additional Documentation</h1></span>
+            <p>We used Autodesk Fusion to create the designs for the top and bottom parts of the Chordinator. Then, we 3D printed these parts using an FDM 3D printer.</p>
+            <p>Tolerances are difficult to determine with 3D printing, as pieces can be slightly different between prints. Despite this, Logan was able to create a hinge that lets the user "prop up" the display on the lower part of the Chordinator. Additionally, I designed the top part (neck attachment) of the Chordinator. This part required using a compliant mechanism that uses the tension of the 3D printed PLA plastic to "clip" onto a guitar neck. Two test prints were required to acquire the correct tolerance, and we later applied foam tape to the parts as to provide more static friction while mounted on the guitar so it would not slide off. The foam tape also ensured that the guitar would not sustain any damage from the application of our device.</p>
+            <p>After adjusting tolerances and 3D printing the final parts, we affixed the electronics (neopixel strips and OLED display) to the case parts using hot glue, which keeps them securely in place and insulates any circuits safely. This can also provide strain relief to any external wires so they do not fray. Once the electronics were mounted inside the case, we could connect the wires shown in the schematic below to interface the neopixel strips and the OLED display with the Raspberry Pi Zero.</p>
+            <p>At this time, I realized that I had made the wires connecting the neck attachment and the body attachment of the Chordinator too short. Therefore, I soldered some extension wires to allow the parts to be mounted further apart. I ensured the extension wires were made using stranded wires, so current loss would be minimal, though the distance was less than half a meter.</p>
+            <p>Once the parts could be connected, I also lasercut a cover for the neopixel LEDs using our school lasercutter and dark, matte acrylic. This turned out to work exceptionally well, as seen in the image below.</p>
+            <p>After the physical device was complete, I spent seven hours on a rainy Saturday writing a web scraper program that would take song chord data from https://freetar.de (a frontend website for https://ultimate-guitar.com). This gave us access to the largest guitar song and chord repository worldwide, Ultimate Guitar. Now we could load over 500,000 songs onto the Chordinator, just by inputing the song name into the program!</p>
+            <p>I am releasing the code for the Chordinator as open-source under the GNU GPLv3 Affero License. Code for the Chordinator is available <a href="https://github.com/perspector/chordinator">here.</a></p>
+            <span><h1>Construction Pictures</h1></span>
+            <div class="design-process-image-box">
+                <img src="capstone48.webp" alt="Electronics schematic">
+                <img src="capstone49.webp" alt="Me building the neck attachment">
+                <img src="capstone50.webp" alt="Logan building the body attachment">
+                <img src="capstone51.webp" alt="The final neck attachment">
+                <img src="capstone52.webp" alt="The final body attachment">
+            </div>
         </div>
     </section>
 
