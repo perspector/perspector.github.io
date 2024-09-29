@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="/index.html" class="active">Home</a>
+            <a href="/index.html#about">About</a>
+            <a href="/engineering/pre-engineering.html">Pre-Engineering</a>
+            <a href="/computer-science/computer-science.html">Computer Science</a>
+            <a href="/other-projects/other-projects.html">Other Projects</a>
+            <a href="/work-experience/work-experience.html">Work Experience</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Project - "It's a Trap"</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> 1st Cybersecurity project, involved identifying and removing malware from a virtual computer.
+            </h2>
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Analysis</span> Process</h2>
+
+        <div class="design-process-container">
+            <span><h1>Project Objective</h1></span>
+            <p>
+                This project followed the scenario described below:
+            </p>
+            <p>
+                "A friend has come to you after inheriting her sister’s computer.
+                After using it for just one day, she has already lost some data and suspects there may be security problems with the computer.
+                She feels that if she does any more work on the computer, it will be like walking into a trap!"
+            </p>
+
+            <span><h1>Plan of Action</h1></span>
+            <ol>
+                <li>Check and secure firewall rules</li>
+                <li>Run antivirus</li>
+                <li>Find suspicious processes and trace these back to malicious files</li>
+                <li>End suspicious processes</li>
+                <li>Permanently delete suspicious files including suspicious downloads</li>
+                <li>Recover lost/deleted user files (in this case in the Recycle Bin)</li>
+            </ol>
+
+            <h1>Cybersecurity Lifecycle</h1>
+            <div class="design-process-image-box">
+                <img src="its-a-trap1.webp" alt="Cybersecurity lifecycle diagram">
+            </div>
+
+            <h1><span>Protecting the Computer Using Proactive Protection Measures</span></h1>
+            <p>The scenario described that data was lost due to potential malware from a previous user, the current user's sister. This malware was likely downloaded from the internet, so the firewall should be checked.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap2.webp" alt="Firewall is off">
+            </div>
+            <p>Indeed, the firewall is off, so I turned it on to block unwanted network traffic and close unnecessary ports.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap3.webp" alt="Turning firewall on">
+            </div>
+            <p>Files downloaded from the internet use FTP (File Transfer Protocol) or SFTP (Secure File Transfer Protocol). We should disable FTP as SFTP is preferred since SFTP is encrypted through SSH (Secure Shell) while FTP is unencrypted and can cause files to be read and altered during transit. As seen in the screenshot below, FTP was enabled, which I disabled so only SFTP can be utilized.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap4.webp" alt="FTP was enabled">
+            </div>
+
+
+            <h1><span>Detecting Security Problems</span></h1>
+            <p>Malware can often be identified using the Task Manager. In the Task Manager, Python was using over 50% of the CPU. I decided to investigate further by choosing the "Details" tab.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap5.webp" alt="Task Manager Processes - Python (32 bit) causes over 50% CPU utilization">
+            </div>
+            <p>Under the "Details" tab, I found that a process titled "unknown.exe" was responsible for the high CPU usage. I opened the file location.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap6.webp" alt="Opening the file location of unknown.exe">
+            </div>
+            <p>When I opened the file location, nothing was visible. This occurs since Windows hides hidden items by default, so I made them visible.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap7.webp" alt="Showing hidden files">
+            </div>
+            <p>By showing hidden files, I was able to see multiple files:</p>
+            <ul>
+                <li>unknown.exe - the process malware file</li>
+                <li>analysis.pyw - a password cracking script</li>
+            </ul>
+            <div class="design-process-image-box">
+                <img src="its-a-trap8.webp" alt="unknown.exe properties">
+                <img src="its-a-trap9.webp" alt="Viewing analysis.pyw">
+            </div>
+            <p>Under further analysis, unknown.exe is a renamed Python installation, and also has the digital signature of the Python Software Foundation. Unknown.exe seems to have been downloaded Friday, April 6, 2018.</p>
+            <p>Additionally, the analysis.pyw seems to be a password cracking file, so seemingly malware.</p>
+            <p>I also looked at the C:\ drive as malware often resides there. Seeing four additional suspicious files, I decided to permanently delete them.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap10.webp" alt="Four suspicious files on the C:\ drive">
+            </div>
+            <p>In the Downloads\ folder, I found a file named "Coupon.bat". This file runs a script in the command line, and was likely a trojan (type of malware that pretends to be legitimate). When viewing the file's properties, I determined that the malware was downloaded on May 8, 2023. This is after the unknown.exe file was downloaded, so there was likely malware before the coupon was downloaded.</p>
+            <p>If file extensions are not visible, then "Coupon.bat" would only read "Coupon", so it would seem more legitimate.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap11.webp" alt="Coupon.bat properties">
+            </div>
+            <p>When viewing the Coupon.bat file (without running it) in a text editor, I saw the following string:</p>
+            <p>
+                <pre><code>
+"EICAR-STANDARD-ANTIVIRUS-TEST-FILE!
+                </code></pre>
+            </p>
+            <p>After a little research, I found that EICAR is the <a href="https://eicar.org">European Institute for Computer Anti-Virus Research.</a> This lead me to conclude that Coupon.bat was a test file for antivirus applications and not actual malware.</p>
+
+            <div class="design-process-image-box">
+                <img src="its-a-trap12.webp" alt="Coupon.bat contents">
+            </div>
+            <p>Next, I decided to find the source of the malware file, "Coupon.bat". I checked the Google Chrome browsing history, and found a single website pointing to a website with an advertisement. The advertisement reads, "FREE PRINTABLE COUPON$." This was the source of the attack.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap13.webp" alt="Google Chrome browsing history">
+                <img src="its-a-trap14.webp" alt="Coupon advertisement">
+            </div>
+            <p>I also ran AVG antivirus software, but it found no malware, so I think the "malware" is either just a test (this is confirmed by the EICAR statement within Coupon.bat), or the antivirus is not functioning properly.</p>
+
+
+            <h1><span>Responding to the Problem By Removing Malicious Files and Processes</span></h1>
+            <p>Once I had found all of the malware and traced it back to its source, I could remove all of the processes and malware.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap15.webp" alt="Removing suspicious files on the C:\ drive">
+                <img src="its-a-trap16.webp" alt="Removing suspicious files in the Downloads\ folder">
+            </div>
+            <p>I used "Shift + Delete" to <span>permanently</span> delete the malware on both the C:\ drive and in the Downloads\ folder.</p>
+
+
+            <h1><span>Recovering Deleted Data</span></h1>
+            <p>The last step of the cybersecurity process was to restore the system to its previous state. A full-system backup would have been better as permanently deleted files would be recovered easily, but no backups were available. For the purpose of this lab, "deleted" files were only placed in the Recycle Bin. I restored these to the Desktop\ folder, which is where they originally were.</p>
+            <div class="design-process-image-box">
+                <img src="its-a-trap16.webp" alt="Restoring 'deleted' files from the Recycle Bin">
+            </div>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 - 2024 by Benjamin Chase</p>
+            <p>The code for this website, excluding dependencies, is licensed under the GNU GPLv3 license.</p>
+            <p>Code and license are available at: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- custom js -->
+    <script src="../../js/script.js"></script>
+
+
+
+    <!-- nice code formatting by highlight.js -->
+    <link rel="stylesheet"
+        href="../../../highlight/styles/a11y-dark.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>
