@@ -1,0 +1,244 @@
+// Go.java
+
+public class Go {
+    private int blackX;
+    private int blackY;
+    private int whiteX;
+    private int whiteY;
+    // private static int blackPrisoners; // TODO: Add detection for capturing stones
+    // private static int whitePrisoners; // TODO: Add detection for capturing stones
+    private int width;
+    private String player;
+    private String [][] board;
+
+    /* constructor with default width -- initializes instance variables to default values
+    Preconditions: None
+    Postconditions: A 19x19 Go game board will be created and filled with type String intersections (+).
+    Additionally, the player will be set to "Black"
+    */
+    public Go() {
+        // blackPrisoners = 0; // TODO: Add detection for capturing stones
+        // whitePrisoners = 0; // TODO: Add detection for capturing stones
+        player = "Black";
+        this.width = 19;
+        this.board = new String [this.width][this.width];
+
+        // fill board with intersections
+        for (int row = 0; row < this.board.length; row++) {
+            for (int column = 0; column < this.board[0].length; column++) {
+                this.board[row][column] = "+";
+        }
+        }
+    }
+
+    /* Constructor with custom width -- initializes instance variables
+    Preconditions: Width is an odd positive integer.
+    Postconditions: A Go game board with size (width x width) will be created and filled with type String intersections (+).
+    Additionally, the player will be set to "Black"
+    */
+    public Go(int initWidth) {
+        // blackPrisoners = 0; // TODO: Add detection for capturing stones
+        // whitePrisoners = 0; // TODO: Add detection for capturing stones
+        player = "Black";
+        this.width = initWidth;
+        this.board = new String [this.width][this.width];
+
+        // fill board with empty intersections
+        for (int row = 0; row < this.board.length; row++) {
+            for (int column = 0; column < this.board[0].length; column++) {
+                this.board[row][column] = "+";
+            }
+        }
+    }
+    /*
+    // WORK IN PROGRESS
+    // TODO: Must finish algorithm for locating groups of stones and checking if liberties = 0.
+    // I am still figuring out an approach for this.
+    public void removeSurrounded(String currentPlayer) {
+        int liberties;
+        if (currentPlayer == "Black") {
+            currentPlayer = "B";
+        } else {
+            currentPlayer = "W";
+        }
+        // JUST FOR SINGLE STONES THAT HAVE BEEN SURROUNDED
+        // replace all of currentPlayer's stones with 0 liberties with X's
+        // If there is any of currentPlayer's stones still bordered by 1 or more X's, then nothing changes.
+        // Otherwise, replace each of currentPlayer's stones at the x and y choordinates of each X with a +.
+
+        // iterate through all stones on the board
+        for (int row = 0; row < this.board.length; row++) {
+            for (int column = 0; column < this.board[0].length; column++) {
+                liberties = 4;
+                // if it is one of currentPlayer's stones
+                if (this.board[row][column] == currentPlayer) {
+                    // check if stone has any liberties
+                    if (row == 0) {
+                        // beginning of a row, less liberties
+                        liberties -= 1;
+                        if (this.board[row][column] != "+") {
+                            liberties -= 1;
+                        }
+                    } else if (row == this.board.length-1) {
+                        // end of row
+                        liberties -= 1;
+                    }
+                    if (column == 0) {
+                        // top of a column, less liberties
+                        liberties -= 1;
+                    } else if (column == this.board.length-1) {
+                        // bottom of column
+                        liberties -= 1;
+                    } else {
+                        
+                    }
+                    // if a stone has no liberties, remove it
+                    if (liberties == 0) {
+                        this.board[row][column] = "+";
+                    }
+                }
+            }
+        }
+    }
+    */
+
+    /* Mathod to check if position is already occupied or is suicide
+    Preconditions: Coordinates (playerX, playerY) lie on the board.
+    Postconditions: A boolean isValid is returned, true if the position has not been taken and is not suicide, false otherwise.
+    */
+    public boolean validPosition(int playerY, int playerX) {
+        boolean isValid;
+        String opponent;
+        if (player == "Black") {
+            opponent = "W";
+        } else {
+            opponent = "B";
+        }
+        // Check if position is taken already
+        if (this.board[playerY][playerX] == "+") {
+            // not taken
+            isValid = true;
+            boolean borderedTop = false;
+            boolean borderedBottom = false;
+            boolean borderedLeft = false;
+            boolean borderedRight = false;
+
+            // check if position is suicide
+            if (playerY == 0) {
+                // no top liberty
+                borderedTop = true;
+            }
+            if (playerX == 0) {
+                // no left liberty
+                borderedLeft = true;
+            }
+            if (playerX == this.board[0].length-1) {
+                // no right liberty
+                borderedRight = true;
+            }
+            if (playerY == this.board.length-1) {
+                // no bottom liberty
+                borderedBottom = true;
+            }
+
+
+            if (!borderedTop) {
+                if (this.board[playerY-1][playerX] == opponent) {
+                    // bordered on top by opponent
+                    borderedTop = true;
+                }
+            }
+            if (!borderedLeft) {
+                if (this.board[playerY][playerX-1] == opponent) {
+                    // bordered on left by opponent
+                    borderedLeft = true;
+                }
+            }
+            if (!borderedRight) {
+                if (this.board[playerY][playerX+1] == opponent) {
+                    // bordered on right by opponent
+                    borderedRight = true;
+                }
+            }
+            if (!borderedBottom) {
+                if (this.board[playerY+1][playerX] == opponent) {
+                    // bordered on bottom by opponent
+                    borderedBottom = true;
+                }
+            }
+
+            // Is the desired position suicide/surrounded?
+            if (borderedTop && borderedLeft && borderedRight && borderedBottom) {
+                isValid = false; // suicide is not allowed
+            }
+        } else {
+            // space has been occupied already
+            isValid = false;
+        }
+        // return whether the desired position is allowed
+        return isValid;
+    }
+
+    /* Adds the current player's stone to the board.
+    Preconditions: Check with validPosition(playerY, playerX) first to ensure the position is valid.
+    Postconditions: The value at (playerX, playerY) will be the player's color
+     */
+    public void setPosition(String currentPlayer, int playerY, int playerX) {
+        player = currentPlayer;
+        if (player == "Black") { // black's turn
+            blackY = playerY;
+            blackX = playerX;
+            this.board[blackY][blackX] = "W";
+        } else { // white's turn
+            whiteY = playerY;
+            whiteX = playerX;
+            this.board[whiteY][whiteX] = "B";
+        }
+    }
+
+
+    /* Returns a string containing the current player's color and the board, all of which are *nicely formatted* :)
+    Preconditions: None
+    Postconditions: A String containing the current player's color along with the board will be returned for printing as user output
+    Or who knows, maybe an AI will pick it up.
+    */
+    public String toString() {
+        // Add current player to output
+
+        // found String.format() on StackOverflow :)
+        // https://stackoverflow.com/questions/9643610/how-to-including-variables-within-strings
+        // Luckily, "Black" and "White" both have 5 characters, so no special length formatting is needed!
+        String output = String.format("""
+                \t+--------------------+
+                \t|  %s to Play...  |
+                \t+--------------------+
+                """, player
+        );
+
+        // Add game board to output
+        output += " R\n o Col >";
+        for (int column = 0; column < this.width; column++) {
+            output += " " + (column + 1);
+        }
+        output += "\n w   +" + "--".repeat(this.width) + "-----+\n";
+        output += " V   |   " + "  ".repeat(this.width) + "  |\n";
+        for (int row = 0; row < this.board.length; row++) {
+            if (row + 1 < 10) {
+                output += " " + (row + 1) + " - |   "; // pad row number with a leading space
+            } else {
+                output += (row + 1) + " - |   "; // do not pad row number if 10 or greater
+            }
+            for (int column = 0; column < this.board[0].length; column++) {
+                output += this.board[row][column];
+                if (column + 1 < this.width) {
+                    output += " "; // Alternatively use "-" to show actual lines
+                }
+            }
+            output += "   |\n";
+        }
+        output += "     |    " + "  ".repeat(this.width) + " |\n";
+        output += "     +" + "--".repeat(this.width) + "-----+\n";
+        // return the entire output
+        return output;
+    }
+}
