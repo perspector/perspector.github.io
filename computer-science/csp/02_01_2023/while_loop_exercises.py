@@ -1,0 +1,26 @@
+# print odd numbers between 1 and 100
+n = 1
+while n < 100:
+    print(str(n))
+    n += 2
+print("\n\n===============================\n\n")
+
+
+# print multiples of 3 from 300 down to 3
+n = 300
+while n > 3:
+    print(str(n))
+    n -= 3
+
+
+# 3.	Prompt the user for an even number and then output all the even numbers from the user input up to and including 100.	
+# Example) User inputs 96.  The output will be:
+# 96
+# 98
+# 100
+
+evenNum = int(input("Enter an even number less than 100: "))
+
+while evenNum <= 100:
+    print(str(evenNum))
+    evenNum += 2

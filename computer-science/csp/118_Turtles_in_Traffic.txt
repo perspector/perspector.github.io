@@ -1,0 +1,100 @@
+"""
+num1 = int(input("Number 1: "))
+num2 = int(input("Number 2: "))
+
+if num1 > num2:
+    print("Number 1 is greater than number 2.")
+elif num1 < num2:
+    print("Number 1 is less than number 2.")
+elif num1 == num2:
+    print("The two numbers are equal.")
+"""
+"""
+a = int(input("Number 1: "))
+b = int(input("Number 2: "))
+if a + b >= 10 and a + b <= 19:
+    print("20")
+else:
+    print(str(a + b))
+"""
+"""
+num = int(input("Non-negative integer: "))
+while num < 0:
+    num = int(input("NON-NEGATIVE integer: "))
+
+if num % 2 == 0:
+    print("even")
+else:
+    print("odd")
+"""
+
+#   a118_turtles_in_traffic.py
+#   Move turtles horizontally and vertically across screen.
+#   Stopping turtles when they collide.
+import turtle as trtl
+
+# create two empty lists of turtles, adding to them later
+horiz_turtles = []
+vert_turtles = []
+
+# use interesting shapes and colors
+turtle_shapes = ["arrow", "turtle", "circle", "square", "triangle", "classic"]
+horiz_colors = ["red", "blue", "green", "orange", "purple", "gold"]
+vert_colors = ["darkred", "darkblue", "lime", "salmon", "indigo", "brown"]
+
+tloc = 50
+for s in turtle_shapes:
+    ht = trtl.Turtle(shape=s)
+    horiz_turtles.append(ht)
+    ht.penup()
+    new_color = horiz_colors.pop()
+    ht.fillcolor(new_color)
+    ht.goto(-350, tloc)
+    ht.setheading(0)
+
+    vt = trtl.Turtle(shape=s)
+    vert_turtles.append(vt)
+    vt.penup()
+    new_color = vert_colors.pop()
+    vt.fillcolor(new_color)
+    vt.goto( -tloc, 350)
+    vt.setheading(270)
+    tloc += 50
+    ht.speed(100)
+    vt.speed(100)
+# TODO: move turtles across and down screen, stopping for collisions
+
+for j in range(50):
+    vLoc = []
+    hLoc = []
+    for v in vert_turtles:
+        v.forward(5)
+        vLoc.append((v.xcor(), v.ycor(), v))
+    for h in horiz_turtles:
+        h.forward(5)
+        hLoc.append((h.xcor(), h.ycor(), h))
+    for i in range(len(vert_turtles)):
+        if i <= len(horiz_turtles):
+        #i = 0
+        #while i < len(vert_turtles):
+            #i += 1
+            vPos = vLoc[i][0]
+            hPos = hLoc[i][0]
+            if abs(vPos - hPos) <= 5 and abs(vPos - hPos) <= 5:
+                print("Too close!")
+                #print(f"vloc {vLoc[2][2]} hloc {hLoc[2][2]}")
+                print(vLoc)
+                print(hLoc)
+                t1 = vLoc[2][2]
+                t2 = hLoc[2][2]
+                vert_turtles.remove(t1)
+                t1.color("gray")
+                horiz_turtles.remove(t2)
+                t2.color("gray")
+
+#for step in range(150): # 50
+#	#if ht.xcor() == vt.xcor() and ht.ycor() == vt.ycor():
+#    if abs(ht.xcor() - vt.xcor()) <= 20 and abs(ht.ycor() - vt.ycor()) <= 20:
+#        print("too close!")
+#        vert_turtles.remove(vt)
+#        horiz_turtles.remove(ht)

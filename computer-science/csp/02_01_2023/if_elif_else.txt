@@ -1,0 +1,27 @@
+# 1. SumTwenty: Given 2 ints, a and b, print their sum.
+# However, sums in the range 10..19 inclusive, are forbidden,
+# so in that case just print 20.
+a = int(input("First number to add: "))
+b = int(input("Second number to add: "))
+
+totalSum = a + b
+
+if totalSum > 10 and totalSum < 19:
+    # display 20
+    print("20")
+else:
+    print(f"The total sum is {str(totalSum)}")
+
+
+#2. Balance Check Book:  You are a bank teller that needs to determine
+# whether a client has money or not.
+# Ask for the users balance and tell them if they have money to withdraw or not.
+# For example if their balance is less than 0 then tell them they
+# cannot make a withdraw.  Make sure to include $ in the output.
+
+balance = float(input("What is your current balance? "))
+if balance < 0:
+    print("Sorry, you are in debt and cannot withdraw more money.")
+else:
+    balance = "%.2f" % balance   # format the number to 2 decimal places
+    print("You can withdraw $" + balance)
