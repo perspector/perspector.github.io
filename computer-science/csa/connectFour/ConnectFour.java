@@ -1,0 +1,178 @@
+// ConnectFour.java
+
+public class ConnectFour {
+    private String player;
+    private String [][] board;
+    private int width;
+    private int height;
+
+    /* Constructor, sets up everything */
+    public ConnectFour() {
+        player = "Blue";
+        this.width = 7;
+        this.height = 6;
+
+        this.board = new String [this.height][this.width];
+
+        // fill board with blank spaces
+        for (int row = 0; row < this.board.length; row++) {
+            for (int column = 0; column < this.board[0].length; column++) {
+                this.board[row][column] = "O";
+        }
+        }
+    }
+    /*
+    Checks if the position is valid
+    Preconditions:
+    * playerCol is in the range of the columns of the board
+    * the board is not full
+    Postconditions:
+    * returns true if the position is valid and false if it is not valid
+     */
+    public boolean validPosition(int playerCol) {
+        boolean isValid;
+        // Check if the column is full
+        if (this.board[0][playerCol] == "O") {
+            // not taken
+            isValid = true;
+        } else {
+            // row is full
+            isValid = false;
+        }
+        // return whether the desired position is allowed
+        return isValid;
+    }
+
+    /* Adds the current player's token to the board.
+    Preconditions: Check with validPosition(playerCol) first to ensure the position is valid.
+    Postconditions: The lowest available space in the column playerCol will be the player's color (based on currentPlayer)
+     */
+    public void setPosition(String currentPlayer, int playerCol) {
+        player = currentPlayer;
+        String playerAbbrev;
+        if (player == "Blue") { // blue's turn
+            playerAbbrev = "\033[44mB\033[0m";
+        } else {
+            playerAbbrev = "\033[41mR\033[0m";
+        }
+        for (int row = 0; row < this.board.length; row++) {
+            // for each row on the board
+            if (row != this.board.length - 1) {
+                // not last row
+                if (this.board[row][playerCol] == "O" && this.board[row + 1][playerCol] != "O") {
+                    // Area is blank and area below is filled, so fill current place with player token
+                    this.board[row][playerCol] = playerAbbrev;
+                }
+            } else if (this.board[row][playerCol] == "O") {
+                // bottom row and the space is empty, automatically place player token there
+                this.board[row][playerCol] = playerAbbrev;
+            }
+        }
+    }
+    /*
+    Checks whether the current player has won
+    Preconditions: board is not full
+    Postconditions: returns true if the provided player has won and false if the player has not won
+     */
+    public boolean hasWon(String player) {
+        String playerAbbrev;
+        if (player == "Blue") { // blue's turn
+            playerAbbrev = "\033[44mB\033[0m";
+        } else {
+            playerAbbrev = "\033[41mR\033[0m";
+        }
+        for (int row = 0; row < this.height; row ++) { // horizontal win
+            for (int column = 0; column < this.width - 3; column ++)
+                if (
+                    board[row][column] == playerAbbrev &&
+                    board[row][column + 1] == playerAbbrev &&
+                    board[row][column + 2] == playerAbbrev &&
+                    board[row][column + 3] == playerAbbrev
+                ) {
+                    return true;
+                }
+        }
+        for (int column = 0; column < this.width; column ++) { // vertical win
+            for (int row = 0; row < this.height - 3; row ++)
+                if (
+                    board[row][column] == playerAbbrev &&
+                    board[row + 1][column] == playerAbbrev &&
+                    board[row + 2][column] == playerAbbrev &&
+                    board[row + 3][column] == playerAbbrev
+                ) {
+                    return true;
+                }
+        }
+        for (int row = 0; row < this.height - 3; row ++) { // decreasing diagonal win
+            for (int column = 0; column < this.width - 3; column ++)
+                if (
+                    board[row][column] == playerAbbrev &&
+                    board[row + 1][column + 1] == playerAbbrev &&
+                    board[row + 2][column + 2] == playerAbbrev &&
+                    board[row + 3][column + 3] == playerAbbrev
+                ) {
+                    return true;
+                }
+        }
+        for (int row = this.height - 1; row > 0; row --) { // increasing diagonal win
+            for (int column = 0; column < this.width - 3; column ++)
+                if (
+                    board[row][column] == playerAbbrev &&
+                    board[row - 1][column + 1] == playerAbbrev &&
+                    board[row - 2][column + 2] == playerAbbrev &&
+                    board[row - 3][column + 3] == playerAbbrev
+                ) {
+                    return true;
+                }
+        }
+        return false;
+    }
+
+    /* Returns a string containing the current player's color and the board, all of which are *nicely formatted* :)
+    Preconditions: None
+    Postconditions: A String containing the current player's color along with the board will be returned for printing as user output
+    Or who knows, maybe an AI will pick it up.
+    */
+    public String toString() {
+        // Add current player to output
+
+        // found String.format() on StackOverflow :)
+        // https://stackoverflow.com/questions/9643610/how-to-including-variables-within-strings
+        String displayPlayer;
+
+        if (player == "Red") {
+            displayPlayer = "\033[44mBlue\033[0m";
+        } else {
+            displayPlayer = "\033[41mRed\033[0m";
+        }
+
+        String output = String.format("""
+                \t+--------------------+
+                \t|  %s to Play...  |
+                \t+--------------------+
+                """, displayPlayer
+        );
+
+        // Add game board to output
+        output += " Col > ";
+        for (int column = 0; column < this.width; column++) {
+            output += " " + (column + 1);
+        }
+        output += "\n    +" + "--".repeat(this.width) + "-----+\n";
+        output += "    |   " + "  ".repeat(this.width) + "  |\n";
+        for (int row = 0; row < this.board.length; row++) {
+            output += "    |   ";
+            for (int column = 0; column < this.board[0].length; column++) {
+                output += this.board[row][column];
+                if (column + 1 < this.width) {
+                    output += "|";
+                }
+            }
+            output += "   |\n";
+        }
+        output += "    |    " + "  ".repeat(this.width) + " |\n";
+        output += "    +" + "--".repeat(this.width) + "-----+\n";
+        // return the entire output
+        return output;
+    }
+}

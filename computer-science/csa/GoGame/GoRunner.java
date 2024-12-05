@@ -1,0 +1,120 @@
+// GoRunner.java
+
+import java.util.Scanner;
+import java.util.NoSuchElementException;
+
+public class GoRunner {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        try {
+            Go game;
+            System.out.print("\n".repeat(20));
+            System.out.print(
+                """
+                ASCII art credits to
+                http://www.patorjk.com/software/taag/#p=display&f=Impossible&t=Go
+                \n\n\n\n\n\n\n\n\n\n\n
+                    \tWelcome to
+                         __             __       
+                        /\\ \\           /\\ \\     
+                       /  \\ \\         /  \\ \\    
+                      / /\\ \\_\\       / /\\ \\ \\   
+                     / / /\\/_/      / / /\\ \\ \\  
+                    / / / ______   / / /  \\ \\_\\ 
+                   / / / /\\_____\\ / / /   / / / 
+                  / / /  \\/____ // / /   / / /  
+                 / / /_____/ / // / /___/ / /   
+                / / /______\\/ // / /____\\/ /    
+                \\/___________/ \\/_________/     
+
+                """
+            );
+            //System.out.println("\n".repeat(2));
+            System.out.print("What width should the game board have (0 for default)? ");
+            //int size = 3;
+            int size = scan.nextInt();
+
+            // Go boards must have a width of an odd integer, and the width cannot be 1, and there is a soft limit of 19 (may be changed later).
+            while (((size < 3) || (size > 19) || ((double) size % 2 == 0)) && (size != 0)) {
+                if (size < 3) {
+                    System.out.println("That is too small.");
+                } else if (size > 19) {
+                    System.out.println("That is too large.");
+                } else if ((double) size % 2 == 0) {
+                    System.out.println("Go boards must be an odd integer.");
+                }
+                System.out.println("Please choose an odd size, at least 3 but less than or equal to 19.\n");
+                System.out.print("What width should the game board have? ");
+                size = scan.nextInt();
+            }
+            if (size == 0) {
+                size = 19;
+                game = new Go(); // setup the game using the default size constructor
+            } else {
+                game = new Go(size); // setup the game using the custom size constructor
+            }
+
+            // In Go, black begins, but for display purposes I start with white. This fixes an off-by-one issue.
+            String currentPlayer = "White";
+
+            // variables for storing current play
+            int playerX;
+            int playerY;
+
+            while (true) {
+                System.out.println("\n".repeat(5));
+                // display game board
+                System.out.println(game);
+
+                // query position (row, column) from player
+                System.out.print("Row of current play: ");
+                playerY = scan.nextInt() - 1;
+                while (playerY > size - 1 || playerY < 0) {
+                    System.out.print("Row must be > 0 and < the board size.\nRow of current play: ");
+                    playerY = scan.nextInt() - 1;
+                }
+                System.out.print("Column: ");
+                playerX = scan.nextInt() - 1;
+                while (playerX > size - 1 || playerX < 0) {
+                    System.out.print("Column must be > 0 and < the board size.\nColumn: ");
+                    playerX = scan.nextInt() - 1;
+                }
+                while (!game.validPosition(playerY, playerX)) {
+                    System.out.println("Position is invalid, please choose another.");
+                    // query position (row, column) from player
+                    System.out.print("Row of current play: ");
+                    playerY = scan.nextInt() - 1;
+                    while (playerY > size - 1 || playerY < 0) {
+                        System.out.print("Row must be > 0 and < the board size.\nRow of current play: ");
+                        playerY = scan.nextInt() - 1;
+                    }
+                    System.out.print("Column: ");
+                    playerX = scan.nextInt() - 1;
+                    while (playerX > size - 1 || playerX < 0) {
+                        System.out.print("Column must be > 0 and < the board size.\nColumn: ");
+                        playerX = scan.nextInt() - 1;
+                    }
+                }
+                // add new move
+                game.setPosition(currentPlayer, playerY, playerX);
+
+                // switch player
+                if (currentPlayer == "Black") {
+                    currentPlayer = "White";
+                } else {
+                    currentPlayer = "Black";
+                }
+            }
+        }
+        catch (NoSuchElementException e) {
+            // handle exception of user pressing "Ctrl + C" by closing scanner and exitting the program
+            System.out.println("\n".repeat(10) + "Game ended by user, goodbye.");
+            scan.close();
+        }
+        /*
+        catch (Exception e) {
+            System.err.println(e);
+        }
+        */
+    }
+}

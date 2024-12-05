@@ -1,0 +1,73 @@
+// ConnectFourRunner.java
+
+import java.util.Scanner;
+import java.util.NoSuchElementException;
+
+public class ConnectFourRunner {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        try {
+            int rows = 5; // board rows - 1
+            int columns = 6; // board columns - 1
+            ConnectFour game;
+            System.out.print("\n".repeat(20));
+
+            game = new ConnectFour(); // setup the game using the custom size constructor
+
+            String currentPlayer = "Red";
+            String opponentPlayer = "Blue";
+
+            int playerCol;
+
+            while (game.hasWon(opponentPlayer) == false) {
+                System.out.println("\n".repeat(5));
+                // display game board
+                System.out.println(game);
+
+                // query position (row, column) from player
+                System.out.print("Column of current play: ");
+                playerCol = scan.nextInt() - 1;
+                while (playerCol > columns || playerCol < 0) {
+                    System.out.print("Column must be > 0 and < the board width.\nColumn of current play: ");
+                    playerCol = scan.nextInt() - 1;
+                }
+                while (!game.validPosition(playerCol)) {
+                    System.out.println("Position is invalid, please choose another.");
+                    // query new column position from player
+                    System.out.print("Column of current play: ");
+                    playerCol = scan.nextInt() - 1;
+                    while (playerCol > columns || playerCol < 0) {
+                        System.out.print("Column must be > 0 and < the board width.\nColumn: ");
+                        playerCol = scan.nextInt() - 1;
+                    }
+                }
+                // add new move
+                game.setPosition(currentPlayer, playerCol);
+
+                // switch player
+                if (currentPlayer == "Red") {
+                    currentPlayer = "Blue";
+                    opponentPlayer = "Red";
+                } else {
+                    currentPlayer = "Red";
+                    opponentPlayer = "Blue";
+                }
+            }
+            if (opponentPlayer == "Red") {
+                System.out.println("\n\n\033[41mRed Won! Congratulations!\033[0m\n\n");
+            } else {
+                System.out.println("\n\n\033[44mBlue Won! Congratulations!\033[0m\n\n");
+            }
+        }
+        catch (NoSuchElementException e) {
+            // handle exception of user pressing "Ctrl + C" by closing scanner and exitting the program
+            System.out.println("\n".repeat(10) + "\033[41mGame ended by user, goodbye.\033[0m\n\n");
+            scan.close();
+        }
+        /*
+        catch (Exception e) {
+            System.err.println(e);
+        }
+        */
+    }
+}
