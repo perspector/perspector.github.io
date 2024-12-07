@@ -78,10 +78,31 @@
                 The water cannot be reliably treated anymore, so a penetration test is necessary to determine and resolve the network vulnerabilities.
             </p>
 
-            <h1>Network Topology</h1>
+            <span><h1>Network Topology and Operation</h1></span>
             <div class="design-process-image-box">
                 <img src="water-treatment-network1.webp" alt="Water treatment facility network topology">
             </div>
+            <p>
+                JUSTIFICATION OF NETWORK TOPOLOGY AND EXPLANATION OF HOW THE SYSTEM FUNCTIONS
+            </p>
+
+
+            <span><h1>Baseline Network Traffic</h1></span>
+            <h1>FTP from PumpPLC to PumpMon</h1>
+            <p>Here, the PumpMon computer uses FTP (the File Transfer Protocol) to access a logfile from PumpPLC</p>
+            <h1>FTP from PumpMon to Web01</h1>
+            <p>Next, the PumpMon computer uses FTP to transfer the logfile from PumpMon to Web01 so it can be hosted on the webserver.</p>
+            <h1>Browsing Web01 from TargetWindows01</h1>
+            <p>After the logfile has been transferred to the webserver (Web01), the web interface can be accessed by a user using their web browser.</p>
+            <span><h1>Malicious Network Traffic</h1></span>
+            <h1>Network Scan from TargetWindows01</h1>
+            <p>A network scan is often used by network administrators, but also by malicious attackers. This practice allows identifying all devices on a network. Furthermore, a network scan can identify open ports on devices. These ports correspond to services such as FTP, HTTPS, HTTP, and SSH. If these services are not configured properly, a hacker may be able to gain unauthorized access to a system within the network.</p>
+            <h1>Browsing Web01 from PumpMonitor</h1>
+            <h1>PumpMonitor should not be browsing Web01 as PumpMonitor is a headless GNU/Linux machine and Web01 is intended to be used for end-users, not internal browsing.</h1>
+            <p>FTP from Web01 to PumpPLC</p>
+            <p>This transfer raises suspicions as Web01 should not be able to send a file to PumpPLC. If Web01 were compromised, a hackker could send malicious files to the low-level PumpPLC, which could in turn affect the water-treatment facility pumps.</p>
+            <span><h1>Securing the Network</h1></span>
+            <span><h1>Reflection</h1></span>
         </div>
     </section>
 
