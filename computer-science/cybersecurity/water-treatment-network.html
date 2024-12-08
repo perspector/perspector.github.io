@@ -91,8 +91,8 @@
 
             <span><h1>Baseline Network Traffic</h1></span>
             <p>Baseline network traffic serves as a control group for network security analysis. This traffic represents any communications over a network under ideal circumstances.</p>
-            <p>To capture this traffic on PumpMon, a GNU/Linux machine, I used the <pre><code>tcpdump</code></pre> command.</p>
-            <p>Syntax of the <pre><code>tcpdump</code></pre> command is as follows:</p>
+            <p>To capture this traffic on PumpMon, a GNU/Linux machine, I used the <span>tcpdump</span> command.</p>
+            <p>Syntax of the <span>tcpdump</span> command is as follows:</p>
             <pre>
                 <code>
 Example:
@@ -277,7 +277,7 @@ not port 22 ignores SSH traffic
                 </tbody></table>
             </div>
             <p>
-                To set up this host-based firewall, I used the <pre><code>iptables</code></pre> command. The iptables command follows the following syntax:
+                To set up this host-based firewall, I used the <span>iptables</span> command. The iptables command follows the following syntax:
             </p>
             <pre><code>
 iptables -A INPUT -p &lt;PROTOCOL&gt; -s &lt;SOURCE_IP&gt; --dport &lt;DESTINATION_SERVICE_PORT&gt; -j &lt;ACCEPT/DENY&gt;
