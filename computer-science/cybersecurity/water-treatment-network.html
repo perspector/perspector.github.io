@@ -83,26 +83,243 @@
                 <img src="water-treatment-network1.webp" alt="Water treatment facility network topology">
             </div>
             <p>
-                JUSTIFICATION OF NETWORK TOPOLOGY AND EXPLANATION OF HOW THE SYSTEM FUNCTIONS
+                Workers from the water treatment plant want to monitor the water pump activity.
+                PumpPLC is a low-level computer that directly controls the water treatment plant pumps. Periodically, PumpMon (Pump Monitor) transfers a logfile from PumpPLC to PumpMon, which includes details of the pump operation. This logfile is then transferred from PumpMon to Web01 (a web server) that hosts the pump logfiles so the public can view the water treatment activity.
+                The public (TargetWindows01) can access these logfiles by sending an HTTP request through their browser to Web01 (the webserver).
             </p>
 
 
             <span><h1>Baseline Network Traffic</h1></span>
+            <p>Baseline network traffic serves as a control group for network security analysis. This traffic represents any communications over a network under ideal circumstances.</p>
+            <p>To capture this traffic on PumpMon, a GNU/Linux machine, I used the <pre><code>tcpdump</code></pre> command.</p>
+            <p>Syntax of the <pre><code>tcpdump</code></pre> command is as follows:</p>
+            <pre>
+                <code>
+Example:
+tcpdump -w BC_PumpMon_Baseline1.pcap -n -s 65535 -i ens5 not port 22
+
+Where:
+-w writes the output to a file
+-n records IP addresses instead of hostnames,
+–s 65535 records entire packets instead of just header information
+-i ens5 uses the ethernet network interface for monitoring
+not port 22 ignores SSH traffic
+                </code>
+            </pre>
             <h1>FTP from PumpPLC to PumpMon</h1>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network2.webp" alt="FTP from PumpPLC to PumpMon">
+                <img src="water-treatment-network3.webp" alt="Wireshark of FTP transfer">
+            </div>
             <p>Here, the PumpMon computer uses FTP (the File Transfer Protocol) to access a logfile from PumpPLC</p>
             <h1>FTP from PumpMon to Web01</h1>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network4.webp" alt="FTP from PumpMon to Web01">
+                <img src="water-treatment-network5.webp" alt="Wireshark of FTP transfer">
+            </div>
             <p>Next, the PumpMon computer uses FTP to transfer the logfile from PumpMon to Web01 so it can be hosted on the webserver.</p>
             <h1>Browsing Web01 from TargetWindows01</h1>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network6.webp" alt="Wireshark of web browsing">
+            </div>
             <p>After the logfile has been transferred to the webserver (Web01), the web interface can be accessed by a user using their web browser.</p>
             <span><h1>Malicious Network Traffic</h1></span>
+            <p>Once baseline network traffic was collected, I could simulate attacks on the network and gather malicious network traffic. Keep in mind that I had permission to perform these attacks through my curriculum.</p>
             <h1>Network Scan from TargetWindows01</h1>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network7.webp" alt="Nmap network scan">
+                <img src="water-treatment-network8.webp" alt="Continuation of nmap network scan">
+                <img src="water-treatment-network9.webp" alt="Wireshark capture of nmap network scan">
+            </div>
             <p>A network scan is often used by network administrators, but also by malicious attackers. This practice allows identifying all devices on a network. Furthermore, a network scan can identify open ports on devices. These ports correspond to services such as FTP, HTTPS, HTTP, and SSH. If these services are not configured properly, a hacker may be able to gain unauthorized access to a system within the network.</p>
+            <p>The network scan results are shown below: (required services for normal operation are highlighted <span>green</span>)</p>
+            <div class="decision-matrix">
+                <table>
+                    <tbody>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td><strong>IP</strong></td>
+                            <td><strong>Name</strong></td>
+                            <td><strong>Open Ports</strong></td>
+                            <td><strong>Filtered Ports</strong></td>
+                            <td><strong>Closed Ports</strong></td>
+                            <td><strong>Port Number and Service</strong></td>
+                        </tr>
+                        <tr>
+                            <td>10.2.0.5</td>
+                            <td>PumpPLC</td>
+                            <td>9</td>
+                            <td>0</td>
+                            <td>988</td>
+                            <td>
+                                <span>21 ftp</span>
+                                <br><span>22 ssh</span>
+                                <br>80 http
+                                <br>111 rpcbind
+                                <br>139 netbios-ssn
+                                <br>445 microsoft-ds
+                                <br>631 ipp
+                                <br>3306 mysql
+                                <br>8080 http-proxy
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>10.2.0.6</td>
+                            <td>PumpMon</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>998</td>
+                            <td>
+                                <span>21 ftp</span>
+                                <br><span>22 ssh</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>10.2.0.7</td>
+                            <td>Web01</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>994</td>
+                            <td>
+                                <span>21 ftp</span>
+                                <br><span>80 http</span>
+                                <br>135 msrpc
+                                <br>139 netbios-ssn
+                                <br>445 microsoft-ds
+                                <br>3389 ms-wbt-server
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>10.2.0.8</td>
+                            <td>
+                                TargetWindows01
+                                <br>(login machine)
+                            </td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>996</td>
+                            <td>
+                                135 msrpc
+                                <br>139 netbios-ssn
+                                <br>445 microsoft-ds
+                                <br>3389 ms-wbt-server
+                            </td>
+                        </tr>
+                </tbody></table>
+            </div>
             <h1>Browsing Web01 from PumpMonitor</h1>
-            <h1>PumpMonitor should not be browsing Web01 as PumpMonitor is a headless GNU/Linux machine and Web01 is intended to be used for end-users, not internal browsing.</h1>
-            <p>FTP from Web01 to PumpPLC</p>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network10.webp" alt="Lynx on PumpMonitor">
+                <img src="water-treatment-network11.webp" alt="Wireshark of browsing Web01 from PumpMonitor">
+            </div>
+            <p>PumpMonitor should not be browsing Web01 as PumpMonitor is a headless GNU/Linux machine and Web01 is intended to be used for end-users, not internal browsing.</p>
+            <h1>FTP from Web01 to PumpPLC</h1>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network12.webp" alt="FTP transfer from Web01 to PumpPLC">
+                <img src="water-treatment-network13.webp" alt="Wireshark of the malicious FTP transfer">
+            </div>
             <p>This transfer raises suspicions as Web01 should not be able to send a file to PumpPLC. If Web01 were compromised, a hackker could send malicious files to the low-level PumpPLC, which could in turn affect the water-treatment facility pumps.</p>
+            <span><h1>Comparison of Baseline and Malicious Network Data Filesizes</h1></span>
+            <p>The combined Wireshark PCAP capture files contained 11.41 MB of capture data. In contrast, the baseline capture files contained only 53 KB of capture data. This demonstrates that the malicious actions resulted in large quantities of network traffic, which could easily be identified.</p>
             <span><h1>Securing the Network</h1></span>
-            <span><h1>Reflection</h1></span>
+            <p>
+                The network can be secured by using a host-based firewall. A host-based firewall allows or denies network traffic on each device in a network.
+            </p>
+            <p>
+                The rules below should be applied:
+            </p>
+            <div class="decision-matrix">
+                <table>
+                    <tbody>
+                        <tr>
+                            <!-- <td>&nbsp;</td> -->
+                            <td><strong>Protocol/Port</strong></td>
+                            <td><strong>Source</strong></td>
+                            <td><strong>Destination</strong></td>
+                            <td><strong>Permission</strong></td>
+                        </tr>
+                        <tr>
+                            <td>FTP/21</td>
+                            <td>10.2.0.6</td>
+                            <td>10.2.0.5</td>
+                            <td>ALLOW</td>
+                        </tr>
+                        <tr>
+                            <td>FTP/21</td>
+                            <td>10.2.0.7</td>
+                            <td>10.2.0.6</td>
+                            <td>ALLOW</td>
+                        </tr>
+                        <tr>
+                            <td>HTTP/80</td>
+                            <td>ANY</td>
+                            <td>10.2.0.7</td>
+                            <td>ALLOW</td>
+                        </tr>
+                        <tr>
+                            <td>SSH/22</td>
+                            <td>10.2.0.8</td>
+                            <td>10.2.0.7</td>
+                            <td>ALLOW</td>
+                        </tr>
+                        <tr>
+                            <td>ms-wbt-server/3389</td>
+                            <td>10.2.0.8</td>
+                            <td>10.2.0.7</td>
+                            <td>ALLOW</td>
+                        </tr>
+                        <tr>
+                            <td>ANY</td>
+                            <td>ANY</td>
+                            <td>ANY</td>
+                            <td>DENY</td>
+                        </tr>
+                </tbody></table>
+            </div>
+            <p>
+                To set up this host-based firewall, I used the <pre><code>iptables</code></pre> command. The iptables command follows the following syntax:
+            </p>
+            <pre><code>
+iptables -A INPUT -p &lt;PROTOCOL&gt; -s &lt;SOURCE_IP&gt; --dport &lt;DESTINATION_SERVICE_PORT&gt; -j &lt;ACCEPT/DENY&gt;
+Where:
+-A INPUT adds a rule for inbound traffic
+-p &lt;PROTOCOL&gt; filters by protocol
+-s &lt;SOURCE_IP&gt; adds the source IP address for the rule
+--dport &lt;DESTINATION_SERVICE_PORT&gt; defines the port used by the service
+-j &lt;ACCEPT/DENY&gt; defines whether to accept or deny the network traffic
+
+Other useful arguments:
+iptables -L INPUT lists inbound rules
+iptables -F INPUT clears ("flushes") inbound rules
+iptables --policy INPUT DROP adds an ANY/DENY rule
+iptables-save will save the rules
+
+Examples for setting up the rules in the above table:
+sudo iptables -F INPUT
+sudo iptables -A INPUT -p tcp -s 10.2.0.8 --dport ssh -j ACCEPT
+sudo iptables -A INPUT -p tcp -s 10.2.0.8 --dport ssh -j ACCEPT
+sudo iptables -A INPUT -p tcp -s 10.2.0.8 --dport ssh -j ACCEPT
+sudo iptables -A INPUT -p tcp -s 10.2.0.8 --dport ssh -j ACCEPT
+sudo iptables -A INPUT -p tcp -s 10.2.0.8 --dport ssh -j ACCEPT
+sudo iptables --policy INPUT DROP
+sudo iptables-save
+            </code></pre>
+
+            <h1>Network Scan After Updating the IP Table</h1>
+            <div class="design-process-image-box">
+                <img src="water-treatment-network14.webp" alt="Zenmap scan of PumpPLC showing only SSH accessible from TargetWindows01">
+            </div>
+            <p>This shows that only SSH is available from TargetWindows01. FTP can no longer be used from TargetWindows01 to PumpPLC.</p>
+
+            <span><h1>Reflection: Network-Based Firewalls vs. Host-Based Firewalls</h1></span>
+            <p>
+                There are network firewalls and host-level firewalls.
+                A network-based firewall controls traffic for the entire network, while a host-based firewall is different on each host.
+                A host-based firewall controls traffic to and from its host.
+                The latter increases configuration options within a network.
+                However, it is more difficult to monitor all the host-based firewalls on a network than a single network-based firewall.
+                Additionally, changing multiple host-based firewalls is more difficult than changing a single network-based firewall as each device must be logged into.
+            </p>
         </div>
     </section>
 
