@@ -26,7 +26,7 @@ def find_and_replace(dir_path, file_extension, find_text, replace_text):
 # Usage
 dir_path = '/home/superuser/Documents/GitHub/perspector.github.io'
 file_extension = ".html"
-find_text = '<p>Copyright &copy; 2023 - 2024 by Benjamin Chase</p>'
-replace_text = '<p>Copyright &copy; 2023 - 2025 by Benjamin Chase</p>'
+find_text = '<p>Copyright &copy; 2023 - 2025 by Benjamin Chase</p>'
+replace_text = '<p>Copyright &copy; 2023 - 2026 by Benjamin Chase</p>'
 find_and_replace(dir_path, file_extension, find_text, replace_text)
 
