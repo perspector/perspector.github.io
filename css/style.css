@@ -93,6 +93,12 @@ section {
     align-items: center;
     line-height: 1.5;
 }
+
+model-viewer {
+    width: 45vw;
+    height: 60vw;
+}
+
 .home-img {
     margin-top: -100px;
     align-items: center;
