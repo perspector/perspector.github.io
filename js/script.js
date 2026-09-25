@@ -1,7 +1,5 @@
 /*==================== delay loading home-img ====================*/
-window.addEventListener('load', () => {
-    document.getElementById('home-img').classList.add('loaded');
-});
+window.addEventListener('load', () => {document.getElementById('stlviewer').classList.add('loaded');});
 
 
 /*==================== toggle icon navbar ====================*/
