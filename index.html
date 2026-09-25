@@ -8,37 +8,7 @@
     <title>Benjamin Chase</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <script>
-        /*================= lazy load 3d model on homepage ===================*/
-        // Source - https://stackoverflow.com/a/10211585
-        // Posted by patrick, modified by community. See post 'Timeline' for change history
-        // Retrieved 2026-09-25, License - CC BY-SA 3.0
-
-        $(document).ready(function(){
-        $(window).scroll(lazyload);
-        lazyload();
-        });
-
-        function lazyload(){
-        var wt = $(window).scrollTop();    //* top of the window
-        var wb = wt + $(window).height();  //* bottom of the window
-
-        $(".stlviewer").each(function(){
-            var ot = $(this).offset().top;  //* top of object
-            var ob = ot + $(this).height(); //* bottom of object
-
-            if(!$(this).attr("loaded") && wt<=ob && wb >= ot){
-                /* $(this).html("here goes the iframe definition"); */
-                $(this).attr("loaded",true);
-            }
-        });
-        }
-    </script>
-
     <!-- js for loading 3D STL models -->
-    <!-- <style type="text/css">
-        div.stlviewer { height: 500px; }
-    </style> -->
     <script type=text/javascript> 
     window.onload=function() {
         STLViewerEnable("stlviewer");
