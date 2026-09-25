@@ -16,29 +16,52 @@
     <link href="css/style.css" rel="stylesheet">
 
 
+
+    <!-- js for loading 3D STL models -->
+    <!-- <style type="text/css">
+        div.stlviewer { height: 500px; }
+    </style> -->
+    <script type=text/javascript> 
+    window.onload=function() {
+        STLViewerEnable("stlviewer");
+    } 
+    </script>
+    <script src="/three.js/build/three.js"></script>
+    <script src="/three.js/examples/js/WebGL.js"></script>
+    <!-- <script src="/three.js/examples/js/capabilities/WebGL.js"></script> -->
+    
+    <script src="three.js/examples/js/loaders/STLLoader.js"></script>
+    <!-- <script src="/three.js/examples/js/loaders/STLLoader.js"></script> -->
+    
+    <script src="/three.js/examples/js/controls/OrbitControls.js"></script>
+    <!-- <script src="/three.js/examples/js/controls/OrbitControls.js"></script> -->
+
+    <script src="/js/stl.js"></script>
+
+
+
+
     <!-- Loads <model-viewer> for modern browsers: -->
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+    <!-- <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script> -->
 
     <!-- Loads <model-viewer> for old browsers like IE11: -->
-    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+    <!-- <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script> -->
 
     <!-- The following libraries and polyfills are recommended to maximize browser support -->
     <!-- NOTE: you must adjust the paths as appropriate for your project -->
     <!-- REQUIRED: Web Components polyfill to support Edge and Firefox < 63 -->
-    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"></script>
+    <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"></script> -->
 
     <!-- OPTIONAL: Intersection Observer polyfill for better performance in Safari and IE11 -->
-    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <!-- <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script> -->
 
     <!-- OPTIONAL: Resize Observer polyfill improves resize behavior in non-Chrome browsers -->
-    <script src="https://unpkg.com/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+    <!-- <script src="https://unpkg.com/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script> -->
 
     <!-- OPTIONAL: Fullscreen polyfill is required for experimental AR features in Canary -->
     <!--<script src="https://unpkg.com/fullscreen-polyfill@1.0.2/dist/fullscreen.polyfill.js"></script>-->
     <!-- OPTIONAL: Include prismatic.js for Magic Leap support -->
     <!--<script src="https://unpkg.com/@magicleap/prismatic@0.18.2/prismatic.min.js"></script>-->
-
-
 
 </head>
 
@@ -94,8 +117,9 @@
         </div>
 
         <div class="home-img">
-            <model-viewer id="modelblock" src="/assets/stl/VADER.glb" background-color=" #254441" min-camera-orbit="Infinity 0deg auto" max-camera-orbit="Infinity 180deg auto" min-field-of-view="0" max-field-of-view="180" interaction-prompt="none" bounds="tight" default-progress-bar="" ar-status="not-presenting" auto-rotate="1" rotation-per-second="300%" style="--display: none;" camera-controls="" camera-orbit="0deg 90deg" disable-zoom="">
-            </model-viewer>
+            <!-- <model-viewer id="modelblock" src="/assets/stl/carAssembly.stl" background-color=" #254441" min-camera-orbit="Infinity 0deg auto" max-camera-orbit="Infinity 180deg auto" min-field-of-view="0" max-field-of-view="180" interaction-prompt="none" bounds="tight" default-progress-bar="" ar-status="not-presenting" auto-rotate="1" rotation-per-second="300%" style="--display: none;" camera-controls="" camera-orbit="0deg 90deg" disable-zoom=""> -->
+            <!-- </model-viewer> -->
+            <div class=stlviewer data-src="/assets/stl/test.stl"></div>
         </div>
     </section>
 
