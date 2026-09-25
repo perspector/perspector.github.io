@@ -33,6 +33,9 @@ function STLViewer(elem, model) {
         //scene.add(box);
 
         camera.updateProjectionMatrix();
+
+        scaleFactor = Math.min(elem.clientWidth, elem.clientHeight) / 1;
+        model.scale.set(scaleFactor, scaleFactor, scaleFactor);
     }, false);
 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -54,35 +57,49 @@ function STLViewer(elem, model) {
             specular: 100,
             shininess: 100
         });
-        var mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh)
-        //const wireframe = new THREE.WireframeGeometry(mesh.geometry);
-        const wireframe = new THREE.EdgesGeometry( mesh.geometry );
-        scene.add(wireframe)
+        var material2 = new THREE.MeshPhongMaterial({
+            color: 0x000000,
+            specular: 100,
+            shininess: 100
+        });
         
+        // center the geometry
+        geometry.center();
+        
+        var mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh); // uncomment for solid geometry
+        //const wireframe_geo = new THREE.WireframeGeometry(mesh.geometry);
+        wireframe_geo = new THREE.EdgesGeometry(mesh.geometry, thresholdAngle=2); // uncomment for wireframe geometry
+        wireframe = new THREE.LineSegments(wireframe_geo, material2);
+        scene.add(wireframe)
+
         // Compute the middle
         var middle = new THREE.Vector3();
-        geometry.center();
+        
         geometry.boundingBox.getCenter(middle);
 
         // rotate it
         mesh.rotateX(3 * Math.PI / 2) // 3pi/2
+        wireframe.rotateX(3 * Math.PI / 2) // 3pi/2
 
         // Center it
         mesh.position.x = -1 * middle.x;
         mesh.position.y = -1 * middle.y;
         mesh.position.z = -1 * middle.z;
+        wireframe.position.x = -1 * middle.x;
+        wireframe.position.y = -1 * middle.y;
+        wireframe.position.z = -1 * middle.z;
 
         // Pull the camera away as needed
         var largestDimension = Math.max(geometry.boundingBox.max.x,
             geometry.boundingBox.max.y, geometry.boundingBox.max.z)
-        camera.position.z = largestDimension * 1.6;
+        camera.position.z = largestDimension * 1.6; // 1.6
         
         // adjust FOV to ensure it does not scale strangly when resizing the window
         //camera.fov = 2 * Math.atan( geometry.height / ( 2 * cameraPosition.z ) ) * ( 180 / Math.PI );
-        
+
         // move the camera to its desired starting position
-        camera.position.y = largestDimension * 0.75
+        camera.position.y = largestDimension * 1.1 // 1.8
         camera.updateProjectionMatrix();
 
 

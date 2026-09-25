@@ -1,3 +1,9 @@
+/*==================== delay loading home-img ====================*/
+window.addEventListener('load', () => {
+    document.getElementById('home-img').classList.add('loaded');
+});
+
+
 /*==================== toggle icon navbar ====================*/
 let menuIcon = document.querySelector('#menu-icon');
 let navbar = document.querySelector('.navbar');
