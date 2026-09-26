@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="/index.html" class="active">Home</a>
+            <a href="/uni/uni-projects.html">University</a>
+            <a href="/high-school/high-school-projects.html">High School</a>
+            <a href="/other-projects/other-projects.html">Other Projects</a>
+            <a href="/work-experience/work-experience.html">Work Experience</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Interviewing Experts for Capstone Research</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> First Part of the Capstone Project
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <div class="design-process-image-box">
+                <img src="interviews1.webp" alt="Picture of Christopher Yoder">
+            </div>
+            <span><h1>Dr. Christopher Yoder</h1></span>
+            <span><h1>Expert Background</h1></span>
+            <p>
+                Christopher Yoder is currently an Aerospace Engineer for NASA’s Balloon Program Office at
+                Wallops Flight Facility. He has degrees in Mechanical Engineering and Physics from the
+                University of North Carolina at Charlotte as well as masters and doctorate degrees in Aerospace
+                Engineering from North Carolina State University. Dr. Yoder studied in the Engineering
+                Mechanics and Space Systems Laboratory at NC State focusing on the dynamics of long tethers
+                and their applications to the trajectory control of scientific balloons. Since joining NASA, he has
+                worked on several projects, including NASA’s Super Pressure Balloon, new modeling
+                techniques, and the SPARROW project. He currently serves as an adjunct professor at the
+                University of Maryland Eastern Shore and is a AIAA member.
+            </p>
+            <p>
+                Chris Yoder was a fantastic mentor to me during my internship at NASA WFF in the summer of 2023. He helped me along with projects, gave critical advice, and taught me many new skills.
+            </p>
+            <p>
+                We need a way to find the radius of a Super Pressure Balloon during flight to calculate the volume of helium gas inside the balloon.
+            </p>
+
+            <div class="design-process-image-box">
+                <img src="interviews2.webp" alt="Picture of Sarah Roth">
+            </div>
+            <span><h1>Dr. Sarah Roth</h1></span>
+            <span><h1>Expert Background</h1></span>
+            <p>
+                Dr. Sarah Roth is the Chief Technologist for NASA’s Balloon Program Office located
+                at the NASA Wallops Flight Facility in Wallops Island, VA.
+                In her current role, Sarah shapes the future of technology development to advance the capabilities
+                of the high-altitude scientific ballooning program.
+                She has a passion for educational outreach and works with students each semester
+                through internships and mentoring opportunities.
+                Sarah holds a Doctorate of Engineering in Engineering Management from George Washington University,
+                a Master of Science in Chemical Engineering from the University of Akron and a Bachelor of Music
+                in Music Education from Bowling Green State University.
+            </p>
+            <p>
+                Sarah Roth was also one of my amazing mentors at NASA WFF during the same internship. She provided many great project ideas along with vital support.
+            </p>
+            <p>
+                We need a winch that uses a low power (5-10W maximum) motor to lift a LIDAR system through 35 meters inside a Super Pressure Balloon. It must be able to operate in extremely low temperatures, in a vacuum, and should be able to operate quickly.
+            </p>
+
+            <div class="design-process-image-box">
+                <img src="interviews3.webp" alt="Picture of Evan Youngberg">
+            </div>
+            <span><h1>Evan Youngberg</h1></span>
+            <span><h1>Expert Background</h1></span>
+            <p>
+                Evan Youngberg is currently an aerospace engineer at NASA’s Wallops Flight Facility located in Wallops Island, VA. He works as a technologist and R&D lab manager for the Balloon Program Office, which flies massive telescope-carrying balloons up to the stratosphere worldwide. In his current role, he helps advance the capabilities of the scientific balloon platform by leading materials research, instrumentation testing, and technology development in the lab. He also participates in outreach activities and involves interns from around the country in balloon technology development, educating the public about the novel suborbital platform. Evan holds a bachelor’s degree in aerospace engineering and a master’s degree in mechanical engineering from North Carolina State University in Raleigh. In his free time he enjoys outdoor activities, especially running, hiking and snowboarding.
+            </p>
+            <p>
+                Evan Youngberg was also one of my fabulous mentors. He provided guidance during electrical projects, was always there for me, and helped me along with various projects.
+            </p>
+            <p>
+                The winch system must lift a LIDAR sensor that can calculate the radius of a Super Pressure Balloon as a function of height inside the balloon when deployed. It must also be able to transmit this data back to a ground station.
+            </p>
+
+
+            <span><h1>Overall Proposal</h1></span>
+            <p>
+                Proposed problem:
+                    <br>We’ve identified the need to perform a radius measurement of the SPB balloon during flight and have been limited in our success. We think that a LIDAR-based solution which is raised/lowered inside the balloon on a small winch system is a viable solution, but need someone to engineer it and test it. Our proposed project starts this development by designing the mechanism and controller for the winch of the payload (with the idea that the LIDAR would be added on at a later date, ideally this summer).
+                    <br>Some high level requirements for your consideration are (minimum must be met, desired are nice but not required):
+                    <br>* Must be low power (i.e. 5-10W maximum)
+                    <br>    - Minimum is constant 5-10W of power
+                    <br>    - Desired is an “on” mode when deploying, and an “off” mode where it uses a trickle of power just to stay warm
+                    <br>* Must be able to raise/lower 0.5kg (i.e. the LIDAR) a minimum of 35 meters
+                    <br>    - Minimum is a lower-raise cycle time of 10 minutes
+                    <br>    - Desired is a lower-raise cycle time of 5 minutes
+                    <br>* Must have a total mass of 10kg or less
+                    <br>    - This one is a little flexible, since the tether may be heavier, just aim for 10kg
+                    <br>* Must be capable of measuring it’s own deployed length (i.e. distance from “zero”)
+                    <br>* Must be capable of transmitting data after deployment
+                    <br>    - Minimum is the maximum diameter measured
+                    <br>    - Desired is the measured diameter as a function of deployed length
+                    <br>* Must cost under $15,000 per unit to purchase all parts and fabricate
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 - 2026 by Benjamin Chase</p>
+            <p>The code for this website, excluding dependencies, is licensed under the GNU GPLv3 license.</p>
+            <p>Code and license are available at: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="https://linkedin.com/in/benjamin-l-chase" target="_blank" rel="noopener"><i class='bx bxl-linkedin-square'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

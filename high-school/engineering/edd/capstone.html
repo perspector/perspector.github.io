@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benjamin Chase</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+
+
+
+    <!-- START 3D STL VIEWER -->
+    <script type=text/javascript> 
+    window.onload=function() {
+        STLViewerEnable("stlviewer");
+    } 
+    </script>
+    <script src="/three.js/build/three.js"></script>
+    <script src="/three.js/examples/js/WebGL.js"></script>
+    <!-- <script src="/three.js/examples/js/capabilities/WebGL.js"></script> -->
+    
+    <script src="/three.js/examples/js/loaders/STLLoader.js"></script>
+    <!-- <script src="/three.js/examples/js/loaders/STLLoader.js"></script> -->
+    
+    <script src="/three.js/examples/js/controls/OrbitControls.js"></script>
+    <!-- <script src="/three.js/examples/js/controls/OrbitControls.js"></script> -->
+
+    <script src="/js/stl.js"></script>
+    <!-- END 3D STL VIEWER -->
+    
+
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="../../index.html" class="logo">Benjamin Chase</a>
+
+        <div class='bx bx-menu' id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="/index.html" class="active">Home</a>
+            <a href="/uni/uni-projects.html">University</a>
+            <a href="/high-school/high-school-projects.html">High School</a>
+            <a href="/other-projects/other-projects.html">Other Projects</a>
+            <a href="/work-experience/work-experience.html">Work Experience</a>
+        </nav>
+    </header>
+
+    <!-- home section design -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Benjamin Chase</h3>
+            <!-- Animated Typing -->
+            <h1>
+                <!-- Element to contain animated typing -->
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                    var typed = new Typed('#element', {
+                        startDelay: 1000,
+                        strings: ["<i>Final Capstone Project</i>"],
+                        typeSpeed: 150,
+                        cursorChar: "<i>|<i>",
+                        loop: false,
+                    });
+                </script>
+            </h1>
+
+            <h2>
+                -> This is the final capstone project from the PLTW engineering program.
+            </h2>
+        </div>
+
+        <div class="home-img">
+            <!-- <img src="images/home.png" alt=""> -->
+        </div>
+    </section>
+
+    <!-- portfolio section design -->
+    <section class="design-process" id="design-process">
+        <h2 class="heading"><span>Design</span> Process</h2>
+        <div class="design-process-container">
+            <!--
+            <div class="design-process-image-box">
+                <img src="capstone1.webp" alt="Group Picture">
+            </div>
+            <p>
+                INTENDED MAJORS OF EACH OF US ALONG WITH OUR NAMES
+            </p>
+            -->
+
+            <div class="design-process-image-box">
+                <img src="capstone2.webp" alt="Gantt Chart">
+            </div>
+
+            <span><h1>Finding and Justifying a Problem</h1></span>
+            <p>
+                To begin this project, we needed to find a justifiable problem that impacted many people and could be solved within our semester.
+            </p>
+            <span><h2>Possible Problems</h2></span>
+            <p>
+                <span>1. Rip Currents are Difficult to Detect</span>
+                <br>Rip currents are dangerous currents close to shore that can pull unaware swimmers out to sea.
+                While a few computer programs using neural networks and AI to detect rip currents,
+                there are no existing systems that can be widely implemented to detect rip currents.
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0378383921000193">Existing solutions</a> require specific camera placement,
+                immense amounts of data, and are generally not effective enough at this point in time.
+                According to the <a href="https://www.weather.gov/hazstat/">U.S. National Weather Service</a> (Accessed March 19, 2024),
+                between 2013 and 2022 there were an average of 53 rip current fatalities per year.
+            </p>
+            <p>
+                <span>2. Orthotics in Shoes are Difficult and Expensive to Make</span>
+                <br>Many people, such as other runners and myself, start to get "flat feet" where the arches of their feet flatten out over time, resulting in foot pain.
+                To resolve this issue, people buy expensive orthotic inserts that are custom made to support your arches when wearing shoes.
+                According to <a href="https://www.vivehealth.com/blogs/resources/custom-orthotics-cost">VibeHealth</a>, a health website,
+                "The cost of custom orthotics typically ranges between $300 and $600."
+                I know from personal experience that these orthotics also take weeks or months to manufacture and ship.
+                If 3D printing could be used to make ergonomic orthotics with custom arch support, then these issues would be eliminated.
+            </p>
+            <p>
+                <span>3. Many Applications of Drones Require a Specific Drone, But Drones are Expensive</span>
+                <br>Drones are used for
+                <a href="https://www.fs.usda.gov/inside-fs/delivering-mission/sustain/drones-change-way-forest-fires-are-managed">forest fire detection</a>,
+                <a href="https://www.dhs.gov/science-and-technology/news/2020/04/02/snapshot-first-responders-assess-drones-search-and-rescue-missions">search and rescue</a>,
+                <a href="https://www.nfi.edu/drone-filming/">photography</a>, and even
+                <a href="https://www.usgs.gov/centers/whcmsc/science/aerial-imaging-and-mapping">aerial mapping</a>.
+                With this many use cases, drones have immensely different form factors for specific uses.
+                The issue with drones in their current state is that many different types of drones would be required for multiple missions.
+                It would be best to have a single drone that can have attachments for other instruments (cameras, winches, sensors, etc.) for any use case.
+                This would appeal to both government entities, as their drones would be ready wherever, whenever, for whatever purpose necessary.
+                Modular drones could also be applied to other user groups, such as hobbyists that just want to do as much as possible with the
+                hardware they have without spending immense amounts of money.
+            </p>
+            <p>
+                <span>4. Guitar is Often Difficult and Frustrating to Learn for Beginners</span>
+                <br>When starting to play guitar, many beginners have the dream of playing their favorite song quickly.
+                As they begin to learn with simple songs, beginners often become bored.
+                Later on, they have trouble remembering the immense amounts of major, minor, bar, seventh chords, and so on.
+                This marks the end of most beginners' interest in playing guitar as they become frustrated and quit with self-doubt.
+                Fender, a leader in guitar production and education, found that,
+                "of the 45 per cent of guitars Fender sold in a year that went to new players;
+                90 per cent abandoned the instrument within their first year as a beginner,"
+                according to a quote from Fender's CEO Andy Mooney, explained by <a href="https://www.musicradar.com/news/90-of-beginner-guitar-players-give-up-within-a-year-says-fender">MusicRadar</a>.
+                If we could develop a device that helps beginners learn to play chords of their favorite songs on guitar quickly and effectively,
+                then we can avoid any self-doubt and rekindle a passion for guitar in many. Playing guitar is also a social activity,
+                which can bring many people together and help them make new friends and bring happiness to others.
+            </p>
+
+            <span><h2>Decision Matrix</h2></span>
+            <div class="design-process-image-box">
+                <img src="capstone3.webp" alt="Decision Matrix">
+            </div>
+            <span><h2>Problem Justification Research</h2></span>
+            <p>
+                As a team, we researched the issue of many beginners giving up on guitar. These are the results we found:
+                <br>Source: <a href="https://www.prnewswire.com/news-releases/16-million-americans-learned-to-play-guitar-in-the-last-two-years-why-and-who-are-they-301394808.html">PR Newswire</a> 
+                <br>Summary:
+                PR Newswire states that, “7% of the U.S. population ages 13-64 started to learn guitar in the last two years.”
+                This is a significant customer base showing that there is intense demand for an aid that eases learning to play guitar.
+                This percentage equates to approximately 16 million people who are learning to play guitar.
+                <br>Critique:
+                <br>This article has statistics from Fender, a leader in guitar technology that conducted large research projects
+                to determine what guitar players want and need for their commercial advantage.
+                This means that they have pinpointed exactly what projects users need, which is advantageous to us, as we can find out exactly what users need using this data. 
+                <br>
+                <br>Source: <a href="https://www.musicradar.com/news/90-of-beginner-guitar-players-give-up-within-a-year-says-fender">MusicRader</a>
+                <br>Summary:
+                <br>Most people who start playing guitar quit alarmingly quickly. Fender is trying to change this, but many beginners still get frustrated and quit.
+                The article states, “According to the Fender chief, the company found that of the 45 per cent of guitars Fender sold in a year that went to new players;
+                90 per cent abandoned the instrument within their first year as a beginner." 
+                <br>Critique:
+                This demonstrates a need to interest beginners enough to continue playing the guitar without frustration.
+                There is validity in this issue since Fender has invested in improving the user retention of guitar beginners. 
+                <br>
+                <br>Source: <a href="https://www.bbc.com/news/business-58556770">BBC News</a>
+                <br>Summary:
+                <br>There is an increasing market behind musical instruments, as during COVID-19 many people tried to learn to play a musical instrument.
+                According to BBC, the UK's largest online retailer of musical instruments, Gear4music, reported, "a sales growth of 80%." 
+                <br>Critique:
+                <br>Since there is a large market with a definite need for easing the process of learning an instrument,
+                a tool to help beginners learn to play guitar would be beneficial to both consumers and retailers.
+            </p>
+
+            <span><h2>Market Survey</h2></span>
+            <div class="design-process-image-box">
+                <img src="capstone4.webp" alt="">
+                <img src="capstone5.webp" alt="">
+                <img src="capstone6.webp" alt="">
+                <img src="capstone7.webp" alt="">
+                <img src="capstone8.webp" alt="">
+                <img src="capstone9.webp" alt="">
+                <img src="capstone10.webp" alt="">
+                <img src="capstone11.webp" alt="">
+                <img src="capstone12.webp" alt="">
+                <img src="capstone13.webp" alt="">
+                <img src="capstone14.webp" alt="">
+                <img src="capstone15.webp" alt="">
+            </div>
+
+            <span><h2>Problem Statement</h2></span>
+            <p>
+                Almost 10% (715 million) of the world’s population has attempted to learn guitar,
+                but only 50 million people play consistently. We believe that this stems from the lack of gratification
+                and the immense difficulty of learning to play the guitar well and memorize chords.
+                We hope to be able to develop a physical aid of some kind to help new, and even experienced guitar
+                players to learn chords and techniques as a way to be able to preform new and interesting songs.
+            </p>
+
+            <p>
+                During this portion of the capstone project, Logan, Ethan, and I were able to gather over 200 responses for our survey.
+                Thus, the survey is representative of what criteria users value most in a tool to help them to learn to play guitar.
+                According to our survey, 55.2% of respondents had played guitar before.
+                Those who had played guitar before found it most difficult to memorize chords, learn techniques, and play chords.
+                They had mostly learned to play from a teacher.
+                Teachers can be expensive over time, and if tought during school a teacher may not be able to devote as much attention to individual students.
+                We could make a device that would be supplementary to teacher instruction to get beginners started and guide them personally, without having to teach them many specific chords to memorize and play.
+                When asked whether they had an interest in playing guitar, 30.8% of the 91 surveyed non-guitar players showed possible interest, citing time and cost as hinderences.
+                Additionally, 48.4% of non-guitar players showed definite interest.
+                Over one-fourth of those showing definite interest would devote less than an hour per week to playing guitar, while over half would devote one to three hours per week.
+                Users generally valued ease of use, cost, and customizability in a guitar learning tool.
+                Users also expressed interest in using an application or a physical aid on a guitar as a learning medium.
+            </p>
+
+            <span><h1>Finding Prior Solutions and Patents</h1></span>
+            <span><h2>Patent 1</h2></span>
+            <p><span>Source: </span><a href="https://ppubs.uspto.gov/dirsearch-public/print/downloadPdf/20240078928">US Patent Office</a></p>
+            <div class="design-process-image-box">
+                <img src="capstone16.webp" alt="Patent image">
+                <img src="capstone17.webp" alt="Patent image">
+                <img src="capstone18.webp" alt="Patent image">
+            </div>
+            <span><p>Summary</p></span>
+            <p>This patent is for a device that assists users in learning new stringed instruments, like the electric guitar. It employs a system of indicators to aid the user in determining when and which notes to play, as well as the techniques required to play them. The device uses lights with different colors to help users learn the instrument.</p>
+            <span><p>Critique</p></span>
+            <p>Learning to play guitar is not an interactive process, in that sheet music does not correct mistakes or indicate the physical location of the notes to play. This patent attempts to solve the latter by introducing a system of lights to guide the user to the correct playing position. The system of lighting and timing works well with learning how to play specific songs, but the device has to be invasively glued to the fretboard, potentially ruining the guitar. This patent adds a creative and visual method to learning guitar, utilizing an on-guitar device.</p>
+
+            <span><h2>Patent 2</h2></span>
+            <p><span>Source: </span><a href="https://patents.google.com/patent/US8835731B1/en">Google Patents</a></p>
+            <div class="design-process-image-box">
+                <img src="capstone19.webp" alt="Patent image">
+                <img src="capstone20.webp" alt="Patent image">
+                <img src="capstone21.webp" alt="Patent image">
+            </div>
+            <span><p>Summary</p></span>
+            <p>This patent is for a mechanical device that fits onto the top of the fretboard of a guitar. A system of movable levers is used to teach basic guitar chords, with a progression system implemented to gradually move users towards playing the strings themselves. Device is lightweight and inexpensive, and can be easily removed and placed on the guitar.</p>
+            <span><p>Critique</p></span>
+            <p>This patent attempts to help users learn playing technique, as well as how to read music. By teaching users chords, they can play learn to play songs, providing positive feedback. Additionally, they can gradually develop the calluses needed for playing. The progressive features of the patent make it ideal, where users can reduce their dependence on the device as their skill levels grow. Patent shows how a simple mechanical device can be used to encourage new guitar players to stick with it, as well as demonstrating how removable devices with progression systems are important.</p>
+
+            <span><h2>Patent 3</h2></span>
+            <p><span>Source: </span><a href="https://patents.google.com/patent/US7381878B2/en?q=(Guitar+learning+aid)&oq=Guitar+learning+aid">Google Patents</a></p>
+            <div class="design-process-image-box">
+                <img src="capstone22.webp" alt="Patent image">
+                <img src="capstone23.webp" alt="Patent image">
+                <img src="capstone24.webp" alt="Patent image">
+            </div>
+            <span><p>Summary</p></span>
+            <p>This patent is for a guitar that has a Liquid Crystal Display (LCD) mounted underneath the fingerboard in order to be able to display finger positions. The LCD in theory can be used to display multiple different colors at any position to indicate where the user’s fingers should be placed and what needs to happen fro the proper effect to be achieved.</p>
+            <span><p>Critique</p></span>
+            <p>This patent solved the problem by clearly showing users what they need to do in certain situations to attempt to help them learn different techniques. The good attributes are that it seems like it would work well in theory, and it seems like it could turn out to be an actually good product. However, when thinking about this product in actuality the LCD would take up the entire neck of the guitar, and thus would likely change the tone, and be incredibly expensive and fragile. Also the entire neck of the guitar would have to be replaced to get the product to work in the desired fashion.</p>
+
+
+
+
+            <span><h1>Products on the Market</h1></span>
+            <span><h2>Product 1</h2></span>
+            <p><span>Source: </span><a href="https://www.amazon.com/Practice-Portable-Beginner-Rotatable-Included/dp/B07SJPMRJF?tag=neaera06-20&linkId=1fcfec7d4f1e7df3269181857451d179&ref_=as_li_ss_tl&geniuslink=true&th=1">Amazon</a></p>
+            <div class="design-process-image-box">
+                <img src="capstone25.webp" alt="Product image">
+            </div>
+            <span><p>Summary</p></span>
+            <p>This is a tool to help beginners learning to play guitar. A chord is shown on the display, and has fake strings to let the user play the chord, but the strings cannot be strummed. There is also a quite small display that shows the chord name and correct finger placement. It is also silent as strings cannot be strummed, so others are not disturbed.</p>
+            <span><p>Critique</p></span>
+            <p>This product builds muscle memory for the user by allowing them to practice chord positions quickly. The main feature that this product lacks is that there is no sound, so users do not remember chords by ear, only by kinesthetic feeling. The feature of displaying chords close to the finger positions would be beneficial to have in our design.</p>
+
+            <span><h2>Product 2</h2></span>
+            <p><span>Source: </span><a href="https://a.co/d/9LSx8Do">Amazon</a></p>
+            <div class="design-process-image-box">
+                <img src="capstone26.webp" alt="Product image">
+            </div>
+            <span><p>Summary</p></span>
+            <p>This product uses a paper cover to show where fingers should be positioned to play specific chords. A paper insert is placed between the strings and the fretboard which has circles representing finger placement positions.</p>
+            <span><p>Critique</p></span>
+            <p>This product has chords printed on paper, which is cheap to produce and easy to install. It is also not a permanent attachment to the guitar. However, switching between chords is difficult as the paper inserts must be swapped each time. Additionally, the paper insert may interfere with the strings so that the sound is unpleasant.</p>
+
+            <span><h2>Product 3</h2></span>
+            <p><span>Source: </span><a href="https://chordu.com">ChordU</a></p>
+            <div class="design-process-image-box">
+                <img src="capstone27.webp" alt="Product image">
+            </div>
+            <span><p>Summary</p></span>
+            <p>This is a website and an app that takes a youtube music video and shows what chords are used. The finger placement of the chords is also depicted on the website in an intuitive interface. This lets people understand how to play their favorite songs easily without the need for other tutorials.</p>
+            <span><p>Critique</p></span>
+            <p>This shows beginners and advanced players alike learn their favorite songs easily. The main issue with this product is that the chord recognition is not perfect and may require some tweaking. There are free and paid versions, and it can be used for free without MIDI exports or more advanced features.</p>
+
+
+            <span><h1>Potential Market</h1></span>
+            <p>
+                About 715 million people have attempted to play guitar, but only 50 million actively play. Some 62% of the study participants shared that Covid-19 was an important reason behind starting guitar and 77% say it allowed them to practice more than they would have normally. Additionally, 53% of beginners responded that they spend 2 hours or less practicing a week, but on average, they believe practicing 4 hours a week for 1-2 years is what it will take to “get good” at guitar.
+                <br>Statistics are from <a href="https://www.forbes.com/sites/jesscording/2022/06/24/study-shows-16-million-people-learned-to-play-guitar-during-the-first-two-years-of-the-pandemic/?sh=484750095400">Forbes/Fender</a>.
+            </p>
+            <p>
+                Investment Justification:
+                <br>* ~50 million players worldwide, ~715mil have tried at some point 
+                <br>* 1% market share is 500,000
+                <br>* Retail ~$50, revenue of $2.5 million 
+            </p>
+
+            <span><h2>Summary So Far</h2></span>
+            <p>
+                We have now found multiple existing products and patents, which we cannot infringe upon. This has showed us what has already been done to solve the issue of beginners having difficulties learning to play guitar. By analyzing these pre-existing solutions, we can now determine what features must be included on our solution and how we can make our design more appealing to users than other designs. It is also interesting to see what patents have been created and were seen as having high potential, versus the products that are actually on the market (patented or unpatented). In this portion of the project, I researched all of the products and helped Ethan and Logan find patents.
+            </p>
+
+            <span><h1>Product Marketing</h1></span>
+            <span><h2>The <i>"Chordinator"</i></h2></span>
+            <div class="design-process-image-box">
+                <img src="capstone28.webp" alt="Chordinator Logo">
+            </div>
+            <p>
+                <span>Designers:</span> Benjamin, Logan, and Ethan
+            </p>
+            <p>
+                <span>Target Consumers:</span> According to our survey, users want to memorize chords easier and be would like to learn to play songs without spending multiple hours per week practicing. Our survey was shared with various age groups ranging from teenagers to grandparents, with quite uniform results. This means that our target consumers are anyone who wants to learn to play guitar with little effort.
+            </p>
+            <span><h1>Design Specifications</h1></span>
+            <ul>
+                <li>
+                    <span>Performance:</span>
+                    The product must be able to display the chord fingerings of a user-selected-song in order to help the user memorize the chords 
+                </li>
+                <li>
+                    <span>Target Cost:</span>
+                    Less than $50.00 if mass produced (but may cost $75-$100 to produce for us) 
+                </li>
+                <li>
+                    <span>Size and Weight:</span>
+                    The product should be relatively small and lightweight to be able to attach to a guitar neck with little to no restrictions on movement or balance 
+                </li>
+                <li>
+                    <span>Aesthetics:</span>
+                    Ideally would be made of laminated wood, with wiring/electronics hidden discretely 
+                </li>
+                <li>
+                    <span>Materials Used:</span>
+                    Ideally, it would be encased in wood to make device fit in with the guitar. We will likely 3D print or lasercut materials, so PLA plastic (Polylactic Acid), some kind of wood, or acrylic.
+                </li>
+                <li>
+                    <span>Safety and Legal Issues:</span>
+                    Potential patent infringement due to existing vague and broad patents.
+                    There will be no human safety issues as all electrical wiring will be insulated and hidden.
+                    We will do our best to not damage the guitar.
+                <li>
+                    <span>Ergonomics:</span>
+                    The device should be unobtrusive to the user and avoid getting in the way of playing the guitar as effectively as possible.  
+                </li>
+                <li>
+                    <span>Operating Environment:</span>
+                    There should be little to no need for resistance to the elements, the product may need to be dust resistant. 
+                </li>
+                <li>
+                    <span>Global Environmental Impact:</span>
+                    Ideally will be able to be produced sustainably, but because it will contain many electronics, it may need to be recycled or disposed of in parts. 
+                </li>
+                <li>
+                    <span>Service Life:</span>
+                    Service life should be at least 3-5 years.
+                <li>
+                    <span>Product Life:</span>
+                    What is the anticipated length of time that the product will be produced before it is replaced by a newer version or alternate product?
+                    The product will be standalone and secure in the production phase, so the product should function at or near full capacity for the entire service life. 
+                </li>
+                <li>
+                    <span>Durability and Maintenance:</span>
+                    The product will NOT require routine maintenance.
+                    The battery must be easily replaceable/chargeable. Having a rechargeable battery would be preferred.
+                </li>
+            </ul>
+            <span><h2>Criteria Importance</h2></span>
+            <ul>
+                <li><span>Most Important</span></li>
+                <li>Customer Needs</li>
+                <li>Performance</li>
+                <li>Cost</li>
+                <li>Ergonomics/size/weight</li>
+                <li>Liability/Patents</li>
+                <li>Durability/maintenance</li>
+                <li>Service life</li>
+                <li>Product life</li>
+                <li>Materials</li>
+                <li>Aesthetics</li>
+                <li>Operating environment</li>
+                <li>Global environment</li>
+                <li><span>Least Important</span></li>
+            </ul>
+            <span><h2>Design Requirements</h2></span>
+            <ul>
+                <li>Weigh less than 1 lb.</li>
+                <li>Start, pause, speed, and select buttons should be included for easy access to the device's features.</li>
+                <li>The guitar should not be damaged by the device (no scratches!).</li>
+                <li>Attachment and removal of the device should take less than 1 minute.</li>
+                <li>Songs can be selected quickly (less than 1 minute).</li>
+                <li>Songs can be loaded onto the device (legally).</li>
+                <li>The battery should last at least 2 hours when fully charged and the device is in continuous operation during that time.</li>
+            </ul>
+            <span><h1>Summary So Far</h1></span>
+            <p>
+                In this portion of the capstone project, we brainstormed multiple design requirements which our selected design must fulfill. These will be used in the next part of the design process to eliminate inadequate concepts and decide on the most effective solution, which we will build later. Setting measurable design requirements (specific requirements that can be tested and evaulated logically or using mathematics) ensures that our design must fulfill the requirements and that no "shortcuts" are taken, resulting in a more effective design. By brainstorming these requirements early, we can guide our design process toward the best solution without having to revise our solution as many times later.
+                I contributed to this step by analyzing survey results, brainstorming design requirements, and keeping the team on task as a project manager.
+            </p>
+
+
+
+
+
+            <!-- PART D -->
+            <span><h1>Concept Sketches</h1></span>
+            <div class="design-process-image-box">
+                <img src="capstone29.webp" alt="My concept #1">
+                <img src="capstone30.webp" alt="My concept #2">
+                <img src="capstone31.webp" alt="My concept #3">
+                <img src="capstone32.webp" alt="Logan's concept #1">
+                <img src="capstone33.webp" alt="Logan's concept #2">
+                <img src="capstone34.webp" alt="Logan's concept #3">
+                <img src="capstone35.webp" alt="Ethan's concept #1">
+                <img src="capstone36.webp" alt="Ethan's concept #2">
+                <img src="capstone37.webp" alt="Ethan's concept #3">
+            </div>
+
+            <span><h1>Concept Survey</h1></span>
+            <div class="design-process-image-box">
+                <img src="capstone38.webp" alt="First image of the concept survey">
+                <img src="capstone39.webp" alt="Second image of the concept survey">
+                <img src="capstone40.webp" alt="Third image of the concept survey">
+            </div>
+            <p>
+                Once we had multiple concept sketches, we decided upon three to include in a user survey. We then questioned twenty people about the three chosen concepts to gather more user data. We explained the details of each concept evenly and then asked interviewees what they liked and disliked about each concept, along with whether they had any improvements to suggest. We also collected their age for age group identification along with for determining customer needs from various age groups.
+            </p>
+            <span><h2>Concept Survey Summary</h2></span>
+            <p>
+                Most of the people we surveyed had interest in learning to play or playing guitar. Features they liked about our designs were that they were detachable, non-permanent, and intuitive. Issues with the designs were commonly interference with fingers while playing, cost, and visibility.
+                They thought that we should combine the first and third or second and third design. It also must be easily visible when tilting your head to view your fingers and should not fall off easily. Also important was being friendly for beginners, and teaching them proper methods of playing and musical notation.
+            </p>
+            <span><h1>Final Design Decision Matrix</h1></span>
+            <div class="design-process-image-box">
+                <img src="capstone41.webp" alt="Final design decision matrix">
+            </div>
+            <span><h1>Final Design Sketch</h1></span>
+            <div class="design-process-image-box">
+                <img src="capstone42.webp" alt="Final design sketch">
+            </div>
+            <p>
+                Our final design is composed of two main components that are clamped to the guitar such as to avoid damaging the instrument. This removable design will also avoid any infringement on playing properly. The first component is an LED matrix (multiple rows and columns of lights) that is attached to the neck of the guitar. This matrix will show the user the positions that their fingers must be placed on the neck. Using different LED colors the user will easily be able to see which fingers are placed on each fret and string to play the appropriate chord. The second component of our design is an OLED display (a small screen) that is attached to the body of the instrument that will be able to prop up for easy viewing. This screen will display additional information about playing the chord or song including the name of the chord and other information such as timing or the next chord. This design will be very helpful in teaching users how to play chords along with their favorite songs early on without frustration. 
+            </p>
+
+
+
+
+
+            <!-- PART E -->
+            <span><h1>STEM Concepts</h1></span>
+            <p>Each of our decisions relating to the creation of this product is well thought out and requires some element of STEM. The largest of these concepts that is apparent in our design is Technology. We are using a system of electrical components in order to create a system of lights and a screen that will communicate to the user how to play the guitar. This requires some coding, programming, and wiring, which are all technical engineering skills. This is not the only essential part of our design though. Our design has to attach directly to the guitar, and this means that there are several different Engineering components used. We need to figure out how to attach the several components of our design to the guitar such that they are both not causing any harm to the instrument and can be easily removed and reattached, and that they do not cause any major balancing issues when holding the guitar. Because the guitar has a somewhat awkward shape and has a long obtrusion at one end (the neck) that holds the strings for playing and we have to attach things to it, we needed to analyze how much that would have the balancing of the instrument and how this could impact playing could impact playing.
+            </p>
+            <span><h1>Prototype Stages</h1></span>
+            <p>
+                We are planning to create our design using a small computer called a Raspberry Pi Zero. This computer has a low-level interface that can be programmed using the Python programming language. Using this interface, called GPIO (General Purpose Input Output pins), along with underlying Python code (gpiozero, Adafruit CircuitPython's neopixel, and luma.oled), we will control a hand-soldered neopixel matrix and an OLED display. A neopixel matrix is an array comprised of five strips of neopixels (super bright color-controlled Light Emitting Diodes), containing eight neopixels each. This will give us an 8x5 matrix, but we will only use it as a 6x5 matrix as common guitars only have six strings. To interface with the OLED display, we will use a protocol called SPI (Serial Peripheral Interface) to send commands to the display.
+            </p>
+            <p>
+                All of these functions will be combined in a main Python program with possible additional code in another programming language for scraping (gathering) website data for songs from the internet.
+            </p>
+            <p>
+                As for hardware, we will design a custom enclosure for the electronics to be mounted on the neck of the guitar and on the body, containing the neopixel matrix and the OLED display respectively. To create these designs, we will use Autodesk Fusion 360 CAD (Computer Aided Design) software to design the case. Once the design phase is complete, we will either 3D print or lasercut the design, or use a combination of both manufacturing methods.
+            </p>
+            <span><h1>Expert Advisor</h1></span>
+            <p><span>Mr. Czar Domingo, Aerospace Technology Software Engineer at NASA WFF</span></p>
+            <p>
+                Introductory Letter:
+                <br>Good afternoon Mr. Domingo,
+                <br><br>This is Benjamin Chase, Logan Hurney, and Ethan Justice. We are juniors and seniors at Worcester Technical High School, and are working on a final capstone project for our pre-engineering class. We intend to create a prototype that will assist beginners in learning to play guitar. Our prior experience includes programming, 3D printing, lasercutting, and Raspberry Pi. We were wondering if we could schedule a meeting with you. We are available Monday through Friday, from 12pm to 1pm virtually or in person.
+                <br><br>Thank you very much,
+                <br>Benjamin, Logan, Ethan
+            </p>
+            <span><h1>Software, Technology, and Equipment</h1></span>
+            <div class="decision-matrix">
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td><strong>Component</strong></td>
+                        <td><strong>Description</strong></td>
+                        <td><strong>Quantity</strong></td>
+                        <td><strong>Cost</strong></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://a.co/d/1J6DA1P">ws2812 Neopixel Strips</a></td>
+                        <td>Very bright LEDs that will be mounted on the neck of the guitar to display finger positions</td>
+                        <td>5 needed, buying 10</td>
+                        <td>$19</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Soldering Iron, Solder, Wires</td>
+                        <td>Used to connect electronics</td>
+                        <td>About 20 wires, 1 soldering iron</td>
+                        <td>About $50, but $0 for us since we already have these</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://a.co/d/3Wrel7Q">Raspberry Pi Zero 2 W (with headers)</a></td>
+                        <td>The "brain" of the Chordinator, a small and popular Single Board Computer that will be programmed and can interface with electronics directly</td>
+                        <td>1</td>
+                        <td>$24, but $0 for us since I already have one</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://a.co/d/8WGssHb">2.4" OLED Display</a></td>
+                        <td>A small monochrome (black/white only) display used to show the chord name and other relevent information</td>
+                        <td>1</td>
+                        <td>$20</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://hatchbox3d.com">3D Printer Filament</a></td>
+                        <td>We may decide to 3D print an enclosure for the electronics, which requires biodegradable plastic PLA (Polylactic Acid) filament. Can be used for more complex 3D designs.</td>
+                        <td>1 spool</td>
+                        <td>$26, but $0 for us since I already have filament.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Acrylic/Wood</td>
+                        <td>For a nicer look and faster production time, we may opt for a lasercut case instead. Can only be used for 2D designs that can be assembled later.</td>
+                        <td>Less than 1 sheet</td>
+                        <td>$10?</td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td>Total Cost</td>
+                        <td>$149 overall, but only $75 for us with prior materials</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+
+
+
+
+
+            <!-- PART F -->
+            <span><h1>Design Viability</h1></span>
+            <p>
+                In this portion of the design process, we needed to determine what conditions our design would be exposed to and how viable the design truly was. We needed to weigh the benefits and the drawbacks of our product. To do this, we also considered the environmental impact that producing, shipping, using, and disposing of our product would have.
+            </p>
+            <p>
+                <span>Loads</span>
+            </p>
+            <p>Loads will be static as there will be tension in the design portion that is connected to the neck of the guitar. The design will need to be clamped onto the guitar, and the clamp will have a static load in the form of tension. The lower portion of the design comprised of the OLED display mounted on the guitar body will also be clamped to the guitar to allow easy removal and attachment, so this will also have tension in the clamp.</p>
+
+            <p>
+                <span>Materials</span>
+            </p>
+            <p>We will either lasercut acrylic or some sort of hardwood to construct the outer case. We may also use 3D printing in the design, whichever option we decide on later. These materials will be more than strong enough together with a thoughtfully designed product that it will be resilient to any small drops or swinging it around on the guitar. We will also add strain relief or connectors for wires exiting the enclosures to ensure that they do not fray or break. Our design will only be mounted on a guitar, so it will not experience many loads. The design will also be able to clamp onto a guitar neck and guitar body, so repetitive loading will be withstood through a clamp release mechanism which will be thoroughly tested. There will not be any extreme temperatures expected for this design to operate in. PLA plastic does deteriorate very slowly when exposed to UV light, but we know that PLA designs have withstood harsh conditions (previous project from Benny, designing a waterproof radio antenna case for outside use, it still works).</p>
+
+            <p>
+                <span>Mechanical Engineering</span>
+            </p>
+            <p>No heat or mechanical power is required. No moving parts or simple machines will be used. All components should interact effectively because none will be moving w/out external input from user. Loads should not be transferred except in the case of rapid catastrophic deconstruction. All parts should move at an ideal speed of 0m/s (so the product is at rest).</p>
+
+            <p>
+                <span>Energy</span>
+            </p>
+            <p>Electronics components require electricity, supplied by a battery. Chemical energy in the battery is converted into electrical energy and transferred through wires.</p>
+
+            <p>
+                <span>Chemical/Bio-Engineering</span>
+            </p>
+            <p>Hazardous chemicals will unfortunately be used in the production of the electronic circuit boards, as hydrochloric acid and sulfuric acid are used to etch copper traces on PCBs (Printed Circuit Boards).</p>
+
+            <p>
+                <span>Electrical Engineering</span>
+            </p>
+            <p>Electronics used to coordinate and display information. LEDs, wiring, an OLED display, and a Raspberry Pi Zero are all used. They will be integrated using laser-cut mounts.</p>
+
+            <p>
+                <span>Laws, Codes, and Regulations</span>
+            </p>
+            <p>The only relevent legal issue we could find was the disposal of batteries as hazardous waste. These can be disposed of through municipal programs and local stores, which then transport them to recycling centers. Our team also meets the ethical responsility for technical expertise related to our product design.</p>
+
+            <span><h2>Environmental Impact</h2></span>
+            <div class="design-process-image-box">
+                <img src="capstone43.webp" alt="The environmental impact of the premanufacture stage">
+                <img src="capstone44.webp" alt="The environmental impact of the manufacturing stage">
+                <img src="capstone45.webp" alt="The environmental impact of the product delivery stage">
+                <img src="capstone46.webp" alt="The environmental impact of the product use stage">
+                <img src="capstone47.webp" alt="The environmental impact of the disposal stage">
+            </div>
+
+            <span><h2>Summary So Far</h2></span>
+            <p>During this stage, I helped with analyzing the true environmental impact of the Chordinator. It is astonishing how much energy is required for the production of a product, from harvesting raw materials during the premanufacture stage to chemical treatment when a product is disposed of. It is absolutely imperative that engineers consider the lifecycle of a product as every engineer should strive to reduce any negative impacts that production has on the environment. Lithium-ion batteries are extremely dangerous for the environment, can poisen entire rivers, and are recycled through unsafe practices and child labor. All of our electronics now use PCBs (Printed Circuit Boards), which are comprised of a mixture of glass and resin along with copper trace layers. Copper is mined by using open-pit mines, strip-mines or mountaintop removal, where entire mountaintops are leveled and landscapes are destroyed. Engineers must have ethical considerations for the environment and humanity worldwide as small design choices may have a long-lasting impact on the world. The IEEE (Institute for Electrical and Electronics Engineers) has a <a href="https://www.ieee.org/about/corporate/governance/p7-8.html">Code of Ethics</a> that aligns to my belief of what "being ethical" truly means.</p>
+            <p>The IEEE Code of Ethics emphasizes the following concepts:</p>
+            <ul>
+                <li>Ensuring the safety, health, and welfare of the public</li>
+                <li>Developing sustainably</li>
+                <li>Protecting privacy</li>
+                <li>Disclosing dangers immediately</li>
+                <li>Improve general knowledge of technology</li>
+                <li>Avoid and disclose conflict, obey laws, and reject bribery</li>
+                <li>To accept and seek honest criticism of work and to correct errors</li>
+                <li>To give accurate and honest claims based upon data</li>
+                <li>To credit others properly</li>
+                <li>Know your technical knowledge and limits, and ensure others do too. Be honest!</li>
+                <li>To treat all people fairly and to respect all and to never discriminate against others</li>
+                <li>Never harass anyone</li>
+                <li>Never injure others, property, reputation, or employment</li>
+                <li>To ensure that this code of ethics is upheld by others</li>
+                <li>Never retaliate against individuals reporting violations of this code</li>
+            </ul>
+
+
+            <!-- PART G -->
+            <spen><h1>Building Process</h1></spen>
+            <span><h2>Materials Needed</h2></span>
+            <div class="decision-matrix">
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td><strong>Component</strong></td>
+                        <td><strong>Quantity</strong></td>
+                        <td><strong>Cost</strong></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://a.co/d/1J6DA1P">ws2812 Neopixel Strips</a></td>
+                        <td>5 needed, buying 10</td>
+                        <td>$19</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Soldering Iron, Solder, Wires</td>
+                        <td>About 20 wires, 1 soldering iron</td>
+                        <td>About $50, but $0 for us since we already have these</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://a.co/d/3Wrel7Q">Raspberry Pi Zero 2 W (with headers)</a></td>
+                        <td>1</td>
+                        <td>$24, but $0 for us since I already have one</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://a.co/d/8WGssHb">2.4" OLED Display</a></td>
+                        <td>1</td>
+                        <td>$20</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><a href="https://hatchbox3d.com">3D Printer Filament</a></td>
+                        <td>1 spool</td>
+                        <td>$26, but $0 for us since Mrs. Zienty already has filament</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Acrylic/Wood for the case cover</td>
+                        <td>Less than 1 sheet</td>
+                        <td>~$5, Mrs. Gallo will provide this for us</td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td>Total Cost</td>
+                        <td>$144 overall, but only $39 for us with prior materials</td>
+                    </tr>
+                </table>
+            </div>
+            <span><h1>Additional Documentation</h1></span>
+            <p>We used Autodesk Fusion to create the designs for the top and bottom parts of the Chordinator. Then, we 3D printed these parts using an FDM 3D printer.</p>
+            <p>Tolerances are difficult to determine with 3D printing, as pieces can be slightly different between prints. Despite this, Logan was able to create a hinge that lets the user "prop up" the display on the lower part of the Chordinator. Additionally, I designed the top part (neck attachment) of the Chordinator. This part required using a compliant mechanism that uses the tension of the 3D printed PLA plastic to "clip" onto a guitar neck. Two test prints were required to acquire the correct tolerance, and we later applied foam tape to the parts as to provide more static friction while mounted on the guitar so it would not slide off. The foam tape also ensured that the guitar would not sustain any damage from the application of our device.</p>
+            <p>After adjusting tolerances and 3D printing the final parts, we affixed the electronics (neopixel strips and OLED display) to the case parts using hot glue, which keeps them securely in place and insulates any circuits safely. This can also provide strain relief to any external wires so they do not fray. Once the electronics were mounted inside the case, we could connect the wires shown in the schematic below to interface the neopixel strips and the OLED display with the Raspberry Pi Zero.</p>
+            <p>At this time, I realized that I had made the wires connecting the neck attachment and the body attachment of the Chordinator too short. Therefore, I soldered some extension wires to allow the parts to be mounted further apart. I ensured the extension wires were made using stranded wires, so current loss would be minimal, though the distance was less than half a meter.</p>
+            <p>Once the parts could be connected, I also lasercut a cover for the neopixel LEDs using our school lasercutter and dark, matte acrylic. This turned out to work exceptionally well, as seen in the image below.</p>
+            <p>After the physical device was complete, I spent seven hours on a rainy Saturday writing a web scraper program that would take song chord data from https://freetar.de (a frontend website for https://ultimate-guitar.com). This gave us access to the largest guitar song and chord repository worldwide, Ultimate Guitar. Now we could load over 500,000 songs onto the Chordinator, just by inputing the song name into the program!</p>
+            <p>I am releasing the code for the Chordinator as open-source under the GNU GPLv3 Affero License. Code for the Chordinator is available <a href="https://github.com/perspector/chordinator">here.</a></p>
+            <span><h1>Construction Pictures</h1></span>
+            <div class="home-img">
+                <div class=stlviewer data-src="/assets/stl/capstone-neck-attachment.stl"></div>
+            </div>
+            <div class="home-img">
+                <div class=stlviewer data-src="/assets/stl/capstone-body-attachment.stl"></div>
+            </div>
+            <div class="design-process-image-box">
+                <img src="capstone48.webp" alt="Electronics schematic">
+                <img src="capstone49.webp" alt="Me building the neck attachment">
+                <img src="capstone50.webp" alt="Logan building the body attachment">
+                <img src="capstone51.webp" alt="The final neck attachment">
+                <img src="capstone52.webp" alt="The final body attachment">
+                <img src="capstone53.webp" alt="Everything together">
+            </div>
+
+
+
+
+            <!-- PARTS H AND I -->
+            <span><h1>Testing</h1></span>
+            <span><h2>Research of Tests</h2></span>
+            <p>
+                Most other devices that are designed for helping beginners learn to play the guitar better
+                rely on customer feedback and a few attachment tests to see if the function properly.
+                The issue with this process is that the products are not tested nearly enough before production,
+                thus issues can occur. Products rely on reviews from experts on
+                <a href="https://www.youtube.com/watch?v=O5FwOCiMtv4">YouTube</a>
+                to ensure that their product meets the needs of users.
+                In addition, the engineers making the product must try attaching the device to a guitar
+                and ensure it can be easily secured properly.
+            </p>
+            <span><h2>Our Tests</h2></span>
+            <h2>Attachment Test Instructions</h2>
+            <div class="design-process-image-box">
+                <img src="capstone54.webp" alt="Instructions for attachment testing">
+            </div>
+            <h2>Attachment Test</h2>
+            <p>
+                This test will verify how easy it is to attach and set up the Chordinator by timing how
+                long it takes them to attach the device to a guitar.
+                Other products require taking the strings off of the guitar, applying adhesives to the guitar,
+                or fall off easily. Our product must be easy to attach and remove from the guitar,
+                and cannot damage the guitar.
+            </p>
+            <span><p>Criteria</p></span>
+            <p><span>Pass</span> - The two-part device can be set up in less than one minute, does not damage the guitar, and stays on after attachment.</p>
+            <p><span>Fail</span> - The device takes longer than a minute, damages the guitar, falls off, or breaks during testing.</p>
+            <p><span>Materials:</span> Only a guitar, the Chordinator, and a volunteer are necessary for this test.</p>
+            <p><span>Initial Conditions:</span> The prototype is completed and can be safely attached to the guitar and used as intended.</p>
+            <div class="decision-matrix">
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td><strong>Hazards</strong></td>
+                        <td><strong>Controls</strong></td>
+                        <td><strong>Completed?</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Device could detach from guitar and cause damage to itself or the user.</td>
+                        <td>Device will be attached properly and safely.</td>
+                        <td>YES</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>If the user has epilepsy the flashing lights could be harmful.</td>
+                        <td>Make sure that the user is not epileptic</td>
+                        <td>YES</td>
+                    </tr>
+                </table>
+            </div>
+            <p><span>Termination Cases:</span> We would only need to terminate the test if the device detaches, breaks, or harms the user.</p>
+            <h2>Attachment Test Results</h2>
+            <p>
+                We started by showing the user basic instructions on how to attach the Chordinator to the guitar.
+                Then, we timed how long it took the user to attach the Chordinator successfuly.
+                During this time, we also watched carefully whether the wires were still connected and whether everything was in order.
+                We did not give tips during this test.
+            </p>
+            <p>
+                During this test, the Chordinator was attached easily by the user in only 90 seconds, even though it was their first time.
+                No wires became dislodged as a result of this test, and it was easy to attach for the user.
+                As a result, this test was passed.
+            </p>
+
+
+            <h2>Learning Test</h2>
+            <p>
+                This test will see how long it take the user to learn and reliably play a randomly selected
+                chord within 5 minutes of using the Chordinator.
+                We need to quantify how helpful our device is to users learning to play guitar,
+                as this is the entire purpose of the device.
+            </p>
+            <span><p>Criteria</p></span>
+            <p><span>Pass</span> - The user retains memory of the chord after using the Chordinator. This means they can play the chord without help with less than five minutes of using the Chordinator.</p>
+            <p><span>Fail</span> - The user forgets how to play the chord or plays it incorrectly. This is only based upon hand position and not strumming, as the Chordinator does not teach strumming patterns, which are more for advanced players.</p>
+            <p><span>Materials:</span> A stopwatch, guitar, the Chordinator, and a volunteer are necessary for this test.</p>
+            <p><span>Initial Conditions:</span> The prototype is completed and can be safely attached to the guitar and used as intended. Also, the device must be properly attached to the guitar and be in an appropriate position before use.</p>
+            <div class="decision-matrix">
+                <table>
+                    <tr>
+                        <!-- <td>&nbsp;</td> -->
+                        <td><strong>Hazards</strong></td>
+                        <td><strong>Controls</strong></td>
+                        <td><strong>Completed?</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Device could detach from guitar and cause damage to itself or the user.</td>
+                        <td>Device will be attached properly and safely.</td>
+                        <td>YES</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>If the user has epilepsy the flashing lights could be harmful.</td>
+                        <td>Make sure that the user is not epileptic</td>
+                        <td>YES</td>
+                    </tr>
+                </table>
+            </div>
+            <p><span>Termination Cases:</span> We would need to terminate the test if the device detaches, breaks, or harms the user. Another case for termination would be if the user becomes frustrated and does not want to continue using the Chordinator.</p>
+            <h2>Learning Test Results</h2>
+            <p>
+                We loaded a chord onto the Chordinator for the user to play. Once the user was ready, we could start the stopwatch and the user could practice.
+                Then, we timed how long it took the user to remember the chord successfuly. Once the time exceeded five minutes, we would ask them to show us how to play the chord.
+                During this time, we also watched carefully whether the wires were still connected and whether everything was in order.
+                We did not give tips during this test.
+            </p>
+            <p>
+                During this test, the user learned to play a C chord in only 2:47. The user also requested to learn another chord, and also learned the G chord within five minutes.
+                In this test, no wires became dislodged and it was easy to remember chords for the user.
+                As a result, this test was passed.
+            </p>
+
+
+            <span><h1>Customer Survey</h1></span>
+            <p>Here is the survey of our user:</p>
+            <p>
+                Customer Satisfaction Survey 
+
+            Was the Chordinator beneficial in your guitar learning experience?   Y  /  N 
+            
+            If yes: 
+            
+                What aspect of the Chordinator helped you the most? 
+            
+                    “It’s really easy to use, and seeing the chords next to your fingers is very helpful.” 
+            
+                    Seeing the chords next to your fingers helped the most. 
+            
+            Do you have other comments about the Chordinator? 
+            
+                Setup is very easy. 
+            
+                The groove on the back of the neck piece helps to keep the thumb in the right position. 
+            
+                In this prototype, the display for the chord names should stay propped up, also make it less bulky. 
+            
+                It would be helpful to use a smaller battery. 
+            
+                It would be helpful to explain the colors of the lights in the instructions. 
+            
+              
+            
+            Would you use the Chordinator to help you learn guitar? How many hours per week would you use the Chordinator? 
+            
+                Absolutely! Every time I would play guitar, so 3 hours a week. 
+            
+            Do you think that the Chordinator should be implemented in guitar learning classes (such as in school)? 
+            
+                That would be very helpful! 
+            
+            Were there any drawbacks to the Chordinator? How could we improve the Chordinator further? 
+            
+                Add lines representing strings to the neck attachment would make it easier to locate the correct finger placements.
+            </p>
+            <span><h2>Adjustments After Testing</h2></span>
+            <p>
+                We did not need to adjust much after testing. However, I did make the Chordinator work without needing an additional
+                laptop for running the Python script, which was a crucial part to setting up the Chordinator.
+            </p>
+            <span><h2>Summary So Far</h2></span>
+            <p>
+                These tests were imperative in determining whether the Chordinator was truly successful at solving our issue.
+                Without tests, engineers cannot correctly determine whether a product is effective at solving a problem.
+                The attachment test showed us that attaching the Chordinator was quite simple, which was much better than many other products.
+                In addition, the learning test demonstrated that the Chordinator is a viable aid for beginners when learning guitar.
+                When I told our wonderful mentor, Mr. Czar Domingo, about our tests and test results, he was satisfied with the results and our product.
+                He wondered about attaching the Chordinator to different types of guitars, which would just require specific designs for each type of guitar neck,
+                as each guitar neck has a slightly different shape.
+            </p>
+
+
+
+
+
+
+            <!-- PART J -->
+            <span><h1>Final Capstone Presentation</h1></span>
+            <p>
+                First, we did a dry-run presentation about a week before our final presentation.
+                Completely honestly, we did not spend much time on the dry-run presentation since we were still finishing the building process and testing procedures.
+                However, we did learn from the dry-run presentation that we needed to add much more to our presentation and that we needed to practice.
+            </p>
+            <p>
+                Our final capstone presentation was on Wednesday, May 15th, 2024.
+                Logan and I worked on the presentation during school on the previous Friday and Monday, but we were nowhere near finished.
+                So Monday afternoon, I added eleven more slides, speakers notes, pictures, statistics, explanations, and added a section about our design process.
+                In the remaining day until our official presentation, I tried to get our team together to practice.
+                Unfortunately, we could not meet on the following day, so we decided to meet early in the morning before our presentation to do another practice run.
+            </p>
+            <p>
+                This worked, and we organized roles along with planning out the presentation mechanics more.
+                I had reprogrammed the Chordinator to work offline, so network issues were out of the question.
+                Everything was ready, and we presented first.
+            </p>
+            <p>
+                Our final presentation went very well, although I skipped over the software slide. However, when judges asked questions about software,
+                I was able to explain how I built a web scraper and how more frets could be added easily as an improvement to the Chordinator.
+                Additionally, our time was 11:07, which was longer than the recommended ten minutes, so overall it went well.
+            </p>
+            <p>
+                Of course I would recommend to any team that they should practice multiple times before the day of the presentation, but for us this did not work.
+                Also, everyone should contribute equally to the presentation and the project as a whole.
+                I used extra time on the weekends to do programming and solder the electronics, however this was mainly out of my passion to make this project truly useful and more than functional.
+            </p>
+            <span><h1>Brochure</h1></span>
+            <p>
+                We also made a <span>brochure,</span> which was given to the judges:
+            </p>
+            <div class="design-process-image-box">
+                <img src="capstone55.webp" alt="Brochure Front">
+                <img src="capstone56.webp" alt="Brochure Back">
+            </div>
+            <span><h1>Final Presentation</h1></span>
+            <div class="design-process-image-box">
+                <iframe height="400" src="https://www.youtube-nocookie.com/embed/5bH9ZYRPwVo?si=O3Y2jdFNr8C45RKD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="design-process-image-box">
+                <img src="capstone58.webp" alt="">
+                <img src="capstone59.webp" alt="">
+                <img src="capstone60.webp" alt="">
+                <img src="capstone61.webp" alt="">
+                <img src="capstone62.webp" alt="">
+                <img src="capstone63.webp" alt="">
+                <img src="capstone64.webp" alt="">
+                <img src="capstone65.webp" alt="">
+                <img src="capstone66.webp" alt="">
+                <img src="capstone67.webp" alt="">
+                <img src="capstone68.webp" alt="">
+                <img src="capstone69.webp" alt="">
+                <img src="capstone70.webp" alt="">
+                <img src="capstone71.webp" alt="">
+                <img src="capstone72.webp" alt="">
+                <img src="capstone73.webp" alt="">
+                <img src="capstone74.webp" alt="">
+                <img src="capstone75.webp" alt="">
+                <img src="capstone76.webp" alt="">
+                <img src="capstone77.webp" alt="">
+            </div>
+
+            <span><h1>Thank You</h1></span>
+            <p>
+                To make this project reality, we had help from our mentor Mr. Czar Domingo, who is an Aerospace Technology Software Engineer at NASA Wallops Flight Facility.
+                He helped to give crucial advice on our project.
+                With his experience in software validation, he helped to find possible issues such as viewing angle of the guitar body attachment
+                and cable management for the neck attachment before they could occur.
+                Mr. Domingo was very supportive throughout our project, always asked the right clarifying questions, and always believed in us.
+                We are very thankful for his help.
+            </p>
+            <p><span>Mr. Domingo's Bio</span></p>
+            <p>Mr. Domingo is currently an Aerospace Technology Engineer working on software assurance at NASA Wallops Flight facility. He has extensive experience with IT project management, network design, and network engineering over the past 25 years which includes over 10 years as a Project Engineer/Manager, 3 years as a System Engineer and 6 years of strong experience in Network Operation Center environments providing 24X7 monitoring and support. Mr. Domingo has a strong background in enhanced virtual private network and MPLS network environment design. Additionally, Mr. Domingo also has experience in supporting Windows platform environment. He has further experience in implementing and supporting videoconferencing for studio and desktop applications over frame relay and MPLS network. Mr. Domingo was also a Lead Engineer deploying Riverbed optimizers to more than 100 sites.</p>
+            <p>
+                Mr. Domingo also has a Master's Degree in Cybersecurity from Western Governors University, where he also earned his CCNA and CCNP certifications.
+                He also has a Bachelor's Degree in Electronics and Communications Engineering at Mapúa Institute of Technology in the Philippines.
+            </p>
+            <p><span>Thank you letter to Mr. Domingo</span></p>
+            <p>
+                <br>Hello Mr. Domingo,
+                <br><br>Thank you so much for being a truly wonderful mentor for our team. Your expertise was crucial in identifying potential issues before they could occur, and in making the concept a reality. Thank you for never doubting us, for always believing in us and our project, and for keeping in touch along the way. You always asked the perfect clarifying questions, and motivated us to keep going with this project. We are very thankful for all of your help and time from the beginning of the project all the way to the end.
+                <br><br>Thank you so much,
+                <br>Benjamin, Logan, and Ethan
+                <br><br><br><br><br>
+            </p>
+
+            <span><h1>Thank you to our amazing engineering teachers, especially Mrs. Zienty!</h1></span>
+            <p>
+                We would also like to thank our absolutely wonderful engineering teacher Mrs. Zienty.
+                She never once doubted us, was always supportive of our project, helped us along the way, and gave us critical advice.
+                Mrs. Zienty also helped to manage our team, keep us on track, and gave us the knowledge and resources necessary to make the Chordinator a success.
+            </p>
+            <p>
+                In the past few years, we also had classes with our other engineering teachers, Mrs. Sangwan and Mrs. Gallo.
+                They provided us with knowledge and sparked our interest in a variety of engineering fields and taught us their respective skills.
+            </p>
+
+
+
+
+
+            <!-- PART K -->
+            <span><h1>Project in Review</h1></span>
+            <p>
+                This project has taught me a multitude of skills and knowledge.
+                I learned teamwork skills such as how to settle disagreements in a team and how to keep everyone on task.
+                During this project, I also learned how to collect and use data from surveys.
+                I also did all of the programming and electronics, so I learned how to build a web scraper with Python.
+                Programming also required some troubleshooting, as due to network issues I redesigned the program to work fully offline.
+                As for the electronics, I got some more soldering practice and also had some more practice in integrating software with hardware,
+                which is an essential skill to master.
+                When designing the CAD models in Autodesk Fusion, I thought about Occam's Razor and the Law of Economy,
+                where the simplest design has advantages over more complex designs as there are less points of failure.
+                So, I thought I would use a <a href="https://compliantmechanisms.byu.edu/about-compliant-mechanisms">compliant mechanism</a>
+                for the neck attachment of the design.
+                In terms of this project, this means that there is only one piece that uses tension in the plastic instead
+                of a more complex clamping mechanism to attach to the guitar neck.
+            </p>
+            <p>
+                And despite difficulties along the way, we ended up finishing the project and making a learning aid that can truly help beginners
+                to learn guitar without frustration in a fun, engaging way where they can play their favorite songs quickly.
+            </p>
+        </div>
+    </section>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 - 2026 by Benjamin Chase</p>
+            <p>The code for this website, excluding dependencies, is licensed under the GNU GPLv3 license.</p>
+            <p>Code and license are available at: <a href="https://github.com/perspector/perspector.github.io">GitHub</a></p>
+        </div>
+        
+        <div class="social-media">
+            <a href="https://github.com/perspector"><i class='bx bxl-github'></i></a>
+            <a href="https://linkedin.com/in/benjamin-l-chase" target="_blank" rel="noopener"><i class='bx bxl-linkedin-square'></i></a>
+            <a href="mailto:benjaminlchase@protonmail.com"><i class='bx bxl-gmail'></i></a>
+        </div>
+    </footer>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+
+    <!-- custom js -->
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
